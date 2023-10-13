@@ -75,7 +75,7 @@ import DraggableItem from './tools/drag/DraggableItem.js'
 
 // collaboration
 import Collaboration from '@tiptap/extension-collaboration'
-import { HocuspocusProvider } from '@hocuspocus/provider'
+import { HocuspocusProvider } from '@hocuspocus/provider' 
 
 // buttons for bubble menu
 import BoldButton from './tools/buttons/BoldButton.vue'
