@@ -1,0 +1,186 @@
+.editor-canvas {
+  padding: 5% 10%;
+}
+#page-title {
+  font-size: 3rem; /* 48px */
+  line-height: 1;
+  font-weight: 700;
+  margin-bottom: 3rem;
+}
+/* EDITOR */
+/* spacing every line */
+.tiptap {
+  > * + * {
+    margin-top: 0.5em;
+  }
+}
+/* placeholder every new node */
+.tiptap p.is-empty::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
+}
+/* color font */
+/* .ProseMirror > p {
+  color: blue;
+} */
+* {
+  color: #272829;
+}
+/* disable outline editor */
+.ProseMirror-focused {
+  outline: none;
+}
+
+/* Block mode style */
+.has-focus {
+  border-radius: 3px;
+  box-shadow: 0 0 0 0.5px #D8D9DA;
+  padding: 4px 12px;
+}
+.ProseMirror p:not(.has-focus) {
+  padding: 4px 12px;
+  /* box-shadow: 0 0 0 0.5px #D8D9DA; */
+}
+.mention {
+  border: 1px solid #000;
+  border-radius: 0.4rem;
+  padding: 0.1rem 0.3rem;
+  box-decoration-break: clone;
+}
+
+/* Heading style */
+h1.heading {
+  font-size: 2.25rem; /* 36px */
+  line-height: 2.5rem; /* 40px */
+  font-weight: 700;
+}
+h2.heading {
+  font-size: 1.875rem; /* 30px */
+  line-height: 2.25rem; /* 36px */
+  font-weight: 700;
+}
+h3.heading {
+  font-size: 1.5rem; /* 24px */
+  line-height: 2rem; /* 32px */
+  font-weight: 700;
+}
+
+/* Ordered List Style */
+ol.orderedList {
+  list-style-type: decimal;
+}
+ol.orderedList ol.orderedList{
+  margin-left: 1.25rem;
+}
+
+/* Bulleted List Style */
+ul.bulletedList {
+  list-style-type: disc;
+}
+ul.bulletedList ul.bulletedList {
+  margin-left: 1.25rem;
+  list-style-type: circle;
+}
+ul.bulletedList ul.bulletedList ul.bulletedList {
+  margin-left: 1.25rem;
+  list-style-type: square;
+}
+
+/* Column Style */
+.ProseMirror .column-block {
+  width: 100%;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 24px;
+  padding: 8px 0;
+}
+.ProseMirror .column {
+  overflow: auto;
+  box-shadow: 0 0 0 0.15px #D8D9DA;
+  border: 1px gray solid;
+  border-radius: 6px;
+  padding: 8px;
+  margin: -8px;
+}
+
+/* code style */
+.ProseMirror pre {
+  background: #0D0D0D;
+  border-radius: 3px;
+}
+.ProseMirror pre code {
+  color: inherit;
+  color: #FFF;
+  font-size: 0.8rem;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* blockquote style */
+blockquote.blockquote {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 40px;
+  margin-inline-end: 40px;
+  border-left: 4px solid rgba(10, 10, 10, 0.859);
+}
+
+/* Todo List */
+ul[data-type=taskList] {
+  list-style: none;
+  padding: 0;
+}
+ul[data-type=taskList] p {
+  margin: 0;
+}
+ul[data-type=taskList] li {
+  display: flex;
+}
+ul[data-type=taskList] li > label {
+  /* flex: 0 0 auto; */
+  /* margin-right: 0.5rem; */
+  /* user-select: none; */
+  width: 1em;
+  padding-top: 100px;
+  height: 30px;
+  width: 30px;
+}
+ul[data-type=taskList] li > div {
+  flex: 1 1 auto;
+}
+ul[data-type=taskList] li > label input {
+  padding-top: 20px;
+  display: block;
+  width: 1.1rem;
+  height: 1.1rem;
+  cursor: pointer;
+}
+ul[data-type=taskList] li > label span {
+  display: none;
+}
+ul[data-type=taskList] li ul li,
+ul[data-type=taskList] li ol li {
+  display: list-item;
+}
+ul[data-type=taskList] li ul[data-type=taskList] > li {
+  display: flex;
+}
+
+/* bubble menu */
+#bubbleMenu {
+  border-radius: 4px;
+  border: 1px solid #D9D9D9;
+  background: #F8F7F7;
+  box-shadow: 0px 4px 16px 2px rgba(0, 0, 0, 0.15);
+  padding: 2px 12px;
+  display: flex;
+}
+.bubble {
+  padding-top: 4px;
+  padding-bottom: 0px;
+  margin: 0 4px;
+}
