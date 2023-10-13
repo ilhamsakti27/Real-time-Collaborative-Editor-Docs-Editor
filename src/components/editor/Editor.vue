@@ -88,7 +88,7 @@ import FontFamilyButton from './tools/buttons/FontFamilyButton.vue'
 
 
 const provider = new HocuspocusProvider({
-  url: 'ws://rosfandy.my.id:1234/',
+  url: 'wss://api.server.rosfandy.my.id/',
   name: 'example-document',
 })
 

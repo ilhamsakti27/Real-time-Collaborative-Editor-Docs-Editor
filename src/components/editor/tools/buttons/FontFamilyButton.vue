@@ -6,35 +6,41 @@
     >
       Inter
     </button>
+    <br>
     <button
       :class="{ 'is-active': editor.isActive('textStyle', { fontFamily: 'Comic Sans MS, Comic Sans' }) }"
       @click="editor.chain().focus().setFontFamily('Comic Sans MS, Comic Sans').run()"
     >
       Comic Sans
     </button>
+    <br>
     <button
       :class="{ 'is-active': editor.isActive('textStyle', { fontFamily: 'serif' }) }"
       @click="editor.chain().focus().setFontFamily('serif').run()"
     >
       serif
     </button>
+    <br>
     <button
       :class="{ 'is-active': editor.isActive('textStyle', { fontFamily: 'monospace' }) }"
       @click="editor.chain().focus().setFontFamily('monospace').run()"
     >
       monospace
     </button>
+    <br>
     <button
       :class="{ 'is-active': editor.isActive('textStyle', { fontFamily: 'cursive' }) }"
       @click="editor.chain().focus().setFontFamily('cursive').run()"
     >
       cursive
     </button>
+    <br>
     <button
       @click="editor.chain().focus().unsetFontFamily().run()"
     >
       unsetFontFamily
     </button>
+    <br>
   </button>
 </template>
 
