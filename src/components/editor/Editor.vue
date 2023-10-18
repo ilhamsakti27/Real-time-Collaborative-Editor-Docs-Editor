@@ -4,10 +4,7 @@
 <!-- styling superscript -->
 <!-- styling subscript -->
 <template>
-  <div
-    v-if="editor"
-    class="editor-canvas"
-  >
+  <div v-if="editor" class="editor-canvas">
     <h1 id="page-title">
       Editor Block-based
     </h1>
@@ -16,53 +13,21 @@
       Total user: {{ totalUser }}
     </p>
 
-    <BubbleMenu
-      v-if="editor"
-      id="bubbleMenu"
-      :editor="editor"
-      :tippy-options="{ duration: 10 }"
-    >
-      <ColorButton
-        class="bubble-menu-btn"
-        :editor="editor"
-      />
-      <BoldButton
-        class="bubble-menu-btn"
-        :editor="editor"
-      />
-      <ItalicButton
-        class="bubble-menu-btn"
-        :editor="editor"
-      />
-      <StrikeButton
-        class="bubble-menu-btn"
-        :editor="editor"
-      />
-      <UnderlineButton
-        class="bubble-menu-btn"
-        :editor="editor"
-      />
-      <LinkButton
-        class="bubble-menu-btn"
-        :editor="editor"
-      />
+    <BubbleMenu v-if="editor" id="bubbleMenu" :editor="editor" :tippy-options="{ duration: 10 }">
+      <ColorButton class="bubble-menu-btn" :editor="editor" />
+      <BoldButton class="bubble-menu-btn" :editor="editor" />
+      <ItalicButton class="bubble-menu-btn" :editor="editor" />
+      <StrikeButton class="bubble-menu-btn" :editor="editor" />
+      <UnderlineButton class="bubble-menu-btn" :editor="editor" />
+      <LinkButton class="bubble-menu-btn" :editor="editor" />
       <!-- <FontFamilyButton
         class="bubble-menu-btn"
         :editor="editor"
       /> -->
-      <SuperscriptButton
-        class="bubble-menu-btn"
-        :editor="editor"
-      />
-      <SubscriptButton
-        :editor="editor"
-      />
+      <SuperscriptButton class="bubble-menu-btn" :editor="editor" />
+      <SubscriptButton :editor="editor" />
     </BubbleMenu>
-    <editor-content
-      id="editor"
-      :editor="editor"
-      :value="editor.getAttributes('textStyle').color"
-    />
+    <editor-content id="editor" :editor="editor" :value="editor.getAttributes('textStyle').color" />
   </div>
 </template>
 
@@ -103,7 +68,7 @@ import DraggableItem from './tools/drag/DraggableItem.js'
 
 // collaboration
 import Collaboration from '@tiptap/extension-collaboration'
-import { HocuspocusProvider } from '@hocuspocus/provider' 
+import { HocuspocusProvider } from '@hocuspocus/provider'
 // cursor collaboration
 // import CollaborationCursor from '@tiptap/extension-collaboration-cursor'
 // import { WebrtcProvider } from 'y-webrtc'
@@ -293,11 +258,11 @@ export default {
     },
     seeTotalUser() {
       provider.awareness.on('change', () => {
-      let totalClients = provider.awareness.getStates().size;
-      this.totalUser =  totalClients           
-    });
+        let totalClients = provider.awareness.getStates().size;
+        this.totalUser = totalClients
+      });
     }
-    
+
   },
 }
 </script>
