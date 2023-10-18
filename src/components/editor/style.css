@@ -5,9 +5,11 @@
   font-size: 3rem; /* 48px */
   line-height: 1;
   font-weight: 700;
-  margin-bottom: 3rem;
 }
 /* EDITOR */
+#editor {
+  margin-top: 3rem;
+}
 /* spacing every line */
 .tiptap {
   > * + * {
@@ -111,6 +113,7 @@ ul.bulletedList ul.bulletedList ul.bulletedList {
 .ProseMirror pre {
   background: #0D0D0D;
   border-radius: 3px;
+  padding: 8px 16px;
 }
 .ProseMirror pre code {
   color: inherit;
@@ -176,11 +179,13 @@ ul[data-type=taskList] li ul[data-type=taskList] > li {
   border: 1px solid #D9D9D9;
   background: #F8F7F7;
   box-shadow: 0px 4px 16px 2px rgba(0, 0, 0, 0.15);
-  padding: 2px 12px;
+  /* padding: 2px 12px; */
   display: flex;
 }
-.bubble {
-  padding-top: 4px;
-  padding-bottom: 0px;
-  margin: 0 4px;
+.bubble-menu-btn {
+  border-right: 1px solid rgb(182, 177, 177);
+  padding: 3px 10px;
+}
+.bubble-menu-btn:hover {
+  background-color: #ecececd8;
 }

@@ -1,3 +1,8 @@
+<!-- Note: -->
+<!-- create function to close the dropdown if the user clicks outside of it   -->
+<!-- dropdown menu for font family -->
+<!-- styling superscript -->
+<!-- styling subscript -->
 <template>
   <div
     v-if="editor"
@@ -7,6 +12,10 @@
       Editor Block-based
     </h1>
 
+    <p>
+      Total user: {{ totalUser }}
+    </p>
+
     <BubbleMenu
       v-if="editor"
       id="bubbleMenu"
@@ -14,28 +23,43 @@
       :tippy-options="{ duration: 10 }"
     >
       <ColorButton
+        class="bubble-menu-btn"
         :editor="editor"
       />
       <BoldButton
+        class="bubble-menu-btn"
         :editor="editor"
       />
       <ItalicButton
+        class="bubble-menu-btn"
         :editor="editor"
       />
       <StrikeButton
+        class="bubble-menu-btn"
         :editor="editor"
       />
       <UnderlineButton
+        class="bubble-menu-btn"
         :editor="editor"
       />
       <LinkButton
+        class="bubble-menu-btn"
         :editor="editor"
       />
-      <FontFamilyButton
+      <!-- <FontFamilyButton
+        class="bubble-menu-btn"
+        :editor="editor"
+      /> -->
+      <SuperscriptButton
+        class="bubble-menu-btn"
+        :editor="editor"
+      />
+      <SubscriptButton
         :editor="editor"
       />
     </BubbleMenu>
     <editor-content
+      id="editor"
       :editor="editor"
       :value="editor.getAttributes('textStyle').color"
     />
@@ -66,6 +90,10 @@ import Link from '@tiptap/extension-link'
 import FontFamily from '@tiptap/extension-font-family'
 import Image from '@tiptap/extension-image'
 import Dropcursor from '@tiptap/extension-dropcursor'
+// import History from '@tiptap/extension-history'
+import Superscript from '@tiptap/extension-superscript'
+import Subscript from '@tiptap/extension-subscript'
+import Typography from '@tiptap/extension-typography'
 
 // slash menu
 import Commands from './tools/commands/commands.js'
@@ -76,6 +104,10 @@ import DraggableItem from './tools/drag/DraggableItem.js'
 // collaboration
 import Collaboration from '@tiptap/extension-collaboration'
 import { HocuspocusProvider } from '@hocuspocus/provider' 
+// cursor collaboration
+// import CollaborationCursor from '@tiptap/extension-collaboration-cursor'
+// import { WebrtcProvider } from 'y-webrtc'
+// import * as Y from 'yjs'
 
 // buttons for bubble menu
 import BoldButton from './tools/buttons/BoldButton.vue'
@@ -85,12 +117,22 @@ import UnderlineButton from './tools/buttons/UnderlineButton.vue'
 import ColorButton from './tools/buttons/ColorButton.vue'
 import LinkButton from './tools/buttons/LinkButton.vue'
 import FontFamilyButton from './tools/buttons/FontFamilyButton.vue'
+import SuperscriptButton from './tools/buttons/SuperscriptButton.vue'
+import SubscriptButton from './tools/buttons/SubcriptButton.vue'
 
-
+// collaboration
 const provider = new HocuspocusProvider({
   url: 'wss://api.server.rosfandy.my.id/',
   name: 'example-document',
 })
+// provider.awareness.on('change', () => {
+//   let totalClients = provider.awareness.getStates().size;
+//   this.totalUser =  totalClients
+// });
+
+// collaboration cursor
+// const ydoc = new Y.Doc()
+// const providerCollabCursor = new WebrtcProvider('tiptap-collaboration-cursor-extension', provider)
 
 
 export default {
@@ -104,12 +146,15 @@ export default {
     ColorButton,
     LinkButton,
     FontFamilyButton,
+    SuperscriptButton,
+    SubscriptButton
   },
   data() {
     return {
-      // provider: null,
       editor: null,
       isEditable: true,
+      totalUser: 0,
+      // providerCollaborationCursor: null,
     }
   },
   watch: {
@@ -118,6 +163,10 @@ export default {
     },
   },
   mounted() {
+    // const ydoc = new Y.Doc()
+
+    // this.providerCollaborationCursor = new WebrtcProvider('tiptap-collaboration-cursor-extension', ydoc)
+
     this.editor = new Editor({
       extensions: [
         StarterKit.configure({
@@ -171,15 +220,34 @@ export default {
           nested: true,
         }),
         Underline,
-        Collaboration.configure({
-          document: provider.document,
-        }),
         TextStyle,
         Color,
         Link,
         FontFamily,
         Image,
-        Dropcursor
+        Dropcursor,
+        // History,
+        Superscript.configure({
+          HTMLAttributes: {
+            class: 'superscript',
+          },
+        }),
+        Subscript.configure({
+          HTMLAttributes: {
+            class: 'subscript',
+          },
+        }),
+        Typography,
+        Collaboration.configure({
+          document: provider.document,
+        }),
+        // CollaborationCursor.configure({
+        //   provider: providerCollabCursor,
+        //   user: {
+        //     name: 'Cyndi Lauper',
+        //     color: '#f783ac',
+        //   },
+        // }),
       ],
       // content: `
       // <p>This is a boring paragraph.</p>
@@ -208,9 +276,12 @@ export default {
         // console.log(this.editor.getJSON())
       },
     })
+
+    this.seeTotalUser()
   },
   beforeDestroy() {
     this.editor.destroy()
+    // this.provider.destroy()
   },
   methods: {
     addImage() {
@@ -219,7 +290,14 @@ export default {
       if (url) {
         this.editor.chain().focus().setImage({ src: url }).run()
       }
+    },
+    seeTotalUser() {
+      provider.awareness.on('change', () => {
+      let totalClients = provider.awareness.getStates().size;
+      this.totalUser =  totalClients           
+    });
     }
+    
   },
 }
 </script>
