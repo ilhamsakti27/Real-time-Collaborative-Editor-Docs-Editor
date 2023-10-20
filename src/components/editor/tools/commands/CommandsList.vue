@@ -1,34 +1,21 @@
+<!-- eslint-disable -->
 <template>
-  <div
-    id="slash-menu"
-    class="items"
-  >
-    <template
-      v-if="items.length"
-    >
-      <button
-        v-for="(item, index) in items"
-        :key="index"
-        class="item"
-        :class="{ 'is-selected': index === selectedIndex }"
-        @click="selectItem(index)"
-      >
+  <div ref="itemsContainer" class="items">
+    <template v-if="items.length">
+      <button v-for="(item, index) in items" :key="index" class="item" :class="{ 'is-selected': index === selectedIndex }"
+        @click="selectItem(index)">
         <!-- {{ item }} -->
         <!-- list of menu -->
         <span v-html="item.icon" /> <span>{{ item.title }}</span>
       </button>
     </template>
-    <div
-      v-else
-      class="item"
-    >
+    <div v-else class="item">
       No result
     </div>
   </div>
 </template>
 
 <script>
-/* eslint-disable */
 export default {
   props: {
     items: {
@@ -63,28 +50,66 @@ export default {
   methods: {
     onKeyDown({ event }) {
       if (event.key === 'ArrowUp') {
-        this.upHandler()   
+        this.upHandler()
+
         return true
       }
+
       if (event.key === 'ArrowDown') {
         this.downHandler()
+
         return true
       }
+
       if (event.key === 'Enter') {
         this.enterHandler()
+
         return true
       }
+
       return false
     },
 
     upHandler() {
-      this.selectedIndex = ((this.selectedIndex + this.items.length) - 1) % this.items.length
-      this.scrollToSelectedUp()
+      // stop scroll event jika sudah mentok
+      if (this.selectedIndex <= 0) {
+        this.selectedIndex = 0
+      } else {
+        this.selectedIndex -= 1
+      }
+      // ref untuk element items
+      const { itemsContainer } = this.$refs
+      // logic scroll key down
+      if (itemsContainer) {
+        // scroll untuk key down pada index
+        const scrollPosition = itemsContainer.scrollTop
+        if (this.selectedIndex !== this.items.length) {
+          const newScrollPosition = scrollPosition - 40
+          itemsContainer.scrollTop = newScrollPosition
+          console.log('Scroll Position:', this.selectedIndex)
+        }
+      }
     },
 
     downHandler() {
-      this.selectedIndex = (this.selectedIndex + 1) % this.items.length
-      this.scrollToSelectedDown()
+      // stop scroll event jika sudah mentok
+      if (this.selectedIndex >= this.items.length - 1) {
+        this.selectedIndex = this.items.length - 1
+      } else {
+        this.selectedIndex += 1
+      }
+
+      // ref untuk element items
+      const { itemsContainer } = this.$refs
+      // logic scroll key down
+      if (itemsContainer && this.selectedIndex >= (this.items.length / 2) + 1) {
+        // scroll untuk key down pada index >= ke-setengah item
+        const scrollPosition = itemsContainer.scrollTop
+        if (this.selectedIndex !== this.items.length) {
+          const newScrollPosition = scrollPosition + 40
+          itemsContainer.scrollTop = newScrollPosition
+        }
+      }
     },
 
     enterHandler() {
@@ -98,24 +123,6 @@ export default {
         this.command(item)
       }
     },
-
-    scrollToSelectedDown() {
-      const slashMenuElement = document.getElementById('slash-menu');
-      const selectedItem = slashMenuElement.querySelector('.is-selected');
-      if (selectedItem) {
-        const offsetTop = selectedItem.offsetTop;
-        slashMenuElement.scrollTop = offsetTop;
-      }
-    },
-
-    scrollToSelectedUp() {
-      const slashMenuElement = document.getElementById('slash-menu');
-      const selectedItem = slashMenuElement.querySelector('.is-selected');
-      if (selectedItem) {
-        // const offsetTop = selectedItem.offsetTop;
-        slashMenuElement.scrollTop -= 25;
-      }
-    }
   },
 }
 </script>
@@ -127,10 +134,11 @@ export default {
   border: 1px solid #D9D9D9;
   background: #f8f7f7;
   box-shadow: 0px 4px 16px 2px rgba(0, 0, 0, 0.15);
-  overflow: auto;
+  overflow: scroll;
   width: 200px;
-  height: 320px;
+  height: 300px;
 }
+
 .item {
   display: block;
   margin: 0;
@@ -146,7 +154,8 @@ export default {
     background-color: #d8d9daa1;
   }
 }
-.item span svg{
+
+.item span svg {
   display: inline-block;
   width: 2em;
 }
