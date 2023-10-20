@@ -79,6 +79,7 @@ export default {
     },
 
     upHandler() {
+      console.log(this.items.length)
       // stop scroll event jika sudah mentok
       if (this.selectedIndex <= 0) {
         this.selectedIndex = 0
@@ -88,15 +89,16 @@ export default {
       // ref untuk element items
       const { itemsContainer } = this.$refs
       // logic scroll key down
-      if (itemsContainer) {
+      if (itemsContainer && this.selectedIndex <= (this.items.length / 2)) {
         // scroll untuk key down pada index
         const scrollPosition = itemsContainer.scrollTop
-        if (this.selectedIndex !== this.items.length) {
+        if (this.selectedIndex >= 0) {
           const newScrollPosition = scrollPosition - 60
           itemsContainer.scrollTop = newScrollPosition
-          console.log('Scroll Position:', this.selectedIndex)
+          console.log('Scroll Position:', newScrollPosition)
         }
       }
+      console.log('Scroll Position:', this.selectedIndex)
     },
 
     downHandler() {
