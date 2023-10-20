@@ -126,7 +126,6 @@ export default {
             isEditable: true,
             total: 0,
             status: ""
-            // providerCollaborationCursor: null,
         }
     },
     watch: {
@@ -136,8 +135,9 @@ export default {
     },
     mounted() {
         provider.awareness.on('change', () => {
-            const totalClients = provider.awareness.getStates().size
-            this.total = totalClients
+            let awareness = this.buatMapBaru(provider.awareness.getStates())
+            console.log(awareness.size)
+            this.total = awareness.size
         })
         provider.on('status', evt => {
             console.log(evt.status)
@@ -146,7 +146,6 @@ export default {
         this.editor = new Editor({
             extensions: [
                 StarterKit.configure({
-                    // The Collaboration extension comes with its own history handling
                     history: false,
                 }),
                 Placeholder.configure({
@@ -223,41 +222,29 @@ export default {
                 }),
 
             ],
-            // content: `
-            // <p>This is a boring paragraph.</p>
-            //   <div data-type="draggable-item">
-            //     <p>Followed by a fancy draggable item.</p>
-            //   </div>
-            //   <div data-type="draggable-item">
-            //     <p>And another draggable item.</p>
-            //     <div data-type="draggable-item">
-            //       <p>And a nested one.</p>
-            //       <div data-type="draggable-item">
-            //         <p>But can we go deeper?</p>
-            //       </div>
-            //     </div>
-            //   </div>
-            //   <p>Let’s finish with a boring paragraph.</p>
-            // `,
-            // autofocus: true,
             onUpdate: () => {
-                // HTML
-                // this.$emit('input', this.editor.getHTML())
-                // console.log(this.editor.getHTML())
-                // JSON
-                // this.$emit('input', this.editor.getJSON()) // jika mau raw JSONnya
+
                 this.$emit('input', this.editor.getJSON().content) // jika mau langsung isi pada key 'content'nya
-                // console.log(this.editor.getJSON())
             },
         })
 
-        this.seeTotalUser()
     },
     beforeDestroy() {
         this.editor.destroy()
-        // this.provider.destroy()
     },
     methods: {
+        buatMapBaru(dataMap) {
+            const mapBaru = new Map();
+
+            for (const [key, value] of dataMap) {
+                if (Object.keys(value).length !== 0) {
+                    mapBaru.set(key, value);
+                }
+            }
+
+            return mapBaru;
+        },
+
         gantiNama() {
             const name = (window.prompt('Name') || '')
                 .trim()
@@ -293,13 +280,6 @@ export default {
                 this.editor.chain().focus().setImage({ src: url }).run()
             }
         },
-        seeTotalUser() {
-            provider.awareness.on('change', () => {
-                let totalClients = provider.awareness.getStates().size;
-                this.totalUser = totalClients
-            });
-        }
-
     },
 }
 </script>
@@ -309,8 +289,6 @@ export default {
 
 /* ============ STYLING CURSOR ============ */
 /* Give a remote user a caret */
-.tiptap .collaboration-cursor__caret {}
-
 .collaboration-cursor__caret {
     position: relative;
     margin-left: -1px;
