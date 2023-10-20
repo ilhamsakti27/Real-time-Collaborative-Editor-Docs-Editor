@@ -4,6 +4,7 @@
 <!-- styling superscript -->
 <!-- styling subscript -->
 <template>
+  <!-- eslint-disable -->
   <div v-if="editor" class="editor-canvas">
     <h1 id="page-title">
       Editor Block-based

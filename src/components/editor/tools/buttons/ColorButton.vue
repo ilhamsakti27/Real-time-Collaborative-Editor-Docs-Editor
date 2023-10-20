@@ -339,11 +339,22 @@ export default {
       console.log('Haiii')
       const dropdrownTextColorMenu =  document.getElementById('dropdownMenu')
       dropdrownTextColorMenu.classList.toggle('show')
-    }
+    },
+    // // close dropdown when user click outside
+    // closeDropdown(e) {
+    //   const myDropdown = document.getElementById("dropdownMenu");
+    //   if (!e.target.matches('.dropbtn')) {
+    //     if (myDropdown.classList.contains('show')) {
+    //       myDropdown.classList.remove('show');
+    //     }
+    //   }
+    //   myDropdown.classList.remove('show')
+    // },
   },
-  mounted() {
-    
-  }
+  beforeDestroy() {
+    // Remove the event listener when the component is destroyed
+    // document.removeEventListener("click", this.closeDropdown);
+  },
 }
 </script>
 

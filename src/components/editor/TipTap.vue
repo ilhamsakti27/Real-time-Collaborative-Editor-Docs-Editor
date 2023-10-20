@@ -10,7 +10,7 @@
         <div class="pl-8 pt-20 w-[20%]">
             <div>Online: {{ total }}</div>
             <div>Status: {{ status }}</div>
-            <div>Your Name: {{ this.currentUser.name }}</div>
+            <div>Your Name: {{ currentUser.name }}</div>
             <div class="my-4">
                 <button class="bg-gray-200 border border-black px-2" @click="gantiNama">
                     Ganti Nama

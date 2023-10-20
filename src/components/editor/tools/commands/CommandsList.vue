@@ -1,6 +1,11 @@
 <template>
-  <div class="items">
-    <template v-if="items.length">
+  <div
+    id="slash-menu"
+    class="items"
+  >
+    <template
+      v-if="items.length"
+    >
       <button
         v-for="(item, index) in items"
         :key="index"
@@ -23,6 +28,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 export default {
   props: {
     items: {
@@ -57,34 +63,28 @@ export default {
   methods: {
     onKeyDown({ event }) {
       if (event.key === 'ArrowUp') {
-        this.upHandler()
-
+        this.upHandler()   
         return true
       }
-
       if (event.key === 'ArrowDown') {
         this.downHandler()
-
         return true
       }
-
       if (event.key === 'Enter') {
         this.enterHandler()
-
         return true
       }
-
       return false
     },
 
     upHandler() {
       this.selectedIndex = ((this.selectedIndex + this.items.length) - 1) % this.items.length
+      this.scrollToSelectedUp()
     },
 
     downHandler() {
       this.selectedIndex = (this.selectedIndex + 1) % this.items.length
-      this.selectedIndex.scrollTop += 20
-      // e.preventDefault()
+      this.scrollToSelectedDown()
     },
 
     enterHandler() {
@@ -98,6 +98,24 @@ export default {
         this.command(item)
       }
     },
+
+    scrollToSelectedDown() {
+      const slashMenuElement = document.getElementById('slash-menu');
+      const selectedItem = slashMenuElement.querySelector('.is-selected');
+      if (selectedItem) {
+        const offsetTop = selectedItem.offsetTop;
+        slashMenuElement.scrollTop = offsetTop;
+      }
+    },
+
+    scrollToSelectedUp() {
+      const slashMenuElement = document.getElementById('slash-menu');
+      const selectedItem = slashMenuElement.querySelector('.is-selected');
+      if (selectedItem) {
+        // const offsetTop = selectedItem.offsetTop;
+        slashMenuElement.scrollTop -= 25;
+      }
+    }
   },
 }
 </script>
@@ -109,9 +127,9 @@ export default {
   border: 1px solid #D9D9D9;
   background: #f8f7f7;
   box-shadow: 0px 4px 16px 2px rgba(0, 0, 0, 0.15);
-  overflow: scroll;
+  overflow: auto;
   width: 200px;
-  height: 300px;
+  height: 320px;
 }
 .item {
   display: block;
