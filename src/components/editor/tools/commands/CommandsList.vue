@@ -1,12 +1,20 @@
 <!-- eslint-disable -->
 <template>
-  <div ref="itemsContainer" class="items">
+  <div ref="itemsContainer" class="items flex flex-col gap-y-1">
     <template v-if="items.length">
       <button v-for="(item, index) in items" :key="index" class="item" :class="{ 'is-selected': index === selectedIndex }"
         @click="selectItem(index)">
         <!-- {{ item }} -->
         <!-- list of menu -->
-        <span v-html="item.icon" /> <span>{{ item.title }}</span>
+        <div class="flex items-center gap-x-2">
+          <div class="border rounded-md p-2">
+            <span v-html="item.icon" />
+          </div>
+          <div class="flex flex-col">
+            <span class="text-md">{{ item.title }}</span>
+            <span class="text-black/50 text-sm">{{ item.desc }}</span>
+          </div>
+        </div>
       </button>
     </template>
     <div v-else class="item">
@@ -84,7 +92,7 @@ export default {
         // scroll untuk key down pada index
         const scrollPosition = itemsContainer.scrollTop
         if (this.selectedIndex !== this.items.length) {
-          const newScrollPosition = scrollPosition - 40
+          const newScrollPosition = scrollPosition - 60
           itemsContainer.scrollTop = newScrollPosition
           console.log('Scroll Position:', this.selectedIndex)
         }
@@ -102,11 +110,11 @@ export default {
       // ref untuk element items
       const { itemsContainer } = this.$refs
       // logic scroll key down
-      if (itemsContainer && this.selectedIndex >= (this.items.length / 2) + 1) {
+      if (itemsContainer && this.selectedIndex >= (this.items.length / 3) + 1) {
         // scroll untuk key down pada index >= ke-setengah item
         const scrollPosition = itemsContainer.scrollTop
         if (this.selectedIndex !== this.items.length) {
-          const newScrollPosition = scrollPosition + 40
+          const newScrollPosition = scrollPosition + 60
           itemsContainer.scrollTop = newScrollPosition
         }
       }
@@ -132,11 +140,29 @@ export default {
   padding: 8px 4px;
   border-radius: 6px;
   border: 1px solid #D9D9D9;
-  background: #f8f7f7;
+  background: white;
   box-shadow: 0px 4px 16px 2px rgba(0, 0, 0, 0.15);
   overflow: scroll;
-  width: 200px;
-  height: 300px;
+  // width: 200px;
+  max-height: 300px;
+}
+
+// styling scroll slash menu
+.items::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track (jalur) */
+.items::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 50px;
+}
+
+/* Handle (bilah) */
+.items::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 20px;
+  border: 7px solid transparent;
 }
 
 .item {
