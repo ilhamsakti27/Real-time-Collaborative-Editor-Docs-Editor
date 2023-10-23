@@ -14,7 +14,7 @@
       <path
         d="M10.0834 4.58333H15.5834M6.41669 17.4167H11.9167M12.8334 4.58333L9.16669 17.4167"
         stroke="#272829"
-        stroke-opacity="0.8"
+        stroke-opacity="0.85"
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
