@@ -1,10 +1,4 @@
-<!-- eslint-disable vue/max-attributes-per-line -->
-<!-- eslint-disable vue/html-indent -->
-<!-- Note: -->
-<!-- create function to close the dropdown if the user clicks outside of it   -->
-<!-- dropdown menu for font family -->
-<!-- styling superscript -->
-<!-- styling subscript -->
+<!-- eslint-disable -->
 <template>
     <div class="flex">
         <div class="pl-8 pt-20 w-[20%]">
@@ -22,8 +16,36 @@
             <h1 id="page-title">
                 Editor Block-based
             </h1>
+            <floating-menu pluginKey="" @dragend="endDragging($event)" :draggable="dragging"
+                :should-show="shouldShowMainToolbar" v-if="editor" :editor="editor" :tippy-options="{
+                    maxWidth: 'none',
+                    placement: 'left-start',
+                    animation: 'fade',
+                    duration: 300,
+                    getReferenceClientRect: getMenuCoords,
+                    onCreate: (instance) =>
+                        instance.popper.classList.add(
+                            'max-md:!sticky',
+                            'max-md:!bottom-0',
+                            'max-md:!top-auto',
+                            'max-md:!transform-none'
+                        ),
+                }">
+                <div class="flex flex-row">
+                    <button @mousedown="startDragging($event)" @mouseup="
+                        draggedNodePosition = false; dragging = false;" class=" md:block ml-1 my-2 rounded"
+                        aria-label="Drag" data-tooltip="Drag to move&#10;Click to menu">
+                        <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            aria-hidden="true" focusable="false" class="menu w-5 h-5 md:w-6 md:h-6" fill="#696969">
+                            <path
+                                d="M8 7h2V5H8v2zm0 6h2v-2H8v2zm0 6h2v-2H8v2zm6-14v2h2V5h-2zm0 8h2v-2h-2v2zm0 6h2v-2h-2v2z">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+            </floating-menu>
 
-            <BubbleMenu v-if="editor" id="bubbleMenu" :editor="editor" :tippy-options="{ duration: 10 }">
+            <BubbleMenu :editor="editor" :tippy-options="{ duration: 100 }" v-if="editor" id="bubbleMenu">
                 <ColorButton class="bubble-menu-btn" :editor="editor" />
                 <BoldButton class="bubble-menu-btn" :editor="editor" />
                 <ItalicButton class="bubble-menu-btn" :editor="editor" />
@@ -42,7 +64,7 @@
 /* eslint-disable */
 // tiptap extension
 import { Editor } from '@tiptap/core'
-import { BubbleMenu, EditorContent } from '@tiptap/vue-2'
+import { BubbleMenu, EditorContent, FloatingMenu } from '@tiptap/vue-2'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
 import Focus from '@tiptap/extension-focus'
@@ -78,8 +100,6 @@ import Collaboration from '@tiptap/extension-collaboration'
 import { HocuspocusProvider } from '@hocuspocus/provider'
 // cursor collaboration
 import CollaborationCursor from '@tiptap/extension-collaboration-cursor'
-// import { WebrtcProvider } from 'y-webrtc'
-// import * as Y from 'yjs'
 
 // buttons for bubble menu
 import BoldButton from './tools/buttons/BoldButton.vue'
@@ -93,11 +113,16 @@ import SuperscriptButton from './tools/buttons/SuperscriptButton.vue'
 import SubscriptButton from './tools/buttons/SubcriptButton.vue'
 import * as Y from 'yjs'
 
+import {
+    GetTopLevelBlockCoords,
+} from "./utils/pm-utils.js";
+
+
 const ydoc = new Y.Doc()
 const getRandomElement = list => list[Math.floor(Math.random() * list.length)]
 
 const provider = new HocuspocusProvider({
-    url: 'wss://api.server.rosfandy.my.id',
+    url: 'wss://api.server.rosfandya.my.id',
     name: 'example-document',
     document: ydoc,
 })
@@ -106,6 +131,7 @@ export default {
     components: {
         EditorContent,
         BubbleMenu,
+        FloatingMenu,
         BoldButton,
         ItalicButton,
         StrikeButton,
@@ -127,7 +153,11 @@ export default {
             isEditable: true,
             total: 0,
             status: "",
-            awareness: ''
+            dragging: false,
+            isMenuVisible: false,
+            draggedNodePosition: null,
+            awareness: '',
+            bubbleShow: false
         }
     },
     watch: {
@@ -149,6 +179,7 @@ export default {
             extensions: [
                 StarterKit.configure({
                     history: false,
+                    blockquote: false
                 }),
                 Placeholder.configure({
                     placeholder: "Write something … or type '/' to choose block",
@@ -222,8 +253,24 @@ export default {
                     provider: provider,
                     user: this.currentUser
                 }),
-
             ],
+            // content: `
+            // <p>This is a boring paragraph.</p>
+            //   <div data-type="draggable-item">
+            //     <p>Followed by a fancy draggable item.</p>
+            //   </div>
+            //   <div data-type="draggable-item">
+            //     <p>And another draggable item.</p>
+            //     <div data-type="draggable-item">
+            //       <p>And a nested one.</p>
+            //       <div data-type="draggable-item">
+            //         <p>But can we go deeper?</p>
+            //       </div>
+            //     </div>
+            //   </div>
+            //   <p>Let’s finish with a boring paragraph.</p>
+            // `,
+            // autofocus: true,
             onUpdate: () => {
 
                 this.$emit('input', this.editor.getJSON().content) // jika mau langsung isi pada key 'content'nya
@@ -246,7 +293,9 @@ export default {
 
             return mapBaru;
         },
-
+        shouldShowMainToolbar() {
+            return this.editor.isActive();
+        },
         gantiNama() {
             const name = (window.prompt('Name') || '')
                 .trim()
@@ -282,22 +331,23 @@ export default {
                 this.editor.chain().focus().setImage({ src: url }).run()
             }
         },
+        startDragging(event) {
+            let coords = { left: event.clientX + 48, top: event.clientY };
+            if (this.editor.view.posAtCoords(coords)) {
+                this.draggedNodePosition = this.editor.view.posAtCoords(coords).pos;
+                console.log("node drag pos: ", this.draggedNodePosition)
+                this.dragging = true;
+            }
+        },
+        getMenuCoords() {
+            return GetTopLevelBlockCoords(this.editor.view);
+        },
     },
 }
 </script>
 
 <style>
 @import 'style.css';
-
-/* .has-focus {
-    border-radius: 3px;
-    box-shadow: 0 0 0 1px #f5f5f5;
-    margin-bottom: 24px;
-}
-
-.is-empty {
-    margin-bottom: 24px;
-} */
 
 /* ============ STYLING CURSOR ============ */
 /* Give a remote user a caret */
