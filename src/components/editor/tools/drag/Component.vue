@@ -14,12 +14,12 @@
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-2'
 
 export default {
-  props: nodeViewProps,
 
   components: {
     NodeViewWrapper,
     NodeViewContent,
   },
+  props: nodeViewProps,
 }
 </script>
 
