@@ -97,7 +97,7 @@ const ydoc = new Y.Doc()
 const getRandomElement = list => list[Math.floor(Math.random() * list.length)]
 
 const provider = new HocuspocusProvider({
-    url: 'wss://api.server.rosfandy.my.id',
+    url: 'wss://api.server.rosfandya.my.id',
     name: 'example-document',
     document: ydoc,
 })
@@ -121,11 +121,13 @@ export default {
             currentUser: JSON.parse(localStorage.getItem('currentUser')) || {
                 name: 'anonymous',
                 color: this.getRandomColor(),
+                avatar: 'https://unavatar.io/github/ueberdosis',
             },
             editor: null,
             isEditable: true,
             total: 0,
-            status: ""
+            status: "",
+            awareness: ''
         }
     },
     watch: {
@@ -135,9 +137,9 @@ export default {
     },
     mounted() {
         provider.awareness.on('change', () => {
-            let awareness = this.buatMapBaru(provider.awareness.getStates())
-            console.log(awareness.size)
-            this.total = awareness.size
+            this.awareness = this.buatMapBaru(provider.awareness.getStates())
+            console.log(this.awareness)
+            this.total = this.awareness.size
         })
         provider.on('status', evt => {
             console.log(evt.status)
@@ -286,6 +288,16 @@ export default {
 
 <style>
 @import 'style.css';
+
+/* .has-focus {
+    border-radius: 3px;
+    box-shadow: 0 0 0 1px #f5f5f5;
+    margin-bottom: 24px;
+}
+
+.is-empty {
+    margin-bottom: 24px;
+} */
 
 /* ============ STYLING CURSOR ============ */
 /* Give a remote user a caret */

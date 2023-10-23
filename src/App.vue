@@ -1,16 +1,21 @@
 <!-- eslint-disable -->
 <template>
-  <div id="app" class="flex w-full">
+  <div id="app" class="flex w-full ">
     <!-- editor -->
-    <div class="w-[90%]">
+    <div class="w-full ">
       <Tiptap v-model="content" mode="json" />
     </div>
     <!-- output file -->
-    <div class="w-[30%] py-20 max-h-screen">
-      <h3>
-        Output file
-      </h3>
-      <div class="  overflow-y-auto max-h-[100%]">
+    <div class="json py-20 max-h-screen ">
+      <div class="">
+        <h3>
+          Output file
+        </h3>
+        <h3>
+          total blocks : {{ content.length }}
+        </h3>
+      </div>
+      <div class="overflow-x-auto  overflow-y-auto max-h-[100%]">
         <pre>
           {{ content }}
         </pre>
@@ -38,3 +43,8 @@ export default {
 }
 
 </script>
+<style>
+.json {
+  max-width: 15%;
+}
+</style>

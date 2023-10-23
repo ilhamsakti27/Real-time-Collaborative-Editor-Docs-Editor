@@ -1,11 +1,13 @@
 .editor-canvas {
   padding: 5% 10%;
 }
+
 #page-title {
   font-size: 3rem; /* 48px */
   line-height: 1;
   font-weight: 700;
 }
+
 /* EDITOR */
 #editor {
   margin-top: 3rem;
@@ -42,15 +44,16 @@
   box-shadow: 0 0 0 0.5px #D8D9DA;
   padding: 4px 12px;
 }
-.ProseMirror p:not(.has-focus) {
-  padding: 4px 12px;
-  /* box-shadow: 0 0 0 0.5px #D8D9DA; */
-}
+
 .mention {
   border: 1px solid #000;
   border-radius: 0.4rem;
   padding: 0.1rem 0.3rem;
   box-decoration-break: clone;
+}
+
+.ProseMirror > * {
+  padding: 8px;
 }
 
 /* Heading style */
@@ -77,10 +80,16 @@ ol.orderedList {
 ol.orderedList ol.orderedList{
   margin-left: 1.25rem;
 }
+ol.orderedList li p{
+  padding: 8px;
+}
 
 /* Bulleted List Style */
 ul.bulletedList {
   list-style-type: disc;
+}
+ul.bulletedList li p{
+  padding: 8px;
 }
 ul.bulletedList ul.bulletedList {
   margin-left: 1.25rem;
@@ -133,22 +142,23 @@ blockquote.blockquote {
 }
 
 /* Todo List */
+
 ul[data-type=taskList] {
   list-style: none;
   padding: 0;
 }
 ul[data-type=taskList] p {
   margin: 0;
+  padding:  8px;
 }
 ul[data-type=taskList] li {
   display: flex;
+  align-items: center;
+  column-gap: 8px;
 }
 ul[data-type=taskList] li > label {
-  /* flex: 0 0 auto; */
-  /* margin-right: 0.5rem; */
-  /* user-select: none; */
   width: 1em;
-  padding-top: 100px;
+  padding: 8px;
   height: 30px;
   width: 30px;
 }
