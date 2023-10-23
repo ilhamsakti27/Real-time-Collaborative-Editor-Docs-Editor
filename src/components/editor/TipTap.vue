@@ -31,7 +31,7 @@
                 <UnderlineButton class="bubble-menu-btn" :editor="editor" />
                 <LinkButton class="bubble-menu-btn" :editor="editor" />
                 <SuperscriptButton class="bubble-menu-btn" :editor="editor" />
-                <SubscriptButton :editor="editor" />
+                <SubscriptButton class="bubble-menu-btn" :editor="editor" />
             </BubbleMenu>
             <editor-content id="editor" :editor="editor" :value="editor.getAttributes('textStyle').color" />
         </div>
