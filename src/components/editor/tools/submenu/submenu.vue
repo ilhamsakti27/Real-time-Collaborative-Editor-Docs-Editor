@@ -2,12 +2,14 @@
 <template>
     <div ref="itemsContainer" class="menuContainer">
         <template v-if="items.length">
+            <div class="pl-2 text-black/40 text-sm font-semibold">Action</div>
             <button :ref="item.ref" v-for="(item, index) in items" :key="index" class="item"
-                :class="{ 'is-selected': index === selectedIndex }" @click="selectItem(index)">
+                :class="{ 'is-selected': index === selectedIndex }" @click="selectItem(index)"
+                @mouseover="handleHover(index)">
                 <!-- {{ item }} -->
                 <!-- list of menu -->
                 <div class="flex items-center gap-x-2">
-                    <div class="border rounded-md">
+                    <div class="icon-wrapper rounded-md ">
                         <span v-html="item.icon" />
                     </div>
                     <div class="flex flex-col">
@@ -41,9 +43,11 @@ export default {
             required: true,
         },
         editor: {
-            require: true
+            required: true
         },
-
+        topLevelNodeType: {
+            required: true
+        },
     },
 
     data() {
@@ -57,24 +61,19 @@ export default {
                 case 'ArrowUp':
                     // Handle Arrow Up key press
                     this.upHandler()
-                    console.log('Arrow Up pressed: ', this.selectedIndex);
                     break;
-
                 case 'ArrowDown':
                     // Handle Arrow Down key press
                     this.downHandler()
-                    console.log('Arrow Down pressed: ', this.selectedIndex);
                     break;
-
                 default:
                     break;
             }
-
         })
-        // Add event listener for keydown event
     },
     methods: {
         selectItem(index) {
+            this.selectedIndex = index
             const item = this.items[index]
             const command = item.operation[0]
             const subcommand = item.operation[1]
@@ -96,7 +95,13 @@ export default {
                     break;
                 case 'delete':
                     // Code for 'delete'
-                    this.editor.commands.deleteSelection()
+                    if (this.editor.can().deleteNode(this.topLevelNodeType)) {
+                        this.deleteNode(this.topLevelNodeType)
+                    }
+                    break;
+                case 'convert':
+                    // Code for 'delete'
+                    alert('on progress convert')
                     break;
                 default:
                     break;
@@ -112,9 +117,6 @@ export default {
         },
         deleteNode(node) {
             this.editor.commands.deleteNode(node);
-            let btn = this.$refs.deleteButton
-            console.log(node)
-            // this.$refs.deleteButton.$el.blur();
         },
         upHandler() {
             // stop scroll event jika sudah mentok
@@ -132,12 +134,12 @@ export default {
                 if (this.selectedIndex >= 0) {
                     const newScrollPosition = scrollPosition - 60
                     itemsContainer.scrollTop = newScrollPosition
-                    console.log('Scroll Position:', newScrollPosition)
                 }
             }
-            console.log('Scroll Position:', this.selectedIndex)
         },
-
+        handleHover(index) {
+            this.selectedIndex = index
+        },
         downHandler() {
             // stop scroll event jika sudah mentok
             if (this.selectedIndex >= this.items.length - 1) {
@@ -164,19 +166,23 @@ export default {
 </script>
 
 <style lang="scss">
+.icon-wrapper {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    padding-bottom: 2px;
+}
+
 .menuContainer {
     display: flex;
     flex-direction: column;
     row-gap: 4px;
     border-radius: 6px;
-    justify-content: center;
-    align-items: center;
     padding: 12px 4px 0px 4px;
     border: 1px solid #D9D9D9;
     background: white;
     box-shadow: 0px 4px 16px 2px rgba(0, 0, 0, 0.15);
     overflow: scroll;
     max-height: 300px;
+    // width: 200px;
 }
 
 // styling scroll slash menu
