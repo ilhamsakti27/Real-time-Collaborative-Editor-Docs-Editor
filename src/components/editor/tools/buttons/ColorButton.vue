@@ -33,7 +33,7 @@
         <button v-for="(item, index) in colorFonts" :key="index"
           :class="{ 'is-active': editor.isActive('textStyle', { color: item.setColor }) }"
           @click="setColor(item.setColor)">
-          <span v-html="item.mainIcon" />
+          <span v-html="item.mainIcon" class="border rounded-md pad"/>
           <span class="space">{{ item.name }}</span>
         </button>
       </div>
@@ -73,11 +73,9 @@ export default {
 #color-menu {
   display: inline;
 }
-
 .inline {
   display: inline;
 }
-
 .arrow-icon {
   margin-left: -2px;
 }
@@ -86,26 +84,33 @@ export default {
 .dropdownContent {
   overflow: auto;
   position: absolute;
-  background-color: white;
+  background-color: rgb(253, 253, 253);
   left: 0;
   z-index: 1;
   border-radius: 0 0 4px 4px;
-  padding: 2vh 0;
+  padding: 0.5vh 0.5vh;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
+  /* border: 1px solid rgba(0, 0, 0, 0.5);; */
+  box-shadow: 0px 4px 16px 2px rgba(0, 0, 0, 0.35);
+  width: 120px;
   @apply shadow-md
-}
 
+  /* Add the top property to move the dropdown downward */
+}
 .dropdownContent button {
-  padding: 2px 8px;
+  padding: 4px 8px;
   min-width: 110px;
   text-align: left;
+  margin: 2px 0;
 }
-
 .dropdownContent button:hover {
   background-color: #ececec;
+  border-radius: 4px;
 }
-
 .space {
   margin-left: 4px;
+}
+.pad {
+  padding: 4px;
 }
 </style>

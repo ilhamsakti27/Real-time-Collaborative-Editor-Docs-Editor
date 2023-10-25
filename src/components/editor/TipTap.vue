@@ -140,7 +140,7 @@ const ydoc = new Y.Doc()
 const getRandomElement = list => list[Math.floor(Math.random() * list.length)]
 
 const provider = new HocuspocusProvider({
-    url: 'wss://api.server.rosfandya.my.id',
+    url: 'wss://api.server.rosfandy.my.id',
     name: 'example-document',
     document: ydoc,
 })
