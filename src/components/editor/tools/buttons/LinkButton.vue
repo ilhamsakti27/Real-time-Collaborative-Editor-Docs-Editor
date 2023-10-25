@@ -23,8 +23,8 @@
     <!-- pop up link -->
     <template>
       <div id="popUpLink" v-show="toggleShowLinkInput">
-        <input placeholder="Paste link" type="text">
-        <input type="submit" value="Submit">
+        <input placeholder="Paste link" type="text" v-model="urlInput" @input="clearError">
+        <button @click="setLink">Submit</button>
       </div>
     </template>
   </div>
@@ -36,7 +36,9 @@ export default {
   props: ['editor'],
   data() {
     return {
-      toggleShowLinkInput: false
+      toggleShowLinkInput: false,
+      urlInput: '', // Data property to store the input URL
+      urlError: '' // Data property to display an error message
     }
   },
   methods: {
@@ -70,9 +72,40 @@ export default {
       //   .run()
       
       this.toggleShowLinkInput = !this.toggleShowLinkInput
+      document.addEventListener("click", this.clickOutsideHandler);
     },
-
-
+    submitUrl() {
+      // You can add validation logic here
+      if (this.isValidUrl(this.urlInput)) {
+        // URL is valid, you can proceed with further actions
+        console.log('Input URL:', this.urlInput);
+      } else {
+        // Display an error message if the URL is not valid
+        this.urlError = 'Invalid URL';
+      }
+      this.closePopup();
+    },
+    isValidUrl(url) {
+      // You can add URL validation logic here (e.g., using regular expressions)
+      // For simplicity, this example checks if the URL starts with 'http' or 'https'
+      return url.startsWith('http://') || url.startsWith('https://');
+    },
+    clearError() {
+      this.urlError = ''; // Clear the error message when input changes
+    },
+    closePopup() {
+      this.toggleShowLinkInput = false;
+    },
+    closePopupOutside() {
+      this.closePopup();
+      // Remove the event listener when closing the modal
+      document.removeEventListener("click", this.clickOutsideHandler);
+    },
+    clickOutsideHandler(event) {
+      if (!this.$el.contains(event.target)) {
+        this.closePopup();
+      }
+    },
   },
 }
 </script>
@@ -85,13 +118,37 @@ export default {
   position: absolute;
   background-color: rgb(253, 253, 253);
   left: 0;
+  top: 10;
   z-index: 1;
   border-radius: 0 0 4px 4px;
   padding: 2vh 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 0, 0, 1);;
-  box-shadow: 0px 4px 16px 2px rgba(0, 0, 0, 0.35);
-  width: 120px;
-  @apply shadow-md
+  /* border: 1px solid rgba(255, 0, 0, 1);; */
+  box-shadow: 0px 8px 16px 2px rgba(0, 0, 0, 0.1);
+  width: 222px;
+  padding: 12px;
+}
+#popUpLink input {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  padding: 2px 8px;
+
+  &:focus{
+    outline: 2px solid rgba(35, 131, 226, 0.5);
+  }
+}
+#popUpLink button {
+  margin-top: 8px;
+  padding: 2px 8px;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  border-color: #6c757d; /* Button border color */
+  color: #6c757d; /* Button text color */
+}
+#popUpLink button:hover {
+  border-color: #545b62; /* Hovered button border color */
+  color: white; /* Hovered button text color */
+  background-color: #545b62;
 }
 </style>

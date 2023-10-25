@@ -33,7 +33,7 @@
         <button v-for="(item, index) in colorFonts" :key="index"
           :class="{ 'is-active': editor.isActive('textStyle', { color: item.setColor }) }"
           @click="setColor(item.setColor)">
-          <span v-html="item.mainIcon" />
+          <span v-html="item.mainIcon" class="border rounded-md pad"/>
           <span class="space">{{ item.name }}</span>
         </button>
       </div>
@@ -98,9 +98,10 @@ export default {
   /* Add the top property to move the dropdown downward */
 }
 .dropdownContent button {
-  padding: 2px 8px;
+  padding: 4px 8px;
   min-width: 110px;
   text-align: left;
+  margin: 2px 0;
 }
 .dropdownContent button:hover {
   background-color: #ececec;
@@ -108,5 +109,8 @@ export default {
 }
 .space {
   margin-left: 4px;
+}
+.pad {
+  padding: 4px;
 }
 </style>
