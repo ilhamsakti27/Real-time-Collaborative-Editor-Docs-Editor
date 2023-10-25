@@ -142,7 +142,6 @@ blockquote.blockquote {
 }
 
 /* Todo List */
-
 ul[data-type=taskList] {
   list-style: none;
   padding: 0;
