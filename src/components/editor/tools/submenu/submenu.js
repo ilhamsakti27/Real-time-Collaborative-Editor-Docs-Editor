@@ -1,15 +1,17 @@
 /* eslint-disable no-unused-vars */
 import { VueRenderer } from '@tiptap/vue-2'
 import tippy from 'tippy.js'
-import floatingItems from './floatingItems' // Assuming you have a file named floating.js
+import subMenuItems from './subMenuItems' // Assuming you have a file named floating.js
 import submenu from './submenu.vue'
 
 let floatingComponent = null // Declare a variable to hold the VueRenderer instance
 
-export function showSubMenu(editor) {
+export function showSubMenu(editor, topLevelNodeType) {
+  console.log('n: ', topLevelNodeType)
   const props = {
-    items: floatingItems,
+    items: subMenuItems,
     editor,
+    topLevelNodeType,
   }
 
   floatingComponent = new VueRenderer(submenu, {
@@ -24,6 +26,6 @@ export function showSubMenu(editor) {
     showOnCreate: true,
     interactive: true,
     trigger: 'manual',
-    placement: 'left-end',
+    placement: 'left-start',
   })
 }

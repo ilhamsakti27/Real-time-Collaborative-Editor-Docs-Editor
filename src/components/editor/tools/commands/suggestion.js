@@ -4,11 +4,11 @@ import { VueRenderer } from '@tiptap/vue-2'
 import tippy from 'tippy.js'
 
 import CommandsList from './CommandsList.vue'
-import blockTools from '../blockTools'
+import slashMenu from '../slashMenu'
 
 export default {
   items: ({ query }) => {
-    return blockTools.filter( (item) => item.title.toLowerCase().startsWith(query.toLowerCase()) ).slice(0, 15)
+    return slashMenu.filter((item) => item.title.toLowerCase().startsWith(query.toLowerCase())).slice(0, 15)
   },
 
   render: () => {

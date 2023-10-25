@@ -36,11 +36,10 @@
                 <div class="flex flex-row">
                     <div class="" id="submenu"></div>
                     <div class="">
-                        <button ref="subMenuBtn" @keydown.enter.prevent @click="handleSubMenu"
-                            @mousedown="startDragging($event)" @mouseup="
-                                draggedNodePosition = false;
-                            dragging = false;
-                            " class="ml-1 my-2 hover:bg-slate-100 rounded" :class="{
+                        <button ref="subMenuBtn" @keydown.enter.prevent @click="handleSubMenu($event)" @mouseup="
+                            draggedNodePosition = false;
+                        dragging = false;
+                        " class="ml-1 my-2 hover:bg-slate-100 rounded" :class="{
     'cursor-grab': !dragging,
     'cursor-grabbing mr-1': dragging,
 }" aria-label="Drag" data-tooltip="Drag">
@@ -134,7 +133,9 @@ import {
     GetTableRowCoords,
     GetTopLevelNode,
 } from "./utils/pm-utils.js";
-import { showSubMenu } from "./tools/floating/submenu"
+import { showSubMenu } from "./tools/submenu/submenu"
+import { mergeArrays } from "./utils/utils";
+import defaultBlockTools from "./tools/block-tools";
 
 const ydoc = new Y.Doc()
 const getRandomElement = list => list[Math.floor(Math.random() * list.length)]
@@ -149,6 +150,10 @@ export default {
     props: {
         editorClass: {
             type: String,
+        },
+        blockTools: {
+            type: Array,
+            default: () => [],
         },
     },
     components: {
@@ -184,13 +189,31 @@ export default {
             isTyping: false,
             topLevelNodeType: null,
             showMainToolbar: false,
-            isSubMenu: false
+            isSubMenu: false,
+            currentBlockTool: null,
+            allBlockTools: mergeArrays(defaultBlockTools(), this.blockTools),
 
         }
     },
     watch: {
         isEditable(value) {
             this.editor.setEditable(value)
+        },
+        topLevelNodeType() {
+            this.currentBlockTool = this.getCurrentBlockTool();
+        },
+    },
+    computed: {
+        activeAlignmentTools() {
+            if (this.topLevelNodeType) {
+                return this.allAlignmentTools.filter((alignmentToolGroup) =>
+                    alignmentToolGroup.find((tool) =>
+                        tool.isActiveTest(this.editor, this.topLevelNodeType)
+                    )
+                );
+            } else {
+                return null;
+            }
         },
     },
     mounted() {
@@ -283,7 +306,12 @@ export default {
                 }),
             ],
             onUpdate: () => {
+                this.updateToolbar();
                 this.$emit('input', this.editor.getJSON().content) // jika mau langsung isi pada key 'content'nya
+            },
+            onSelectionUpdate: () => {
+                this.updateToolbar();
+                // this.nodeTree = GetNodeTree(this.editor.view);
             },
         })
 
@@ -292,8 +320,21 @@ export default {
         this.editor.destroy()
     },
     methods: {
-        handleSubMenu() {
-            showSubMenu(this.editor)
+        getTopLevelNodeType() {
+            return GetTopLevelNode(this.editor.view)?.type.name;
+        },
+        updateToolbar() {
+            this.topLevelNodeType = this.getTopLevelNodeType();
+        },
+        getCurrentBlockTool() {
+            return this.allBlockTools.find(
+                (tool) =>
+                    tool.name == this.topLevelNodeType ||
+                    tool.tools?.find((tool) => tool.name == this.topLevelNodeType)
+            );
+        },
+        handleSubMenu(event) {
+            showSubMenu(this.editor, this.topLevelNodeType)
         },
         buatMapBaru(dataMap) {
             const mapBaru = new Map();
@@ -348,7 +389,6 @@ export default {
             let coords = { left: event.clientX + 48, top: event.clientY };
             if (this.editor.view.posAtCoords(coords)) {
                 this.draggedNodePosition = this.editor.view.posAtCoords(coords).pos;
-                console.log("node drag pos: ", this.draggedNodePosition)
                 this.dragging = true;
             }
         },
@@ -437,3 +477,4 @@ export default {
     white-space: nowrap;
 }
 </style>
+./tools/submenu/submenu.js

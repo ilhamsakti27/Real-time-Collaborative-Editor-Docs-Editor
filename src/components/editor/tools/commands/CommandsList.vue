@@ -79,7 +79,6 @@ export default {
     },
 
     upHandler() {
-      console.log(this.items.length)
       // stop scroll event jika sudah mentok
       if (this.selectedIndex <= 0) {
         this.selectedIndex = 0
@@ -95,10 +94,8 @@ export default {
         if (this.selectedIndex >= 0) {
           const newScrollPosition = scrollPosition - 60
           itemsContainer.scrollTop = newScrollPosition
-          console.log('Scroll Position:', newScrollPosition)
         }
       }
-      console.log('Scroll Position:', this.selectedIndex)
     },
 
     downHandler() {
