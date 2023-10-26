@@ -1,20 +1,19 @@
 <!-- eslint-disable -->
 <template>
-    <div ref="itemsContainer" class="menuContainer">
+    <div ref="itemsContainer" class="moreContainer">
         <template v-if="items.length">
-            <div class="pl-2 text-black/40 text-xs font-semibold">New Block</div>
+            <div class="pl-2 text-black/40 text-xs font-semibold">{{ title }}</div>
             <button :ref="item.ref" v-for="(item, index) in items" :key="index" class="item"
                 :class="{ 'is-selected': index === selectedIndex }" @click="selectItem(index)"
                 @mouseover="handleHover(index)">
                 <!-- {{ item }} -->
                 <!-- list of menu -->
                 <div class="flex menu items-center gap-x-2">
-                    <div class="icon-wrapper rounded-md ">
+                    <div class="icon-con rounded-md ">
                         <span v-html="item.icon" />
                     </div>
                     <div class="flex flex-col">
                         <span class="text-sm">{{ item.title }}</span>
-                        <span class="text-black/50 text-xs">{{ item.desc }}</span>
                     </div>
                 </div>
             </button>
@@ -36,12 +35,12 @@ export default {
         editor: {
             required: true
         },
-        topLevelNodeType: {
+        isMoreTools: {
             required: true
         },
-        isNewNode: {
-            required: true
-        },
+        title: {
+            type: String
+        }
     },
 
     data() {
@@ -64,7 +63,7 @@ export default {
             if (item) {
                 console.log(this.editor)
                 let editor = this.editor
-                item.command({ editor })
+                item.command(editor)
             }
         },
         upHandler() {
@@ -115,7 +114,7 @@ export default {
         },
         keyDownHandler(event) {
             event.preventDefault()
-            if (this.isNewNode === true) {
+            if (this.isMoreTools === true) {
                 switch (event.key) {
                     case 'ArrowUp':
                         this.upHandler()
@@ -136,12 +135,12 @@ export default {
 </script>
 
 <style lang="scss">
-.icon-wrapper {
+.icon-con {
     border: 1px solid rgba(0, 0, 0, 0.15);
     padding-bottom: 2px;
 }
 
-.menuContainer {
+.moreContainer {
     display: flex;
     flex-direction: column;
     row-gap: 4px;
@@ -152,22 +151,21 @@ export default {
     box-shadow: 0px 4px 16px 2px rgba(0, 0, 0, 0.15);
     overflow: scroll;
     max-height: 300px;
-    width: 210px;
 }
 
 // styling scroll slash menu
-.menuContainer::-webkit-scrollbar {
+.moreContainer::-webkit-scrollbar {
     width: 3px;
 }
 
 /* Track (jalur) */
-.menuContainer::-webkit-scrollbar-track {
+.moreContainer::-webkit-scrollbar-track {
     background: transparent;
     border-radius: 50px;
 }
 
 /* Handle (bilah) */
-.menuContainer::-webkit-scrollbar-thumb {
+.moreContainer::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 20px;
     border: 7px solid transparent;
