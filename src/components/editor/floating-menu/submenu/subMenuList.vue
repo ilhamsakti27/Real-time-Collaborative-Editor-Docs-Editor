@@ -2,7 +2,7 @@
 <template>
     <div ref="itemsContainer" class="menuContainer">
         <template v-if="items.length">
-            <div class="pl-2 text-black/40 text-sm font-semibold">Action</div>
+            <div class="pl-2 text-black/40 text-xs font-semibold">Action</div>
             <button :ref="item.ref" v-for="(item, index) in filteredItems" :key="index" class="item"
                 :class="{ 'is-selected': index === selectedIndex }" @click="selectItem(index)"
                 @mouseover="handleHover(index)">

@@ -64,15 +64,16 @@
 
             </floating-menu>
 
-            <BubbleMenu :editor="editor" :tippy-options="{ duration: 100 }" v-if="editor" id="bubbleMenu">
-                <ColorButton class="bubble-menu-btn" :editor="editor" />
-                <BoldButton class="bubble-menu-btn" :editor="editor" />
-                <ItalicButton class="bubble-menu-btn" :editor="editor" />
-                <StrikeButton class="bubble-menu-btn" :editor="editor" />
-                <UnderlineButton class="bubble-menu-btn" :editor="editor" />
+            <BubbleMenu :editor="editor" :tippy-options="{
+                duration: 100, placement: 'top-start',
+            }" v-if="editor" id="bubbleMenu" class="flex items-center">
+                <ColorButton class="bubble-menu-btn border-r bored-black" :editor="editor" />
+                <inlineToolsBtn :editor="editor" class=""></inlineToolsBtn>
                 <LinkButton class="bubble-menu-btn" :editor="editor" />
-                <SuperscriptButton class="bubble-menu-btn" :editor="editor" />
-                <SubscriptButton class="bubble-menu-btn" :editor="editor" />
+                <!-- <StrikeButton class="bubble-menu-btn" :editor="editor" /> -->
+                <!-- <UnderlineButton class="bubble-menu-btn" :editor="editor" /> -->
+                <!-- <SuperscriptButton class="bubble-menu-btn" :editor="editor" /> -->
+                <!-- <SubscriptButton class="bubble-menu-btn" :editor="editor" /> -->
             </BubbleMenu>
             <editor-content id="editor" :editor="editor" :value="editor.getAttributes('textStyle').color" />
         </div>
@@ -131,6 +132,8 @@ import LinkButton from './tools/buttons/LinkButton.vue'
 import FontFamilyButton from './tools/buttons/FontFamilyButton.vue'
 import SuperscriptButton from './tools/buttons/SuperscriptButton.vue'
 import SubscriptButton from './tools/buttons/SubcriptButton.vue'
+import inlineToolsBtn from './tools/buttons/InlineButton.vue'
+
 import * as Y from 'yjs'
 
 import {
@@ -177,7 +180,8 @@ export default {
         LinkButton,
         FontFamilyButton,
         SuperscriptButton,
-        SubscriptButton
+        SubscriptButton,
+        inlineToolsBtn
     },
     data() {
         return {
