@@ -20,7 +20,7 @@
                 :should-show="shouldShowMainToolbar" v-if="editor" :editor="editor" :class="{
                     'mouse:pointer-events-none mouse:opacity-0': isTyping,
                 }" :tippy-options="{
-    maxWidth: 'none',
+    maxWidth: '350',
     placement: 'left-start',
     animation: 'fade',
     duration: 300,
@@ -36,6 +36,14 @@
                 <div class="flex flex-row">
                     <div class="" id="submenu"></div>
                     <div class="">
+                        <button ref="newLineBtn" @keydown.enter.prevent @click="handleNewLine($event)" @mouseup="
+                            draggedNodePosition = false;
+                        dragging = false;
+                        " class="ml-1 my-2 hover:bg-slate-100 rounded">
+                            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 24">
+                                <path d="M16 9h-5V4H9v5H4v2h5v5h2v-5h5V9z" />
+                            </svg>
+                        </button>
                         <button ref="subMenuBtn" @keydown.enter.prevent @click="handleSubMenu($event)" @mouseup="
                             draggedNodePosition = false;
                         dragging = false;
@@ -133,7 +141,8 @@ import {
     GetTableRowCoords,
     GetTopLevelNode,
 } from "./utils/pm-utils.js";
-import { showSubMenu } from "./tools/submenu/submenu"
+import { showSubMenu } from "./floating-menu/submenu/submenu"
+import { showNewNode } from "./floating-menu/newnode/newNode"
 import { mergeArrays } from "./utils/utils";
 import defaultBlockTools from "./tools/block-tools";
 
@@ -190,9 +199,9 @@ export default {
             topLevelNodeType: null,
             showMainToolbar: false,
             isSubMenu: false,
+            isNewNode: false,
             currentBlockTool: null,
             allBlockTools: mergeArrays(defaultBlockTools(), this.blockTools),
-
         }
     },
     watch: {
@@ -219,11 +228,9 @@ export default {
     mounted() {
         provider.awareness.on('change', () => {
             this.awareness = this.buatMapBaru(provider.awareness.getStates())
-            console.log(this.awareness)
             this.total = this.awareness.size
         })
         provider.on('status', evt => {
-            console.log(evt.status)
             this.status = evt.status
         })
         this.editor = new Editor({
@@ -233,7 +240,21 @@ export default {
                     blockquote: false
                 }),
                 Placeholder.configure({
-                    placeholder: "Write something … or type '/' to choose block",
+                    placeholder: ({ node }) => {
+                        let text = `Write something … or type '/' to choose block`
+                        switch (node.type.name) {
+                            case 'heading':
+                                text = 'Heading'
+                                break;
+                            case 'codeBlock':
+                                text = 'place your code'
+                                break;
+                            default:
+                                break;
+                        }
+                        return text
+                    },
+                    showOnlyCurrent: true
                 }),
                 Focus.configure({
                     className: 'has-focus',
@@ -333,8 +354,27 @@ export default {
                     tool.tools?.find((tool) => tool.name == this.topLevelNodeType)
             );
         },
+        handleNewLine(event) {
+            if (event.target.tagName.toLowerCase() === 'svg') {
+                // Hide the submenu when there's a click outside the component
+                this.isNewNode = true;
+                showNewNode(this.editor, this.topLevelNodeType, this.isNewNode);
+            } else {
+                // Show the submenu when there's a click inside the component
+                this.isNewNode = false;
+                showNewNode(this.editor, this.topLevelNodeType, this.isNewNode);
+            }
+        },
         handleSubMenu(event) {
-            showSubMenu(this.editor, this.topLevelNodeType)
+            if (event.target.tagName.toLowerCase() === 'svg') {
+                // Hide the submenu when there's a click outside the component
+                this.isSubMenu = true;
+                showSubMenu(this.editor, this.topLevelNodeType, this.isSubMenu);
+            } else {
+                // Show the submenu when there's a click inside the component
+                this.isSubMenu = false;
+                showSubMenu(this.editor, this.topLevelNodeType, this.isSubMenu);
+            }
         },
         buatMapBaru(dataMap) {
             const mapBaru = new Map();
@@ -411,7 +451,19 @@ export default {
             this.draggedNode = null;
         },
         getMenuCoords() {
-            return GetTopLevelBlockCoords(this.editor.view);
+            let coord = GetTopLevelBlockCoords(this.editor.view)
+            let val = coord.left - 12
+            let updatedCoord = {
+                bottom: coord.bottom,
+                height: coord.height,
+                left: val,
+                right: coord.right,
+                top: coord.top,
+                width: coord.width,
+                x: coord.x,
+                y: coord.y,
+            };
+            return updatedCoord;
         },
         getTableRowMenuCoords() {
             return GetTableRowCoords(this.editor.view);
@@ -477,4 +529,3 @@ export default {
     white-space: nowrap;
 }
 </style>
-./tools/submenu/submenu.js

@@ -2,18 +2,19 @@
 <template>
     <div ref="itemsContainer" class="menuContainer">
         <template v-if="items.length">
-            <div class="pl-2 text-black/40 text-sm font-semibold">Action</div>
+            <div class="pl-2 text-black/40 text-sm font-semibold">New Node</div>
             <button :ref="item.ref" v-for="(item, index) in items" :key="index" class="item"
                 :class="{ 'is-selected': index === selectedIndex }" @click="selectItem(index)"
                 @mouseover="handleHover(index)">
                 <!-- {{ item }} -->
                 <!-- list of menu -->
-                <div class="flex items-center gap-x-2">
+                <div class="flex menu items-center gap-x-2">
                     <div class="icon-wrapper rounded-md ">
                         <span v-html="item.icon" />
                     </div>
                     <div class="flex flex-col">
                         <span class="text-sm">{{ item.title }}</span>
+                        <span class="text-black/50 text-xs">{{ item.desc }}</span>
                     </div>
                 </div>
             </button>
@@ -26,16 +27,6 @@
 
 <!-- eslint-disable -->
 <script>
-import { ref, onMounted, computed, nextTick } from 'vue'
-import {
-    DragNode,
-    MoveNode,
-    GetTopLevelBlockCoords,
-    GetTableColumnCoords,
-    GetTableRowCoords,
-    GetTopLevelNode,
-} from "../../utils/pm-utils.js";
-
 export default {
     props: {
         items: {
@@ -48,6 +39,9 @@ export default {
         topLevelNodeType: {
             required: true
         },
+        isNewNode: {
+            required: true
+        },
     },
 
     data() {
@@ -56,67 +50,22 @@ export default {
         }
     },
     mounted() {
-        document.addEventListener('keydown', event => {
-            switch (event.key) {
-                case 'ArrowUp':
-                    // Handle Arrow Up key press
-                    this.upHandler()
-                    break;
-                case 'ArrowDown':
-                    // Handle Arrow Down key press
-                    this.downHandler()
-                    break;
-                default:
-                    break;
-            }
-        })
+        this.$nextTick(() => {
+            const el = this.$refs.itemsContainer
+            el.focus();
+            el.addEventListener('keydown', this.keyDownHandler);
+        });
     },
     methods: {
         selectItem(index) {
             this.selectedIndex = index
             const item = this.items[index]
-            const command = item.operation[0]
-            const subcommand = item.operation[1]
-            switch (command) {
-                case 'movenode':
-                    switch (subcommand) {
-                        case 'up':
-                            // Code for 'movenode up'
-                            this.moveNode('UP')
-                            break;
-                        case 'down':
-                            // Code for 'movenode down'
-                            this.moveNode('DOWN')
-                            break;
-                        default:
-                            // Code for 'movenode' with an unknown subcommand
-                            break;
-                    }
-                    break;
-                case 'delete':
-                    // Code for 'delete'
-                    if (this.editor.can().deleteNode(this.topLevelNodeType)) {
-                        this.deleteNode(this.topLevelNodeType)
-                    }
-                    break;
-                case 'convert':
-                    // Code for 'delete'
-                    alert('on progress convert')
-                    break;
-                default:
-                    break;
-            }
 
-        },
-        moveNode(dir = "UP") {
-            MoveNode({
-                view: this.editor.view,
-                dir: dir,
-                currentResolved: this.editor.view.state.selection.$from,
-            });
-        },
-        deleteNode(node) {
-            this.editor.commands.deleteNode(node);
+            if (item) {
+                console.log(this.editor)
+                let editor = this.editor
+                item.command({ editor })
+            }
         },
         upHandler() {
             // stop scroll event jika sudah mentok
@@ -160,6 +109,27 @@ export default {
                 }
             }
         },
+        enterHandler() {
+            // alert(this.selectedIndex)
+            this.selectItem(this.selectedIndex)
+        },
+        keyDownHandler(event) {
+            event.preventDefault()
+            if (this.isNewNode === true) {
+                switch (event.key) {
+                    case 'ArrowUp':
+                        this.upHandler()
+                        break;
+                    case 'ArrowDown':
+                        this.downHandler()
+                        break;
+                    case 'Enter':
+                        this.enterHandler()
+                    default:
+                        break;
+                }
+            }
+        }
 
     },
 }
@@ -182,7 +152,7 @@ export default {
     box-shadow: 0px 4px 16px 2px rgba(0, 0, 0, 0.15);
     overflow: scroll;
     max-height: 300px;
-    // width: 200px;
+    width: 210px;
 }
 
 // styling scroll slash menu

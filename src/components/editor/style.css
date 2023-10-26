@@ -26,6 +26,20 @@
   pointer-events: none;
   height: 0;
 }
+.tiptap .is-empty::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #d0d5d9;
+  pointer-events: none;
+  height: 0;
+}
+.tiptap ol.is-empty::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #d0d5d9;
+  pointer-events: none;
+  height: 0;
+}
 /* color font */
 /* .ProseMirror > p {
   color: blue;
