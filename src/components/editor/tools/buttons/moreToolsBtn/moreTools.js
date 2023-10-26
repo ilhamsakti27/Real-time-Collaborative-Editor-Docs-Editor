@@ -8,7 +8,6 @@ let floatingComponent = null // Declare a variable to hold the VueRenderer insta
 let popup
 export function moreTools(editor, moreTools, isMoreTools, title) {
     if (floatingComponent == null && editor != null && isMoreTools) {
-        console.log(isMoreTools)
         const props = {
             items: moreTools,
             editor,
@@ -27,13 +26,12 @@ export function moreTools(editor, moreTools, isMoreTools, title) {
             showOnCreate: true,
             interactive: true,
             trigger: 'manual',
-            placement: 'left-start',
+            placement: 'bottom-start',
         })
 
     } else if (isMoreTools) {
         popup
     } else {
-        console.log(isMoreTools)
         popup[0].destroy()
         floatingComponent = null
     }

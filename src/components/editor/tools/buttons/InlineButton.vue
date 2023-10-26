@@ -3,7 +3,8 @@
     <div class="">
         <div ref="inlineBtn" class="flex">
             <template v-if="allInlineTools.length">
-                <button :ref="item.ref" v-for="(item, index) in allInlineTools" :key="index">
+                <button :ref="item.ref" v-for="(item, index) in allInlineTools" :key="index"
+                    :id="item.tools ? 'more' : null">
                     <!-- list of menu -->
                     <div class="icon-container flex menu items-center gap-x-2 bubble-menu-btn"
                         @mouseover="handleHover(index)" @mouseout="hideLabel(index)" @click="selectItem(index)">
@@ -18,7 +19,6 @@
             </template>
             <div v-else class="">No data</div>
         </div>
-        <div id="more" class=""></div>
     </div>
 </template>
 <!-- eslint-disable  -->
@@ -65,7 +65,7 @@ export default {
                     moreTools(this.editor, item.tools, this.isMoreTools, title)
             } else {
                 this.isMoreTools = false
-                moreTools(null, null, this.isMoreTools, null)
+                moreTools(this.editor, this.isMoreTools, this.isMoreTools, null)
             }
         },
         hideLabel(index) {
@@ -87,12 +87,6 @@ export default {
 <style>
 .icon-container {
     position: relative;
-}
-
-#more {
-    position: absolute;
-    right: -32px;
-    top: 35px;
 }
 
 .label {
