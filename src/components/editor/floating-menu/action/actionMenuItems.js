@@ -54,6 +54,17 @@ const floatingItems = [
             editor.chain().focus().unsetHighlight().run();
         }
     },
+    {
+        title: 'Unset Color',
+        ref: 'unsetColorBtn',
+        desc: 'Clear current text color',
+        icon: '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" data-name="Layer 1" viewBox="0 0 100 100" x="0px" y="0px"><title>Artboard 32</title><path d="M27.17,27.31l-2.83,2.83L35.82,41.61C32.74,46.94,30.39,52.24,30.39,56A19.58,19.58,0,0,0,63.94,69.74l8.89,8.89,2.83-2.83Z"/><path d="M69.61,56C69.61,45.16,50,21.38,50,21.38s-5.36,6.5-10.47,14.25L67.89,64A19.51,19.51,0,0,0,69.61,56Z"/></svg>',
+        command: (editor, node) => {
+            console.log('color')
+            if (editor.isActive('textStyle'))
+                editor.chain().focus().unsetColor().run();
+        }
+    },
 ]
 
 export default floatingItems

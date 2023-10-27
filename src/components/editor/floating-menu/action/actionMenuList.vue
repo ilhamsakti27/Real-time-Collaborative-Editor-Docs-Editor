@@ -67,6 +67,8 @@ export default {
                     return this.editor.can().deleteNode(this.topLevelNodeType);
                 } else if (item.ref === 'unsetHghlBtn') {
                     return this.editor.isActive('highlight')
+                } else if (item.ref === 'unsetColorBtn') {
+                    return this.editor.isActive('textStyle')
                 }
                 return true;
             });
@@ -81,8 +83,14 @@ export default {
     },
     methods: {
         selectItem(index) {
-            this.selectedIndex = index
-            const item = this.items[index]
+            if (this.editor.isActive('highlight') && this.editor.isActive('textStyle')) {
+                this.selectedIndex = index
+            } else if (this.editor.isActive('textStyle')) {
+                this.selectedIndex = index + 1
+            } else {
+                this.selectItem = index
+            }
+            const item = this.items[this.selectedIndex]
             if (item) {
                 item.command(this.editor, this.topLevelNodeType)
             }
