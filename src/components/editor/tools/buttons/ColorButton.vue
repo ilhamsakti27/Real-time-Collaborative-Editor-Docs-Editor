@@ -99,14 +99,17 @@ export default {
       this.selectedIndex = index
       this.isHighlight = false
       this.editor.chain().focus().setColor(color).run();
+      this.editor.chain().blur().run();
     },
     setHighlight(color, index) {
       this.selectedIndex = index
       this.isHighlight = true
       if (color === '#000') {
-        this.editor.commands.unsetHighlight()
+        this.editor.chain().focus().unsetHighlight().run();
+        this.editor.chain().blur().run();
       } else {
-        this.editor.commands.setHighlight({ color })
+        this.editor.chain().focus().toggleHighlight({ color }).run();
+        this.editor.chain().blur().run();
       }
     }
   },

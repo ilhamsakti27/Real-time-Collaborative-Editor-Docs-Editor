@@ -65,6 +65,8 @@ export default {
             return this.items.filter(item => {
                 if (item.title === 'Delete') {
                     return this.editor.can().deleteNode(this.topLevelNodeType);
+                } else if (item.ref === 'unsetHghlBtn') {
+                    return this.editor.isActive('highlight')
                 }
                 return true;
             });
@@ -81,34 +83,9 @@ export default {
         selectItem(index) {
             this.selectedIndex = index
             const item = this.items[index]
-            const command = item.operation[0]
-            const subcommand = item.operation[1]
-            switch (command) {
-                case 'movenode':
-                    switch (subcommand) {
-                        case 'up':
-                            this.moveNode('UP')
-                            break;
-                        case 'down':
-                            this.moveNode('DOWN')
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                case 'delete':
-                    if (this.editor.can().deleteNode(this.topLevelNodeType)) {
-                        this.deleteNode(this.topLevelNodeType)
-                    }
-                    break;
-                case 'convert':
-                    // Code for 'delete'
-                    alert('on progress convert')
-                    break;
-                default:
-                    break;
+            if (item) {
+                item.command(this.editor, this.topLevelNodeType)
             }
-
         },
         moveNode(dir = "UP") {
             MoveNode({
