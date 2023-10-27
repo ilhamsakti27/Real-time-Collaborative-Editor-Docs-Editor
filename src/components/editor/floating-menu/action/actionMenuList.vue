@@ -88,22 +88,12 @@ export default {
             } else if (this.editor.isActive('textStyle')) {
                 this.selectedIndex = index + 1
             } else {
-                this.selectItem = index
+                this.selectedIndex = index
             }
             const item = this.items[this.selectedIndex]
             if (item) {
                 item.command(this.editor, this.topLevelNodeType)
             }
-        },
-        moveNode(dir = "UP") {
-            MoveNode({
-                view: this.editor.view,
-                dir: dir,
-                currentResolved: this.editor.view.state.selection.$from,
-            });
-        },
-        deleteNode(node) {
-            this.editor.commands.deleteNode(node);
         },
         upHandler() {
             // stop scroll event jika sudah mentok
