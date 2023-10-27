@@ -1,4 +1,3 @@
-<!-- eslint-disable -->
 <template>
   <div id="app" class="flex w-full ">
     <!-- editor -->
@@ -26,13 +25,11 @@
 
 <!-- eslint-disable  -->
 <script>
-import Editor from './components/editor/Editor.vue'
 import Tiptap from './components/editor/TipTap.vue'
 import SampleContent from './content.json'
 
 export default {
   components: {
-    Editor,
     Tiptap,
   },
   data() {

@@ -86,7 +86,7 @@
 import { Editor } from '@tiptap/core'
 import { BubbleMenu, EditorContent, FloatingMenu } from '@tiptap/vue-2'
 import StarterKit from '@tiptap/starter-kit'
-import Placeholder from '@tiptap/extension-placeholder'
+import Placeholder from './custom-extension/placeholder'
 import Focus from '@tiptap/extension-focus'
 import Heading from '@tiptap/extension-heading'
 import ListItem from '@tiptap/extension-list-item'
@@ -108,6 +108,7 @@ import Dropcursor from '@tiptap/extension-dropcursor'
 import Superscript from '@tiptap/extension-superscript'
 import Subscript from '@tiptap/extension-subscript'
 import Typography from '@tiptap/extension-typography'
+import Highlight from '@tiptap/extension-highlight'
 
 // slash menu
 import Commands from './tools/commands/commands.js'
@@ -188,7 +189,6 @@ export default {
             currentUser: JSON.parse(localStorage.getItem('currentUser')) || {
                 name: 'anonymous',
                 color: this.getRandomColor(),
-                avatar: 'https://unavatar.io/github/ueberdosis',
             },
             editor: null,
             isEditable: true,
@@ -243,6 +243,7 @@ export default {
                     history: false,
                     blockquote: false
                 }),
+                Highlight.configure({ multicolor: true }),
                 Placeholder.configure({
                     placeholder: ({ node }) => {
                         let text = `Write something … or type '/' to choose block`
@@ -258,7 +259,8 @@ export default {
                         }
                         return text
                     },
-                    showOnlyCurrent: true
+                    showOnlyCurrent: false,
+                    includeChildren: true
                 }),
                 Focus.configure({
                     className: 'has-focus',
@@ -502,7 +504,7 @@ export default {
 }
 </script>
 
-<style>
+<style >
 @import 'style.css';
 
 /* ============ STYLING CURSOR ============ */
