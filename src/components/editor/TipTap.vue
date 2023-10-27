@@ -55,7 +55,6 @@
                                 </path>
                             </svg>
                         </button>
-
                     </div>
                 </div>
 
@@ -230,11 +229,14 @@ export default {
     },
     mounted() {
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && this.editor.isActive('highlight')) {
-                this.editor.chain().focus().unsetHighlight().run();
-            }
-            else if (e.key === 'Enter' && this.editor.isActive('textStyle')) {
-                this.editor.chain().focus().unsetColor().run();
+            if (e.key === 'Enter') {
+                if (this.editor.isActive('highlight') && this.editor.isActive('textStyle')) {
+                    this.editor.chain().focus().unsetHighlight().unsetColor().run();
+                } else if (this.editor.isActive('highlight')) {
+                    this.editor.chain().focus().unsetHighlight().run();
+                } else if (this.editor.isActive('textStyle')) {
+                    this.editor.chain().focus().unsetColor().run();
+                }
             }
         })
         provider.awareness.on('change', () => {
