@@ -88,7 +88,7 @@ import SubscriptButton from './tools/buttons/SubcriptButton.vue'
 
 // collaboration
 const provider = new HocuspocusProvider({
-  url: 'wss://api.server.rosfandy.my.id/',
+  url: 'wss://editorhocus.oriens.my.id/',
   name: 'example-document',
 })
 // provider.awareness.on('change', () => {
