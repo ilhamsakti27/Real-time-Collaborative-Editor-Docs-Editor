@@ -143,7 +143,7 @@ import {
     GetTableRowCoords,
     GetTopLevelNode,
 } from "./utils/pm-utils.js";
-import { showSubMenu } from "./floating-menu/submenu/submenu"
+import { showActionMenu } from "./floating-menu/action/actionMenu"
 import { showNewNode } from "./floating-menu/newnode/newNode"
 import { mergeArrays } from "./utils/utils";
 import defaultBlockTools from "./tools/block-tools";
@@ -391,12 +391,12 @@ export default {
                 // Hide the submenu when there's a click outside the component
                 this.isSubMenu = true;
                 if (this.topLevelNodeType !== 'title')
-                    showSubMenu(this.editor, this.topLevelNodeType, this.isSubMenu);
+                    showActionMenu(this.editor, this.topLevelNodeType, this.isSubMenu);
             } else {
                 // Show the submenu when there's a click inside the component
                 this.isSubMenu = false;
                 if (this.topLevelNodeType !== 'title')
-                    showSubMenu(this.editor, this.topLevelNodeType, this.isSubMenu);
+                    showActionMenu(this.editor, this.topLevelNodeType, this.isSubMenu);
             }
         },
         buatMapBaru(dataMap) {
@@ -551,4 +551,4 @@ export default {
     border-radius: 3px 3px 3px 0;
     white-space: nowrap;
 }
-</style>
+</style>./floating-menu/submenu/actionMenu./floating-menu/action/submenu
