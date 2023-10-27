@@ -1,7 +1,7 @@
 <!-- eslint-disable -->
 <template>
     <div class="flex">
-        <div class="pl-8 pt-20 w-[20%]">
+        <div class=" absolute top-4 left-4 w-[20%]">
             <div>Online: {{ total }}</div>
             <div>Status: {{ status }}</div>
             <div>Your Name: {{ currentUser.name }}</div>
@@ -13,9 +13,6 @@
         </div>
 
         <div v-if="editor" class="editor-canvas w-full">
-            <h1 id="page-title">
-                Editor Block-based
-            </h1>
             <floating-menu pluginKey="" @dragend="endDragging($event)" :draggable="dragging"
                 :should-show="shouldShowMainToolbar" v-if="editor" :editor="editor" :class="{
                     'mouse:pointer-events-none mouse:opacity-0': isTyping,
@@ -33,7 +30,7 @@
             'max-md:!transform-none'
         ),
 }">
-                <div class="flex flex-row">
+                <div v-if="topLevelNodeType !== 'title'" class="flex flex-row">
                     <div class="" id="submenu"></div>
                     <div class="">
                         <button ref="newLineBtn" @keydown.enter.prevent @click="handleNewLine($event)" @mouseup="
@@ -109,6 +106,7 @@ import Superscript from '@tiptap/extension-superscript'
 import Subscript from '@tiptap/extension-subscript'
 import Typography from '@tiptap/extension-typography'
 import Highlight from '@tiptap/extension-highlight'
+// import Document from "@tiptap/extension-document";
 
 // slash menu
 import Commands from './tools/commands/commands.js'
@@ -149,6 +147,7 @@ import { showSubMenu } from "./floating-menu/submenu/submenu"
 import { showNewNode } from "./floating-menu/newnode/newNode"
 import { mergeArrays } from "./utils/utils";
 import defaultBlockTools from "./tools/block-tools";
+import { DocumentWithTitle, Title } from './custom-extension/title'
 
 const ydoc = new Y.Doc()
 const getRandomElement = list => list[Math.floor(Math.random() * list.length)]
@@ -239,15 +238,21 @@ export default {
         })
         this.editor = new Editor({
             extensions: [
+                DocumentWithTitle,
+                Title,
                 StarterKit.configure({
                     history: false,
-                    blockquote: false
+                    blockquote: false,
+                    document: false,
                 }),
                 Highlight.configure({ multicolor: true }),
                 Placeholder.configure({
                     placeholder: ({ node }) => {
                         let text = `Write something … or type '/' to choose block`
                         switch (node.type.name) {
+                            case 'title':
+                                text = 'Untitled'
+                                break;
                             case 'heading':
                                 text = 'Heading'
                                 break;
@@ -262,10 +267,10 @@ export default {
                     showOnlyCurrent: false,
                     includeChildren: true
                 }),
-                Focus.configure({
-                    className: 'has-focus',
-                    mode: 'deepest'
-                }),
+                // Focus.configure({
+                //     className: 'has-focus',
+                //     mode: 'deepest'
+                // }),
                 Heading.configure({
                     levels: [1, 2, 3],
                     HTMLAttributes: {
@@ -364,22 +369,26 @@ export default {
             if (event.target.tagName.toLowerCase() === 'svg') {
                 // Hide the submenu when there's a click outside the component
                 this.isNewNode = true;
-                showNewNode(this.editor, this.topLevelNodeType, this.isNewNode);
+                if (this.topLevelNodeType !== 'title')
+                    showNewNode(this.editor, this.topLevelNodeType, this.isNewNode);
             } else {
                 // Show the submenu when there's a click inside the component
                 this.isNewNode = false;
-                showNewNode(this.editor, this.topLevelNodeType, this.isNewNode);
+                if (this.topLevelNodeType !== 'title')
+                    showNewNode(this.editor, this.topLevelNodeType, this.isNewNode);
             }
         },
         handleSubMenu(event) {
             if (event.target.tagName.toLowerCase() === 'svg') {
                 // Hide the submenu when there's a click outside the component
                 this.isSubMenu = true;
-                showSubMenu(this.editor, this.topLevelNodeType, this.isSubMenu);
+                if (this.topLevelNodeType !== 'title')
+                    showSubMenu(this.editor, this.topLevelNodeType, this.isSubMenu);
             } else {
                 // Show the submenu when there's a click inside the component
                 this.isSubMenu = false;
-                showSubMenu(this.editor, this.topLevelNodeType, this.isSubMenu);
+                if (this.topLevelNodeType !== 'title')
+                    showSubMenu(this.editor, this.topLevelNodeType, this.isSubMenu);
             }
         },
         buatMapBaru(dataMap) {
