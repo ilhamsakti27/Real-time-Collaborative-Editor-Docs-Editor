@@ -153,7 +153,7 @@ const ydoc = new Y.Doc()
 const getRandomElement = list => list[Math.floor(Math.random() * list.length)]
 
 const provider = new HocuspocusProvider({
-    url: 'wss://api.server.rosfandy.my.id',
+    url: 'wss://editorhocus.oriens.my.id/',
     name: 'example-document',
     document: ydoc,
 })
