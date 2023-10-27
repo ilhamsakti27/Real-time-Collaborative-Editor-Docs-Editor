@@ -32,8 +32,10 @@
           <div class="px-3 py-2 text-black/40 text-xs font-semibold">
             Latest use
           </div>
-          <button @click="selectedIndex === null ? editor.chain().focus().setColor('#000000').run()
-            : setColor(colorFonts[selectedIndex].setColor, selectedIndex)" class="">
+          <button
+            @click="selectedIndex !== null ?
+              isHighlight ? setHighlight(colorFonts[selectedIndex].setColor, selectedIndex) : setColor(colorFonts[selectedIndex].setColor, selectedIndex) : ''"
+            class="">
             <span v-html="selectedIndex === null ? defaultIcon : colorFonts[selectedIndex].mainIcon" :class="['border rounded-md pad', isHighlight && selectedIndex !== null ?
               colorFonts[selectedIndex].name !== 'Default' ?
                 `bg-[${colorFonts[selectedIndex].setColor}]/20` : ''
@@ -98,18 +100,19 @@ export default {
     setColor(color, index) {
       this.selectedIndex = index
       this.isHighlight = false
-      this.editor.chain().focus().setColor(color).run();
-      this.editor.chain().blur().run();
+      if (color === '#000') {
+        this.editor.chain().focus().unsetColor().blur().run();
+      } else {
+        this.editor.chain().focus().setColor(color).blur().run();
+      }
     },
     setHighlight(color, index) {
       this.selectedIndex = index
       this.isHighlight = true
       if (color === '#000') {
-        this.editor.chain().focus().unsetHighlight().run();
-        this.editor.chain().blur().run();
+        this.editor.chain().focus().unsetHighlight().blur().run();
       } else {
-        this.editor.chain().focus().toggleHighlight({ color }).run();
-        this.editor.chain().blur().run();
+        this.editor.chain().focus().toggleHighlight({ color }).blur().run();
       }
     }
   },
