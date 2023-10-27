@@ -1,8 +1,11 @@
+<!-- eslint-disable  -->
 <template>
   <div id="app" class="flex w-full ">
-    <!-- editor -->
-    <div class="w-full ">
-      <Tiptap v-model="content" mode="json" />
+    <div class="w-full">
+      <!-- editor -->
+      <div class="w-full mt-24">
+        <Tiptap v-model="content" mode="json" />
+      </div>
     </div>
     <!-- output file -->
     <div class="json py-20 max-h-screen ">
@@ -27,9 +30,10 @@
 <script>
 import Tiptap from './components/editor/TipTap.vue'
 import SampleContent from './content.json'
-
+import Title from './components/editor/Title.vue'
 export default {
   components: {
+    // Title,
     Tiptap,
   },
   data() {
