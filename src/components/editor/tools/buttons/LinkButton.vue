@@ -24,14 +24,15 @@
     <template>
       <div class="popUpLink" v-show="toggleShowLinkInput">
         <input placeholder="Paste link" type="url" v-model="urlInput" @input="clearError">
-        <button @click="setLink">Submit</button>
+        <button @click="setLink" style="border: 1px solid rgba(156, 156, 156, 0.201);">Submit</button>
       </div>
       <div class="popUpLink" v-show="toggleShowLinkEdit">
         <label for="pageOrURL">Page or URL</label>
-        <input placeholder="Edit link or search pages" type="url" id="pageOrURL">
+        <input placeholder="Edit link or search pages" type="url" id="pageOrURL" v-model="url">
         <label for="linkTitle">Link title</label>
-        <input placeholder="url" type="text" id="linkTitle">
-        <button @click="">
+        <input placeholder="title" type="text" id="linkTitle">
+        <hr class="custom-hr">
+        <button @click="removeLink" style="border: 1px solid rgba(156, 156, 156, 0.201);">
           <span v-html="removeIcon"></span>
           Remove link
         </button>
@@ -50,7 +51,8 @@ export default {
       toggleShowLinkEdit: false,
       urlInput: '', // Data property to store the input URL
       urlError: '', // Data property to display an error message
-      removeIcon: '<svg class="inline" id="Layer_1" style="enable-background:new 0 0 64 64;" width="24" height="24" version="1.1" viewBox="0 0 64 64" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style type="text/css"> .st0{fill:#134563;}</style><g><g id="Icon-Trash" transform="translate(232.000000, 228.000000)"><polygon class="st0" id="Fill-6" points="-207.5,-205.1 -204.5,-205.1 -204.5,-181.1 -207.5,-181.1    "/><polygon class="st0" id="Fill-7" points="-201.5,-205.1 -198.5,-205.1 -198.5,-181.1 -201.5,-181.1    "/><polygon class="st0" id="Fill-8" points="-195.5,-205.1 -192.5,-205.1 -192.5,-181.1 -195.5,-181.1    "/><polygon class="st0" id="Fill-9" points="-219.5,-214.1 -180.5,-214.1 -180.5,-211.1 -219.5,-211.1    "/><path class="st0" d="M-192.6-212.6h-2.8v-3c0-0.9-0.7-1.6-1.6-1.6h-6c-0.9,0-1.6,0.7-1.6,1.6v3h-2.8v-3     c0-2.4,2-4.4,4.4-4.4h6c2.4,0,4.4,2,4.4,4.4V-212.6" id="Fill-10"/><path class="st0" d="M-191-172.1h-18c-2.4,0-4.5-2-4.7-4.4l-2.8-36l3-0.2l2.8,36c0.1,0.9,0.9,1.6,1.7,1.6h18     c0.9,0,1.7-0.8,1.7-1.6l2.8-36l3,0.2l-2.8,36C-186.5-174-188.6-172.1-191-172.1" id="Fill-11"/></g></g></svg>' 
+      removeIcon: '<svg class="inline" id="Layer_1" style="enable-background:new 0 0 64 64;" width="24" height="24" version="1.1" viewBox="0 0 64 64" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style type="text/css"> .st0{fill:#134563;}</style><g><g id="Icon-Trash" transform="translate(232.000000, 228.000000)"><polygon class="st0" id="Fill-6" points="-207.5,-205.1 -204.5,-205.1 -204.5,-181.1 -207.5,-181.1    "/><polygon class="st0" id="Fill-7" points="-201.5,-205.1 -198.5,-205.1 -198.5,-181.1 -201.5,-181.1    "/><polygon class="st0" id="Fill-8" points="-195.5,-205.1 -192.5,-205.1 -192.5,-181.1 -195.5,-181.1    "/><polygon class="st0" id="Fill-9" points="-219.5,-214.1 -180.5,-214.1 -180.5,-211.1 -219.5,-211.1    "/><path class="st0" d="M-192.6-212.6h-2.8v-3c0-0.9-0.7-1.6-1.6-1.6h-6c-0.9,0-1.6,0.7-1.6,1.6v3h-2.8v-3     c0-2.4,2-4.4,4.4-4.4h6c2.4,0,4.4,2,4.4,4.4V-212.6" id="Fill-10"/><path class="st0" d="M-191-172.1h-18c-2.4,0-4.5-2-4.7-4.4l-2.8-36l3-0.2l2.8,36c0.1,0.9,0.9,1.6,1.7,1.6h18     c0.9,0,1.7-0.8,1.7-1.6l2.8-36l3,0.2l-2.8,36C-186.5-174-188.6-172.1-191-172.1" id="Fill-11"/></g></g></svg>',
+      url: ''
     }
   },
   methods: {
@@ -60,14 +62,25 @@ export default {
 
       // jika sudah embed link
       if (previousUrl){
+        this.toggleShowLinkInput = false
         this.toggleShowLinkEdit = !this.toggleShowLinkEdit;
+        document.addEventListener("click", this.clickOutsideHandler);
+        
+        // const element = document.querySelector(`[link="${previousUrl}"]`);
+
+        // console.log('tag html: ' + element);
+        this.url = previousUrl;
+        
+        return
       }
       // jika belum embed link
-      if (typeof yourVariable === 'undefined') {
+      if (typeof previousUrl === 'undefined') {
+        this.toggleShowLinkEdit = false
         this.toggleShowLinkInput = !this.toggleShowLinkInput;
+        document.addEventListener("click", this.clickOutsideHandler);
+        return
       }
-      
-      document.addEventListener("click", this.clickOutsideHandler);
+
     },
     setLink() {
       // cancelled
@@ -116,17 +129,19 @@ export default {
       }
 
       console.log('Input adalah: ' + this.urlInput);
-      
-      // this.toggleShowLinkInput = !this.toggleShowLinkInput
+      this.toggleShowLinkInput = !this.toggleShowLinkInput
       document.addEventListener("click", this.clickOutsideHandler);
     },
     removeLink(){
       this.editor
         .chain()
         .focus()
-        .extendMarkRange('link')
         .unsetLink()
         .run()
+
+      this.toggleShowLinkEdit = !this.toggleShowLinkEdit;
+      
+      document.addEventListener("click", this.clickOutsideHandler);
     },
     clearError() {
       this.urlError = ''; // Clear the error message when input changes
@@ -157,7 +172,6 @@ export default {
   border-radius: 0 0 4px 4px;
   padding: 2vh 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
-  /* border: 1px solid rgba(255, 0, 0, 1);; */
   box-shadow: 0px 8px 16px 2px rgba(0, 0, 0, 0.1);
   width: 222px;
   padding: 12px;
@@ -174,15 +188,21 @@ export default {
 .popUpLink button {
   margin-top: 8px;
   padding: 2px 8px;
-  border: 1px solid transparent;
   border-radius: 0.25rem;
   cursor: pointer;
   border-color: #6c757d; /* Button border color */
   color: #6c757d; /* Button text color */
+  width: 100%;
 }
 .popUpLink button:hover {
   border-color: #545b62; /* Hovered button border color */
   color: white; /* Hovered button text color */
-  background-color: #545b62;
+  background-color: #92969a7b;
+}
+.custom-hr {
+  border: none; 
+  height: 1px; /* Set the height of the custom rule line */
+  background-color: #7979794f; /* Set the background color of the line */
+  margin-top: 8px; /* Add margin for spacing */
 }
 </style>
