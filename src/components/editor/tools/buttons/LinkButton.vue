@@ -3,7 +3,7 @@
   <div>
     <button
       :class="{ 'is-active': editor.isActive('link') }"
-      @click="setLink"
+      @click="linkBtn"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -22,9 +22,20 @@
 
     <!-- pop up link -->
     <template>
-      <div id="popUpLink" v-show="toggleShowLinkInput">
-        <input placeholder="Paste link" type="text" v-model="urlInput" @input="clearError">
-        <button @click="setLink">Submit</button>
+      <div class="popUpLink" v-show="toggleShowLinkInput">
+        <input placeholder="Paste link" type="url" v-model="urlInput" @input="clearError">
+        <button @click="setLink" style="border: 1px solid rgba(156, 156, 156, 0.201);">Submit</button>
+      </div>
+      <div class="popUpLink" v-show="toggleShowLinkEdit">
+        <label for="pageOrURL">Page or URL</label>
+        <input placeholder="Edit link or search pages" type="url" id="pageOrURL" v-model="url">
+        <!-- <label for="linkTitle">Link title</label>
+        <input placeholder="title" type="text" id="linkTitle" v-model="urlTitle"> -->
+        <hr class="custom-hr">
+        <button @click="removeLink" style="border: 1px solid rgba(156, 156, 156, 0.201);">
+          <span v-html="removeIcon"></span>
+          Remove link
+        </button>
       </div>
     </template>
   </div>
@@ -37,69 +48,104 @@ export default {
   data() {
     return {
       toggleShowLinkInput: false,
+      toggleShowLinkEdit: false,
       urlInput: '', // Data property to store the input URL
-      urlError: '' // Data property to display an error message
+      urlError: '', // Data property to display an error message
+      removeIcon: '<svg class="inline" id="Layer_1" style="enable-background:new 0 0 64 64;" width="24" height="24" version="1.1" viewBox="0 0 64 64" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style type="text/css"> .st0{fill:#134563;}</style><g><g id="Icon-Trash" transform="translate(232.000000, 228.000000)"><polygon class="st0" id="Fill-6" points="-207.5,-205.1 -204.5,-205.1 -204.5,-181.1 -207.5,-181.1    "/><polygon class="st0" id="Fill-7" points="-201.5,-205.1 -198.5,-205.1 -198.5,-181.1 -201.5,-181.1    "/><polygon class="st0" id="Fill-8" points="-195.5,-205.1 -192.5,-205.1 -192.5,-181.1 -195.5,-181.1    "/><polygon class="st0" id="Fill-9" points="-219.5,-214.1 -180.5,-214.1 -180.5,-211.1 -219.5,-211.1    "/><path class="st0" d="M-192.6-212.6h-2.8v-3c0-0.9-0.7-1.6-1.6-1.6h-6c-0.9,0-1.6,0.7-1.6,1.6v3h-2.8v-3     c0-2.4,2-4.4,4.4-4.4h6c2.4,0,4.4,2,4.4,4.4V-212.6" id="Fill-10"/><path class="st0" d="M-191-172.1h-18c-2.4,0-4.5-2-4.7-4.4l-2.8-36l3-0.2l2.8,36c0.1,0.9,0.9,1.6,1.7,1.6h18     c0.9,0,1.7-0.8,1.7-1.6l2.8-36l3,0.2l-2.8,36C-186.5-174-188.6-172.1-191-172.1" id="Fill-11"/></g></g></svg>',
+      url: '',
+      urlTitle: 'Halo',
     }
   },
   methods: {
+    linkBtn() {
+      const previousUrl = this.editor.getAttributes('link').href;
+      console.log('previous url: ' + previousUrl);
+
+      // jika sudah embed link
+      if (previousUrl){
+        this.toggleShowLinkInput = false
+        this.toggleShowLinkEdit = !this.toggleShowLinkEdit;
+        document.addEventListener("click", this.clickOutsideHandler);
+        
+        this.url = previousUrl;
+        
+        return
+      }
+      // jika belum embed link
+      if (typeof previousUrl === 'undefined') {
+        this.toggleShowLinkEdit = false
+        this.toggleShowLinkInput = !this.toggleShowLinkInput;
+        document.addEventListener("click", this.clickOutsideHandler);
+        return
+      }
+
+    },
     setLink() {
-      // const previousUrl = this.editor.getAttributes('link').href
-      // const url = window.prompt('URL', previousUrl)
-
-      // // cancelled
-      // if (url === null) {
-      //   return
-      // }
-
-      // // empty
-      // if (url === '') {
-      //   this.editor
-      //     .chain()
-      //     .focus()
-      //     .extendMarkRange('link')
-      //     .unsetLink()
-      //     .run()
-
-      //   return
-      // }
-
-      // // update link
-      // this.editor
-      //   .chain()
-      //   .focus()
-      //   .extendMarkRange('link')
-      //   .setLink({ href: url })
-      //   .run()
+      // cancelled
+      if (this.urlInput === null) {
+        return
+      }
       
+      // empty
+      if (this.urlInput === '') {
+        this.editor
+        .chain()
+        .focus()
+        .extendMarkRange('link')
+        .unsetLink()
+        .run()
+        
+        return
+      }
+      
+      const pattern = /^(http:\/\/|https:\/\/)/;
+      const url = pattern.test(this.urlInput);
+
+      if (!url) {
+        // update link if the link doesn't contain http or https
+        this.editor
+          .chain()
+          .focus()
+          .extendMarkRange('link')
+          .setLink({ href: `http://${this.urlInput}` })
+          .run()
+        
+        // clear input
+        this.urlInput = ''
+      }
+      else {
+        // update link
+        this.editor
+          .chain()
+          .focus()
+          .extendMarkRange('link')
+          .setLink({ href: this.urlInput })
+          .run()
+
+        // clear input
+        this.urlInput = ''
+      }
+
+      console.log('Input adalah: ' + this.urlInput);
       this.toggleShowLinkInput = !this.toggleShowLinkInput
       document.addEventListener("click", this.clickOutsideHandler);
     },
-    submitUrl() {
-      // You can add validation logic here
-      if (this.isValidUrl(this.urlInput)) {
-        // URL is valid, you can proceed with further actions
-        console.log('Input URL:', this.urlInput);
-      } else {
-        // Display an error message if the URL is not valid
-        this.urlError = 'Invalid URL';
-      }
-      this.closePopup();
-    },
-    isValidUrl(url) {
-      // You can add URL validation logic here (e.g., using regular expressions)
-      // For simplicity, this example checks if the URL starts with 'http' or 'https'
-      return url.startsWith('http://') || url.startsWith('https://');
+    removeLink(){
+      this.editor
+        .chain()
+        .focus()
+        .unsetLink()
+        .run()
+
+      this.toggleShowLinkEdit = !this.toggleShowLinkEdit;
+      
+      document.addEventListener("click", this.clickOutsideHandler);
     },
     clearError() {
       this.urlError = ''; // Clear the error message when input changes
     },
     closePopup() {
       this.toggleShowLinkInput = false;
-    },
-    closePopupOutside() {
-      this.closePopup();
-      // Remove the event listener when closing the modal
-      document.removeEventListener("click", this.clickOutsideHandler);
     },
     clickOutsideHandler(event) {
       if (!this.$el.contains(event.target)) {
@@ -113,8 +159,9 @@ export default {
 <style>
 .tiptap a {
   color: #24b8f7;
+  text-decoration: underline;
 }
-#popUpLink {
+.popUpLink {
   position: absolute;
   background-color: rgb(253, 253, 253);
   left: 0;
@@ -123,12 +170,11 @@ export default {
   border-radius: 0 0 4px 4px;
   padding: 2vh 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
-  /* border: 1px solid rgba(255, 0, 0, 1);; */
   box-shadow: 0px 8px 16px 2px rgba(0, 0, 0, 0.1);
   width: 222px;
   padding: 12px;
 }
-#popUpLink input {
+.popUpLink input {
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 4px;
   padding: 2px 8px;
@@ -137,18 +183,24 @@ export default {
     outline: 2px solid rgba(35, 131, 226, 0.5);
   }
 }
-#popUpLink button {
+.popUpLink button {
   margin-top: 8px;
   padding: 2px 8px;
-  border: 1px solid transparent;
   border-radius: 0.25rem;
   cursor: pointer;
   border-color: #6c757d; /* Button border color */
   color: #6c757d; /* Button text color */
+  width: 100%;
 }
-#popUpLink button:hover {
+.popUpLink button:hover {
   border-color: #545b62; /* Hovered button border color */
   color: white; /* Hovered button text color */
-  background-color: #545b62;
+  background-color: #92969a7b;
+}
+.custom-hr {
+  border: none; 
+  height: 1px; /* Set the height of the custom rule line */
+  background-color: #7979794f; /* Set the background color of the line */
+  margin-top: 8px; /* Add margin for spacing */
 }
 </style>
