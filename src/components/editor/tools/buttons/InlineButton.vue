@@ -4,7 +4,7 @@
         <div ref="inlineBtn" class="flex">
             <template v-if="allInlineTools.length">
                 <button :ref="item.ref" v-for="(item, index) in allInlineTools" :key="index"
-                    :id="item.title === 'Link' ? 'popup' : (item.tools ? 'more' : null)">
+                    :id="item.title === 'Link' || item.title === 'Unlink' ? 'popup' : item.tools ? 'more' : null">
                     <!-- list of menu -->
                     <div class="icon-container flex menu items-center gap-x-2 bubble-menu-btn border-r"
                         @mouseover="handleHover(index)" @mouseout="hideLabel(index)" @click="selectItem(index)">
@@ -26,8 +26,8 @@
 <script>
 import defaultInlineTools from '../inlineTools';
 import { mergeArrays } from '../../utils/utils';
-import { moreTools } from './moreToolsBtn/moreTools'
-
+import { moreTools } from './moreToolsBtn'
+import moreListTools from './moreToolsBtn/moreListTools.vue'
 export default {
     props: {
         inlineTools: {
@@ -49,10 +49,24 @@ export default {
         };
     },
     mounted() {
-        this.allInlineTools = mergeArrays(defaultInlineTools(), this.inlineTools);
+        this.allInlineTools = mergeArrays(defaultInlineTools(this.editor), this.inlineTools);
         this.isLabelVisible = new Array(this.allInlineTools.length).fill(false);
     },
+    computed: {
+        hrefValue() {
+            return this.editor.getAttributes("link").href;
+        },
+    },
+    watch: {
+        hrefValue(newHref, oldHref) {
+            this.handleHrefChange(newHref, oldHref);
+        },
+    },
     methods: {
+        handleHrefChange(newHref, oldHref) {
+            this.allInlineTools = mergeArrays(defaultInlineTools(this.editor), this.inlineTools);
+        },
+
         handleHover(index) {
             this.isLabel = true;
             this.selectedIndex = index;
@@ -63,9 +77,6 @@ export default {
                 let title = 'Inline Tools'
                 if (this.isMoreTools)
                     moreTools(this.editor, item.tools, this.isMoreTools, title)
-            } else {
-                this.isMoreTools = false
-                moreTools(this.editor, this.isMoreTools, this.isMoreTools, null)
             }
         },
         hideLabel(index) {
@@ -78,7 +89,6 @@ export default {
             const item = this.allInlineTools[index]
             if (item.command)
                 item.command(this.editor)
-
         }
     },
 };

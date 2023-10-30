@@ -232,10 +232,10 @@ ul[data-type="taskList"] {
   display: flex;
   width: max-content;
   /* width: 500px; */
-  @apply shadow-md
+  @apply shadow-md border
 }
 .bubble-menu-btn {
-  padding: 4px 8px;
+  padding: 6px 8px;
 }
 .bubble-menu-btn:hover {
   background-color: #e2e1e1fa;

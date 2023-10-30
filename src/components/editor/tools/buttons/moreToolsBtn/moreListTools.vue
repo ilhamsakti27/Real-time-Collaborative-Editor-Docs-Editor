@@ -26,6 +26,8 @@
 
 <!-- eslint-disable -->
 <script>
+import tippy from 'tippy.js'
+
 export default {
     props: {
         items: {
@@ -144,13 +146,14 @@ export default {
     display: flex;
     flex-direction: column;
     row-gap: 4px;
+    margin-top: -8px;
     border-radius: 6px;
     padding: 12px 4px 0px 4px;
     border: 1px solid #D9D9D9;
     background: white;
-    box-shadow: 0px 4px 16px 2px rgba(0, 0, 0, 0.15);
     overflow: scroll;
     max-height: 300px;
+    @apply shadow-md
 }
 
 // styling scroll slash menu

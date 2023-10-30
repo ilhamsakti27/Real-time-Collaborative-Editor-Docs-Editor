@@ -139,6 +139,7 @@ export default {
 .dropdownContent {
   background-color: rgb(255, 255, 255);
   border-radius: 0 0 4px 4px;
+  margin-top: -5px;
   padding: 0.5vh 0.5vh;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0px 4px 16px 2px rgba(0, 0, 0, 0.35);
