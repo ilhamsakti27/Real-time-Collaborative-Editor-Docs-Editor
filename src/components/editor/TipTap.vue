@@ -96,7 +96,7 @@ import Heading from '@tiptap/extension-heading'
 import ListItem from '@tiptap/extension-list-item'
 import OrderedList from '@tiptap/extension-ordered-list'
 import BulletList from '@tiptap/extension-bullet-list'
-import { ColumnExtension } from "@gocapsule/column-extension"
+import { ColumnExtension, } from "./custom-extension/column"
 import Blockquote from '@tiptap/extension-blockquote'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import TaskItem from '@tiptap/extension-task-item'
@@ -140,6 +140,7 @@ import FontFamilyButton from './tools/buttons/FontFamilyButton.vue'
 import SuperscriptButton from './tools/buttons/SuperscriptButton.vue'
 import SubscriptButton from './tools/buttons/SubcriptButton.vue'
 import inlineToolsBtn from './tools/buttons/InlineButton.vue'
+import Document from '@tiptap/extension-document'
 
 import * as Y from 'yjs'
 
@@ -155,14 +156,14 @@ import { showActionMenu } from "./floating-menu/action/actionMenu"
 import { showNewNode } from "./floating-menu/newnode/newNode"
 import { mergeArrays } from "./utils/utils";
 import defaultBlockTools from "./tools/block-tools";
-import { DocumentWithTitle, Title } from './custom-extension/title'
+import { DocumentWithTitle, Title, TitleExtension } from './custom-extension/title'
 import { v4 as uuidv4 } from 'uuid';
 
 const ydoc = new Y.Doc()
 const getRandomElement = list => list[Math.floor(Math.random() * list.length)]
 
 const provider = new HocuspocusProvider({
-    url: 'wss://editorhocus.oriens.my.id/',
+    url: 'wss://editorhocus.oriena.my.id/',
     name: 'example-document',
     document: ydoc,
 })
@@ -273,6 +274,7 @@ export default {
                 Highlight.configure({ multicolor: true }),
                 Placeholder.configure({
                     placeholder: ({ node }) => {
+                        console.log(node)
                         let text = `Write something … or type '/' to choose block`
                         switch (node.type.name) {
                             case 'title':
@@ -498,6 +500,7 @@ export default {
         },
         getMenuCoords() {
             let coord = GetTopLevelBlockCoords(this.editor.view)
+            console.log(this.editor.view)
             let val = coord.left - 12
             let updatedCoord = {
                 bottom: coord.bottom,

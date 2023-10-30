@@ -1,5 +1,5 @@
 /* eslint-disable  */
-import { mergeAttributes, Node } from '@tiptap/core'
+import { Extension, mergeAttributes, Node } from '@tiptap/core'
 import Document from '@tiptap/extension-document'
 
 export const DocumentWithTitle = Document.extend({
