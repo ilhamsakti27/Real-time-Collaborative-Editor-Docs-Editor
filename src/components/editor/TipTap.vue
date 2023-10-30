@@ -108,12 +108,10 @@ import Link from '@tiptap/extension-link'
 import FontFamily from '@tiptap/extension-font-family'
 import Image from '@tiptap/extension-image'
 import Dropcursor from '@tiptap/extension-dropcursor'
-// import History from '@tiptap/extension-history'
 import Superscript from '@tiptap/extension-superscript'
 import Subscript from '@tiptap/extension-subscript'
 import Typography from '@tiptap/extension-typography'
 import Highlight from '@tiptap/extension-highlight'
-// import Document from "@tiptap/extension-document";
 
 // slash menu
 import Commands from './tools/commands/commands.js'
@@ -126,7 +124,6 @@ import DraggableItem from './tools/drag/DraggableItem.js'
 import Collaboration from '@tiptap/extension-collaboration'
 import { HocuspocusProvider } from '@hocuspocus/provider'
 // cursor collaboration
-// import CollaborationCursor from '@tiptap/extension-collaboration-cursor'
 import CollaborationCursor from './custom-extension/collaborationCursor'
 
 // buttons for bubble menu
@@ -140,7 +137,6 @@ import FontFamilyButton from './tools/buttons/FontFamilyButton.vue'
 import SuperscriptButton from './tools/buttons/SuperscriptButton.vue'
 import SubscriptButton from './tools/buttons/SubcriptButton.vue'
 import inlineToolsBtn from './tools/buttons/InlineButton.vue'
-import Document from '@tiptap/extension-document'
 
 import * as Y from 'yjs'
 
@@ -163,7 +159,8 @@ const ydoc = new Y.Doc()
 const getRandomElement = list => list[Math.floor(Math.random() * list.length)]
 
 const provider = new HocuspocusProvider({
-    url: 'wss://editorhocus.oriena.my.id/',
+    // url: 'wss://editorhocus.oriena.my.id/',
+    url: 'ws://localhost:1234/',
     name: 'example-document',
     document: ydoc,
 })
