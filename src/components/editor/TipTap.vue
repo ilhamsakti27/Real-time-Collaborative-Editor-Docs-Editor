@@ -2,7 +2,13 @@
 <template>
     <div class="flex">
         <div class=" absolute top-4 left-4 w-[20%]">
-            <div>Online: {{ total }}</div>
+            <div class="flex gap-x-3 mb-4 border p-2 w-max max-w-md overflow-x-scroll">
+                <div v-for="(item, index) in users" :key="index" class="flex gap-x-2 items-center">
+                    <span v-html="item[1].user.avatar" class="rounded-[50%] w-[20px] h-[20px]" />
+                    <div class="">{{ index === 0 ? 'Me' : item[1].user.name }}</div>
+                </div>
+            </div>
+            <div class="">Online: {{ total }}</div>
             <div>Status: {{ status }}</div>
             <div>Your Name: {{ currentUser.name }}</div>
             <div class="my-4">
@@ -11,6 +17,7 @@
                 </button>
             </div>
         </div>
+
 
         <div v-if="editor" class="editor-canvas w-full">
             <floating-menu pluginKey="" @dragend="endDragging($event)" :draggable="dragging"
@@ -73,6 +80,7 @@
             </BubbleMenu>
             <editor-content id="editor" :editor="editor" :value="editor.getAttributes('textStyle').color" />
         </div>
+
     </div>
 </template>
 
@@ -118,7 +126,8 @@ import DraggableItem from './tools/drag/DraggableItem.js'
 import Collaboration from '@tiptap/extension-collaboration'
 import { HocuspocusProvider } from '@hocuspocus/provider'
 // cursor collaboration
-import CollaborationCursor from '@tiptap/extension-collaboration-cursor'
+// import CollaborationCursor from '@tiptap/extension-collaboration-cursor'
+import CollaborationCursor from './custom-extension/collaborationCursor'
 
 // buttons for bubble menu
 import BoldButton from './tools/buttons/BoldButton.vue'
@@ -147,6 +156,7 @@ import { showNewNode } from "./floating-menu/newnode/newNode"
 import { mergeArrays } from "./utils/utils";
 import defaultBlockTools from "./tools/block-tools";
 import { DocumentWithTitle, Title } from './custom-extension/title'
+import { v4 as uuidv4 } from 'uuid';
 
 const ydoc = new Y.Doc()
 const getRandomElement = list => list[Math.floor(Math.random() * list.length)]
@@ -185,12 +195,15 @@ export default {
     data() {
         return {
             currentUser: JSON.parse(localStorage.getItem('currentUser')) || {
+                id: uuidv4(),
                 name: 'anonymous',
                 color: this.getRandomColor(),
+                avatar: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"> <g fill="#54595d"> <path d="M10 11c-5.92 0-8 3-8 5v3h16v-3c0-2-2.08-5-8-5z"/> <circle cx="10" cy="5.5" r="4.5"/> </g> </svg>',
             },
             editor: null,
             isEditable: true,
             total: 0,
+            users: '',
             status: "",
             dragging: false,
             draggedNodePosition: null,
@@ -241,6 +254,8 @@ export default {
         })
         provider.awareness.on('change', () => {
             this.awareness = this.buatMapBaru(provider.awareness.getStates())
+            console.log(this.awareness)
+            this.users = this.awareness
             this.total = this.awareness.size
         })
         provider.on('status', evt => {
@@ -405,13 +420,16 @@ export default {
             const mapBaru = new Map();
 
             for (const [key, value] of dataMap) {
-                if (Object.keys(value).length !== 0) {
-                    mapBaru.set(key, value);
+                const userId = value.user.id;
+
+                if (!mapBaru.has(userId) && Object.keys(value).length !== 0) {
+                    mapBaru.set(userId, value);
                 }
             }
 
             return mapBaru;
         },
+
         shouldShowMainToolbar() {
             return this.editor.isActive();
         },
@@ -423,11 +441,14 @@ export default {
             if (name) {
                 return this.updateCurrentUser({
                     name,
+                    avatar: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"> <g fill="#54595d"> <path d="M10 11c-5.92 0-8 3-8 5v3h16v-3c0-2-2.08-5-8-5z"/> <circle cx="10" cy="5.5" r="4.5"/> </g> </svg>',
                 })
             }
         },
         updateCurrentUser(attributes) {
+            console.log(attributes)
             this.currentUser = { ...this.currentUser, ...attributes }
+            console.log(this.currentUser)
             this.editor.chain().focus().updateUser(this.currentUser).run()
 
             localStorage.setItem('currentUser', JSON.stringify(this.currentUser))

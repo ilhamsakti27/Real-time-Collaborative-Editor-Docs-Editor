@@ -30,10 +30,8 @@
 <script>
 import Tiptap from './components/editor/TipTap.vue'
 import SampleContent from './content.json'
-import Title from './components/editor/Title.vue'
 export default {
   components: {
-    // Title,
     Tiptap,
   },
   data() {

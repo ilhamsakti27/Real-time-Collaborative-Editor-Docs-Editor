@@ -6,14 +6,14 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    redirect: 'App',
-  },
   // {
   //   path: '/',
-  //   redirect: 'dashboard',
+  //   redirect: 'App',
   // },
+  {
+    path: '/',
+    redirect: 'dashboard',
+  },
   // {
   //   path: '/dashboard',
   //   name: 'dashboard',

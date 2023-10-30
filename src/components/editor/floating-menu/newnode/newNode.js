@@ -27,7 +27,7 @@ export function showNewNode(editor, topLevelNodeType, isNewNode) {
       showOnCreate: true,
       interactive: true,
       trigger: 'manual',
-      placement: 'top-start',
+      placement: 'bottom-start',
     })
   }
 }
