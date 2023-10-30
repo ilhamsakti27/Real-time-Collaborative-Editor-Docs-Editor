@@ -71,9 +71,10 @@
                 duration: 100, placement: 'top-start',
             }" v-if="editor" id="bubbleMenu" class="flex items-center">
                 <ColorButton class="bubble-menu-btn border-r bored-black" :editor="editor" />
-                <inlineToolsBtn :editor="editor" class=""></inlineToolsBtn>
+                <inlineToolsBtn :editor="editor" class="" />
                 <FontFamilyButton class="bubble-menu-btn border-r" :editor="editor" />
             </BubbleMenu>
+
             <editor-content id="editor" :editor="editor" :value="editor.getAttributes('textStyle').color" />
         </div>
 
@@ -148,8 +149,8 @@ const ydoc = new Y.Doc()
 const getRandomElement = list => list[Math.floor(Math.random() * list.length)]
 
 const provider = new HocuspocusProvider({
-    // url: 'wss://editorhocus.oriena.my.id/',
-    url: 'ws://localhost:1234/',
+    url: 'wss://editorhocus.oriens.my.id/',
+    // url: 'ws://localhost:1234/',
     name: 'example-document',
     document: ydoc,
 })
@@ -235,7 +236,6 @@ export default {
         })
         provider.awareness.on('change', () => {
             this.awareness = this.buatMapBaru(provider.awareness.getStates())
-            console.log(this.awareness)
             this.users = this.awareness
             this.total = this.awareness.size
         })
@@ -254,7 +254,6 @@ export default {
                 Highlight.configure({ multicolor: true }),
                 Placeholder.configure({
                     placeholder: ({ node }) => {
-                        console.log(node)
                         let text = `Write something … or type '/' to choose block`
                         switch (node.type.name) {
                             case 'title':
@@ -428,9 +427,7 @@ export default {
             }
         },
         updateCurrentUser(attributes) {
-            console.log(attributes)
             this.currentUser = { ...this.currentUser, ...attributes }
-            console.log(this.currentUser)
             this.editor.chain().focus().updateUser(this.currentUser).run()
 
             localStorage.setItem('currentUser', JSON.stringify(this.currentUser))
@@ -480,7 +477,6 @@ export default {
         },
         getMenuCoords() {
             let coord = GetTopLevelBlockCoords(this.editor.view)
-            console.log(this.editor.view)
             let val = coord.left - 12
             let updatedCoord = {
                 bottom: coord.bottom,

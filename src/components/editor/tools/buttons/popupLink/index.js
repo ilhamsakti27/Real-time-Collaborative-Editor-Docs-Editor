@@ -23,7 +23,7 @@ export function PopupLink(editor) {
             placement: 'bottom-start',
         })
 
-    } else {
+    } else if (floatingComponent != null) {
         popup[0].destroy()
         floatingComponent = null
     }
