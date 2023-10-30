@@ -72,7 +72,8 @@
             }" v-if="editor" id="bubbleMenu" class="flex items-center">
                 <ColorButton class="bubble-menu-btn border-r bored-black" :editor="editor" />
                 <inlineToolsBtn :editor="editor" class=""></inlineToolsBtn>
-                <LinkButton class="bubble-menu-btn" :editor="editor" />
+                <LinkButton class="bubble-menu-btn border-r" :editor="editor" />
+                <FontFamilyButton class="bubble-menu-btn border-r" :editor="editor" />
                 <!-- <StrikeButton class="bubble-menu-btn" :editor="editor" /> -->
                 <!-- <UnderlineButton class="bubble-menu-btn" :editor="editor" /> -->
                 <!-- <SuperscriptButton class="bubble-menu-btn" :editor="editor" /> -->
@@ -178,20 +179,21 @@ export default {
         },
     },
     components: {
-        EditorContent,
-        BubbleMenu,
-        FloatingMenu,
-        BoldButton,
-        ItalicButton,
-        StrikeButton,
-        UnderlineButton,
-        ColorButton,
-        LinkButton,
-        FontFamilyButton,
-        SuperscriptButton,
-        SubscriptButton,
-        inlineToolsBtn
-    },
+    EditorContent,
+    BubbleMenu,
+    FloatingMenu,
+    BoldButton,
+    ItalicButton,
+    StrikeButton,
+    UnderlineButton,
+    ColorButton,
+    LinkButton,
+    FontFamilyButton,
+    SuperscriptButton,
+    SubscriptButton,
+    inlineToolsBtn,
+    FontFamilyButton
+},
     data() {
         return {
             currentUser: JSON.parse(localStorage.getItem('currentUser')) || {

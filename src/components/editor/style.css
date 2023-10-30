@@ -199,6 +199,7 @@ ul[data-type="taskList"] {
   /* padding: 2px 12px; */
   display: flex;
   width: max-content;
+  /* width: 500px; */
   @apply shadow-md
 }
 .bubble-menu-btn {
