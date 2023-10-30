@@ -19,6 +19,9 @@
   }
 }
 /* placeholder every new node */
+.tiptap p.is-empty{
+  /* background:red */
+}
 .tiptap p.is-empty::before {
   content: attr(data-placeholder);
   float: left;

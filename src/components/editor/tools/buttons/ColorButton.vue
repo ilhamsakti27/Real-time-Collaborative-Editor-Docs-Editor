@@ -91,7 +91,7 @@ export default {
     tippy(this.$refs.colorMenu, {
       content: this.$refs.colorTools,
       appendTo: () => this.$refs.colorMenu,
-      placement: 'left-start',
+      placement: 'bottom-start',
       trigger: 'mouseenter',
       interactive: true,
     });
@@ -143,7 +143,7 @@ export default {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0px 4px 16px 2px rgba(0, 0, 0, 0.35);
   width: 150px;
-  max-height: 40vh;
+  max-height: 50vh;
   margin-left: -10px;
   @apply shadow-md overflow-y-auto
 }
