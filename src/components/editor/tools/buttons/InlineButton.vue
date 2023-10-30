@@ -6,7 +6,7 @@
                 <button :ref="item.ref" v-for="(item, index) in allInlineTools" :key="index"
                     :id="item.title === 'Link' ? 'popup' : (item.tools ? 'more' : null)">
                     <!-- list of menu -->
-                    <div class="icon-container flex menu items-center gap-x-2 bubble-menu-btn"
+                    <div class="icon-container flex menu items-center gap-x-2 bubble-menu-btn border-r"
                         @mouseover="handleHover(index)" @mouseout="hideLabel(index)" @click="selectItem(index)">
                         <div class="flex flex-col">
                             <div class=" rounded-md">
