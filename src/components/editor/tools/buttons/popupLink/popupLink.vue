@@ -9,7 +9,7 @@
             <label for="pageOrURL">Page or URL</label>
             <input placeholder="Edit link or search pages" type="url" id="pageOrURL" v-model="url">
             <label for="linkTitle">Link title</label>
-            <input placeholder="title" type="text" id="linkTitle" v-model="urlTitle">
+            <input placeholder="title" type="url" id="linkTitle" v-model="urlTitle">
             <hr class="custom-hr">
             <button @click="removeLink" class="flex items-center justify-center w-full gap-x-2"
                 style="border: 1px solid rgba(156, 156, 156, 0.201);padding: 4px 0;">
@@ -44,8 +44,9 @@ export default {
     },
     mounted() {
         if (this.previousUrl) {
+            this.url = this.previousUrl;
             this.toggleShowLinkEdit = !this.toggleShowLinkEdit;
-            this.url = previousUrl;
+            console.log(this.url)
         }
     },
     methods: {
@@ -79,7 +80,7 @@ export default {
                     .setLink({ href: `http://${this.urlInput}` })
                     .run()
                 this.toggleShowLinkEdit = !this.toggleShowLinkEdit;
-
+                this.url = this.urlInput;
                 // clear input
                 this.urlInput = ''
             }
@@ -92,7 +93,7 @@ export default {
                     .setLink({ href: this.urlInput })
                     .run()
                 this.toggleShowLinkEdit = !this.toggleShowLinkEdit;
-
+                this.url = this.urlInput;
                 // clear input
                 this.urlInput = ''
             }

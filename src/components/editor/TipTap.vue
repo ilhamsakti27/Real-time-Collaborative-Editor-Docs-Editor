@@ -72,12 +72,7 @@
             }" v-if="editor" id="bubbleMenu" class="flex items-center">
                 <ColorButton class="bubble-menu-btn border-r bored-black" :editor="editor" />
                 <inlineToolsBtn :editor="editor" class=""></inlineToolsBtn>
-                <LinkButton class="bubble-menu-btn border-r" :editor="editor" />
                 <FontFamilyButton class="bubble-menu-btn border-r" :editor="editor" />
-                <!-- <StrikeButton class="bubble-menu-btn" :editor="editor" /> -->
-                <!-- <UnderlineButton class="bubble-menu-btn" :editor="editor" /> -->
-                <!-- <SuperscriptButton class="bubble-menu-btn" :editor="editor" /> -->
-                <!-- <SubscriptButton class="bubble-menu-btn" :editor="editor" /> -->
             </BubbleMenu>
             <editor-content id="editor" :editor="editor" :value="editor.getAttributes('textStyle').color" />
         </div>
@@ -128,15 +123,8 @@ import { HocuspocusProvider } from '@hocuspocus/provider'
 import CollaborationCursor from './custom-extension/collaborationCursor'
 
 // buttons for bubble menu
-import BoldButton from './tools/buttons/BoldButton.vue'
-import ItalicButton from './tools/buttons/ItalicButton.vue'
-import StrikeButton from './tools/buttons/StrikeButton.vue'
-import UnderlineButton from './tools/buttons/UnderlineButton.vue'
 import ColorButton from './tools/buttons/ColorButton.vue'
-import LinkButton from './tools/buttons/LinkButton.vue'
 import FontFamilyButton from './tools/buttons/FontFamilyButton.vue'
-import SuperscriptButton from './tools/buttons/SuperscriptButton.vue'
-import SubscriptButton from './tools/buttons/SubcriptButton.vue'
 import inlineToolsBtn from './tools/buttons/InlineButton.vue'
 
 import * as Y from 'yjs'
@@ -177,21 +165,14 @@ export default {
         },
     },
     components: {
-    EditorContent,
-    BubbleMenu,
-    FloatingMenu,
-    BoldButton,
-    ItalicButton,
-    StrikeButton,
-    UnderlineButton,
-    ColorButton,
-    LinkButton,
-    FontFamilyButton,
-    SuperscriptButton,
-    SubscriptButton,
-    inlineToolsBtn,
-    FontFamilyButton
-},
+        EditorContent,
+        BubbleMenu,
+        FloatingMenu,
+        ColorButton,
+        FontFamilyButton,
+        inlineToolsBtn,
+        FontFamilyButton
+    },
     data() {
         return {
             currentUser: JSON.parse(localStorage.getItem('currentUser')) || {

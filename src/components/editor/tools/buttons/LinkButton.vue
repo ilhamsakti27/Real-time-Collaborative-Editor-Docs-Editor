@@ -48,7 +48,7 @@ export default {
   methods: {
     linkBtn() {
       const previousUrl = this.editor.getAttributes('link').href;
-      console.log('previous url: ' + previousUrl);
+      // console.log('previous url: ' + previousUrl);
 
       // jika sudah embed link
       if (previousUrl) {
@@ -115,7 +115,7 @@ export default {
         this.urlInput = ''
       }
 
-      console.log('Input adalah: ' + this.urlInput);
+      // console.log('Input adalah: ' + this.urlInput);  
       this.toggleShowLinkInput = !this.toggleShowLinkInput
       document.addEventListener("click", this.clickOutsideHandler);
     },
