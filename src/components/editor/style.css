@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400&family=Lobster&family=Poppins:wght@500;600;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700&display=swap');
 .editor-canvas {
   padding: 0% 10% 0% 25%;
 }
@@ -132,11 +133,32 @@ ul.bulletedList ul.bulletedList ul.bulletedList {
 }
 .ProseMirror .column {
   overflow: auto;
-  box-shadow: 0 0 0 0.15px #D8D9DA;
-  border: 1px gray solid;
+  /* box-shadow: 0 0 0 0.15px #D8D9DA; */
   border-radius: 6px;
   padding: 8px;
   margin: -8px;
+}
+.ProseMirror .column .separator{
+  margin: 0 10px;
+}
+.ProseMirror .column > * {
+  padding: 8px 12px;
+}
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track (jalur) */
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 50px;
+}
+
+/* Handle (bilah) */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 20px;
+  border: 7px solid transparent;
 }
 
 /* code style */
@@ -157,11 +179,21 @@ blockquote.blockquote {
   display: block;
   margin-block-start: 1em;
   margin-block-end: 1em;
-  margin-inline-start: 40px;
-  margin-inline-end: 40px;
-  border-left: 4px solid rgba(10, 10, 10, 0.859);
+  /* margin-inline-start: 40px; */
+  /* margin-inline-end: 40px;  */
+  border-left: 4px solid rgba(10, 10, 10, 0.259);
+  background-color: #F1F1EF;
 }
+blockquote.blockquote > *{
+  font-style: italic;
+  color:rgba(10, 10, 10, 0.459);
+    padding: 0px 10px;
+    font-weight: 800;
 
+}
+blockquote.blockquote > *.is-empty{
+    font-weight: 400;
+}
 /* Todo List */
 ul[data-type="taskList"] {
 	 list-style: none;
