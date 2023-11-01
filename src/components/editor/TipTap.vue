@@ -121,7 +121,6 @@ const provider = new HocuspocusProvider({
     name: 'example-document',
     document: ydoc,
 })
-
 import { uuid } from 'vue-uuid';
 
 export default {
