@@ -24,6 +24,8 @@ export function PopupLink(editor) {
         })
 
     } else if (floatingComponent != null) {
+        console.log("yoo")
+        console.log(popup)
         popup[0].destroy()
         floatingComponent = null
     }

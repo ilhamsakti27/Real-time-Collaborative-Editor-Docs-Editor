@@ -3,7 +3,7 @@
   <div ref="itemsContainer" class="items flex flex-col gap-y-1">
     <template v-if="items.length">
       <button v-for="(item, index) in items" :key="index" class="item" :class="{ 'is-selected': index === selectedIndex }"
-        @click="selectItem(index)">
+        @click="selectItem(index)" id="popup">
         <!-- {{ item }} -->
         <!-- list of menu -->
         <div class="flex items-center gap-x-2">

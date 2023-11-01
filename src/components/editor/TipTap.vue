@@ -13,37 +13,53 @@
             </div>
         </div>
 
+
         <div v-if="editor" class="editor-canvas w-full">
-            <floating-menu :should-show="shouldShowMainToolbar" v-if="editor" :editor="editor" :class="{
-                'mouse:pointer-events-none mouse:opacity-0': isTyping,
-            }" :tippy-options="tippy">
-                <div class="" @dragend="endDragging($event)" pluginKey="" :draggable="dragging">
-                    <div v-if="topLevelNodeType !== 'title'" class="flex flex-row">
-                        <div class="" id="submenu"></div>
-                        <div class="">
-                            <button ref="newLineBtn" @keydown.enter.prevent @click="handleNewLine($event)"
-                                class=" ml-1 my-2 hover:bg-slate-100 rounded" data-tooltip="Add new block">
-                                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 24">
-                                    <path d="M16 9h-5V4H9v5H4v2h5v5h2v-5h5V9z" />
-                                </svg>
-                            </button>
-                            <button ref="subMenuBtn" @keydown.enter.prevent @click="handleSubMenu($event)"
-                                @mousedown="startDragging($event)" @mouseup="
-                                    draggedNodePosition = false;
-                                dragging = false;
-                                " class="ml-1 my-2 hover:bg-slate-100 rounded" :class="{
-    'cursor-grab': !dragging, 'cursor-grabbing': dragging,
-}" aria-label="Drag" data-tooltip="Drag or Menu">
-                                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                    aria-hidden="true" focusable="false" class="w-5 h-5 md:w-6 md:h-6">
-                                    <path
-                                        d="M8 7h2V5H8v2zm0 6h2v-2H8v2zm0 6h2v-2H8v2zm6-14v2h2V5h-2zm0 8h2v-2h-2v2zm0 6h2v-2h-2v2z">
-                                    </path>
-                                </svg>
-                            </button>
-                        </div>
+            <floating-menu pluginKey="" @dragend="endDragging($event)" :draggable="dragging"
+                :should-show="shouldShowMainToolbar" v-if="editor" :editor="editor" :class="{
+                    'mouse:pointer-events-none mouse:opacity-0': isTyping,
+                }" :tippy-options="{
+    maxWidth: '350',
+    placement: 'left-start',
+    animation: 'fade',
+    duration: 300,
+    getReferenceClientRect: getMenuCoords,
+    onCreate: (instance) =>
+        instance.popper.classList.add(
+            'max-md:!sticky',
+            'max-md:!bottom-0',
+            'max-md:!top-auto',
+            'max-md:!transform-none'
+        ),
+}">
+                <div v-if="topLevelNodeType !== 'title'" class="flex flex-row">
+                    <div class="" id="submenu"></div>
+                    <div class="">
+                        <button ref="newLineBtn" @keydown.enter.prevent @click="handleNewLine($event)" @mouseup="
+                            draggedNodePosition = false;
+                        dragging = false;
+                        " class="ml-1 my-2 hover:bg-slate-100 rounded">
+                            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 24">
+                                <path d="M16 9h-5V4H9v5H4v2h5v5h2v-5h5V9z" />
+                            </svg>
+                        </button>
+                        <button ref="subMenuBtn" @keydown.enter.prevent @click="handleSubMenu($event)" @mouseup="
+                            draggedNodePosition = false;
+                        dragging = false;
+                        " class="ml-1 my-2 hover:bg-slate-100 rounded" :class="{
+    'cursor-grab': !dragging,
+    'cursor-grabbing mr-1': dragging,
+}" aria-label="Drag" data-tooltip="Drag">
+                            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                aria-hidden="true" focusable="false" class="w-5 h-5 md:w-6 md:h-6">
+                                <path
+                                    d="M8 7h2V5H8v2zm0 6h2v-2H8v2zm0 6h2v-2H8v2zm6-14v2h2V5h-2zm0 8h2v-2h-2v2zm0 6h2v-2h-2v2z">
+                                </path>
+                            </svg>
+                        </button>
                     </div>
                 </div>
+
             </floating-menu>
 
             <BubbleMenu :editor="editor" :tippy-options="{
@@ -78,6 +94,8 @@ import CollaborationCursor from './extensions/collaborationCursor'
 import ColorButton from './tools/buttons/ColorButton.vue'
 import FontFamilyButton from './tools/buttons/FontFamilyButton.vue'
 import inlineToolsBtn from './tools/buttons/InlineButton.vue'
+import ImageView from './tools/buttons/popupImage/popupImage.vue'
+
 
 // floating-menu
 import { showActionMenu } from './floating-menu/action'
@@ -115,6 +133,7 @@ export default {
         FontFamilyButton,
         inlineToolsBtn,
         FontFamilyButton,
+        ImageView,
     },
     props: {
         editorClass: {
