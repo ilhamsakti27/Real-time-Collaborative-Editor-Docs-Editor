@@ -15,7 +15,7 @@ export default function (Editor) {
     },
     {
       title: 'Italic',
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 22 22" fill="none"><path d="M10.0834 4.58333H15.5834M6.41669 17.4167H11.9167M12.8334 4.58333L9.16669 17.4167" stroke="#272829" stroke-opacity="0.85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 22 22" fill="none"><path d="M10.0834 4.58333H15.5834M6.41669 17.4167H11.9167M12.8334 4.58333L9.16669 17.4167" stroke="#272829" stroke-opacity="0.85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
       command: editor => {
         editor.chain().focus().toggleItalic().run()
       },
