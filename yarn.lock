@@ -2387,6 +2387,16 @@
   resolved "https://registry.yarnpkg.com/@types/unist/-/unist-3.0.0.tgz#988ae8af1e5239e89f9fbb1ade4c935f4eeedf9a"
   integrity sha512-MFETx3tbTjE7Uk6vvnWINA/1iJ7LuMdO4fcq8UfF0pRbj01aGLduVvQcRyswuACJdpnHgg8E3rQLhaRdNEJS0w==
 
+"@types/uuid@^8.3.4":
+  version "8.3.4"
+  resolved "https://registry.npmjs.org/@types/uuid/-/uuid-8.3.4.tgz#bd86a43617df0594787d38b735f55c805becf1bc"
+  integrity sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==
+
+"@types/uuid@^9.0.6":
+  version "9.0.6"
+  resolved "https://registry.npmjs.org/@types/uuid/-/uuid-9.0.6.tgz#c91ae743d8344a54b2b0c691195f5ff5265f6dfb"
+  integrity sha512-BT2Krtx4xaO6iwzwMFUYvWBWkV2pr37zD68Vmp1CDV196MzczBRxuEpD6Pr395HAgebC/co7hOphs53r8V7jew==
+
 "@types/webpack-dev-server@^3.11.0":
   version "3.11.6"
   resolved "https://registry.npmjs.org/@types/webpack-dev-server/-/webpack-dev-server-3.11.6.tgz"
@@ -13449,7 +13459,7 @@ uuid@^3.1.0, uuid@^3.3.2, uuid@^3.4.0:
   resolved "https://registry.npmjs.org/uuid/-/uuid-3.4.0.tgz"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
 
-uuid@^8.0.0:
+uuid@^8.0.0, uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.npmjs.org/uuid/-/uuid-8.3.2.tgz"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
@@ -13729,6 +13739,14 @@ vue-ts-types@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/vue-ts-types/-/vue-ts-types-1.6.0.tgz#cc35f10ef41e883b779a123361c0cb24996cb890"
   integrity sha512-8sOvLp0ZiZOD/t899GqsMd6gHM8mMKMtqNXilsrnpvHGZoD9ZgwksJ+eL5zHmjQ7xeCPPvIwhAqYrG/daHyZGA==
+
+vue-uuid@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/vue-uuid/-/vue-uuid-3.0.0.tgz#0c0ed8345040a78adad2185b40415979090079de"
+  integrity sha512-+5DP857xVmTHYd00dMC1c1gVg/nxG6+K4Lepojv9ckHt8w0fDpGc5gQCCttS9D+AkSkTJgb0cekidKjTWu5OQQ==
+  dependencies:
+    "@types/uuid" "^8.3.4"
+    uuid "^8.3.2"
 
 vue2-dropzone@^3.6.0:
   version "3.6.0"

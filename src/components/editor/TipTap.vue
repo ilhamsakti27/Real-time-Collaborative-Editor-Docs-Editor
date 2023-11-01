@@ -1,13 +1,8 @@
 <!-- eslint-disable -->
 <template>
     <div class="flex">
-        <div class=" absolute top-4 left-4 w-[20%]">
-            <div class="flex gap-x-3 mb-4 border p-2 w-max max-w-md overflow-x-scroll">
-                <div v-for="(item, index) in users" :key="index" class="flex gap-x-2 items-center">
-                    <span v-html="item[1].user.avatar" class="rounded-[50%] w-[20px] h-[20px]" />
-                    <div class="">{{ index === 0 ? 'Me' : item[1].user.name }}</div>
-                </div>
-            </div>
+        <div class=" absolute top-20 left-4 w-[20%]">
+
             <div class="">Online: {{ total }}</div>
             <div>Status: {{ status }}</div>
             <div>Your Name: {{ currentUser.name }}</div>
@@ -72,13 +67,11 @@ import { Editor } from '@tiptap/core'
 import { BubbleMenu, EditorContent, FloatingMenu } from '@tiptap/vue-2'
 import defaultExtension from './extensions'
 
-// slash menu
-import Collaboration from '@tiptap/extension-collaboration'
-import { HocuspocusProvider } from '@hocuspocus/provider'
-import * as Y from 'yjs'
-import { v4 as uuidv4 } from 'uuid'
 
 // collaboration
+import { HocuspocusProvider } from '@hocuspocus/provider'
+import * as Y from 'yjs'
+import Collaboration from '@tiptap/extension-collaboration'
 import CollaborationCursor from './extensions/collaborationCursor'
 
 // buttons for bubble menu
@@ -86,16 +79,18 @@ import ColorButton from './tools/buttons/ColorButton.vue'
 import FontFamilyButton from './tools/buttons/FontFamilyButton.vue'
 import inlineToolsBtn from './tools/buttons/InlineButton.vue'
 
+// floating-menu
+import { showActionMenu } from './floating-menu/action'
+import { showNewNode } from './floating-menu/newnode'
+
+// utils
 import {
     DragNode,
-    MoveNode,
     GetTopLevelBlockCoords,
     GetTableColumnCoords,
     GetTableRowCoords,
     GetTopLevelNode,
 } from './utils/pm-utils.js'
-import { showActionMenu } from './floating-menu/action'
-import { showNewNode } from './floating-menu/newnode'
 import { mergeArrays } from './utils/utils'
 import defaultBlockTools from './tools/block-tools'
 
@@ -103,11 +98,13 @@ const ydoc = new Y.Doc()
 const getRandomElement = list => list[Math.floor(Math.random() * list.length)]
 
 const provider = new HocuspocusProvider({
-    url: 'wss://editorhocus.oriens.my.id/',
+    url: 'wss://api.server.rosfandy.my.id/',
     // url: 'ws://localhost:1234/',
     name: 'example-document',
     document: ydoc,
 })
+
+import { uuid } from 'vue-uuid';
 
 export default {
     components: {
@@ -131,7 +128,7 @@ export default {
     data() {
         return {
             currentUser: JSON.parse(localStorage.getItem('currentUser')) || {
-                id: uuidv4(),
+                id: uuid.v4(),
                 name: 'anonymous',
                 color: this.getRandomColor(),
                 avatar: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"> <g fill="#54595d"> <path d="M10 11c-5.92 0-8 3-8 5v3h16v-3c0-2-2.08-5-8-5z"/> <circle cx="10" cy="5.5" r="4.5"/></g></svg>',
@@ -201,6 +198,7 @@ export default {
             this.awareness = this.buatMapBaru(provider.awareness.getStates())
             this.users = this.awareness
             this.total = this.awareness.size
+            this.$emit('update:dataUsers', this.users);
         })
         provider.on('status', evt => {
             this.status = evt.status
@@ -243,28 +241,18 @@ export default {
             )
         },
         handleNewLine(event) {
-            if (event.target.tagName.toLowerCase() === 'svg') {
-                this.isNewNode = true
-                if (this.topLevelNodeType !== 'title') { showNewNode(this.editor, this.topLevelNodeType, this.isNewNode) }
-            } else {
-                this.isNewNode = false
-                if (this.topLevelNodeType !== 'title') { showNewNode(this.editor, this.topLevelNodeType, this.isNewNode) }
-            }
+            this.isNewNode = true
+            if (this.topLevelNodeType !== 'title') { showNewNode(this.editor, this.topLevelNodeType, this.isNewNode) }
         },
         handleSubMenu(event) {
-            if (event.target.tagName.toLowerCase() === 'svg') {
-                this.isSubMenu = true
-                if (this.topLevelNodeType !== 'title') { showActionMenu(this.editor, this.topLevelNodeType, this.isSubMenu) }
-            } else {
-                this.isSubMenu = false
-                if (this.topLevelNodeType !== 'title') { showActionMenu(this.editor, this.topLevelNodeType, this.isSubMenu) }
-            }
+            this.isSubMenu = true
+            if (this.topLevelNodeType !== 'title') { showActionMenu(this.editor, this.topLevelNodeType, this.isSubMenu) }
         },
         buatMapBaru(dataMap) {
             const mapBaru = new Map()
             for (const [key, value] of dataMap) {
                 const userId = value.user.id
-                if (!mapBaru.has(userId) && Object.keys(value).length !== 0) {
+                if (!mapBaru.has(userId)) {
                     mapBaru.set(userId, value)
                 }
             }
@@ -277,9 +265,10 @@ export default {
             const name = (window.prompt('Name') || '')
                 .trim()
                 .substring(0, 32)
-
+            const id = uuid.v4()
             if (name) {
                 return this.updateCurrentUser({
+                    id,
                     name,
                 })
             }
@@ -287,7 +276,6 @@ export default {
         updateCurrentUser(attributes) {
             this.currentUser = { ...this.currentUser, ...attributes }
             this.editor.chain().focus().updateUser(this.currentUser).run()
-
             localStorage.setItem('currentUser', JSON.stringify(this.currentUser))
         },
         getRandomColor() {
@@ -303,13 +291,11 @@ export default {
         },
         addImage() {
             const url = window.prompt('URL')
-
             if (url) {
                 this.editor.chain().focus().setImage({ src: url }).run()
             }
         },
         startDragging(event) {
-            console.log('drag')
             const coords = { left: event.clientX + 48, top: event.clientY }
             if (this.editor.view.posAtCoords(coords)) {
                 this.draggedNodePosition = this.editor.view.posAtCoords(coords).pos
@@ -317,7 +303,6 @@ export default {
             }
         },
         endDragging(event) {
-            console.log('stop drag')
             const targetNodeFromCoords = this.editor.view.posAtCoords({
                 left: event.clientX + 20,
                 top: event.clientY,

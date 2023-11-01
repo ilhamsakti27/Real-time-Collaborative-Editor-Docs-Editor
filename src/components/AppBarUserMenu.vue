@@ -1,37 +1,17 @@
+<!-- eslint-disable vue/max-attributes-per-line -->
 <template>
-  <v-menu
-    offset-y
-    left
-    nudge-bottom="14"
-    min-width="230"
-    content-class="user-profile-menu-content"
-  >
+  <v-menu offset-y left nudge-bottom="14" min-width="230" content-class="user-profile-menu-content">
     <template v-slot:activator="{ on, attrs }">
-      <v-avatar
-        size="40px"
-        v-bind="attrs"
-        color="primary"
-        class="v-avatar-light-bg primary--text ms-4"
-        v-on="on"
-      >
+      <v-avatar size="40px" v-bind="attrs" color="primary" class="v-avatar-light-bg primary--text ms-4" v-on="on">
         <v-img :src="require('@/assets/images/avatars/1.png')" />
       </v-avatar>
     </template>
     <v-list>
       <div class="pb-3 pt-2">
-        <v-avatar
-          offset-x="12"
-          offset-y="12"
-          size="40px"
-          color="primary"
-          class="ms-4 v-avatar-light-bg primary--text"
-        >
+        <v-avatar offset-x="12" offset-y="12" size="40px" color="primary" class="ms-4 v-avatar-light-bg primary--text">
           <v-img :src="require('@/assets/images/avatars/1.png')" />
         </v-avatar>
-        <div
-          class="d-inline-flex flex-column justify-center ms-3"
-          style="vertical-align:middle"
-        >
+        <div class="d-inline-flex flex-column justify-center ms-3" style="vertical-align:middle">
           <span class="text--primary font-weight-semibold mb-n1">
             John Doe
           </span>
@@ -77,11 +57,7 @@
         </v-list-item-content>
 
         <v-list-item-action>
-          <v-badge
-            inline
-            color="error"
-            content="2"
-          />
+          <v-badge inline color="error" content="2" />
         </v-list-item-action>
       </v-list-item>
 

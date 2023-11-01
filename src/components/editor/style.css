@@ -26,10 +26,6 @@
   pointer-events: none;
 }
 
-[disabled] {
-  color:red
-}
-
 .editor-canvas {
   padding: 0% 10% 0% 25%;
 }
@@ -103,6 +99,7 @@
 h1.title {
   font-size: 3rem; /* 36px */
   line-height: 2.5rem; /* 40px */
+  margin-bottom: 36px;
   @apply border-b pb-12 font-bold
 }
 h1.heading {
