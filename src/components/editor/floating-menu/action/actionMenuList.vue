@@ -27,16 +27,6 @@
 
 <!-- eslint-disable -->
 <script>
-import { ref, onMounted, computed, nextTick } from 'vue'
-import {
-    DragNode,
-    MoveNode,
-    GetTopLevelBlockCoords,
-    GetTableColumnCoords,
-    GetTableRowCoords,
-    GetTopLevelNode,
-} from "../../utils/pm-utils.js";
-
 export default {
     props: {
         items: {
@@ -52,6 +42,8 @@ export default {
         isSubMenu: {
             required: true
         },
+        isNodeUp: true,
+        isNodeDown: true,
     },
 
     data() {
@@ -69,7 +61,14 @@ export default {
                     return this.editor.isActive('highlight')
                 } else if (item.ref === 'unsetColorBtn') {
                     return this.editor.isActive('textStyle')
+                } else if (item.ref === 'moveUpBtn') {
+                    let isFilter = this.canMoveNodeUp()
+                    return isFilter
+                } else if (item.ref === 'moveDownBtn') {
+                    let isFilter = this.canMoveNodeDown()
+                    return isFilter
                 }
+
                 return true;
             });
         },
@@ -92,7 +91,11 @@ export default {
             }
             const item = this.items[this.selectedIndex]
             if (item) {
-                item.command(this.editor, this.topLevelNodeType)
+                if (item.ref === 'moveUpBtn' || item.ref === 'moveDownBtn') {
+                    item.command(this.editor, this.topLevelNodeType, this.isNodeUp)
+                } else {
+                    item.command(this.editor, this.topLevelNodeType)
+                }
             }
         },
         upHandler() {
@@ -138,7 +141,6 @@ export default {
             }
         },
         enterHandler() {
-            // alert(this.selectedIndex)
             this.selectItem(this.selectedIndex)
         },
         keyDownHandler(event) {
@@ -157,8 +159,20 @@ export default {
                         break;
                 }
             }
-        }
-
+        },
+        canMoveNodeDown() {
+            const selectionStart = this.editor.view.state.selection.$from
+            return selectionStart.index(0) < selectionStart.node(0).childCount - 1
+        },
+        canMoveNodeUp() {
+            const selectionStart = this.editor.view.state.selection.$from
+            if (selectionStart.index(0) === 1) {
+                this.isNodeUp = false
+            } else {
+                this.isNodeUp = true
+            }
+            return selectionStart.index(0) > 1
+        },
     },
 }
 </script>

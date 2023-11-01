@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { VueRenderer } from '@tiptap/vue-2'
 import tippy from 'tippy.js'
-import newNodeItems from './newNodeItems' // Assuming you have a file named floating.js
+import newNodeItems from './newNodeItems'
 import newNodeList from './newNodeList.vue'
 
-let floatingComponent = null // Declare a variable to hold the VueRenderer instance
+let floatingComponent = null
 
 export function showNewNode(editor, topLevelNodeType, isNewNode) {
   if (isNewNode) {

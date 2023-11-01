@@ -81,4 +81,3 @@ const Placeholder = Extension.create({
 })
 
 export { Placeholder, Placeholder as default }
-// # sourceMappingURL=index.js.map

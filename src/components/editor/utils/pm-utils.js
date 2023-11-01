@@ -110,30 +110,32 @@ export const DragNode = function ({
 }) {
   let targetResolved = state.doc.resolve(targetNodePosition);
   let draggedNode = state.doc.resolve(draggedNodePosition).node(1);
-  let targetNode = targetResolved.node(1);
-  let tr = view.state.tr;
-  const parent = targetResolved.node(0);
-  const parentPos = targetResolved.start(0);
+  if (draggedNode) {
+    console.log(targetResolved)
+    let targetNode = targetResolved.node(1);
+    let tr = view.state.tr;
+    const parent = targetResolved.node(0);
+    const parentPos = targetResolved.start(0);
 
-  const arr = mapChildren(parent, (node) => node);
-  let fromIndex = arr.indexOf(draggedNode);
-  console.log(fromIndex)
-  let targetIndex = arr.indexOf(targetNode);
-  let replaceStart = parentPos;
-  let replaceEnd = targetResolved.end(0);
-  let arrItem = arr[fromIndex];
-  arr.splice(fromIndex, 1);
-  arr.splice(targetIndex, 0, arrItem);
-  try {
+    const arr = mapChildren(parent, (node) => node);
+    let fromIndex = arr.indexOf(draggedNode);
+    let targetIndex = arr.indexOf(targetNode);
+    let replaceStart = parentPos;
+    let replaceEnd = targetResolved.end(0);
+    let arrItem = arr[fromIndex];
+    arr.splice(fromIndex, 1);
+    arr.splice(targetIndex, 0, arrItem);
+    try {
 
-    const slice = new Slice(Fragment.fromArray(arr), 0, 0);
-    tr.step(new ReplaceStep(replaceStart, replaceEnd, slice, false));
+      const slice = new Slice(Fragment.fromArray(arr), 0, 0);
+      tr.step(new ReplaceStep(replaceStart, replaceEnd, slice, false));
 
-    tr.setSelection(Selection.near(tr.doc.resolve(targetNodePosition)));
+      tr.setSelection(Selection.near(tr.doc.resolve(targetNodePosition)));
 
-    view.dispatch(tr);
-  } catch (error) {
-    throw (error)
+      view.dispatch(tr);
+    } catch (error) {
+      throw (error)
+    }
   }
 
 };
@@ -152,12 +154,11 @@ export const MoveNode = function ({ view, dir, currentResolved }) {
   const arr = mapChildren(parent, (node) => node);
   let index = arr.indexOf(currentNode);
 
-  if (index == -1) {
+  if (index == 0) {
     return false;
   }
 
   let swapWithIndex = isDown ? index + 1 : index - 1;
-
   // If swap is out of bound
   if (swapWithIndex >= arr.length || swapWithIndex < 0) {
     return false;
@@ -170,6 +171,7 @@ export const MoveNode = function ({ view, dir, currentResolved }) {
   let replaceEnd = currentResolved.end(parentDepth);
 
   const slice = new Slice(Fragment.fromArray(arr), 0, 0);
+  const selectionStart = view.state.selection.$from
   tr.step(new ReplaceStep(replaceStart, replaceEnd, slice, false));
 
   tr.setSelection(

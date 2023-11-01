@@ -9,10 +9,10 @@ const floatingItems = [
         ref: 'moveUpBtn',
         desc: 'Move up current block',
         icon: '<svg width="24" height="24"  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true" focusable="false"><path d="M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z"></path></svg>',
-        command: (editor, node) => {
+        command: (editor, node, isNodeUp) => {
             MoveNode({
                 view: editor.view,
-                dir: 'UP',
+                dir: isNodeUp ? 'UP' : 'DOWN',
                 currentResolved: editor.view.state.selection.$from,
             });
         }
@@ -22,7 +22,7 @@ const floatingItems = [
         ref: 'moveDownBtn',
         desc: 'Move down current block',
         icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" aria-hidden="true" viewBox="0 0 24 24" ><path d="M17.5 11.6 12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z" /></svg>',
-        command: (editor, node) => {
+        command: (editor, node, isNodeUp) => {
             MoveNode({
                 view: editor.view,
                 dir: 'DOWN',

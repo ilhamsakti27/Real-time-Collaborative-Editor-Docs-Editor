@@ -26,8 +26,6 @@
 
 <!-- eslint-disable -->
 <script>
-import tippy from 'tippy.js'
-
 export default {
     props: {
         items: {
