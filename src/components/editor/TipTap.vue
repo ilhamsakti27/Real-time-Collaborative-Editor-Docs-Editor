@@ -117,7 +117,6 @@ const getRandomElement = list => list[Math.floor(Math.random() * list.length)]
 
 const provider = new HocuspocusProvider({
     url: 'wss://api.server.rosfandy.my.id/',
-    // url: 'ws://localhost:1234/',
     name: 'example-document',
     document: ydoc,
 })
