@@ -78,7 +78,7 @@ export default {
             const item = this.allInlineTools[index]
             if (item.command)
                 item.command(this.editor)
-        }
+        },
     },
 };
 </script>

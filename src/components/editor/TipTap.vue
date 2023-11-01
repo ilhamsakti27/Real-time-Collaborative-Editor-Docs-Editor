@@ -1,13 +1,8 @@
 <!-- eslint-disable -->
 <template>
     <div class="flex">
-        <div class=" absolute top-4 left-4 w-[20%]">
-            <div class="flex gap-x-3 mb-4 border p-2 w-max max-w-md overflow-x-scroll">
-                <div v-for="(item, index) in users" :key="index" class="flex gap-x-2 items-center">
-                    <span v-html="item[1].user.avatar" class="rounded-[50%] w-[20px] h-[20px]" />
-                    <div class="">{{ index === 0 ? 'Me' : item[1].user.name }}</div>
-                </div>
-            </div>
+        <div class=" absolute top-20 left-4 w-[20%]">
+
             <div class="">Online: {{ total }}</div>
             <div>Status: {{ status }}</div>
             <div>Your Name: {{ currentUser.name }}</div>
@@ -69,7 +64,7 @@
 
             <BubbleMenu :editor="editor" :tippy-options="{
                 duration: 100, placement: 'top-start',
-            }" v-if="editor" id="bubbleMenu" class="flex items-center">
+            }" v-if="editor" v-show="topLevelNodeType !== 'title'" id="bubbleMenu" class="flex items-center">
                 <ColorButton class="bubble-menu-btn border-r bored-black" :editor="editor" />
                 <inlineToolsBtn :editor="editor" class="" />
                 <FontFamilyButton class="bubble-menu-btn border-r" :editor="editor" />
@@ -86,42 +81,14 @@
 // tiptap extension
 import { Editor } from '@tiptap/core'
 import { BubbleMenu, EditorContent, FloatingMenu } from '@tiptap/vue-2'
-import StarterKit from '@tiptap/starter-kit'
-import Placeholder from './custom-extension/placeholder'
-import Focus from '@tiptap/extension-focus'
-import Heading from '@tiptap/extension-heading'
-import ListItem from '@tiptap/extension-list-item'
-import OrderedList from '@tiptap/extension-ordered-list'
-import BulletList from '@tiptap/extension-bullet-list'
-import { ColumnExtension, } from "./custom-extension/column"
-import Blockquote from '@tiptap/extension-blockquote'
-import HorizontalRule from '@tiptap/extension-horizontal-rule'
-import TaskItem from '@tiptap/extension-task-item'
-import TaskList from '@tiptap/extension-task-list'
-import Underline from '@tiptap/extension-underline'
-import { Color } from '@tiptap/extension-color'
-import TextStyle from '@tiptap/extension-text-style'
-import Link from '@tiptap/extension-link'
-import FontFamily from '@tiptap/extension-font-family'
-import Image from '@tiptap/extension-image'
-import Dropcursor from '@tiptap/extension-dropcursor'
-import Superscript from '@tiptap/extension-superscript'
-import Subscript from '@tiptap/extension-subscript'
-import Typography from '@tiptap/extension-typography'
-import Highlight from '@tiptap/extension-highlight'
+import defaultExtension from './extensions'
 
-// slash menu
-import Commands from './tools/commands/commands.js'
-import suggestion from './tools/commands/suggestion.js'
-
-// drag feature
-import DraggableItem from './tools/drag/DraggableItem.js'
 
 // collaboration
-import Collaboration from '@tiptap/extension-collaboration'
 import { HocuspocusProvider } from '@hocuspocus/provider'
-// cursor collaboration
-import CollaborationCursor from './custom-extension/collaborationCursor'
+import * as Y from 'yjs'
+import Collaboration from '@tiptap/extension-collaboration'
+import CollaborationCursor from './extensions/collaborationCursor'
 
 // buttons for bubble menu
 import ColorButton from './tools/buttons/ColorButton.vue'
@@ -130,43 +97,33 @@ import inlineToolsBtn from './tools/buttons/InlineButton.vue'
 import ImageView from './tools/buttons/popupImage/popupImage.vue'
 
 
-import * as Y from 'yjs'
+// floating-menu
+import { showActionMenu } from './floating-menu/action'
+import { showNewNode } from './floating-menu/newnode'
 
+// utils
 import {
     DragNode,
-    MoveNode,
     GetTopLevelBlockCoords,
     GetTableColumnCoords,
     GetTableRowCoords,
     GetTopLevelNode,
-} from "./utils/pm-utils.js";
-import { showActionMenu } from "./floating-menu/action"
-import { showNewNode } from "./floating-menu/newnode"
-import { mergeArrays } from "./utils/utils";
-import defaultBlockTools from "./tools/block-tools";
-import { DocumentWithTitle, Title } from './custom-extension/title'
-import { v4 as uuidv4 } from 'uuid';
+} from './utils/pm-utils.js'
+import { mergeArrays } from './utils/utils'
+import defaultBlockTools from './tools/block-tools'
 
 const ydoc = new Y.Doc()
 const getRandomElement = list => list[Math.floor(Math.random() * list.length)]
 
 const provider = new HocuspocusProvider({
-    url: 'wss://editorhocus.oriens.my.id/',
+    url: 'wss://api.server.rosfandy.my.id/',
     // url: 'ws://localhost:1234/',
     name: 'example-document',
     document: ydoc,
 })
+import { uuid } from 'vue-uuid';
 
 export default {
-    props: {
-        editorClass: {
-            type: String,
-        },
-        blockTools: {
-            type: Array,
-            default: () => [],
-        },
-    },
     components: {
         EditorContent,
         BubbleMenu,
@@ -177,13 +134,22 @@ export default {
         FontFamilyButton,
         ImageView,
     },
+    props: {
+        editorClass: {
+            type: String,
+        },
+        blockTools: {
+            type: Array,
+            default: () => [],
+        },
+    },
     data() {
         return {
             currentUser: JSON.parse(localStorage.getItem('currentUser')) || {
-                id: uuidv4(),
+                id: uuid.v4(),
                 name: 'anonymous',
                 color: this.getRandomColor(),
-                avatar: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"> <g fill="#54595d"> <path d="M10 11c-5.92 0-8 3-8 5v3h16v-3c0-2-2.08-5-8-5z"/> <circle cx="10" cy="5.5" r="4.5"/> </g> </svg>',
+                avatar: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"> <g fill="#54595d"> <path d="M10 11c-5.92 0-8 3-8 5v3h16v-3c0-2-2.08-5-8-5z"/> <circle cx="10" cy="5.5" r="4.5"/></g></svg>',
             },
             tippy: {
                 maxWidth: '350',
@@ -191,19 +157,18 @@ export default {
                 animation: 'fade',
                 duration: 300,
                 getReferenceClientRect: this.getMenuCoords,
-                onCreate: (instance) =>
-                    instance.popper.classList.add(
-                        'max-md:!sticky',
-                        'max-md:!bottom-0',
-                        'max-md:!top-auto',
-                        'max-md:!transform-none'
-                    ),
+                onCreate: instance => instance.popper.classList.add(
+                    'max-md:!sticky',
+                    'max-md:!bottom-0',
+                    'max-md:!top-auto',
+                    'max-md:!transform-none',
+                ),
             },
             editor: null,
             isEditable: true,
             total: 0,
             users: '',
-            status: "",
+            status: '',
             dragging: false,
             draggedNodePosition: null,
             isMenuVisible: false,
@@ -218,36 +183,32 @@ export default {
             allBlockTools: mergeArrays(defaultBlockTools(), this.blockTools),
         }
     },
+    computed: {
+        activeAlignmentTools() {
+            if (this.topLevelNodeType) {
+                return this.allAlignmentTools.filter(alignmentToolGroup => alignmentToolGroup.find(tool => tool.isActiveTest(this.editor, this.topLevelNodeType)))
+            }
+            return null
+        },
+    },
     watch: {
         isEditable(value) {
             this.editor.setEditable(value)
         },
         topLevelNodeType() {
-            this.currentBlockTool = this.getCurrentBlockTool();
-        },
-    },
-    computed: {
-        activeAlignmentTools() {
-            if (this.topLevelNodeType) {
-                return this.allAlignmentTools.filter((alignmentToolGroup) =>
-                    alignmentToolGroup.find((tool) =>
-                        tool.isActiveTest(this.editor, this.topLevelNodeType)
-                    )
-                );
-            } else {
-                return null;
-            }
+            this.currentBlockTool = this.getCurrentBlockTool()
         },
     },
     mounted() {
-        document.addEventListener('keydown', (e) => {
+        document.addEventListener('keydown', e => {
             if (e.key === 'Enter') {
                 if (this.editor.isActive('highlight') && this.editor.isActive('textStyle')) {
-                    this.editor.chain().focus().unsetHighlight().unsetColor().run();
+                    this.editor.chain().focus().unsetHighlight().unsetColor()
+                        .run()
                 } else if (this.editor.isActive('highlight')) {
-                    this.editor.chain().focus().unsetHighlight().run();
+                    this.editor.chain().focus().unsetHighlight().run()
                 } else if (this.editor.isActive('textStyle')) {
-                    this.editor.chain().focus().unsetColor().run();
+                    this.editor.chain().focus().unsetColor().run()
                 }
             }
         })
@@ -255,189 +216,77 @@ export default {
             this.awareness = this.buatMapBaru(provider.awareness.getStates())
             this.users = this.awareness
             this.total = this.awareness.size
+            this.$emit('update:dataUsers', this.users);
         })
         provider.on('status', evt => {
             this.status = evt.status
         })
         this.editor = new Editor({
             extensions: [
-                DocumentWithTitle,
-                Title,
-                StarterKit.configure({
-                    history: false,
-                    blockquote: false,
-                    document: false,
-                }),
-                Highlight.configure({ multicolor: true }),
-                Placeholder.configure({
-                    placeholder: ({ node }) => {
-                        let text = `Write something … or type '/' to choose block`
-                        switch (node.type.name) {
-                            case 'title':
-                                text = 'Untitled'
-                                break;
-                            case 'heading':
-                                text = 'Heading'
-                                break;
-                            case 'codeBlock':
-                                text = 'place your code'
-                                break;
-                            default:
-                                break;
-                        }
-                        return text
-                    },
-                    showOnlyCurrent: false,
-                    includeChildren: true
-                }),
-                // Focus.configure({
-                //     className: 'has-focus',
-                //     mode: 'deepest'
-                // }),
-                Heading.configure({
-                    levels: [1, 2, 3],
-                    HTMLAttributes: {
-                        class: 'heading',
-                    },
-                }),
-                Commands.configure({
-                    suggestion,
-                }),
-                OrderedList.configure({
-                    HTMLAttributes: {
-                        class: 'orderedList',
-                    },
-                }),
-                BulletList.configure({
-                    HTMLAttributes: {
-                        class: 'bulletedList',
-                    },
-                }),
-                ColumnExtension,
-                ListItem,
-                Blockquote.configure({
-                    HTMLAttributes: {
-                        class: 'blockquote',
-                    },
-                }),
-                DraggableItem,
-                HorizontalRule.configure({
-                    HTMLAttributes: {
-                        class: 'separator',
-                    },
-                }),
-                TaskList,
-                TaskItem.configure({
-                    HTMLAttributes: {
-                        class: 'todoList',
-                    },
-                    nested: true,
-                }),
-                Underline,
-                TextStyle,
-                Color,
-                Link,
-                FontFamily,
-                Image,
-                Dropcursor,
-                // History,
-                Superscript.configure({
-                    HTMLAttributes: {
-                        class: 'superscript',
-                    },
-                }),
-                Subscript.configure({
-                    HTMLAttributes: {
-                        class: 'subscript',
-                    },
-                }),
-                Typography,
+                ...defaultExtension,
                 Collaboration.configure({
                     document: provider.document,
                 }),
                 CollaborationCursor.configure({
-                    provider: provider,
-                    user: this.currentUser
+                    provider,
+                    user: this.currentUser,
                 }),
             ],
             onUpdate: () => {
-                this.updateToolbar();
-                this.$emit('input', this.editor.getJSON().content) // jika mau langsung isi pada key 'content'nya
+                this.updateToolbar()
+                this.$emit('input', this.editor.getJSON().content)
             },
             onSelectionUpdate: () => {
-                this.updateToolbar();
+                this.updateToolbar()
                 // this.nodeTree = GetNodeTree(this.editor.view);
             },
         })
-
     },
     beforeDestroy() {
         this.editor.destroy()
     },
     methods: {
         getTopLevelNodeType() {
-            return GetTopLevelNode(this.editor.view)?.type.name;
+            return GetTopLevelNode(this.editor.view)?.type.name
         },
         updateToolbar() {
-            this.topLevelNodeType = this.getTopLevelNodeType();
+            this.topLevelNodeType = this.getTopLevelNodeType()
         },
         getCurrentBlockTool() {
             return this.allBlockTools.find(
-                (tool) =>
-                    tool.name == this.topLevelNodeType ||
-                    tool.tools?.find((tool) => tool.name == this.topLevelNodeType)
-            );
+                tool => tool.name == this.topLevelNodeType
+                    || tool.tools?.find(tool => tool.name == this.topLevelNodeType),
+            )
         },
         handleNewLine(event) {
-            if (event.target.tagName.toLowerCase() === 'svg') {
-                // Hide the submenu when there's a click outside the component
-                this.isNewNode = true;
-                if (this.topLevelNodeType !== 'title')
-                    showNewNode(this.editor, this.topLevelNodeType, this.isNewNode);
-            } else {
-                // Show the submenu when there's a click inside the component
-                this.isNewNode = false;
-                if (this.topLevelNodeType !== 'title')
-                    showNewNode(this.editor, this.topLevelNodeType, this.isNewNode);
-            }
+            this.isNewNode = true
+            if (this.topLevelNodeType !== 'title') { showNewNode(this.editor, this.topLevelNodeType, this.isNewNode) }
         },
         handleSubMenu(event) {
-            if (event.target.tagName.toLowerCase() === 'svg') {
-                // Hide the submenu when there's a click outside the component
-                this.isSubMenu = true;
-                if (this.topLevelNodeType !== 'title')
-                    showActionMenu(this.editor, this.topLevelNodeType, this.isSubMenu);
-            } else {
-                // Show the submenu when there's a click inside the component
-                this.isSubMenu = false;
-                if (this.topLevelNodeType !== 'title')
-                    showActionMenu(this.editor, this.topLevelNodeType, this.isSubMenu);
-            }
+            this.isSubMenu = true
+            if (this.topLevelNodeType !== 'title') { showActionMenu(this.editor, this.topLevelNodeType, this.isSubMenu) }
         },
         buatMapBaru(dataMap) {
-            const mapBaru = new Map();
-
+            const mapBaru = new Map()
             for (const [key, value] of dataMap) {
-                const userId = value.user.id;
-
-                if (!mapBaru.has(userId) && Object.keys(value).length !== 0) {
-                    mapBaru.set(userId, value);
+                const userId = value.user.id
+                if (!mapBaru.has(userId)) {
+                    mapBaru.set(userId, value)
                 }
             }
-
-            return mapBaru;
+            return mapBaru
         },
-
         shouldShowMainToolbar() {
-            return this.editor.isActive();
+            return this.editor.isActive()
         },
         gantiNama() {
             const name = (window.prompt('Name') || '')
                 .trim()
                 .substring(0, 32)
-
+            const id = uuid.v4()
             if (name) {
                 return this.updateCurrentUser({
+                    id,
                     name,
                 })
             }
@@ -445,7 +294,6 @@ export default {
         updateCurrentUser(attributes) {
             this.currentUser = { ...this.currentUser, ...attributes }
             this.editor.chain().focus().updateUser(this.currentUser).run()
-
             localStorage.setItem('currentUser', JSON.stringify(this.currentUser))
         },
         getRandomColor() {
@@ -461,40 +309,37 @@ export default {
         },
         addImage() {
             const url = window.prompt('URL')
-
             if (url) {
                 this.editor.chain().focus().setImage({ src: url }).run()
             }
         },
         startDragging(event) {
-            console.log('drag')
-            let coords = { left: event.clientX + 48, top: event.clientY };
+            const coords = { left: event.clientX + 48, top: event.clientY }
             if (this.editor.view.posAtCoords(coords)) {
-                this.draggedNodePosition = this.editor.view.posAtCoords(coords).pos;
-                this.dragging = true;
+                this.draggedNodePosition = this.editor.view.posAtCoords(coords).pos
+                this.dragging = true
             }
         },
         endDragging(event) {
-            console.log('stop drag')
-            let targetNodeFromCoords = this.editor.view.posAtCoords({
+            const targetNodeFromCoords = this.editor.view.posAtCoords({
                 left: event.clientX + 20,
                 top: event.clientY,
-            });
+            })
             if (targetNodeFromCoords) {
                 DragNode({
                     view: this.editor.view,
                     state: this.editor.state,
                     draggedNodePosition: this.draggedNodePosition,
                     targetNodePosition: targetNodeFromCoords.pos,
-                });
+                })
             }
-            this.dragging = false;
-            this.draggedNode = null;
+            this.dragging = false
+            this.draggedNode = null
         },
         getMenuCoords() {
-            let coord = GetTopLevelBlockCoords(this.editor.view)
-            let val = coord.left - 12
-            let updatedCoord = {
+            const coord = GetTopLevelBlockCoords(this.editor.view)
+            const val = coord.left - 12
+            const updatedCoord = {
                 bottom: coord.bottom,
                 height: coord.height,
                 left: val,
@@ -503,39 +348,17 @@ export default {
                 width: coord.width,
                 x: coord.x,
                 y: coord.y,
-            };
-            return updatedCoord;
+            }
+
+            return updatedCoord
         },
         getTableRowMenuCoords() {
-            return GetTableRowCoords(this.editor.view);
+            return GetTableRowCoords(this.editor.view)
         },
         getTableColumnMenuCoords() {
-            return GetTableColumnCoords(this.editor.view);
-        },
-        moveNode(dir = "UP") {
-            MoveNode({
-                view: this.editor.view,
-                dir: dir,
-                currentResolved: this.editor.view.state.selection.$from,
-            });
-        },
-        canMoveNodeDown() {
-            const selectionStart = this.editor.view.state.selection.$from;
-            return selectionStart.index(0) < selectionStart.node(0).childCount - 1;
-        },
-
-        canMoveNodeUp() {
-            const selectionStart = this.editor.view.state.selection.$from;
-            return selectionStart.index(0) > 0;
+            return GetTableColumnCoords(this.editor.view)
         },
     },
-    directives: {
-        draggableItem: {
-            inserted: function (el) {
-                el.setAttribute('data-type', 'draggable-item');
-            }
-        }
-    }
 }
 </script>
 
@@ -569,4 +392,4 @@ export default {
     border-radius: 3px 3px 3px 0;
     white-space: nowrap;
 }
-</style>./floating-menu/submenu/actionMenu./floating-menu/action/submenu./floating-menu/action./floating-menu/newnode
+</style>
