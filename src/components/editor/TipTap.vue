@@ -78,8 +78,7 @@
             <editor-content id="editor" :editor="editor" :value="editor.getAttributes('textStyle').color" />
         </div>
 
-        </div>
-</div>
+    </div>
 </template>
 
 <script>
