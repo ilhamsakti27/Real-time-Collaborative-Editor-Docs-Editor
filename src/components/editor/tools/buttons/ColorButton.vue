@@ -1,6 +1,6 @@
 <!-- eslint-disable -->
 <template>
-  <div id="color-menu" class="dropbtn">
+  <div id="color-menu" class="dropbtn" data-tooltip="Color font">
     <div ref="colorMenu" class="">
       <button>
         <!-- text color icon -->
