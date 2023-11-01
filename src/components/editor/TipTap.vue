@@ -53,7 +53,7 @@
 
             <BubbleMenu :editor="editor" :tippy-options="{
                 duration: 100, placement: 'top-start',
-            }" v-if="editor" id="bubbleMenu" class="flex items-center">
+            }" v-if="editor" v-show="topLevelNodeType !== 'title'" id="bubbleMenu" class="flex items-center">
                 <ColorButton class="bubble-menu-btn border-r bored-black" :editor="editor" />
                 <inlineToolsBtn :editor="editor" class="" />
                 <FontFamilyButton class="bubble-menu-btn border-r" :editor="editor" />
