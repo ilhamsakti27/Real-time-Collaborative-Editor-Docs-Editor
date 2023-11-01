@@ -1,84 +1,93 @@
 <!-- eslint-disable -->
 <template>
-    <div class="flex">
-        <div class=" absolute top-4 left-4 w-[20%]">
-            <div class="flex gap-x-3 mb-4 border p-2 w-max max-w-md overflow-x-scroll">
-                <div v-for="(item, index) in users" :key="index" class="flex gap-x-2 items-center">
-                    <span v-html="item[1].user.avatar" class="rounded-[50%] w-[20px] h-[20px]" />
-                    <div class="">{{ index === 0 ? 'Me' : item[1].user.name }}</div>
-                </div>
-            </div>
-            <div class="">Online: {{ total }}</div>
-            <div>Status: {{ status }}</div>
-            <div>Your Name: {{ currentUser.name }}</div>
-            <div class="my-4">
-                <button class="bg-gray-200 border border-black px-2" @click="gantiNama">
-                    Ganti Nama
-                </button>
-            </div>
+    <div>
+        
+        <div class="justify-center">
+            <ImageView :editor="editor" ></ImageView>
         </div>
+        
+        <div class="flex">
+            <!-- image pop up -->
 
-
-        <div v-if="editor" class="editor-canvas w-full">
-            <floating-menu pluginKey="" @dragend="endDragging($event)" :draggable="dragging"
-                :should-show="shouldShowMainToolbar" v-if="editor" :editor="editor" :class="{
-                    'mouse:pointer-events-none mouse:opacity-0': isTyping,
-                }" :tippy-options="{
-    maxWidth: '350',
-    placement: 'left-start',
-    animation: 'fade',
-    duration: 300,
-    getReferenceClientRect: getMenuCoords,
-    onCreate: (instance) =>
-        instance.popper.classList.add(
-            'max-md:!sticky',
-            'max-md:!bottom-0',
-            'max-md:!top-auto',
-            'max-md:!transform-none'
-        ),
-}">
-                <div v-if="topLevelNodeType !== 'title'" class="flex flex-row">
-                    <div class="" id="submenu"></div>
-                    <div class="">
-                        <button ref="newLineBtn" @keydown.enter.prevent @click="handleNewLine($event)" @mouseup="
-                            draggedNodePosition = false;
-                        dragging = false;
-                        " class="ml-1 my-2 hover:bg-slate-100 rounded">
-                            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 24">
-                                <path d="M16 9h-5V4H9v5H4v2h5v5h2v-5h5V9z" />
-                            </svg>
-                        </button>
-                        <button ref="subMenuBtn" @keydown.enter.prevent @click="handleSubMenu($event)" @mouseup="
-                            draggedNodePosition = false;
-                        dragging = false;
-                        " class="ml-1 my-2 hover:bg-slate-100 rounded" :class="{
-    'cursor-grab': !dragging,
-    'cursor-grabbing mr-1': dragging,
-}" aria-label="Drag" data-tooltip="Drag">
-                            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                aria-hidden="true" focusable="false" class="w-5 h-5 md:w-6 md:h-6">
-                                <path
-                                    d="M8 7h2V5H8v2zm0 6h2v-2H8v2zm0 6h2v-2H8v2zm6-14v2h2V5h-2zm0 8h2v-2h-2v2zm0 6h2v-2h-2v2z">
-                                </path>
-                            </svg>
-                        </button>
+            <div class=" absolute top-4 left-4 w-[20%]">
+                <div class="flex gap-x-3 mb-4 border p-2 w-max max-w-md overflow-x-scroll">
+                    <div v-for="(item, index) in users" :key="index" class="flex gap-x-2 items-center">
+                        <span v-html="item[1].user.avatar" class="rounded-[50%] w-[20px] h-[20px]" />
+                        <div class="">{{ index === 0 ? 'Me' : item[1].user.name }}</div>
                     </div>
                 </div>
+                <div class="">Online: {{ total }}</div>
+                <div>Status: {{ status }}</div>
+                <div>Your Name: {{ currentUser.name }}</div>
+                <div class="my-4">
+                    <button class="bg-gray-200 border border-black px-2" @click="gantiNama">
+                        Ganti Nama
+                    </button>
+                </div>
+            </div>
+            
+            
+            <div v-if="editor" class="editor-canvas w-full">
+                <floating-menu pluginKey="" @dragend="endDragging($event)" :draggable="dragging"
+                    :should-show="shouldShowMainToolbar" v-if="editor" :editor="editor" :class="{
+                        'mouse:pointer-events-none mouse:opacity-0': isTyping,
+                    }" :tippy-options="{
+        maxWidth: '350',
+        placement: 'left-start',
+        animation: 'fade',
+        duration: 300,
+        getReferenceClientRect: getMenuCoords,
+        onCreate: (instance) =>
+            instance.popper.classList.add(
+                'max-md:!sticky',
+                'max-md:!bottom-0',
+                'max-md:!top-auto',
+                'max-md:!transform-none'
+                ),
+    }">
+                    <div v-if="topLevelNodeType !== 'title'" class="flex flex-row">
+                        <div class="" id="submenu"></div>
+                        <div class="">
+                            <button ref="newLineBtn" @keydown.enter.prevent @click="handleNewLine($event)" @mouseup="
+                                draggedNodePosition = false;
+                                dragging = false;
+                                " class="ml-1 my-2 hover:bg-slate-100 rounded">
+                                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 24">
+                                    <path d="M16 9h-5V4H9v5H4v2h5v5h2v-5h5V9z" />
+                                </svg>
+                            </button>
+                            <button ref="subMenuBtn" @keydown.enter.prevent @click="handleSubMenu($event)" @mouseup="
+                                draggedNodePosition = false;
+                                dragging = false;
+                                " class="ml-1 my-2 hover:bg-slate-100 rounded" :class="{
+                                    'cursor-grab': !dragging,
+        'cursor-grabbing mr-1': dragging,
+    }" aria-label="Drag" data-tooltip="Drag">
+                                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                aria-hidden="true" focusable="false" class="w-5 h-5 md:w-6 md:h-6">
+                                <path
+                                d="M8 7h2V5H8v2zm0 6h2v-2H8v2zm0 6h2v-2H8v2zm6-14v2h2V5h-2zm0 8h2v-2h-2v2zm0 6h2v-2h-2v2z">
+                            </path>
+                        </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                </floating-menu>
+                
+                <BubbleMenu :editor="editor" :tippy-options="{
+                    duration: 100, placement: 'top-start',
+                }" v-if="editor" id="bubbleMenu" class="flex items-center">
+                    <ColorButton class="bubble-menu-btn border-r bored-black" :editor="editor" />
+                    <inlineToolsBtn :editor="editor" class="" />
+                    <FontFamilyButton class="bubble-menu-btn border-r" :editor="editor" />
+                </BubbleMenu>
+                
+                <editor-content id="editor" :editor="editor" :value="editor.getAttributes('textStyle').color" />
+            </div>
 
-            </floating-menu>
-
-            <BubbleMenu :editor="editor" :tippy-options="{
-                duration: 100, placement: 'top-start',
-            }" v-if="editor" id="bubbleMenu" class="flex items-center">
-                <ColorButton class="bubble-menu-btn border-r bored-black" :editor="editor" />
-                <inlineToolsBtn :editor="editor" class="" />
-                <FontFamilyButton class="bubble-menu-btn border-r" :editor="editor" />
-            </BubbleMenu>
-
-            <editor-content id="editor" :editor="editor" :value="editor.getAttributes('textStyle').color" />
         </div>
-
-    </div>
+</div>
 </template>
 
 <script>
@@ -127,6 +136,8 @@ import CollaborationCursor from './custom-extension/collaborationCursor'
 import ColorButton from './tools/buttons/ColorButton.vue'
 import FontFamilyButton from './tools/buttons/FontFamilyButton.vue'
 import inlineToolsBtn from './tools/buttons/InlineButton.vue'
+import ImageView from './tools/buttons/popupImage/popupImage.vue'
+
 
 import * as Y from 'yjs'
 
@@ -172,7 +183,8 @@ export default {
         ColorButton,
         FontFamilyButton,
         inlineToolsBtn,
-        FontFamilyButton
+        FontFamilyButton,
+        ImageView,
     },
     data() {
         return {
