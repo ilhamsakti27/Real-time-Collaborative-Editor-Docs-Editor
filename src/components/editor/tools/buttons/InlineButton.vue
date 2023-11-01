@@ -7,11 +7,11 @@
                     :id="item.title === 'Link' || item.title === 'Unlink' ? 'popup' : item.tools ? 'more' : null">
                     <!-- list of menu -->
                     <div class="icon-container flex menu items-center gap-x-2 bubble-menu-btn border-r"
-                        @mouseover="handleHover(index)" @mouseout="hideLabel(index)" @click="selectItem(index)">
+                        :data-tooltip="item.title" @mouseover="handleHover(index)" @mouseout="hideLabel(index)"
+                        @click="selectItem(index)">
                         <div class="flex flex-col">
                             <div class=" rounded-md">
                                 <span v-html="item.icon" />
-                                <div v-if="isLabel && selectedIndex === index" class="label">{{ item.title }}</div>
                             </div>
                         </div>
                     </div>
@@ -27,7 +27,6 @@
 import defaultInlineTools from '../inlineTools';
 import { mergeArrays } from '../../utils/utils';
 import { moreTools } from './moreToolsBtn'
-import moreListTools from './moreToolsBtn/moreListTools.vue'
 export default {
     props: {
         inlineTools: {
@@ -41,16 +40,13 @@ export default {
     data() {
         return {
             allInlineTools: [],
-            isLabelVisible: [],
             moreLineTools: [],
             selectedIndex: -1,
-            isLabel: false,
             isMoreTools: false,
         };
     },
     mounted() {
         this.allInlineTools = mergeArrays(defaultInlineTools(this.editor), this.inlineTools);
-        this.isLabelVisible = new Array(this.allInlineTools.length).fill(false);
     },
     computed: {
         hrefValue() {
@@ -68,9 +64,7 @@ export default {
         },
 
         handleHover(index) {
-            this.isLabel = true;
             this.selectedIndex = index;
-            this.isLabelVisible[this.selectedIndex] = true;
             const item = this.allInlineTools[this.selectedIndex]
             this.isMoreTools = true
             if (item.tools) {
@@ -78,11 +72,6 @@ export default {
                 if (this.isMoreTools)
                     moreTools(this.editor, item.tools, this.isMoreTools, title)
             }
-        },
-        hideLabel(index) {
-            this.isLabel = false;
-            this.selectedIndex = index;
-            this.isLabelVisible[this.selectedIndex] = false;
         },
         selectItem(index) {
             this.selectedIndex = index

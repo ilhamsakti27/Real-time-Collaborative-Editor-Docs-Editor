@@ -1,90 +1,82 @@
 <!-- eslint-disable -->
 <template>
-    <div>
-        
-        <div class="justify-center">
-            <ImageView :editor="editor" ></ImageView>
-        </div>
-        
-        <div class="flex">
-            <!-- image pop up -->
-
-            <div class=" absolute top-4 left-4 w-[20%]">
-                <div class="flex gap-x-3 mb-4 border p-2 w-max max-w-md overflow-x-scroll">
-                    <div v-for="(item, index) in users" :key="index" class="flex gap-x-2 items-center">
-                        <span v-html="item[1].user.avatar" class="rounded-[50%] w-[20px] h-[20px]" />
-                        <div class="">{{ index === 0 ? 'Me' : item[1].user.name }}</div>
-                    </div>
-                </div>
-                <div class="">Online: {{ total }}</div>
-                <div>Status: {{ status }}</div>
-                <div>Your Name: {{ currentUser.name }}</div>
-                <div class="my-4">
-                    <button class="bg-gray-200 border border-black px-2" @click="gantiNama">
-                        Ganti Nama
-                    </button>
+    <div class="flex">
+        <div class=" absolute top-4 left-4 w-[20%]">
+            <div class="flex gap-x-3 mb-4 border p-2 w-max max-w-md overflow-x-scroll">
+                <div v-for="(item, index) in users" :key="index" class="flex gap-x-2 items-center">
+                    <span v-html="item[1].user.avatar" class="rounded-[50%] w-[20px] h-[20px]" />
+                    <div class="">{{ index === 0 ? 'Me' : item[1].user.name }}</div>
                 </div>
             </div>
-            
-            
-            <div v-if="editor" class="editor-canvas w-full">
-                <floating-menu pluginKey="" @dragend="endDragging($event)" :draggable="dragging"
-                    :should-show="shouldShowMainToolbar" v-if="editor" :editor="editor" :class="{
-                        'mouse:pointer-events-none mouse:opacity-0': isTyping,
-                    }" :tippy-options="{
-        maxWidth: '350',
-        placement: 'left-start',
-        animation: 'fade',
-        duration: 300,
-        getReferenceClientRect: getMenuCoords,
-        onCreate: (instance) =>
-            instance.popper.classList.add(
-                'max-md:!sticky',
-                'max-md:!bottom-0',
-                'max-md:!top-auto',
-                'max-md:!transform-none'
-                ),
-    }">
-                    <div v-if="topLevelNodeType !== 'title'" class="flex flex-row">
-                        <div class="" id="submenu"></div>
-                        <div class="">
-                            <button ref="newLineBtn" @keydown.enter.prevent @click="handleNewLine($event)" @mouseup="
-                                draggedNodePosition = false;
-                                dragging = false;
-                                " class="ml-1 my-2 hover:bg-slate-100 rounded">
-                                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 24">
-                                    <path d="M16 9h-5V4H9v5H4v2h5v5h2v-5h5V9z" />
-                                </svg>
-                            </button>
-                            <button ref="subMenuBtn" @keydown.enter.prevent @click="handleSubMenu($event)" @mouseup="
-                                draggedNodePosition = false;
-                                dragging = false;
-                                " class="ml-1 my-2 hover:bg-slate-100 rounded" :class="{
-                                    'cursor-grab': !dragging,
-        'cursor-grabbing mr-1': dragging,
-    }" aria-label="Drag" data-tooltip="Drag">
-                                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+            <div class="">Online: {{ total }}</div>
+            <div>Status: {{ status }}</div>
+            <div>Your Name: {{ currentUser.name }}</div>
+            <div class="my-4">
+                <button class="bg-gray-200 border border-black px-2" @click="gantiNama">
+                    Ganti Nama
+                </button>
+            </div>
+        </div>
+
+
+        <div v-if="editor" class="editor-canvas w-full">
+            <floating-menu pluginKey="" @dragend="endDragging($event)" :draggable="dragging"
+                :should-show="shouldShowMainToolbar" v-if="editor" :editor="editor" :class="{
+                    'mouse:pointer-events-none mouse:opacity-0': isTyping,
+                }" :tippy-options="{
+    maxWidth: '350',
+    placement: 'left-start',
+    animation: 'fade',
+    duration: 300,
+    getReferenceClientRect: getMenuCoords,
+    onCreate: (instance) =>
+        instance.popper.classList.add(
+            'max-md:!sticky',
+            'max-md:!bottom-0',
+            'max-md:!top-auto',
+            'max-md:!transform-none'
+        ),
+}">
+                <div v-if="topLevelNodeType !== 'title'" class="flex flex-row">
+                    <div class="" id="submenu"></div>
+                    <div class="">
+                        <button ref="newLineBtn" @keydown.enter.prevent @click="handleNewLine($event)" @mouseup="
+                            draggedNodePosition = false;
+                        dragging = false;
+                        " class="ml-1 my-2 hover:bg-slate-100 rounded">
+                            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 24">
+                                <path d="M16 9h-5V4H9v5H4v2h5v5h2v-5h5V9z" />
+                            </svg>
+                        </button>
+                        <button ref="subMenuBtn" @keydown.enter.prevent @click="handleSubMenu($event)" @mouseup="
+                            draggedNodePosition = false;
+                        dragging = false;
+                        " class="ml-1 my-2 hover:bg-slate-100 rounded" :class="{
+    'cursor-grab': !dragging,
+    'cursor-grabbing mr-1': dragging,
+}" aria-label="Drag" data-tooltip="Drag">
+                            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                 aria-hidden="true" focusable="false" class="w-5 h-5 md:w-6 md:h-6">
                                 <path
-                                d="M8 7h2V5H8v2zm0 6h2v-2H8v2zm0 6h2v-2H8v2zm6-14v2h2V5h-2zm0 8h2v-2h-2v2zm0 6h2v-2h-2v2z">
-                            </path>
-                        </svg>
-                            </button>
-                        </div>
+                                    d="M8 7h2V5H8v2zm0 6h2v-2H8v2zm0 6h2v-2H8v2zm6-14v2h2V5h-2zm0 8h2v-2h-2v2zm0 6h2v-2h-2v2z">
+                                </path>
+                            </svg>
+                        </button>
                     </div>
-                    
-                </floating-menu>
-                
-                <BubbleMenu :editor="editor" :tippy-options="{
-                    duration: 100, placement: 'top-start',
-                }" v-if="editor" id="bubbleMenu" class="flex items-center">
-                    <ColorButton class="bubble-menu-btn border-r bored-black" :editor="editor" />
-                    <inlineToolsBtn :editor="editor" class="" />
-                    <FontFamilyButton class="bubble-menu-btn border-r" :editor="editor" />
-                </BubbleMenu>
-                
-                <editor-content id="editor" :editor="editor" :value="editor.getAttributes('textStyle').color" />
-            </div>
+                </div>
+
+            </floating-menu>
+
+            <BubbleMenu :editor="editor" :tippy-options="{
+                duration: 100, placement: 'top-start',
+            }" v-if="editor" id="bubbleMenu" class="flex items-center">
+                <ColorButton class="bubble-menu-btn border-r bored-black" :editor="editor" />
+                <inlineToolsBtn :editor="editor" class="" />
+                <FontFamilyButton class="bubble-menu-btn border-r" :editor="editor" />
+            </BubbleMenu>
+
+            <editor-content id="editor" :editor="editor" :value="editor.getAttributes('textStyle').color" />
+        </div>
 
         </div>
 </div>
@@ -149,11 +141,11 @@ import {
     GetTableRowCoords,
     GetTopLevelNode,
 } from "./utils/pm-utils.js";
-import { showActionMenu } from "./floating-menu/action/actionMenu"
-import { showNewNode } from "./floating-menu/newnode/newNode"
+import { showActionMenu } from "./floating-menu/action"
+import { showNewNode } from "./floating-menu/newnode"
 import { mergeArrays } from "./utils/utils";
 import defaultBlockTools from "./tools/block-tools";
-import { DocumentWithTitle, Title, TitleExtension } from './custom-extension/title'
+import { DocumentWithTitle, Title } from './custom-extension/title'
 import { v4 as uuidv4 } from 'uuid';
 
 const ydoc = new Y.Doc()
@@ -193,6 +185,20 @@ export default {
                 name: 'anonymous',
                 color: this.getRandomColor(),
                 avatar: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"> <g fill="#54595d"> <path d="M10 11c-5.92 0-8 3-8 5v3h16v-3c0-2-2.08-5-8-5z"/> <circle cx="10" cy="5.5" r="4.5"/> </g> </svg>',
+            },
+            tippy: {
+                maxWidth: '350',
+                placement: 'left-start',
+                animation: 'fade',
+                duration: 300,
+                getReferenceClientRect: this.getMenuCoords,
+                onCreate: (instance) =>
+                    instance.popper.classList.add(
+                        'max-md:!sticky',
+                        'max-md:!bottom-0',
+                        'max-md:!top-auto',
+                        'max-md:!transform-none'
+                    ),
             },
             editor: null,
             isEditable: true,
@@ -434,7 +440,6 @@ export default {
             if (name) {
                 return this.updateCurrentUser({
                     name,
-                    avatar: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"> <g fill="#54595d"> <path d="M10 11c-5.92 0-8 3-8 5v3h16v-3c0-2-2.08-5-8-5z"/> <circle cx="10" cy="5.5" r="4.5"/> </g> </svg>',
                 })
             }
         },
@@ -463,6 +468,7 @@ export default {
             }
         },
         startDragging(event) {
+            console.log('drag')
             let coords = { left: event.clientX + 48, top: event.clientY };
             if (this.editor.view.posAtCoords(coords)) {
                 this.draggedNodePosition = this.editor.view.posAtCoords(coords).pos;
@@ -470,11 +476,11 @@ export default {
             }
         },
         endDragging(event) {
+            console.log('stop drag')
             let targetNodeFromCoords = this.editor.view.posAtCoords({
                 left: event.clientX + 20,
                 top: event.clientY,
             });
-            alert('test')
             if (targetNodeFromCoords) {
                 DragNode({
                     view: this.editor.view,
@@ -483,7 +489,6 @@ export default {
                     targetNodePosition: targetNodeFromCoords.pos,
                 });
             }
-
             this.dragging = false;
             this.draggedNode = null;
         },
@@ -565,4 +570,4 @@ export default {
     border-radius: 3px 3px 3px 0;
     white-space: nowrap;
 }
-</style>./floating-menu/submenu/actionMenu./floating-menu/action/submenu
+</style>./floating-menu/submenu/actionMenu./floating-menu/action/submenu./floating-menu/action./floating-menu/newnode

@@ -1,4 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400&family=Lobster&family=Poppins:wght@500;600;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700&display=swap');
+
+[data-tooltip] {
+  position: relative;
+}
+
+[data-tooltip]:hover::after {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  width: max-content;
+  transition: all 0.3s;
+  font-size: 12px;
+  padding: 4px 8px;
+  background-color: rgba(0,0,0,0.4);
+  color: white;
+  border-radius: 4px;
+  position: absolute;
+  top:-40px;
+  left: 0;
+  transform: translateX(-50%) translateY(1);
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+
 .editor-canvas {
   padding: 0% 10% 0% 25%;
 }
@@ -228,10 +257,8 @@ ul[data-type="taskList"] {
 #bubbleMenu {
   border-radius: 4px;
   background: white;
-  /* padding: 2px 12px; */
   display: flex;
   width: max-content;
-  /* width: 500px; */
   @apply shadow-md border
 }
 .bubble-menu-btn {

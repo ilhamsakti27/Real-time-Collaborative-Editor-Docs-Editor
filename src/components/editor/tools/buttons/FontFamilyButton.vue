@@ -1,6 +1,6 @@
 <!-- eslint-disable -->
 <template>
-  <div @mouseenter="menuFontFamily" class="w-max-content" ref="fontMenu">
+  <div @mouseenter="menuFontFamily" data-tooltip="Font family" class="w-max-content" ref="fontMenu">
     <button class="flex items-center justify-center">
       <div class="text-sm">Font-Family</div>
       <!-- down arrow icon -->
