@@ -21,6 +21,8 @@ import Superscript from '@tiptap/extension-superscript'
 import Subscript from '@tiptap/extension-subscript'
 import Typography from '@tiptap/extension-typography'
 import Highlight from '@tiptap/extension-highlight'
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
+import { createLowlight } from './lowlight'
 
 // custom extensions
 import { ColumnExtension } from './column'
@@ -31,9 +33,36 @@ import { DocumentWithTitle, Title } from './title'
 import Commands from '../tools/commands/commands'
 import suggestion from '../tools/commands/suggestion'
 
+// highlight js
+import bash from 'highlight.js/lib/languages/bash'
+import c from 'highlight.js/lib/languages/c'
+import cpp from 'highlight.js/lib/languages/cpp'
+import css from 'highlight.js/lib/languages/css'
+import javascript from 'highlight.js/lib/languages/javascript'
+import json from 'highlight.js/lib/languages/json'
+import markdown from 'highlight.js/lib/languages/markdown'
+import python from 'highlight.js/lib/languages/python'
+import scss from 'highlight.js/lib/languages/scss'
+import typescript from 'highlight.js/lib/languages/typescript'
+
+const lowlight = createLowlight()
+lowlight.register({ javascript })
+lowlight.register({ json })
+lowlight.register({ typescript })
+lowlight.register({ python })
+lowlight.register({ bash })
+lowlight.register({ c })
+lowlight.register({ cpp })
+lowlight.register({ markdown })
+lowlight.register({ css })
+lowlight.register({ scss })
+
 const defaultExtension = [
     DocumentWithTitle,
     Title,
+    CodeBlockLowlight.configure({
+        lowlight,
+    }),
     StarterKit.configure({
         history: false,
         blockquote: false,
@@ -51,7 +80,7 @@ const defaultExtension = [
                     text = 'Heading'
                     break
                 case 'codeBlock':
-                    text = 'place your code'
+                    text = 'write code ...'
                     break
                 default:
                     break

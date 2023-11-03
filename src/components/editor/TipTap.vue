@@ -1,9 +1,9 @@
 <!-- eslint-disable -->
 <template>
     <div class="flex">
-        
+
         <div class="absolute top-20 left-4 w-[20%]">
-            
+
             <div class="">Online: {{ total }}</div>
             <div>Status: {{ status }}</div>
             <div>Your Name: {{ currentUser.name }}</div>
@@ -13,7 +13,7 @@
                 </button>
             </div>
         </div>
-        
+
 
         <div v-if="editor" class="editor-canvas w-full">
 
@@ -34,7 +34,8 @@
             'max-md:!transform-none'
         ),
 }">
-                <div v-if="topLevelNodeType !== 'title'" class="flex flex-row">
+                <div v-if="topLevelNodeType !== 'title'" class="flex flex-row" pluginKey="" @dragend="endDragging($event)"
+                    :draggable="dragging">
                     <div class="" id="submenu"></div>
                     <div class="">
                         <button ref="newLineBtn" @keydown.enter.prevent @click="handleNewLine($event)" @mouseup="
@@ -45,12 +46,13 @@
                                 <path d="M16 9h-5V4H9v5H4v2h5v5h2v-5h5V9z" />
                             </svg>
                         </button>
-                        <button ref="subMenuBtn" @keydown.enter.prevent @click="handleSubMenu($event)" @mouseup="
-                            draggedNodePosition = false;
-                        dragging = false;
-                        " class="ml-1 my-2 hover:bg-slate-100 rounded" :class="{
+                        <button ref="subMenuBtn" @keydown.enter.prevent @click="handleSubMenu($event)"
+                            @mouseenter="startDragging($event)" @mouseup="
+                                draggedNodePosition = false;
+                            dragging = false;
+                            " class="ml-1 my-2 hover:bg-slate-100 rounded" :class="{
     'cursor-grab': !dragging,
-    'cursor-grabbing mr-1': dragging,
+    'cursor-grabbing': dragging,
 }" aria-label="Drag" data-tooltip="Drag">
                             <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                 aria-hidden="true" focusable="false" class="w-5 h-5 md:w-6 md:h-6">
@@ -119,7 +121,7 @@ const ydoc = new Y.Doc()
 const getRandomElement = list => list[Math.floor(Math.random() * list.length)]
 
 const provider = new HocuspocusProvider({
-    url: 'wss://api.server.rosfandy.my.id/',
+    url: 'wss://editorhocus.oriens.my.id/',
     name: 'example-document',
     document: ydoc,
 })
