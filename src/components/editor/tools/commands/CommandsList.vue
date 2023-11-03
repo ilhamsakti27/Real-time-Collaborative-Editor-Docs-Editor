@@ -88,11 +88,12 @@ export default {
       // ref untuk element items
       const { itemsContainer } = this.$refs
       // logic scroll key down
-      if (itemsContainer && this.selectedIndex <= (this.items.length / 2)) {
+
+      if (itemsContainer && this.selectedIndex <= (this.items.length) - (this.items.length / 3) - 1) {
         // scroll untuk key down pada index
         const scrollPosition = itemsContainer.scrollTop
         if (this.selectedIndex >= 0) {
-          const newScrollPosition = scrollPosition - 60
+          const newScrollPosition = (scrollPosition - 60) + (this.selectedIndex / 2)
           itemsContainer.scrollTop = newScrollPosition
         }
       }
@@ -100,6 +101,8 @@ export default {
 
     downHandler() {
       // stop scroll event jika sudah mentok
+      console.log(this.selectedIndex)
+      console.log(this.items.length - 1)
       if (this.selectedIndex >= this.items.length - 1) {
         this.selectedIndex = this.items.length - 1
       } else {
@@ -109,11 +112,11 @@ export default {
       // ref untuk element items
       const { itemsContainer } = this.$refs
       // logic scroll key down
-      if (itemsContainer && this.selectedIndex >= (this.items.length / 3) + 1) {
+      if (itemsContainer && this.selectedIndex >= (this.items.length / 3)) {
         // scroll untuk key down pada index >= ke-setengah item
         const scrollPosition = itemsContainer.scrollTop
         if (this.selectedIndex !== this.items.length) {
-          const newScrollPosition = scrollPosition + 60
+          const newScrollPosition = (scrollPosition + 60) - (this.selectedIndex / 3)
           itemsContainer.scrollTop = newScrollPosition
         }
       }
