@@ -96,7 +96,6 @@ import FontFamilyButton from './tools/buttons/FontFamilyButton.vue'
 import inlineToolsBtn from './tools/buttons/InlineButton.vue'
 import ImageView from './tools/buttons/popupImage/popupImage.vue'
 
-
 // floating-menu
 import { showActionMenu } from './floating-menu/action'
 import { showNewNode } from './floating-menu/newnode'

@@ -60,6 +60,7 @@ import Dropcursor from '@tiptap/extension-dropcursor'
 import Superscript from '@tiptap/extension-superscript'
 import Subscript from '@tiptap/extension-subscript'
 import Typography from '@tiptap/extension-typography'
+import Gapcursor from '@tiptap/extension-gapcursor'
 
 // slash menu
 import Commands from './tools/commands/commands.js'
@@ -207,6 +208,7 @@ export default {
         Collaboration.configure({
           document: provider.document,
         }),
+        Gapcursor,
         // CollaborationCursor.configure({
         //   provider: providerCollabCursor,
         //   user: {
