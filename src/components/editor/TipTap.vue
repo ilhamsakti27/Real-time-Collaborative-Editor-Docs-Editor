@@ -13,12 +13,10 @@
             </div>
         </div>
 
-
         <div v-if="editor" class="editor-canvas w-full">
-            <floating-menu pluginKey="" @dragend="endDragging($event)" :draggable="dragging"
-                :should-show="shouldShowMainToolbar" v-if="editor" :editor="editor" :class="{
-                    'mouse:pointer-events-none mouse:opacity-0': isTyping,
-                }" :tippy-options="{
+            <floating-menu :should-show="shouldShowMainToolbar" v-if="editor" :editor="editor" :class="{
+                'mouse:pointer-events-none mouse:opacity-0': isTyping,
+            }" :tippy-options="{
     maxWidth: '350',
     placement: 'left-start',
     animation: 'fade',
@@ -32,7 +30,8 @@
             'max-md:!transform-none'
         ),
 }">
-                <div v-if="topLevelNodeType !== 'title'" class="flex flex-row">
+                <div v-if="topLevelNodeType !== 'title'" class="flex flex-row" pluginKey="" @dragend="endDragging($event)"
+                    :draggable="dragging">
                     <div class="" id="submenu"></div>
                     <div class="">
                         <button ref="newLineBtn" @keydown.enter.prevent @click="handleNewLine($event)" @mouseup="
@@ -43,12 +42,13 @@
                                 <path d="M16 9h-5V4H9v5H4v2h5v5h2v-5h5V9z" />
                             </svg>
                         </button>
-                        <button ref="subMenuBtn" @keydown.enter.prevent @click="handleSubMenu($event)" @mouseup="
-                            draggedNodePosition = false;
-                        dragging = false;
-                        " class="ml-1 my-2 hover:bg-slate-100 rounded" :class="{
+                        <button ref="subMenuBtn" @keydown.enter.prevent @click="handleSubMenu($event)"
+                            @mouseenter="startDragging($event)" @mouseup="
+                                draggedNodePosition = false;
+                            dragging = false;
+                            " class="ml-1 my-2 hover:bg-slate-100 rounded" :class="{
     'cursor-grab': !dragging,
-    'cursor-grabbing mr-1': dragging,
+    'cursor-grabbing': dragging,
 }" aria-label="Drag" data-tooltip="Drag">
                             <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                 aria-hidden="true" focusable="false" class="w-5 h-5 md:w-6 md:h-6">

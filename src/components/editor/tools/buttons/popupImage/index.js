@@ -22,7 +22,7 @@ export function PopupImage(editor) {
       showOnCreate: true,
       interactive: true,
       trigger: 'manual',
-      placement: 'bottom-start',
+      placement: 'top',
     });
   } else if (floatingComponent !== null) {
     console.log("Haii there!!!");
@@ -31,7 +31,7 @@ export function PopupImage(editor) {
     // Check if popup is defined before destroying it
     if (popup) {
       popup[0].destroy();
-    //   popup.destroy();
+      //   popup.destroy();
       popup = null;
     }
 

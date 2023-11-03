@@ -142,6 +142,7 @@ export default {
     box-shadow: 0px 8px 16px 2px rgba(0, 0, 0, 0.1);
     width: 222px;
     padding: 12px;
+    margin-top: 30px;
 }
 
 .popUpLink input {
