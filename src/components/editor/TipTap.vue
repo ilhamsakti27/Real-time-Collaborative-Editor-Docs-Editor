@@ -1,7 +1,8 @@
 <!-- eslint-disable -->
 <template>
     <div class="flex">
-        <div class=" absolute top-20 left-4 w-[20%]">
+
+        <div class="absolute top-20 left-4 w-[20%]">
 
             <div class="">Online: {{ total }}</div>
             <div>Status: {{ status }}</div>
@@ -13,10 +14,13 @@
             </div>
         </div>
 
+
         <div v-if="editor" class="editor-canvas w-full">
-            <floating-menu :should-show="shouldShowMainToolbar" v-if="editor" :editor="editor" :class="{
-                'mouse:pointer-events-none mouse:opacity-0': isTyping,
-            }" :tippy-options="{
+
+            <floating-menu pluginKey="" @dragend="endDragging($event)" :draggable="dragging"
+                :should-show="shouldShowMainToolbar" v-if="editor" :editor="editor" :class="{
+                    'mouse:pointer-events-none mouse:opacity-0': isTyping,
+                }" :tippy-options="{
     maxWidth: '350',
     placement: 'left-start',
     animation: 'fade',
@@ -94,8 +98,9 @@ import CollaborationCursor from './extensions/collaborationCursor'
 import ColorButton from './tools/buttons/ColorButton.vue'
 import FontFamilyButton from './tools/buttons/FontFamilyButton.vue'
 import inlineToolsBtn from './tools/buttons/InlineButton.vue'
-import ImageView from './tools/buttons/popupImage/popupImage.vue'
 
+// buttons for slash menu
+import ImageView from './tools/buttons/popupImage/popupImage.vue'
 
 // floating-menu
 import { showActionMenu } from './floating-menu/action'
