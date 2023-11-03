@@ -37,19 +37,9 @@ import suggestion from '../tools/commands/suggestion'
 import bash from 'highlight.js/lib/languages/bash'
 import c from 'highlight.js/lib/languages/c'
 import cpp from 'highlight.js/lib/languages/cpp'
-import csharp from 'highlight.js/lib/languages/csharp'
 import css from 'highlight.js/lib/languages/css'
-import diff from 'highlight.js/lib/languages/diff'
-import go from 'highlight.js/lib/languages/go'
-import graphql from 'highlight.js/lib/languages/graphql'
-import ini from 'highlight.js/lib/languages/ini'
-import java from 'highlight.js/lib/languages/java'
 import javascript from 'highlight.js/lib/languages/javascript'
 import json from 'highlight.js/lib/languages/json'
-import kotlin from 'highlight.js/lib/languages/kotlin'
-import less from 'highlight.js/lib/languages/less'
-import lua from 'highlight.js/lib/languages/lua'
-import makefile from 'highlight.js/lib/languages/makefile'
 import markdown from 'highlight.js/lib/languages/markdown'
 import python from 'highlight.js/lib/languages/python'
 import scss from 'highlight.js/lib/languages/scss'
@@ -64,6 +54,7 @@ lowlight.register({ bash })
 lowlight.register({ c })
 lowlight.register({ cpp })
 lowlight.register({ markdown })
+lowlight.register({ css })
 lowlight.register({ scss })
 
 const defaultExtension = [
