@@ -127,9 +127,9 @@ export default {
   position: sticky;
 }
 
-.inline {
+/* .inline {
   display: inline;
-}
+} */
 
 .arrow-icon {
   margin-left: -2px;

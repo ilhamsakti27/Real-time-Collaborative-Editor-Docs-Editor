@@ -1,8 +1,3 @@
-<!-- Note: -->
-<!-- create function to close the dropdown if the user clicks outside of it   -->
-<!-- dropdown menu for font family -->
-<!-- styling superscript -->
-<!-- styling subscript -->
 <template>
   <!-- eslint-disable -->
   <div v-if="editor" class="editor-canvas">
@@ -61,6 +56,10 @@ import Superscript from '@tiptap/extension-superscript'
 import Subscript from '@tiptap/extension-subscript'
 import Typography from '@tiptap/extension-typography'
 import Gapcursor from '@tiptap/extension-gapcursor'
+// import Paragraph from '@tiptap/extension-paragraph'
+// callout component
+import { Callout } from './tools/buttons/callout'
+import VueComponent from './tools/buttons/vueComponent/Extension.js'
 
 // slash menu
 import Commands from './tools/commands/commands.js'
@@ -130,10 +129,6 @@ export default {
     },
   },
   mounted() {
-    // const ydoc = new Y.Doc()
-
-    // this.providerCollaborationCursor = new WebrtcProvider('tiptap-collaboration-cursor-extension', ydoc)
-
     this.editor = new Editor({
       extensions: [
         StarterKit.configure({
@@ -209,14 +204,10 @@ export default {
           document: provider.document,
         }),
         Gapcursor,
-        // CollaborationCursor.configure({
-        //   provider: providerCollabCursor,
-        //   user: {
-        //     name: 'Cyndi Lauper',
-        //     color: '#f783ac',
-        //   },
-        // }),
+        VueComponent,
+        
       ],
+      // content for drag&drop
       // content: `
       // <p>This is a boring paragraph.</p>
       //   <div data-type="draggable-item">
@@ -234,6 +225,19 @@ export default {
       //   <p>Let’s finish with a boring paragraph.</p>
       // `,
       // autofocus: true,
+      
+      // content for callout component
+      // content: `
+      //   <p>
+      //     This is still the text editor you’re used to, but enriched with node views.
+      //   </p>
+      //   <vue-component>
+      //     <p>This is editable.</p>
+      //   </vue-component>
+      //   <p>
+      //     Did you see that? That’s a Vue component. We are really living in the future.
+      //   </p>
+      // `,
       onUpdate: () => {
         // HTML
         // this.$emit('input', this.editor.getHTML())
