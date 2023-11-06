@@ -4,11 +4,10 @@
         <div ref="inlineBtn" class="flex">
             <template v-if="allInlineTools.length">
                 <button :ref="item.ref" v-for="(item, index) in allInlineTools" :key="index"
-                    :id="item.title === 'Link' || item.title === 'Unlink' ? 'popup' : item.title === 'Others' ? 'more' : 'align' ">
+                    :id="item.title === 'Link' || item.title === 'Unlink' ? 'popup' : item.title === 'Others' ? 'more' : item.title === 'Format Align' ? 'align' : ''">
                     <!-- list of menu -->
                     <div class="icon-container flex menu items-center gap-x-2 bubble-menu-btn border-r"
-                        :data-tooltip="item.title" @mouseover="handleHover(index)" @mouseout="hideLabel(index)"
-                        @click="selectItem(index)">
+                        :data-tooltip="item.title" @mouseover="handleHover(index)" @click="selectItem(index)">
                         <div class="flex flex-col">
                             <div class=" rounded-md">
                                 <span v-html="item.icon" />
@@ -27,6 +26,7 @@
 import defaultInlineTools from '../inlineTools';
 import { mergeArrays } from '../../utils/utils';
 import { moreTools } from './moreToolsBtn'
+import { alignFormat } from './alignTools'
 export default {
     props: {
         inlineTools: {
@@ -69,8 +69,11 @@ export default {
             this.isMoreTools = true
             if (item.tools) {
                 let title = 'Inline Tools'
-                if (this.isMoreTools)
+                console.log()
+                if (item.title === 'Others')
                     moreTools(this.editor, item.tools, this.isMoreTools, title)
+                if (item.title === 'Format Align')
+                    alignFormat(this.editor, item.tools, this.isMoreTools, title)
             }
         },
         selectItem(index) {

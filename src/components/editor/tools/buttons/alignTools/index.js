@@ -19,7 +19,7 @@ export function alignFormat(editor, moreTools, isMoreTools, title) {
             propsData: props,
         })
 
-        popup = tippy('#more', {
+        popup = tippy('#align', {
             content: floatingComponent.element,
             showOnCreate: true,
             interactive: true,

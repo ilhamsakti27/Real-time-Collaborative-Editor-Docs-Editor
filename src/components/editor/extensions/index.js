@@ -23,6 +23,7 @@ import Typography from '@tiptap/extension-typography'
 import Highlight from '@tiptap/extension-highlight'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { common, createLowlight } from './lowlight'
+import TextAlign from '@tiptap/extension-text-align'
 
 // custom extensions
 import { ColumnExtension } from './column'
@@ -33,15 +34,15 @@ import { DocumentWithTitle, Title } from './title'
 import Commands from '../tools/commands/commands'
 import suggestion from '../tools/commands/suggestion'
 
-// highlight js
-
-
 const lowlight = createLowlight()
 lowlight.register(common)
 
 const defaultExtension = [
     DocumentWithTitle,
     Title,
+    TextAlign.configure({
+        types: ['heading', 'paragraph'],
+    }),
     CodeBlockLowlight.configure({
         lowlight,
     }),
