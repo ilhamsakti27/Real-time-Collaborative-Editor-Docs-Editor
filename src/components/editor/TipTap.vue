@@ -121,9 +121,11 @@ const ydoc = new Y.Doc()
 const getRandomElement = list => list[Math.floor(Math.random() * list.length)]
 
 const provider = new HocuspocusProvider({
+    // url: 'ws://localhost:1234/',
     url: 'wss://editorhocus.oriens.my.id/',
     name: 'example-document',
     document: ydoc,
+    token: 'test-token',
 })
 import { uuid } from 'vue-uuid';
 
@@ -172,7 +174,7 @@ export default {
             isEditable: true,
             total: 0,
             users: '',
-            status: '',
+            status: 'disconnect',
             dragging: false,
             draggedNodePosition: null,
             isMenuVisible: false,
@@ -223,7 +225,12 @@ export default {
             this.$emit('update:dataUsers', this.users);
         })
         provider.on('status', evt => {
-            this.status = evt.status
+            if (evt.status === 'disconnected') {
+                this.status = 'unauthorized'
+            } else {
+                this.status = evt.status
+            }
+            console.log('status: ', evt.status)
         })
         this.editor = new Editor({
             extensions: [
