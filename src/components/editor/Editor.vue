@@ -51,12 +51,11 @@ import Link from '@tiptap/extension-link'
 import FontFamily from '@tiptap/extension-font-family'
 import Image from '@tiptap/extension-image'
 import Dropcursor from '@tiptap/extension-dropcursor'
-// import History from '@tiptap/extension-history'
 import Superscript from '@tiptap/extension-superscript'
 import Subscript from '@tiptap/extension-subscript'
 import Typography from '@tiptap/extension-typography'
 import Gapcursor from '@tiptap/extension-gapcursor'
-// import Paragraph from '@tiptap/extension-paragraph'
+import TextAlign from '@tiptap/extension-text-align'
 // callout component
 import { Callout } from './tools/buttons/callout'
 import VueComponent from './tools/buttons/vueComponent/Extension.js'
@@ -205,7 +204,9 @@ export default {
         }),
         Gapcursor,
         VueComponent,
-        
+        TextAlign.configure({
+          types: ['heading', 'paragraph'],
+        }),
       ],
       // content for drag&drop
       // content: `
