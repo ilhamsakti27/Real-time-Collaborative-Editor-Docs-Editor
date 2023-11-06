@@ -70,7 +70,7 @@
                 duration: 100, placement: 'top-start',
             }" v-if="editor" v-show="topLevelNodeType !== 'title'" id="bubbleMenu" class="flex items-center">
                 <ColorButton class="bubble-menu-btn border-r bored-black" :editor="editor" />
-                <inlineToolsBtn :editor="editor" class="" />
+                <inlineToolsBtn :editor="editor" />
                 <FontFamilyButton class="bubble-menu-btn border-r" :editor="editor" />
             </BubbleMenu>
 
