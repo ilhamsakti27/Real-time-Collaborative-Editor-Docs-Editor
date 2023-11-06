@@ -330,7 +330,7 @@ ul[data-type="taskList"] {
   font-size: 0.9rem;
   padding: 0.25em;
   border-radius: 0.25em;
-  /* background-color: rgba(255,255,255,.05); */ 
+  background-color: rgba(135,131,120,.15);
   color: #EB5757;
   box-decoration-break: clone;
 }
