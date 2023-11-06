@@ -199,8 +199,8 @@ ul.bulletedList ul.bulletedList ul.bulletedList {
   caret-color: white;
 }
 .ProseMirror pre code {
-  color: inherit;
-  color: #FFF;
+  /* color: inherit; */
+  color: #FFFFFF;
   font-size: 0.9rem;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
@@ -279,12 +279,13 @@ ul[data-type="taskList"] {
 
 .tiptap pre .hljs-variable,
 .tiptap pre .hljs-template-variable,
-.tiptap pre .hljs-attribute,
+.tiptap pre .hljs-attr,
 .tiptap pre .hljs-tag,
 .tiptap pre .hljs-name,
 .tiptap pre .hljs-regexp,
 .tiptap pre .hljs-link,
 .tiptap pre .hljs-name,
+.tiptap pre .hljs-property,
 .tiptap pre .hljs-selector-id,
 .tiptap pre .hljs-selector-class {
   color: #F98181;
@@ -329,7 +330,7 @@ ul[data-type="taskList"] {
   font-size: 0.9rem;
   padding: 0.25em;
   border-radius: 0.25em;
-  background-color: rgba(135,131,120,.15);
+  /* background-color: rgba(255,255,255,.05); */
   color: #EB5757;
   box-decoration-break: clone;
 }
