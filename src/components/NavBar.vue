@@ -4,7 +4,7 @@
         class="w-full fixed backdrop-blur-md px-16 py-1 border-b flex justify-between items-center">
         <div class="font-bold text-lg">Collaboration Editor App</div>
         <div class="flex p-1">
-            <div v-for="(item, index) in users" :key="index"
+            <div v-for="(item, index) in  users " :key="index"
                 :class="item ? `flex items-center border rounded-[50%] p-1 bg-white z-[${10 - index}]` : ''"
                 style="margin-left: -14px;">
                 <div class="" :user-tooltip="index === 0 ? 'Me' : item[1].user.name">
@@ -24,8 +24,15 @@ export default {
         },
     },
     methods: {
+        shouldRenderItem(name) {
+            return name || !name.includes("http");
+        },
         getImageUrl(path) {
-            return require('@/assets/images/op-pixel/' + path);
+            if (path !== null) {
+                if (!path.includes("http")) {
+                    return require('@/assets/images/op-pixel/' + path);
+                }
+            }
         },
     },
 
