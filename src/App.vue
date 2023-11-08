@@ -11,9 +11,9 @@
         </div>
       </div>
       <!-- output file -->
-      <div class="json py-20 max-h-screen ">
+      <div class="json absolute right-0 py-20 max-h-screen ">
         <div class="">
-          <h3 @click="handleClick">
+          <h3>
             Output file
           </h3>
           <h3>
@@ -51,13 +51,8 @@ export default {
     }
   },
   methods: {
-    handleClick() {
-      console.log(this.dataUsers)
-      console.log('test')
-    },
     handleDataUsersUpdate(updatedDataUsers) {
       // Handle the updated dataUsers here, you can log it
-      console.log('Updated dataUsers:', updatedDataUsers);
       this.dataUsers = updatedDataUsers; // Update the dataUsers in the parent component if needed
     },
 

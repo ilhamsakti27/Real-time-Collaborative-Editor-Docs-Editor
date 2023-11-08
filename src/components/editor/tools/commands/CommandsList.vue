@@ -30,7 +30,9 @@ export default {
       type: Array,
       required: true,
     },
-
+    editor: {
+      required: true,
+    },
     command: {
       type: Function,
       required: true,

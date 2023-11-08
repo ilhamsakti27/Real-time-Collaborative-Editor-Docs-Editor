@@ -27,7 +27,7 @@
 }
 
 .editor-canvas {
-  padding: 0% 10% 0% 25%;
+  padding: 0% 20%;
 }
 
 #page-title {
@@ -192,6 +192,7 @@ ul.bulletedList ul.bulletedList ul.bulletedList {
 
 /* code style */
 .ProseMirror pre {
+  max-width: 100%;
   background: #2f2f2f;
   border-radius: 3px;
   padding: 16px 24px;
@@ -200,6 +201,7 @@ ul.bulletedList ul.bulletedList ul.bulletedList {
 }
 .ProseMirror pre code {
   /* color: inherit; */
+  max-width: 100%;
   color: #FFFFFF;
   font-size: 0.9rem;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -274,7 +276,8 @@ ul[data-type="taskList"] {
 /*  hlsj */
 .tiptap pre .hljs-comment,
 .tiptap pre .hljs-quote {
-  color: #35b80a;
+  color: #216f06;
+    font-weight: 700;
 }
 
 .tiptap pre .hljs-variable,
