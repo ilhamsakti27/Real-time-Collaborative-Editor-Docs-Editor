@@ -12,6 +12,12 @@
                     Ganti Nama
                 </button>
             </div>
+            <div class="">
+                <button class="bg-gray-200 border border-black px-2"
+                    @click="updateCurrentUser({ avatar: getRandomAvatar() })">
+                    Ganti Avatar
+                </button>
+            </div>
         </div>
 
         <div v-if="editor" class="editor-canvas w-full">
@@ -118,7 +124,8 @@ import { mergeArrays } from './utils/utils'
 import defaultBlockTools from './tools/block-tools'
 
 const ydoc = new Y.Doc()
-const getRandomElement = list => list[Math.floor(Math.random() * list.length)]
+const RandomColor = list => list[Math.floor(Math.random() * list.length)]
+const RandomAvatar = list => list[Math.floor(Math.random() * list.length)]
 
 const provider = new HocuspocusProvider({
     // url: 'ws://localhost:1234/',
@@ -156,7 +163,7 @@ export default {
                 id: uuid.v4(),
                 name: 'anonymous',
                 color: this.getRandomColor(),
-                avatar: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"> <g fill="#54595d"> <path d="M10 11c-5.92 0-8 3-8 5v3h16v-3c0-2-2.08-5-8-5z"/> <circle cx="10" cy="5.5" r="4.5"/></g></svg>',
+                avatar: this.getRandomAvatar(),
             },
             tippy: {
                 maxWidth: '350',
@@ -309,8 +316,22 @@ export default {
             this.editor.chain().focus().updateUser(this.currentUser).run()
             localStorage.setItem('currentUser', JSON.stringify(this.currentUser))
         },
+        getRandomAvatar() {
+            return RandomAvatar([
+                '<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" fill="hsl(0 95% 45%)"><rect x="0" y="0" width="1" height="1"></rect><rect x="0" y="4" width="1" height="1"></rect><rect x="1" y="1" width="1" height="1"></rect><rect x="1" y="2" width="1" height="1"></rect><rect x="1" y="4" width="1" height="1"></rect><rect x="2" y="3" width="1" height="1"></rect><rect x="2" y="4" width="1" height="1"></rect><rect x="4" y="0" width="1" height="1"></rect><rect x="4" y="4" width="1" height="1"></rect><rect x="3" y="1" width="1" height="1"></rect><rect x="3" y="2" width="1" height="1"></rect><rect x="3" y="4" width="1" height="1"></rect></svg>',
+                '<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" fill="hsl(160 95% 45%)"><rect x="0" y="0" width="1" height="1"></rect><rect x="0" y="2" width="1" height="1"></rect><rect x="0" y="4" width="1" height="1"></rect><rect x="1" y="0" width="1" height="1"></rect><rect x="1" y="1" width="1" height="1"></rect><rect x="1" y="3" width="1" height="1"></rect><rect x="1" y="4" width="1" height="1"></rect><rect x="2" y="0" width="1" height="1"></rect><rect x="2" y="1" width="1" height="1"></rect><rect x="2" y="2" width="1" height="1"></rect><rect x="4" y="0" width="1" height="1"></rect><rect x="4" y="2" width="1" height="1"></rect><rect x="4" y="4" width="1" height="1"></rect><rect x="3" y="0" width="1" height="1"></rect><rect x="3" y="1" width="1" height="1"></rect><rect x="3" y="3" width="1" height="1"></rect><rect x="3" y="4" width="1" height="1"></rect></svg>',
+                '<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" fill="hsl(200 95% 45%)"><rect x="0" y="0" width="1" height="1"></rect><rect x="2" y="3" width="1" height="1"></rect><rect x="2" y="4" width="1" height="1"></rect><rect x="4" y="0" width="1" height="1"></rect></svg>',
+                '<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" fill="hsl(40 95% 45%)"><rect x="0" y="1" width="1" height="1"></rect><rect x="0" y="3" width="1" height="1"></rect><rect x="1" y="0" width="1" height="1"></rect><rect x="1" y="3" width="1" height="1"></rect><rect x="1" y="4" width="1" height="1"></rect><rect x="2" y="2" width="1" height="1"></rect><rect x="2" y="4" width="1" height="1"></rect><rect x="4" y="1" width="1" height="1"></rect><rect x="4" y="3" width="1" height="1"></rect><rect x="3" y="0" width="1" height="1"></rect><rect x="3" y="3" width="1" height="1"></rect><rect x="3" y="4" width="1" height="1"></rect></svg>',
+                '<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" fill="hsl(320 95% 45%)"><rect x="0" y="0" width="1" height="1"></rect><rect x="0" y="1" width="1" height="1"></rect><rect x="0" y="3" width="1" height="1"></rect><rect x="1" y="0" width="1" height="1"></rect><rect x="1" y="1" width="1" height="1"></rect><rect x="1" y="2" width="1" height="1"></rect><rect x="2" y="1" width="1" height="1"></rect><rect x="4" y="0" width="1" height="1"></rect><rect x="4" y="1" width="1" height="1"></rect><rect x="4" y="3" width="1" height="1"></rect><rect x="3" y="0" width="1" height="1"></rect><rect x="3" y="1" width="1" height="1"></rect><rect x="3" y="2" width="1" height="1"></rect></svg>',
+                '<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" fill="hsl(240 95% 45%)"><rect x="0" y="0" width="1" height="1"></rect><rect x="0" y="2" width="1" height="1"></rect><rect x="1" y="1" width="1" height="1"></rect><rect x="1" y="3" width="1" height="1"></rect><rect x="1" y="4" width="1" height="1"></rect><rect x="2" y="0" width="1" height="1"></rect><rect x="2" y="1" width="1" height="1"></rect><rect x="2" y="2" width="1" height="1"></rect><rect x="2" y="4" width="1" height="1"></rect><rect x="4" y="0" width="1" height="1"></rect><rect x="4" y="2" width="1" height="1"></rect><rect x="3" y="1" width="1" height="1"></rect><rect x="3" y="3" width="1" height="1"></rect><rect x="3" y="4" width="1" height="1"></rect></svg>',
+                '<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" fill="hsl(240 95% 45%)"><rect x="0" y="0" width="1" height="1"></rect><rect x="1" y="1" width="1" height="1"></rect><rect x="1" y="3" width="1" height="1"></rect><rect x="1" y="4" width="1" height="1"></rect><rect x="2" y="2" width="1" height="1"></rect><rect x="2" y="4" width="1" height="1"></rect><rect x="4" y="0" width="1" height="1"></rect><rect x="3" y="1" width="1" height="1"></rect><rect x="3" y="3" width="1" height="1"></rect><rect x="3" y="4" width="1" height="1"></rect></svg>',
+                '<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" fill="hsl(40 95% 45%)"><rect x="0" y="1" width="1" height="1"></rect><rect x="0" y="2" width="1" height="1"></rect><rect x="0" y="3" width="1" height="1"></rect><rect x="1" y="0" width="1" height="1"></rect><rect x="1" y="1" width="1" height="1"></rect><rect x="1" y="3" width="1" height="1"></rect><rect x="2" y="4" width="1" height="1"></rect><rect x="4" y="1" width="1" height="1"></rect><rect x="4" y="2" width="1" height="1"></rect><rect x="4" y="3" width="1" height="1"></rect><rect x="3" y="0" width="1" height="1"></rect><rect x="3" y="1" width="1" height="1"></rect><rect x="3" y="3" width="1" height="1"></rect></svg>',
+                '<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" fill="hsl(80 95% 45%)"><rect x="0" y="0" width="1" height="1"></rect><rect x="0" y="1" width="1" height="1"></rect><rect x="1" y="2" width="1" height="1"></rect><rect x="1" y="3" width="1" height="1"></rect><rect x="1" y="4" width="1" height="1"></rect><rect x="2" y="0" width="1" height="1"></rect><rect x="2" y="1" width="1" height="1"></rect><rect x="2" y="2" width="1" height="1"></rect><rect x="2" y="3" width="1" height="1"></rect><rect x="2" y="4" width="1" height="1"></rect><rect x="4" y="0" width="1" height="1"></rect><rect x="4" y="1" width="1" height="1"></rect><rect x="3" y="2" width="1" height="1"></rect><rect x="3" y="3" width="1" height="1"></rect><rect x="3" y="4" width="1" height="1"></rect></svg>'
+
+            ])
+        },
         getRandomColor() {
-            return getRandomElement([
+            return RandomColor([
                 '#958DF1',
                 '#F98181',
                 '#FBBC88',

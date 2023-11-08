@@ -11,7 +11,7 @@
         </div>
       </div>
       <!-- output file -->
-      <div class="json absolute right-0 py-20 max-h-screen ">
+      <!-- <div class="json absolute right-0 py-20 max-h-screen ">
         <div class="">
           <h3>
             Output file
@@ -27,7 +27,7 @@
           </pre>
         </div>
 
-      </div>
+      </div> -->
     </div>
 
   </div>

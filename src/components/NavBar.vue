@@ -3,10 +3,12 @@
     <div style="background-color: transparent; z-index: 99;"
         class="w-full fixed backdrop-blur-md px-16 py-1 border-b flex justify-between items-center">
         <div class="font-bold text-lg">Collaboration Editor App</div>
-        <div class="flex gap-x-2ss p-2 w-max max-w-md">
-            <div v-for="(item, index) in users" :key="index" class="flex gap-x-2 items-center border rounded-[50%] p-2">
+        <div class="flex p-2">
+            <div v-for="(item, index) in users" :key="index"
+                :class="item ? `flex items-center border rounded-[50%] p-1 bg-white z-[${10 - index}]` : ''"
+                style="margin-left: -14px;">
                 <span :user-tooltip="index === 0 ? 'Me' : item[1].user.name" @mouseenter="" v-html="item[1].user.avatar"
-                    class="rounded-[50%] w-[20px] h-[20px]" />
+                    class="rounded-[50%] w-[35px] h-[35px]" />
             </div>
         </div>
     </div>
