@@ -12,6 +12,12 @@
                     Ganti Nama
                 </button>
             </div>
+            <div class="">
+                <button class="bg-gray-200 border border-black px-2"
+                    @click="updateCurrentUser({ avatar: getRandomAvatar() })">
+                    Ganti Avatar
+                </button>
+            </div>
         </div>
 
         <div v-if="editor" class="editor-canvas w-full">
@@ -107,6 +113,8 @@ import CalloutNode from './tools/buttons/callout/index'
 import { showActionMenu } from './floating-menu/action'
 import { showNewNode } from './floating-menu/newnode'
 
+import avatar from '../../assets/images/op-pixel/brook.svg'
+
 // utils
 import {
     DragNode,
@@ -119,7 +127,8 @@ import { mergeArrays } from './utils/utils'
 import defaultBlockTools from './tools/block-tools'
 
 const ydoc = new Y.Doc()
-const getRandomElement = list => list[Math.floor(Math.random() * list.length)]
+const RandomColor = list => list[Math.floor(Math.random() * list.length)]
+const RandomAvatar = list => list[Math.floor(Math.random() * list.length)]
 
 const provider = new HocuspocusProvider({
     // url: 'ws://localhost:1234/',
@@ -158,7 +167,7 @@ export default {
                 id: uuid.v4(),
                 name: 'anonymous',
                 color: this.getRandomColor(),
-                avatar: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"> <g fill="#54595d"> <path d="M10 11c-5.92 0-8 3-8 5v3h16v-3c0-2-2.08-5-8-5z"/> <circle cx="10" cy="5.5" r="4.5"/></g></svg>',
+                avatar: this.getRandomAvatar(),
             },
             tippy: {
                 maxWidth: '350',
@@ -311,8 +320,22 @@ export default {
             this.editor.chain().focus().updateUser(this.currentUser).run()
             localStorage.setItem('currentUser', JSON.stringify(this.currentUser))
         },
+        getRandomAvatar() {
+            return RandomAvatar([
+                'brook.svg',
+                'chopper.svg',
+                'franky.svg',
+                'jimbei.svg',
+                'nami.svg',
+                'robin.svg',
+                'sanji.svg',
+                'usopp.svg',
+                'zoro.svg',
+                'luffy.svg',
+            ])
+        },
         getRandomColor() {
-            return getRandomElement([
+            return RandomColor([
                 '#958DF1',
                 '#F98181',
                 '#FBBC88',
