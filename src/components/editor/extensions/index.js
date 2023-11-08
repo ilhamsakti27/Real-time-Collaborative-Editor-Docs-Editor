@@ -1,4 +1,4 @@
-/* eslint-disable  */
+/* eslint-disable */
 // tiptap extension
 import StarterKit from '@tiptap/starter-kit'
 import Focus from '@tiptap/extension-focus'
@@ -24,6 +24,10 @@ import Highlight from '@tiptap/extension-highlight'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { common, createLowlight } from './lowlight'
 import TextAlign from '@tiptap/extension-text-align'
+import Table from '@tiptap/extension-table'
+import TableCell from '@tiptap/extension-table-cell'
+import TableHeader from '@tiptap/extension-table-header'
+import TableRow from '@tiptap/extension-table-row'
 
 // custom extensions
 import { ColumnExtension } from './column'
@@ -135,6 +139,12 @@ const defaultExtension = [
         },
     }),
     Typography,
+    Table.configure({
+        resizable: true,
+    }),
+    TableRow,
+    TableHeader,
+    TableCell,
 ]
 
 export default defaultExtension

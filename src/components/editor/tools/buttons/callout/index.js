@@ -1,26 +1,37 @@
-/* eslint-disable  */
-import { mergeAttributes, Node } from '@tiptap/core'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
-import CalloutComponent from './CalloutButton.vue'
+/* eslint-disable */
 
-console.log("Helllo Semua")
+import { Node } from '@tiptap/core';
 
-export default Node.create({
-    // configuration …
-    name: 'Callout',
-    group: 'block',
-    atom: true,
-    parseHTML() {
-      return [
-        {
-          tag: 'callout-component',
+const CalloutNode = Node.create({
+  name: 'quote',
+
+  defaultOptions: {
+    // You can define default options for your node extension here
+  },
+
+  content: 'block+',
+
+  addProseMirrorPlugins() {
+    return [
+      {
+        name: 'quote',
+        nodeType: 'blockquote',
+        plugin: () => {
+          return {
+            // Add ProseMirror plugins or other custom behavior here
+          };
         },
-      ]
-    },
-    renderHTML({ HTMLAttributes }) {
-      return ['callout-component', mergeAttributes(HTMLAttributes)]
-    },
-    addNodeView() {
-      return VueNodeViewRenderer(CalloutComponent)
-    },
-  })
+      },
+    ];
+  },
+
+  addCommands() {
+    return {
+      toggleQuote: () => ({ commands }) => {
+        return commands.toggleNode('quote', 'paragraph');
+      },
+    };
+  },
+});
+
+export default CalloutNode;

@@ -8,7 +8,7 @@ import slashMenu from '../slashMenu'
 
 export default {
   items: ({ query }) => {
-    return slashMenu.filter((item) => item.title.toLowerCase().startsWith(query.toLowerCase())).slice(0, 15)
+    return slashMenu.filter((item) => item.title.toLowerCase().startsWith(query.toLowerCase())).slice(0, 17)
   },
 
   render: () => {
