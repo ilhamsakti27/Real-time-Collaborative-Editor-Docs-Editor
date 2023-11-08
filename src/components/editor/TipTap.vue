@@ -304,12 +304,10 @@ export default {
                 .trim()
                 .substring(0, 32)
             const id = uuid.v4()
-            const avatar = this.getRandomAvatar()
             if (name) {
                 return this.updateCurrentUser({
                     id,
                     name,
-                    avatar
                 })
             }
         },
