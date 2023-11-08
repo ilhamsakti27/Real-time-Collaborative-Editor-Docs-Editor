@@ -128,8 +128,8 @@ const RandomColor = list => list[Math.floor(Math.random() * list.length)]
 const RandomAvatar = list => list[Math.floor(Math.random() * list.length)]
 
 const provider = new HocuspocusProvider({
-    url: 'ws://localhost:1234/',
-    // url: 'wss://editorhocus.oriens.my.id/',
+    // url: 'ws://localhost:1234/',
+    url: 'wss://editorhocus.oriens.my.id/',
     name: 'example-document',
     document: ydoc,
     token: 'test-token',
