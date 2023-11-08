@@ -112,6 +112,8 @@ import ImageView from './tools/buttons/popupImage/popupImage.vue'
 import { showActionMenu } from './floating-menu/action'
 import { showNewNode } from './floating-menu/newnode'
 
+import avatar from '../../assets/images/op-pixel/brook.svg'
+
 // utils
 import {
     DragNode,
@@ -318,16 +320,16 @@ export default {
         },
         getRandomAvatar() {
             return RandomAvatar([
-                '<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" fill="hsl(0 95% 45%)"><rect x="0" y="0" width="1" height="1"></rect><rect x="0" y="4" width="1" height="1"></rect><rect x="1" y="1" width="1" height="1"></rect><rect x="1" y="2" width="1" height="1"></rect><rect x="1" y="4" width="1" height="1"></rect><rect x="2" y="3" width="1" height="1"></rect><rect x="2" y="4" width="1" height="1"></rect><rect x="4" y="0" width="1" height="1"></rect><rect x="4" y="4" width="1" height="1"></rect><rect x="3" y="1" width="1" height="1"></rect><rect x="3" y="2" width="1" height="1"></rect><rect x="3" y="4" width="1" height="1"></rect></svg>',
-                '<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" fill="hsl(160 95% 45%)"><rect x="0" y="0" width="1" height="1"></rect><rect x="0" y="2" width="1" height="1"></rect><rect x="0" y="4" width="1" height="1"></rect><rect x="1" y="0" width="1" height="1"></rect><rect x="1" y="1" width="1" height="1"></rect><rect x="1" y="3" width="1" height="1"></rect><rect x="1" y="4" width="1" height="1"></rect><rect x="2" y="0" width="1" height="1"></rect><rect x="2" y="1" width="1" height="1"></rect><rect x="2" y="2" width="1" height="1"></rect><rect x="4" y="0" width="1" height="1"></rect><rect x="4" y="2" width="1" height="1"></rect><rect x="4" y="4" width="1" height="1"></rect><rect x="3" y="0" width="1" height="1"></rect><rect x="3" y="1" width="1" height="1"></rect><rect x="3" y="3" width="1" height="1"></rect><rect x="3" y="4" width="1" height="1"></rect></svg>',
-                '<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" fill="hsl(200 95% 45%)"><rect x="0" y="0" width="1" height="1"></rect><rect x="2" y="3" width="1" height="1"></rect><rect x="2" y="4" width="1" height="1"></rect><rect x="4" y="0" width="1" height="1"></rect></svg>',
-                '<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" fill="hsl(40 95% 45%)"><rect x="0" y="1" width="1" height="1"></rect><rect x="0" y="3" width="1" height="1"></rect><rect x="1" y="0" width="1" height="1"></rect><rect x="1" y="3" width="1" height="1"></rect><rect x="1" y="4" width="1" height="1"></rect><rect x="2" y="2" width="1" height="1"></rect><rect x="2" y="4" width="1" height="1"></rect><rect x="4" y="1" width="1" height="1"></rect><rect x="4" y="3" width="1" height="1"></rect><rect x="3" y="0" width="1" height="1"></rect><rect x="3" y="3" width="1" height="1"></rect><rect x="3" y="4" width="1" height="1"></rect></svg>',
-                '<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" fill="hsl(320 95% 45%)"><rect x="0" y="0" width="1" height="1"></rect><rect x="0" y="1" width="1" height="1"></rect><rect x="0" y="3" width="1" height="1"></rect><rect x="1" y="0" width="1" height="1"></rect><rect x="1" y="1" width="1" height="1"></rect><rect x="1" y="2" width="1" height="1"></rect><rect x="2" y="1" width="1" height="1"></rect><rect x="4" y="0" width="1" height="1"></rect><rect x="4" y="1" width="1" height="1"></rect><rect x="4" y="3" width="1" height="1"></rect><rect x="3" y="0" width="1" height="1"></rect><rect x="3" y="1" width="1" height="1"></rect><rect x="3" y="2" width="1" height="1"></rect></svg>',
-                '<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" fill="hsl(240 95% 45%)"><rect x="0" y="0" width="1" height="1"></rect><rect x="0" y="2" width="1" height="1"></rect><rect x="1" y="1" width="1" height="1"></rect><rect x="1" y="3" width="1" height="1"></rect><rect x="1" y="4" width="1" height="1"></rect><rect x="2" y="0" width="1" height="1"></rect><rect x="2" y="1" width="1" height="1"></rect><rect x="2" y="2" width="1" height="1"></rect><rect x="2" y="4" width="1" height="1"></rect><rect x="4" y="0" width="1" height="1"></rect><rect x="4" y="2" width="1" height="1"></rect><rect x="3" y="1" width="1" height="1"></rect><rect x="3" y="3" width="1" height="1"></rect><rect x="3" y="4" width="1" height="1"></rect></svg>',
-                '<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" fill="hsl(240 95% 45%)"><rect x="0" y="0" width="1" height="1"></rect><rect x="1" y="1" width="1" height="1"></rect><rect x="1" y="3" width="1" height="1"></rect><rect x="1" y="4" width="1" height="1"></rect><rect x="2" y="2" width="1" height="1"></rect><rect x="2" y="4" width="1" height="1"></rect><rect x="4" y="0" width="1" height="1"></rect><rect x="3" y="1" width="1" height="1"></rect><rect x="3" y="3" width="1" height="1"></rect><rect x="3" y="4" width="1" height="1"></rect></svg>',
-                '<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" fill="hsl(40 95% 45%)"><rect x="0" y="1" width="1" height="1"></rect><rect x="0" y="2" width="1" height="1"></rect><rect x="0" y="3" width="1" height="1"></rect><rect x="1" y="0" width="1" height="1"></rect><rect x="1" y="1" width="1" height="1"></rect><rect x="1" y="3" width="1" height="1"></rect><rect x="2" y="4" width="1" height="1"></rect><rect x="4" y="1" width="1" height="1"></rect><rect x="4" y="2" width="1" height="1"></rect><rect x="4" y="3" width="1" height="1"></rect><rect x="3" y="0" width="1" height="1"></rect><rect x="3" y="1" width="1" height="1"></rect><rect x="3" y="3" width="1" height="1"></rect></svg>',
-                '<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" fill="hsl(80 95% 45%)"><rect x="0" y="0" width="1" height="1"></rect><rect x="0" y="1" width="1" height="1"></rect><rect x="1" y="2" width="1" height="1"></rect><rect x="1" y="3" width="1" height="1"></rect><rect x="1" y="4" width="1" height="1"></rect><rect x="2" y="0" width="1" height="1"></rect><rect x="2" y="1" width="1" height="1"></rect><rect x="2" y="2" width="1" height="1"></rect><rect x="2" y="3" width="1" height="1"></rect><rect x="2" y="4" width="1" height="1"></rect><rect x="4" y="0" width="1" height="1"></rect><rect x="4" y="1" width="1" height="1"></rect><rect x="3" y="2" width="1" height="1"></rect><rect x="3" y="3" width="1" height="1"></rect><rect x="3" y="4" width="1" height="1"></rect></svg>'
-
+                'brook.svg',
+                'chopper.svg',
+                'franky.svg',
+                'jimbei.svg',
+                'nami.svg',
+                'robin.svg',
+                'sanji.svg',
+                'usopp.svg',
+                'zoro.svg',
+                'luffy.svg',
             ])
         },
         getRandomColor() {

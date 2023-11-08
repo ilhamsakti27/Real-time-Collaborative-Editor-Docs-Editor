@@ -3,12 +3,13 @@
     <div style="background-color: transparent; z-index: 99;"
         class="w-full fixed backdrop-blur-md px-16 py-1 border-b flex justify-between items-center">
         <div class="font-bold text-lg">Collaboration Editor App</div>
-        <div class="flex p-2">
+        <div class="flex p-1">
             <div v-for="(item, index) in users" :key="index"
                 :class="item ? `flex items-center border rounded-[50%] p-1 bg-white z-[${10 - index}]` : ''"
                 style="margin-left: -14px;">
-                <span :user-tooltip="index === 0 ? 'Me' : item[1].user.name" @mouseenter="" v-html="item[1].user.avatar"
-                    class="rounded-[50%] w-[35px] h-[35px]" />
+                <div class="" :user-tooltip="index === 0 ? 'Me' : item[1].user.name">
+                    <img class="rounded-[50%] w-[40px] h-[40px]" :src="getImageUrl(item[1].user.avatar)" />
+                </div>
             </div>
         </div>
     </div>
@@ -20,8 +21,14 @@ export default {
     props: {
         users: {
             required: true,
-        }
-    }
+        },
+    },
+    methods: {
+        getImageUrl(path) {
+            return require('@/assets/images/op-pixel/' + path);
+        },
+    },
+
 }
 </script>
 <style>
