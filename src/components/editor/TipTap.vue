@@ -2,7 +2,7 @@
 <template>
     <div class="flex">
 
-        <div class="absolute top-20 left-4 w-[20%]">
+        <div class="absolute top-20 left-4 w-[15%]">
 
             <div class="">Online: {{ total }}</div>
             <div>Status: {{ status }}</div>
@@ -14,9 +14,7 @@
             </div>
         </div>
 
-
         <div v-if="editor" class="editor-canvas w-full">
-
             <floating-menu pluginKey="" @dragend="endDragging($event)" :draggable="dragging"
                 :should-show="shouldShowMainToolbar" v-if="editor" :editor="editor" :class="{
                     'mouse:pointer-events-none mouse:opacity-0': isTyping,
@@ -68,7 +66,9 @@
 
             <BubbleMenu :editor="editor" :tippy-options="{
                 duration: 100, placement: 'top-start',
-            }" v-if="editor" v-show="topLevelNodeType !== 'title'" id="bubbleMenu" class="flex items-center">
+            }" v-if="editor"
+                v-show="topLevelNodeType !== 'title' && topLevelNodeType !== 'image' && topLevelNodeType !== 'codeBlock'"
+                id="bubbleMenu" class="flex items-center">
                 <ColorButton class="bubble-menu-btn border-r bored-black" :editor="editor" />
                 <inlineToolsBtn :editor="editor" />
                 <FontFamilyButton class="bubble-menu-btn border-r" :editor="editor" />
@@ -127,6 +127,7 @@ const provider = new HocuspocusProvider({
     document: ydoc,
     token: 'test-token',
 })
+
 import { uuid } from 'vue-uuid';
 
 export default {
@@ -216,6 +217,7 @@ export default {
                 } else if (this.editor.isActive('textStyle')) {
                     this.editor.chain().focus().unsetColor().run()
                 }
+                this.editor.commands.setTextAlign('left')
             }
         })
         provider.awareness.on('change', () => {

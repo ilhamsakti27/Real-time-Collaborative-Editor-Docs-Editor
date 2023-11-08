@@ -55,6 +55,7 @@ export default {
         filteredItems() {
             // Use a computed property to filter items based on your condition
             return this.items.filter(item => {
+
                 if (item.title === 'Delete') {
                     return this.editor.can().deleteNode(this.topLevelNodeType);
                 } else if (item.ref === 'unsetHghlBtn') {
@@ -62,11 +63,9 @@ export default {
                 } else if (item.ref === 'unsetColorBtn') {
                     return this.editor.isActive('textStyle')
                 } else if (item.ref === 'moveUpBtn') {
-                    let isFilter = this.canMoveNodeUp()
-                    return isFilter
+                    return this.canMoveNodeUp()
                 } else if (item.ref === 'moveDownBtn') {
-                    let isFilter = this.canMoveNodeDown()
-                    return isFilter
+                    return this.canMoveNodeDown()
                 }
 
                 return true;
@@ -82,21 +81,24 @@ export default {
     },
     methods: {
         selectItem(index) {
-            if (this.editor.isActive('highlight') && this.editor.isActive('textStyle')) {
-                this.selectedIndex = index
-            } else if (this.editor.isActive('textStyle')) {
-                this.selectedIndex = index + 1
-            } else {
-                this.selectedIndex = index
-            }
             const item = this.items[this.selectedIndex]
             if (item) {
+                if (item.ref === 'unsetHghlBtn' || item.ref === 'unsetColorBtn') {
+                    if (this.editor.isActive('highlight') && this.editor.isActive('textStyle')) {
+                        item.command(this.editor, this.topLevelNodeType)
+                    } else if (this.editor.isActive('textStyle')) {
+                        item.command(this.editor, this.topLevelNodeType, 'color')
+                    } else {
+                        item.command(this.editor, this.topLevelNodeType, 'highlight')
+                    }
+                }
                 if (item.ref === 'moveUpBtn' || item.ref === 'moveDownBtn') {
                     item.command(this.editor, this.topLevelNodeType, this.isNodeUp)
                 } else {
                     item.command(this.editor, this.topLevelNodeType)
                 }
             }
+
         },
         upHandler() {
             // stop scroll event jika sudah mentok
