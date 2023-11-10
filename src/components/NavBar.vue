@@ -24,9 +24,6 @@ export default {
         },
     },
     methods: {
-        shouldRenderItem(name) {
-            return name || !name.includes("http");
-        },
         getImageUrl(path) {
             if (path !== null) {
                 if (!path.includes("http")) {

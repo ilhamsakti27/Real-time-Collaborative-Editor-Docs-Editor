@@ -1,9 +1,13 @@
+/* eslint-disable no-unused-vars */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import { uuid } from 'vue-uuid'
+
 // eslint-disable-next-line import/no-cycle
 // import store from '@/store'
 
 Vue.use(VueRouter)
+const id = uuid.v4()
 
 const routes = [
   // {
@@ -12,7 +16,7 @@ const routes = [
   // },
   {
     path: '/',
-    redirect: 'dashboard',
+    redirect: 'editor/documentId-001',
   },
   // {
   //   path: '/dashboard',

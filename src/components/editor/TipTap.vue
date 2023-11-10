@@ -21,51 +21,32 @@
         </div>
 
         <div v-if="editor" class="editor-canvas w-full">
-            <floating-menu pluginKey="" @dragend="endDragging($event)" :draggable="dragging"
-                :should-show="shouldShowMainToolbar" v-if="editor" :editor="editor" :class="{
-                    'mouse:pointer-events-none mouse:opacity-0': isTyping,
-                }" :tippy-options="{
-    maxWidth: '350',
-    placement: 'left-start',
-    animation: 'fade',
-    duration: 300,
-    getReferenceClientRect: getMenuCoords,
-    onCreate: (instance) =>
-        instance.popper.classList.add(
-            'max-md:!sticky',
-            'max-md:!bottom-0',
-            'max-md:!top-auto',
-            'max-md:!transform-none'
-        ),
-}">
+            <floating-menu :should-show="shouldShowMainToolbar" v-if="editor" :editor="editor" :class="{
+                'mouse:pointer-events-none mouse:opacity-0': isTyping,
+            }" :tippy-options=tippy>
                 <div v-if="topLevelNodeType !== 'title'" class="flex flex-row" pluginKey="" @dragend="endDragging($event)"
                     :draggable="dragging">
                     <div class="" id="submenu"></div>
-                    <div class="">
-                        <button ref="newLineBtn" @keydown.enter.prevent @click="handleNewLine($event)" @mouseup="
-                            draggedNodePosition = false;
-                        dragging = false;
-                        " class="ml-1 my-2 hover:bg-slate-100 rounded">
-                            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 24">
-                                <path d="M16 9h-5V4H9v5H4v2h5v5h2v-5h5V9z" />
-                            </svg>
-                        </button>
-                        <button ref="subMenuBtn" @keydown.enter.prevent @click="handleSubMenu($event)"
-                            @mouseenter="startDragging($event)" @mouseup="
-                                draggedNodePosition = false;
-                            dragging = false;
-                            " class="ml-1 my-2 hover:bg-slate-100 rounded" :class="{
+                    <button ref="newNodeMenu" @click="handleNewNode($event)" @mouseup="
+                    " class="ml-1 my-2 hover:bg-slate-100 rounded">
+                        <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 24">
+                            <path d="M16 9h-5V4H9v5H4v2h5v5h2v-5h5V9z" />
+                        </svg>
+                    </button>
+                    <button ref="actionMenu" @click="handleActionMenu($event)" @mousedown="startDragging($event)" @mouseup="
+                        draggedNodePosition = false;
+                    dragging = false;
+                    " class="ml-1 my-2 hover:bg-slate-100 rounded" :class="{
     'cursor-grab': !dragging,
     'cursor-grabbing': dragging,
 }" aria-label="Drag" data-tooltip="Drag">
-                            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                aria-hidden="true" focusable="false" class="w-5 h-5 md:w-6 md:h-6">
-                                <path
-                                    d="M8 7h2V5H8v2zm0 6h2v-2H8v2zm0 6h2v-2H8v2zm6-14v2h2V5h-2zm0 8h2v-2h-2v2zm0 6h2v-2h-2v2z">
-                                </path>
-                            </svg>
-                        </button>
-                    </div>
+                        <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            aria-hidden="true" focusable="false" class="w-5 h-5 md:w-6 md:h-6">
+                            <path
+                                d="M8 7h2V5H8v2zm0 6h2v-2H8v2zm0 6h2v-2H8v2zm6-14v2h2V5h-2zm0 8h2v-2h-2v2zm0 6h2v-2h-2v2z">
+                            </path>
+                        </svg>
+                    </button>
                 </div>
 
             </floating-menu>
@@ -92,7 +73,6 @@
 import { Editor } from '@tiptap/core'
 import { BubbleMenu, EditorContent, FloatingMenu } from '@tiptap/vue-2'
 import defaultExtension from './extensions'
-
 
 // collaboration
 import { HocuspocusProvider } from '@hocuspocus/provider'
@@ -130,14 +110,6 @@ const ydoc = new Y.Doc()
 const RandomColor = list => list[Math.floor(Math.random() * list.length)]
 const RandomAvatar = list => list[Math.floor(Math.random() * list.length)]
 
-const provider = new HocuspocusProvider({
-    // url: 'ws://localhost:1234/',
-    url: 'wss://editorhocus.oriens.my.id/',
-    name: 'example-document',
-    document: ydoc,
-    token: 'test-token',
-})
-
 import { uuid } from 'vue-uuid';
 
 export default {
@@ -163,6 +135,8 @@ export default {
     },
     data() {
         return {
+            documentId: null,
+            provider: null,
             currentUser: JSON.parse(localStorage.getItem('currentUser')) || {
                 id: uuid.v4(),
                 name: 'anonymous',
@@ -201,6 +175,19 @@ export default {
             allBlockTools: mergeArrays(defaultBlockTools(), this.blockTools),
         }
     },
+    created() {
+        // Accessing URL parameters using this.$route
+        const path = this.$route.path
+        this.documentId = path.split('/')[2]
+        this.provider = new HocuspocusProvider({
+            // url: 'ws://localhost:1234/',
+            url: 'wss://editorhocus.oriens.my.id/',
+            name: this.documentId,
+            document: ydoc,
+            token: 'test-token',
+        })
+    },
+
     computed: {
         activeAlignmentTools() {
             if (this.topLevelNodeType) {
@@ -231,13 +218,13 @@ export default {
                 this.editor.commands.setTextAlign('left')
             }
         })
-        provider.awareness.on('change', () => {
-            this.awareness = this.buatMapBaru(provider.awareness.getStates())
+        this.provider.awareness.on('change', () => {
+            this.awareness = this.buatMapBaru(this.provider.awareness.getStates())
             this.users = this.awareness
             this.total = this.awareness.size
             this.$emit('update:dataUsers', this.users);
         })
-        provider.on('status', evt => {
+        this.provider.on('status', evt => {
             if (evt.status === 'disconnected') {
                 this.status = 'unauthorized'
             } else {
@@ -249,10 +236,10 @@ export default {
             extensions: [
                 ...defaultExtension,
                 Collaboration.configure({
-                    document: provider.document,
+                    document: this.provider.document,
                 }),
                 CollaborationCursor.configure({
-                    provider,
+                    provider: this.provider,
                     user: this.currentUser,
                 }),
             ],
@@ -282,11 +269,11 @@ export default {
                     || tool.tools?.find(tool => tool.name == this.topLevelNodeType),
             )
         },
-        handleNewLine(event) {
+        handleNewNode(event) {
             this.isNewNode = true
             if (this.topLevelNodeType !== 'title') { showNewNode(this.editor, this.topLevelNodeType, this.isNewNode) }
         },
-        handleSubMenu(event) {
+        handleActionMenu(event) {
             this.isSubMenu = true
             if (this.topLevelNodeType !== 'title') { showActionMenu(this.editor, this.topLevelNodeType, this.isSubMenu) }
         },
