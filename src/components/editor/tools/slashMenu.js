@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { PopupImage } from './buttons/popupImage'
-import calloutIndex from './buttons/callout/index'
+// import Callout from './buttons/callout/callout'
 
 const blockTools = [
   {
@@ -176,17 +176,26 @@ const blockTools = [
         .chain()
         .focus()
         .deleteRange(range)
-        .setNode(calloutIndex)
+        // .insertContent({
+        //   type: 'callout-node', // Use the type of your custom node
+        // })
+        .setNode('CalloutNode')
         .run()
     },
-    // command: ({ editor, range }) => {
-    //   editor
-    //     .chain()
-    //     .focus()
-    //     .deleteRange(range)
-    //     .setNode('paragraph')
-    //     .run()
-    // },
+  },
+  {
+    name: 'table',
+    title: 'Table',
+    desc: 'Add simple table in page',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none"> <path d="M12 10H34C35.5913 10 37.1174 10.6321 38.2426 11.7574C39.3679 12.8826 40 14.4087 40 16V34C40 35.5913 39.3679 37.1174 38.2426 38.2426C37.1174 39.3679 35.5913 40 34 40H12C10.4087 40 8.88258 39.3679 7.75736 38.2426C6.63214 37.1174 6 35.5913 6 34V16C6 14.4087 6.63214 12.8826 7.75736 11.7574C8.88258 10.6321 10.4087 10 12 10ZM8 34C8 35.0609 8.42143 36.0783 9.17157 36.8284C9.92172 37.5786 10.9391 38 12 38H22V32H8V34ZM22 24H8V30H22V24ZM34 38C35.0609 38 36.0783 37.5786 36.8284 36.8284C37.5786 36.0783 38 35.0609 38 34V32H24V38H34ZM38 24H24V30H38V24ZM8 22H22V16H8V22ZM24 22H38V16H24V22Z" fill="#272829" fill-opacity="0.8"/> </svg>',
+    command: ({ editor, range }) => {
+      editor
+        .chain()
+        .focus()
+        .deleteRange(range)
+        .insertTable({ rows: 3, cols: 3 })
+        .run()
+    },
   },
 ]
 

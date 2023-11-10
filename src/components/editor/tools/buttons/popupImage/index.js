@@ -25,6 +25,9 @@ export function PopupImage(editor) {
       placement: 'top',
     });
   } else if (floatingComponent !== null) {
+    // console.log("Haii there!!!");
+    // console.log(popup)
+
     // Check if popup is defined before destroying it
     if (popup) {
       popup[0].destroy();
