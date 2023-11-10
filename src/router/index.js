@@ -15,6 +15,10 @@ const routes = [
   //   redirect: 'App',
   // },
   {
+    path: '/App',
+    redirect: 'editor/documentId-001',
+  },
+  {
     path: '/',
     redirect: 'editor/documentId-001',
   },
