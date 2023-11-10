@@ -71,6 +71,7 @@ export default {
   },
   created() {
     const path = window.location.href
+    console.log('path: ', path)
     this.documentId = path.split('/')[4]
   },
   methods: {
