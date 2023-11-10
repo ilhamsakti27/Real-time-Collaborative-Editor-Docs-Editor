@@ -74,10 +74,6 @@ const defaultExtension = [
         showOnlyCurrent: false,
         includeChildren: true,
     }),
-    // Focus.configure({
-    //     className: 'has-focus',
-    //     mode: 'deepest'
-    // }),
     Heading.configure({
         levels: [1, 2, 3],
         HTMLAttributes: {

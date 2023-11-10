@@ -10,12 +10,12 @@
       </div>
       <div class="border-t-2 border-slate-300 p-3">
         <!-- <form action="/upload"> -->
-        <input type="file" name="file" id="file-input"
+        <input ref='inputImg' type="file" name="file" id="file-input"
           class="w-full border-solid border border-gray-300 rounded bg-gray-50 px-2 py-1 text-sm outline-none focus:outline focus:outline-2 focus:outline-offset-0 focus:outline-blue-300"
           placeholder="Paste the image link...">
         <button
           class="bg-sky-600 hover:bg-sky-700 active:bg-sky-800 text-white border-solid border bg-indigo-500 rounded px-20 py-1 mt-4 text-sm flex mx-auto text"
-          @click="setLinkImage">Upload Image</button>
+          @click="uploadImage">Upload Image</button>
         <div class="text-center">
           <span class="text-xs mx-auto text-gray-400">The maximum size per file is 5 MB.</span>
         </div>
@@ -50,6 +50,10 @@
 
 <script>
 /* eslint-disable */
+import fs from 'fs';
+import axios from 'axios';
+import FormData from 'form-data';
+
 export default {
   name: 'ImageView', // Change the component name
   props: {
@@ -62,8 +66,12 @@ export default {
       isUpload: true,
       isEmbedLink: false,
       url: '',
-
+      documentId: null
     }
+  },
+  created() {
+    const path = window.location.href
+    this.documentId = path.split('/')[4]
   },
   methods: {
     uploadOrEmbedLinkBtn() {
@@ -73,9 +81,31 @@ export default {
     setLinkImage() {
       if (this.url) {
         this.editor.chain().focus().setImage({ src: this.url }).run()
-        // console.log(`URL: ${this.url}`)
       }
     },
+    async uploadImage() {
+      try {
+        const formData = new FormData();
+        const path = this.$refs.inputImg;
+
+        formData.append("image", path.files[0]);
+        const uri = `http://localhost:1234/imageEditor/${this.documentId}`
+        const response = await axios.post(uri, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+
+        const imgUri = response.data.data.destination.slice('assets/'.length)
+        const fileName = response.data.data.originalname
+        const url = `http://localhost:1234/${imgUri}/${fileName}`
+
+        this.editor.chain().focus().setImage({ src: url }).run()
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
   },
 }
 </script>
