@@ -73,6 +73,7 @@ export default {
     const path = window.location.href
     console.log('path: ', path)
     this.documentId = path.split('/')[4]
+    console.log('path: ', this.documentId)
   },
   methods: {
     uploadOrEmbedLinkBtn() {
