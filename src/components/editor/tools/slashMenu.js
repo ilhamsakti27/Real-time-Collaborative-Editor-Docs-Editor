@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import { PopupImage } from './buttons/popupImage'
-// import Callout from './buttons/callout/callout'
 
 const blockTools = [
   {
@@ -179,7 +178,7 @@ const blockTools = [
         // .insertContent({
         //   type: 'callout-node', // Use the type of your custom node
         // })
-        .setNode('CalloutNode')
+        .setCallout()
         .run()
     },
   },

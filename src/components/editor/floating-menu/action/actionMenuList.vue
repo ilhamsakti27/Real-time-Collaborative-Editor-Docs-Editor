@@ -85,20 +85,6 @@ export default {
             console.log(item.title)
             if (item) {
                 item.command(this.editor, this.topLevelNodeType)
-                // if (item.ref === 'unsetHghlBtn' || item.ref === 'unsetColorBtn') {
-                //     if (this.editor.isActive('highlight') && this.editor.isActive('textStyle')) {
-                //         item.command(this.editor, this.topLevelNodeType)
-                //     } else if (this.editor.isActive('textStyle')) {
-                //         item.command(this.editor, this.topLevelNodeType, 'color')
-                //     } else {
-                //         item.command(this.editor, this.topLevelNodeType, 'highlight')
-                //     }
-                // }
-                // if (item.ref === 'moveUpBtn' || item.ref === 'moveDownBtn') {
-                //     item.command(this.editor, this.topLevelNodeType, this.isNodeUp)
-                // } else {
-                //     item.command(this.editor, this.topLevelNodeType)
-                // }
             }
 
         },

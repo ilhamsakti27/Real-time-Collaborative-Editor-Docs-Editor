@@ -207,6 +207,29 @@ ul.bulletedList ul.bulletedList ul.bulletedList {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+/* Callout Style */
+callout{
+  background-color: #F1F1EF;
+  display: flex;
+  align-items: center;
+  padding: 10em;
+  position: relative; 
+}
+
+callout .callout-content {
+  padding: 0 32px;
+  max-width: 100%;
+}
+
+callout .callout-emoji::before {
+  content: "💡";
+  font-size: 20px;
+  position: absolute;
+  padding: 4px;
+  top:0;
+}
+
+
 /* blockquote style */
 blockquote.blockquote {
   display: block;
