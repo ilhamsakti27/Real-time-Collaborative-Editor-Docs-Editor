@@ -87,13 +87,11 @@ import inlineToolsBtn from './tools/buttons/InlineButton.vue'
 
 // buttons for slash menu
 import ImageView from './tools/buttons/popupImage/popupImage.vue'
-import CalloutNode from './tools/buttons/callout/index'
 
 // floating-menu
 import { showActionMenu } from './floating-menu/action'
 import { showNewNode } from './floating-menu/newnode'
 
-import avatar from '../../assets/images/op-pixel/brook.svg'
 
 // utils
 import {
@@ -112,6 +110,7 @@ const RandomAvatar = list => list[Math.floor(Math.random() * list.length)]
 
 import { uuid } from 'vue-uuid';
 
+console.log(document.querySelector(".callout"))
 export default {
     components: {
         EditorContent,
@@ -122,7 +121,6 @@ export default {
         inlineToolsBtn,
         FontFamilyButton,
         ImageView,
-        CalloutNode,
     },
     props: {
         editorClass: {
@@ -418,4 +416,3 @@ export default {
     white-space: nowrap;
 }
 </style>
-./tools/buttons/callout/Callout

@@ -32,6 +32,7 @@ import TableRow from '@tiptap/extension-table-row'
 // custom extensions
 import { ColumnExtension } from './column'
 import Placeholder from './placeholder'
+import { CalloutExtension } from './callout'
 import { DocumentWithTitle, Title } from './title'
 
 // slash menu extension
@@ -43,6 +44,7 @@ lowlight.register(common)
 
 const defaultExtension = [
     DocumentWithTitle,
+    CalloutExtension,
     Title,
     TextAlign.configure({
         types: ['heading', 'paragraph'],

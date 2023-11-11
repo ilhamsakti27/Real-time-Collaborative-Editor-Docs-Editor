@@ -4,7 +4,7 @@
         <template v-if="items.length">
             <div class="pl-2 text-black/40 text-xs font-semibold">New Block</div>
             <button :ref="item.ref" v-for="(item, index) in items" :key="index" class="item"
-                :class="{ 'is-selected': index === selectedIndex }" @click="selectItem(index)"
+                :class="{ 'is-selected': index === selectedIndex }" @click="selectItem(index)" id="popup"
                 @mouseover="handleHover(index)">
                 <!-- {{ item }} -->
                 <!-- list of menu -->
