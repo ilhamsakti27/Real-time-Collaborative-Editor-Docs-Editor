@@ -93,7 +93,7 @@ export default {
         formData.append("document", this.documentId);
         formData.append("image", path.files[0]);
 
-        const uri = `http://localhost:1234/imageEditor`
+        const uri = `https://editorhocus.oriens.my.id/imageEditor`
         const response = await axios.post(uri, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
@@ -102,7 +102,7 @@ export default {
 
         const imgUri = response.data.data.destination.slice('assets/'.length)
         const fileName = response.data.data.originalname
-        const url = `http://localhost:1234/${imgUri}/${fileName}`
+        const url = `https://editorhocus.oriens.my.id/${imgUri}/${fileName}`
         console.log(url)
         this.editor.chain().focus().setImage({ src: url }).run()
       } catch (error) {

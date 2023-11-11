@@ -178,8 +178,8 @@ export default {
         const path = this.$route.path
         this.documentId = path.split('/')[2]
         this.provider = new HocuspocusProvider({
-            url: 'ws://localhost:1234/',
-            // url: 'wss://editorhocus.oriens.my.id/',
+            // url: 'ws://localhost:1234/',
+            url: 'wss://editorhocus.oriens.my.id/',
             name: this.documentId,
             document: ydoc,
             token: 'test-token',
