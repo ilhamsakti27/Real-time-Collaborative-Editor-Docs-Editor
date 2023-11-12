@@ -7,6 +7,6 @@ export const fetchOpenGraphData = async (url, editor) => {
         console.log(response)
         return response
     } catch (error) {
-        throw error
+        return error
     }
 }

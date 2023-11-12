@@ -219,12 +219,13 @@ ul.bulletedList ul.bulletedList ul.bulletedList {
     max-width: 100%;
     display: flex;
     cursor:pointer;
+    /* align-items: center; */
     margin: 2em 2em;
     @apply rounded
 }
 .bookmark-thumbnail {
-    max-width: 30%;
-    height: 80px;
+    max-width: 25%;
+    height: auto;
 }
 .bookmark-desc{
   padding: 0 20px;
@@ -234,7 +235,7 @@ ul.bulletedList ul.bulletedList ul.bulletedList {
 .bookmark-title {
     margin-top: 10px;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 /* Callout Style */

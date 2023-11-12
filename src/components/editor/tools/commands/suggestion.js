@@ -17,7 +17,6 @@ export default {
 
     return {
       onStart: (props) => {
-        console.log(props)
         component = new VueRenderer(CommandsList, {
           // using vue 2:
           parent: this,
