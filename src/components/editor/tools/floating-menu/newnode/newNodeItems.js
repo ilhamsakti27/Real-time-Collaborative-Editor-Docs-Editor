@@ -1,5 +1,5 @@
 /* eslint-disable  */
-import { PopupImage } from '../../tools/buttons/popupImage'
+import { PopupImage } from '@/components/editor/tools/buttons/popupImage'
 
 const blockTools = [
     {

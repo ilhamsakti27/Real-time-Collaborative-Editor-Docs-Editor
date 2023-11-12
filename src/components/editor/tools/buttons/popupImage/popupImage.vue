@@ -15,7 +15,7 @@
           placeholder="Paste the image link...">
         <button
           class="bg-sky-600 hover:bg-sky-700 active:bg-sky-800 text-white border-solid border bg-indigo-500 rounded px-20 py-1 mt-4 text-sm flex mx-auto text"
-          @click="uploadImage">Upload Image</button>
+          @click="uploadImageHandler">Upload Image</button>
         <div class="text-center">
           <span class="text-xs mx-auto text-gray-400">The maximum size per file is 5 MB.</span>
         </div>
@@ -50,12 +50,14 @@
 
 <script>
 /* eslint-disable */
-import fs from 'fs';
-import axios from 'axios';
-import FormData from 'form-data';
+import { uploadMedia } from '@/components/editor/utils/upload'
+
+// const host = 'http://localhost:1234'
+const host = 'https://editorhocus.oriens.my.id'
+
 
 export default {
-  name: 'ImageView', // Change the component name
+  name: 'ImageView',
   props: {
     editor: {
       required: true
@@ -71,9 +73,7 @@ export default {
   },
   created() {
     const path = window.location.href
-    console.log('path: ', path)
     this.documentId = path.split('/')[4]
-    console.log('path: ', this.documentId)
   },
   methods: {
     uploadOrEmbedLinkBtn() {
@@ -85,31 +85,17 @@ export default {
         this.editor.chain().focus().setImage({ src: this.url }).run()
       }
     },
-    async uploadImage() {
-      try {
-        const formData = new FormData();
-        const path = this.$refs.inputImg;
-
-        formData.append("document", this.documentId);
-        formData.append("image", path.files[0]);
-
-        const uri = `https://editorhocus.oriens.my.id/imageEditor`
-        const response = await axios.post(uri, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })
-
+    uploadImageHandler() {
+      const path = this.$refs.inputImg
+      const file = path.files[0]
+      uploadMedia(file, this.documentId).then(response => {
         const imgUri = response.data.data.destination.slice('assets/'.length)
         const fileName = response.data.data.originalname
-        const url = `https://editorhocus.oriens.my.id/${imgUri}/${fileName}`
+        const url = `${host}/${imgUri}/${fileName}`
         console.log(url)
         this.editor.chain().focus().setImage({ src: url }).run()
-      } catch (error) {
-        console.error(error);
-      }
+      })
     }
-
   },
 }
 </script>

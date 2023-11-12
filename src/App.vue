@@ -8,6 +8,8 @@
         <!-- editor -->
         <div class="w-full mt-24">
           <Tiptap v-model="content" :dataUsers="dataUsers" @update:dataUsers="handleDataUsersUpdate" mode="json" />
+          <div class="">
+          </div>
         </div>
       </div>
       <!-- output file -->
@@ -48,6 +50,7 @@ export default {
     return {
       content: SampleContent,
       dataUsers: new Map(),
+      ogUrl: "https://tiptap.dev/extensions?pro=true",
     }
   },
   methods: {
