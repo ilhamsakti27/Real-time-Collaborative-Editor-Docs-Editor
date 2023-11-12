@@ -1,9 +1,7 @@
 <!-- eslint-disable -->
 <template>
     <div class="flex">
-
         <div class="absolute top-20 left-4 w-[15%]">
-
             <div class="">Online: {{ total }}</div>
             <div>Status: {{ status }}</div>
             <div>Your Name: {{ currentUser.name }}</div>
@@ -23,16 +21,20 @@
         <div v-if="editor" class="editor-canvas w-full">
             <floating-menu :should-show="shouldShowMainToolbar" v-if="editor" :editor="editor" :class="{
                 'mouse:pointer-events-none mouse:opacity-0': isTyping,
-            }" :tippy-options=tippy>
-                <div v-if="topLevelNodeType !== 'title'" class="flex flex-row" pluginKey="" @dragend="endDragging($event)"
-                    :draggable="dragging">
+            }" :tippy-options=floatingTippy>
+                <div v-if="topLevelNodeType !== 'title' && topLevelNodeType !== 'loading'" class="flex flex-row"
+                    pluginKey="" @dragend="endDragging($event)" :draggable="dragging">
+
+                    <!-- sub menu wrapper -->
                     <div class="" id="submenu"></div>
+                    <!-- new node menu -->
                     <button ref="newNodeMenu" @click="handleNewNode($event)" @mouseup="
                     " class="ml-1 my-2 hover:bg-slate-100 rounded">
                         <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 24">
                             <path d="M16 9h-5V4H9v5H4v2h5v5h2v-5h5V9z" />
                         </svg>
                     </button>
+                    <!-- action menu -->
                     <button ref="actionMenu" @click="handleActionMenu($event)" @mousedown="startDragging($event)" @mouseup="
                         draggedNodePosition = false;
                     dragging = false;
@@ -47,14 +49,14 @@
                             </path>
                         </svg>
                     </button>
-                </div>
 
+                </div>
             </floating-menu>
 
             <BubbleMenu :editor="editor" :tippy-options="{
                 duration: 100, placement: 'top-start',
             }" v-if="editor"
-                v-show="topLevelNodeType !== 'title' && topLevelNodeType !== 'image' && topLevelNodeType !== 'codeBlock'"
+                v-show="topLevelNodeType !== 'title' && topLevelNodeType !== 'image' && topLevelNodeType !== 'codeBlock' && topLevelNodeType !== 'bookmark' && topLevelNodeType !== 'loading' && topLevelNodeType !== 'video'"
                 id="bubbleMenu" class="flex items-center">
                 <ColorButton class="bubble-menu-btn border-r bored-black" :editor="editor" />
                 <inlineToolsBtn :editor="editor" />
@@ -62,6 +64,7 @@
             </BubbleMenu>
 
             <editor-content id="editor" :editor="editor" :value="editor.getAttributes('textStyle').color" />
+
         </div>
 
     </div>
@@ -89,28 +92,23 @@ import inlineToolsBtn from './tools/buttons/InlineButton.vue'
 import ImageView from './tools/buttons/popupImage/popupImage.vue'
 
 // floating-menu
-import { showActionMenu } from './floating-menu/action'
-import { showNewNode } from './floating-menu/newnode'
-
+import { showActionMenu } from './tools/floating-menu/action'
+import { showNewNode } from './tools/floating-menu/newnode'
 
 // utils
 import {
     DragNode,
     GetTopLevelBlockCoords,
-    GetTableColumnCoords,
-    GetTableRowCoords,
     GetTopLevelNode,
 } from './utils/pm-utils.js'
 import { mergeArrays } from './utils/utils'
 import defaultBlockTools from './tools/block-tools'
+import { uuid } from 'vue-uuid';
+import { handleImageDrop, handleVideoDrop } from './utils/handleDrop'
 
 const ydoc = new Y.Doc()
 const RandomColor = list => list[Math.floor(Math.random() * list.length)]
 const RandomAvatar = list => list[Math.floor(Math.random() * list.length)]
-
-import { uuid } from 'vue-uuid';
-
-console.log(document.querySelector(".callout"))
 export default {
     components: {
         EditorContent,
@@ -141,7 +139,7 @@ export default {
                 color: this.getRandomColor(),
                 avatar: this.getRandomAvatar(),
             },
-            tippy: {
+            floatingTippy: {
                 maxWidth: '350',
                 placement: 'left-start',
                 animation: 'fade',
@@ -167,19 +165,19 @@ export default {
             isTyping: false,
             topLevelNodeType: null,
             showMainToolbar: false,
-            isSubMenu: false,
+            isActionMenu: false,
             isNewNode: false,
             currentBlockTool: null,
+            isLink: false,
             allBlockTools: mergeArrays(defaultBlockTools(), this.blockTools),
         }
     },
     created() {
-        // Accessing URL parameters using this.$route
         const path = this.$route.path
         this.documentId = path.split('/')[2]
         this.provider = new HocuspocusProvider({
-            // url: 'ws://localhost:1234/',
-            url: 'wss://editorhocus.oriens.my.id/',
+            url: 'ws://localhost:1234/',
+            // url: 'wss://editorhocus.oriens.my.id',
             name: this.documentId,
             document: ydoc,
             token: 'test-token',
@@ -217,7 +215,7 @@ export default {
             }
         })
         this.provider.awareness.on('change', () => {
-            this.awareness = this.buatMapBaru(this.provider.awareness.getStates())
+            this.awareness = this.filterUsers(this.provider.awareness.getStates())
             this.users = this.awareness
             this.total = this.awareness.size
             this.$emit('update:dataUsers', this.users);
@@ -241,13 +239,34 @@ export default {
                     user: this.currentUser,
                 }),
             ],
+            editorProps: {
+                handleDrop: function (view, event, slice, moved) {
+                    if (!moved && event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0]) {
+                        const path = window.location.href
+                        const documentId = path.split('/')[4]
+                        const file = event.dataTransfer.files[0]
+                        const fileSize = ((file.size / 1024) / 1024).toFixed(4) // fileSize in MB
+
+                        // max size for image = 5 Mb
+                        if ((file.type === 'image/jpeg' || file.type === 'image/png' && fileSize < 5)) {
+                            handleImageDrop(view, event, file, documentId)
+                        }
+                        // max size for video = 5 Mb
+                        if ((file.type === 'video/mp4' && fileSize < 20)) {
+                            handleVideoDrop(view, event, file, documentId)
+                        }
+
+                        return true
+                    }
+                    return false
+                }
+            },
             onUpdate: () => {
                 this.updateToolbar()
                 this.$emit('input', this.editor.getJSON().content)
             },
             onSelectionUpdate: () => {
                 this.updateToolbar()
-                // this.nodeTree = GetNodeTree(this.editor.view);
             },
         })
     },
@@ -256,6 +275,9 @@ export default {
     },
     methods: {
         getTopLevelNodeType() {
+            console.log()
+            this.isLink = this.editor.view.state.selection.$head.parent.content.content[0]?.marks[0]?.type.name === 'link'
+            console.log(this.isLink)
             return GetTopLevelNode(this.editor.view)?.type.name
         },
         updateToolbar() {
@@ -272,10 +294,10 @@ export default {
             if (this.topLevelNodeType !== 'title') { showNewNode(this.editor, this.topLevelNodeType, this.isNewNode) }
         },
         handleActionMenu(event) {
-            this.isSubMenu = true
-            if (this.topLevelNodeType !== 'title') { showActionMenu(this.editor, this.topLevelNodeType, this.isSubMenu) }
+            this.isActionMenu = true
+            if (this.topLevelNodeType !== 'title') { showActionMenu(this.editor, this.topLevelNodeType, this.isActionMenu) }
         },
-        buatMapBaru(dataMap) {
+        filterUsers(dataMap) {
             const mapBaru = new Map()
             for (const [key, value] of dataMap) {
                 const userId = value.user.id
@@ -330,12 +352,6 @@ export default {
                 '#B9F18D',
             ])
         },
-        addImage() {
-            const url = window.prompt('URL')
-            if (url) {
-                this.editor.chain().focus().setImage({ src: url }).run()
-            }
-        },
         startDragging(event) {
             const coords = { left: event.clientX + 48, top: event.clientY }
             if (this.editor.view.posAtCoords(coords)) {
@@ -374,12 +390,6 @@ export default {
             }
 
             return updatedCoord
-        },
-        getTableRowMenuCoords() {
-            return GetTableRowCoords(this.editor.view)
-        },
-        getTableColumnMenuCoords() {
-            return GetTableColumnCoords(this.editor.view)
         },
     },
 }

@@ -192,7 +192,9 @@ const blockTools = [
         .chain()
         .focus()
         .deleteRange(range)
-        .insertTable({ rows: 3, cols: 3 })
+        .setBookmark({ src: 'https://tiptap.dev/extensions?pro=true', img: 'https://tiptap.dev/og-image.png?1699692652', title: 'Dev toolkit for building collaborative editors – Tiptap' })
+        // .setVideo({ src: 'http://localhost:1234/editor/documentId-001/video.mp4' })
+        // .insertTable({ rows: 3, cols: 3 })
         .run()
     },
   },

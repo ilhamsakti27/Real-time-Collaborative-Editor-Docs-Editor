@@ -1,7 +1,7 @@
 /* eslint-disable  */
 import {
     MoveNode,
-} from "../../utils/pm-utils.js";
+} from "@/components/editor/utils/pm-utils";
 
 const floatingItems = [
     {

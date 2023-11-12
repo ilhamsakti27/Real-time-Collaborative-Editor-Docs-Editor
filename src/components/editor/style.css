@@ -58,6 +58,10 @@
   pointer-events: none;
   height: 0;
 }
+.tiptap .loading.is-empty::before{
+  content: '';
+
+}
 .tiptap .is-empty::before {
   content: attr(data-placeholder);
   float: left;
@@ -205,6 +209,32 @@ ul.bulletedList ul.bulletedList ul.bulletedList {
   color: #FFFFFF;
   font-size: 0.9rem;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* Bookmark Styling */
+.bookmark {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    max-width: 100%;
+    display: flex;
+    cursor:pointer;
+    margin: 2em 2em;
+    @apply rounded
+}
+.bookmark-thumbnail {
+    max-width: 30%;
+    height: 80px;
+}
+.bookmark-desc{
+  padding: 0 20px;
+  width: 100%;
+  @apply flex flex-col gap-y-1
+}
+.bookmark-title {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 /* Callout Style */

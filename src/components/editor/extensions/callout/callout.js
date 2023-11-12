@@ -19,11 +19,9 @@ export const Callout = Node.create({
             { tag: 'callout' },
         ];
     },
-
     addCommands() {
         return {
             setCallout: () => ({ commands }) => {
-                console.log(this.name)
                 const command = commands.wrapIn(this.name);
                 return command
             },
@@ -40,13 +38,15 @@ export const Callout = Node.create({
     addNodeView() {
         return () => {
             const container = document.createElement('callout')
-            const emoji = document.createElement('div')
+            const bulb = document.createElement('div')
             const content = document.createElement('div')
-            emoji.classList.add('callout-emoji')
+            container.classList.add('callout')
+            bulb.classList.add('callout-emoji')
             content.classList.add('callout-content')
 
-            container.append(emoji)
+            container.append(bulb)
             container.append(content)
+
             return {
                 dom: container,
                 contentDOM: content,
