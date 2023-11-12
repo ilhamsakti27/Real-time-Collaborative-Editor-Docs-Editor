@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 /* eslint-disable no-unused-vars */
 import { fetchOpenGraphData } from '../utils/scrape'
 import { PopupLink } from './buttons/popupLink'
@@ -121,29 +122,31 @@ export default function (Editor) {
         const $pos = state.tr.selection.$from
         const from = $pos.before(1) + 1
         const to = $pos.after(1)
-        const coords = editor.view.coordsAtPos(from)
-        // const from = $pos.before($pos.depth)
-        // const to = $pos.after($pos.depth)
+
         console.log($pos)
+
         editor
           .chain()
           .focus()
           .deleteRange({ from, to })
-          .setLoading({ content: 'Loading Bookmark...' })
+          .setLoading({ content: 'Generating Bookmark...' })
           .run()
 
         const response = await fetchOpenGraphData(url)
+        console.log(response)
 
-        if (response.data.length !== 0) {
-          editor
-            .chain()
-            .focus()
-            .setBookmark({ src: url, img: response.data.ogImage, title: response.data.ogTitle })
-            .run()
+        if (response.status) {
+          if (response.data.length !== 0 && response.status === 200) {
+            editor
+              .chain()
+              .focus()
+              .setBookmark({ src: url, img: response.data.ogImage, title: response.data.ogTitle })
+              .run()
+          }
         } else {
-          alert('Page meta-data not found for bookmark')
+          alert('Link page not found !')
+          editor.commands.undo()
         }
-        PopupLink(editor)
       },
     },
   ]

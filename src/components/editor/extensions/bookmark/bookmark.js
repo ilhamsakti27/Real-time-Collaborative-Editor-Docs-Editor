@@ -46,7 +46,7 @@ export const Bookmark = Node.create({
             const container = document.createElement('div');
             const thumbnail = document.createElement('img');
             const title = document.createElement('h3')
-            const link = document.createElement('a')
+            const link = document.createElement('div')
             const wrapper = document.createElement('div')
 
             container.classList.add('bookmark');
@@ -58,7 +58,6 @@ export const Bookmark = Node.create({
             thumbnail.src = options.HTMLAttributes.img
             title.innerText = options.HTMLAttributes.title
             link.innerText = options.HTMLAttributes.src
-            link.href = options.HTMLAttributes.src
 
             wrapper.appendChild(title)
             wrapper.appendChild(link)

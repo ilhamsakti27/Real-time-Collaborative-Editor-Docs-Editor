@@ -6,10 +6,11 @@ import popupImage from './popupImage.vue'
 let floatingComponent = null; // Declare a variable to hold the VueRenderer instance
 let popup = null;
 
-export function PopupImage(editor) {
+export function PopupImage(editor, range) {
   if (floatingComponent === null && editor !== null) {
     const props = {
-      editor
+      editor,
+      range
     }
     floatingComponent = new VueRenderer(popupImage, {
       parent: this,

@@ -7,6 +7,7 @@ export const Callout = Node.create({
     group: 'block',
     content: 'block+',
     defining: true,
+    draggable: true,
     marks: '',
     // Your code goes here.
     addOptions() {

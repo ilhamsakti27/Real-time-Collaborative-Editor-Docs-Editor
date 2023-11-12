@@ -5,7 +5,7 @@ import FormData from 'form-data';
 // const host = 'http://localhost:1234'
 const host = 'https://editorhocus.oriens.my.id'
 
-export const uploadMedia = (file, documentId) => {
+export const uploadMedia = (file, documentId, progressEvent) => {
     const data = new FormData()
     data.append('document', documentId)
     data.append('file', file)
@@ -16,6 +16,7 @@ export const uploadMedia = (file, documentId) => {
         headers: {
             'Content-Type': 'multipart/form-data',
         },
+        onUploadProgress: progressEvent
     })
 }
 

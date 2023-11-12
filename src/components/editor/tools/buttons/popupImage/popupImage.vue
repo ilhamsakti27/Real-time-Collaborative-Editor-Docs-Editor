@@ -9,17 +9,23 @@
           @click="uploadOrEmbedLinkBtn">Embed link</button>
       </div>
       <div class="border-t-2 border-slate-300 p-3">
-        <!-- <form action="/upload"> -->
         <input ref='inputImg' type="file" name="file" id="file-input"
           class="w-full border-solid border border-gray-300 rounded bg-gray-50 px-2 py-1 text-sm outline-none focus:outline focus:outline-2 focus:outline-offset-0 focus:outline-blue-300"
           placeholder="Paste the image link...">
+        <!-- Display loading indicator if isUploading is true -->
+        <div v-if="isUploading" class="mt-2 text-gray-500 text-sm">Uploading... ({{ uploadLoaded }} / {{ uploadTotal }})
+          {{
+            uploadProgress
+          }}%</div>
+        <div class="progress-bar" v-if="isUploading">
+          <div class="progress" :style="{ width: `${uploadProgress}%` }"></div>
+        </div>
         <button
           class="bg-sky-600 hover:bg-sky-700 active:bg-sky-800 text-white border-solid border bg-indigo-500 rounded px-20 py-1 mt-4 text-sm flex mx-auto text"
           @click="uploadImageHandler">Upload Image</button>
         <div class="text-center">
           <span class="text-xs mx-auto text-gray-400">The maximum size per file is 5 MB.</span>
         </div>
-        <!-- </form> -->
       </div>
     </div>
 
@@ -31,7 +37,6 @@
         <button class="inline-block text-left hover:bg-gray-100 p-2 hover:rounded-md active">Embed link</button>
       </div>
       <div class="border-t-2 border-slate-300 p-3">
-        <!-- <form action=""> -->
         <input type="url" v-model="url"
           class="w-full border-solid border border-gray-300 rounded bg-gray-50 px-2 py-1 text-sm outline-none focus:outline focus:outline-2 focus:outline-offset-0 focus:outline-blue-300"
           placeholder="Paste the image link...">
@@ -42,7 +47,6 @@
         <div class="text-center">
           <span class="text-xs mx-auto text-gray-400">Works with any image from the web</span>
         </div>
-        <!-- </form> -->
       </div>
     </div>
   </div>
@@ -55,11 +59,13 @@ import { uploadMedia } from '@/components/editor/utils/upload'
 // const host = 'http://localhost:1234'
 const host = 'https://editorhocus.oriens.my.id'
 
-
 export default {
   name: 'ImageView',
   props: {
     editor: {
+      required: true
+    },
+    range: {
       required: true
     },
   },
@@ -68,8 +74,12 @@ export default {
       isUpload: true,
       isEmbedLink: false,
       url: '',
-      documentId: null
-    }
+      documentId: null,
+      uploadLoaded: 0,
+      uploadTotal: 0,
+      uploadProgress: 0,
+      isUploading: false, // Add this state for tracking the upload status
+    };
   },
   created() {
     const path = window.location.href
@@ -82,19 +92,33 @@ export default {
     },
     setLinkImage() {
       if (this.url) {
-        this.editor.chain().focus().setImage({ src: this.url }).run()
+        this.editor.chain().focus().deleteRange(this.range).setImage({ src: this.url }).run()
       }
     },
     uploadImageHandler() {
-      const path = this.$refs.inputImg
-      const file = path.files[0]
-      uploadMedia(file, this.documentId).then(response => {
-        const imgUri = response.data.data.destination.slice('assets/'.length)
-        const fileName = response.data.data.originalname
-        const url = `${host}/${imgUri}/${fileName}`
-        console.log(url)
-        this.editor.chain().focus().setImage({ src: url }).run()
-      })
+      const path = this.$refs.inputImg;
+      const file = path.files[0];
+
+      // Set isUploading to true when starting the upload
+      this.isUploading = true;
+
+      uploadMedia(file, this.documentId, (progressEvent) => {
+        console.log(progressEvent)
+        this.uploadLoaded = progressEvent.loaded
+        this.uploadTotal = progressEvent.total
+        this.uploadProgress = parseInt(Math.round((progressEvent.loaded / progressEvent.total) * 100))
+
+      }).then(response => {
+        const imgUri = response.data.data.destination.slice('assets/'.length);
+        const fileName = response.data.data.originalname;
+        const url = `${host}/${imgUri}/${fileName}`;
+        this.editor.chain().focus().deleteRange(this.range).setImage({ src: url }).run();
+
+        this.isUploading = false;
+      }).catch(error => {
+        console.error('Error uploading image:', error);
+        this.isUploading = false;
+      });
     }
   },
 }
@@ -109,5 +133,20 @@ export default {
 
 .active {
   border-bottom: 3px solid black;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #ddd;
+  margin-top: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background-color: #4caf50;
+  transition: width 0.3s ease;
 }
 </style>

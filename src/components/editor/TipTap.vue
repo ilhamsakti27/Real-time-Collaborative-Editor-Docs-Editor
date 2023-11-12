@@ -56,7 +56,7 @@
             <BubbleMenu :editor="editor" :tippy-options="{
                 duration: 100, placement: 'top-start',
             }" v-if="editor"
-                v-show="topLevelNodeType !== 'title' && topLevelNodeType !== 'image' && topLevelNodeType !== 'codeBlock' && topLevelNodeType !== 'bookmark' && topLevelNodeType !== 'loading' && topLevelNodeType !== 'video'"
+                v-show="topLevelNodeType !== 'title' && topLevelNodeType !== 'image' && topLevelNodeType !== 'codeBlock' && topLevelNodeType !== 'bookmark' && topLevelNodeType !== 'loading' && topLevelNodeType !== 'video' && topLevelNodeType !== 'horizontalRule'"
                 id="bubbleMenu" class="flex items-center">
                 <ColorButton class="bubble-menu-btn border-r bored-black" :editor="editor" />
                 <inlineToolsBtn :editor="editor" />
