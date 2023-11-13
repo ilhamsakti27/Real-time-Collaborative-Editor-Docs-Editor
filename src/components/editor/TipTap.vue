@@ -35,13 +35,14 @@
                         </svg>
                     </button>
                     <!-- action menu -->
-                    <button ref="actionMenu" @click="handleActionMenu($event)" @mousedown="startDragging($event)" @mouseup="
-                        draggedNodePosition = false;
-                    dragging = false;
-                    " class="ml-1 my-2 hover:bg-slate-100 rounded" :class="{
+                    <button id="action" ref="actionMenu" @click="handleActionMenu($event)"
+                        @mousedown="startDragging($event)" @mouseup="
+                            draggedNodePosition = false;
+                        dragging = false;
+                        " class="ml-1 my-2 hover:bg-slate-100 rounded" :class="{
     'cursor-grab': !dragging,
     'cursor-grabbing': dragging,
-}" aria-label="Drag" data-tooltip="Drag">
+}" aria-label="Drag" :action-tooltip="actionDataTooltip()">
                         <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                             aria-hidden="true" focusable="false" class="w-5 h-5 md:w-6 md:h-6">
                             <path
@@ -239,6 +240,11 @@ export default {
                     user: this.currentUser,
                 }),
             ],
+            // content: `<h1>Title Document</h1>
+            //     <div data-type="draggable-item"><h1>test</h1></div>
+            //     <div data-type="draggable-item"><h1>test</h1></div>
+            //     <div data-type="draggable-item"><h1>test</h1></div>
+            // `,
             editorProps: {
                 handleDrop: function (view, event, slice, moved) {
                     if (!moved && event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0]) {
@@ -252,7 +258,7 @@ export default {
                             handleImageDrop(view, event, file, documentId)
                         }
                         // max size for video = 5 Mb
-                        if ((file.type === 'video/mp4' && fileSize < 20)) {
+                        if ((file.type === 'video/mp4' && fileSize < 100)) {
                             handleVideoDrop(view, event, file, documentId)
                         }
 
@@ -274,10 +280,11 @@ export default {
         this.editor.destroy()
     },
     methods: {
+        actionDataTooltip() {
+            return this.topLevelNodeType === 'image' || this.topLevelNodeType === 'video' ? 'Drag media for dragging' : 'Hold for dragging'
+        },
         getTopLevelNodeType() {
-            console.log()
             this.isLink = this.editor.view.state.selection.$head.parent.content.content[0]?.marks[0]?.type.name === 'link'
-            console.log(this.isLink)
             return GetTopLevelNode(this.editor.view)?.type.name
         },
         updateToolbar() {
@@ -353,6 +360,9 @@ export default {
             ])
         },
         startDragging(event) {
+            if (this.topLevelNodeType === "image" || this.topLevelNodeType === "video") {
+                return this.dragging = false
+            }
             const coords = { left: event.clientX + 48, top: event.clientY }
             if (this.editor.view.posAtCoords(coords)) {
                 this.draggedNodePosition = this.editor.view.posAtCoords(coords).pos

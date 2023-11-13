@@ -3,12 +3,10 @@
 [data-tooltip] {
   position: relative;
 }
-
 [data-tooltip]:hover::after {
   transform: translateY(0);
   opacity: 1;
 }
-
 [data-tooltip]::after {
   content: attr(data-tooltip);
   width: max-content;
@@ -19,8 +17,33 @@
   color: white;
   border-radius: 4px;
   position: absolute;
-  top:-40px;
-  left: 0;
+  top:-30px;
+  left: 0px;
+  transform: translateX(-50%) translateY(1);
+  opacity: 0;
+  pointer-events: none;
+}
+
+[action-tooltip] {
+  position: relative;
+}
+[action-tooltip]:hover::after {
+  transform: translateY(0);
+  opacity: 1;
+}
+[action-tooltip]::after {
+  content: attr(action-tooltip) "\A Click for Menu";
+  white-space: pre; /* Menjaga spasi putih seperti newline */
+  width: max-content;
+  transition: all 0.3s;
+  font-size: 12px;
+  padding: 4px 8px;
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  border-radius: 4px;
+  position: absolute;
+  top:-50px;
+  left: -60px;
   transform: translateX(-50%) translateY(1);
   opacity: 0;
   pointer-events: none;
@@ -60,8 +83,11 @@
 }
 .tiptap .loading.is-empty::before{
   content: '';
-
 }
+.tiptap .bookmark.is-empty::before{
+  content: '';
+}
+
 .tiptap .is-empty::before {
   content: attr(data-placeholder);
   float: left;
@@ -69,7 +95,6 @@
   pointer-events: none;
   height: 0;
 }
-
 /* color font */
 /* .ProseMirror > p {
   color: blue;
@@ -213,24 +238,26 @@ ul.bulletedList ul.bulletedList ul.bulletedList {
 
 /* Bookmark Styling */
 .bookmark {
-    margin-top: 20px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    max-width: 100%;
+    margin: 20px 0;
     display: flex;
     cursor:pointer;
-    /* align-items: center; */
-    margin: 2em 2em;
-    @apply rounded
-}
-.bookmark-thumbnail {
-    max-width: 25%;
+    justify-content: start;
+    align-items: center;
+  }
+  .bookmark-content{
+    /* margin: 0em 6em; */
+    border: 1px solid #ccc;
+    padding: 10px;
+    max-width: 80%;
+    @apply flex rounded
+  }
+  .bookmark-thumbnail {
+    max-width: 23%;
     height: auto;
-}
-.bookmark-desc{
+  }
+  .bookmark-desc{
   padding: 0 20px;
   width: 100%;
-  @apply flex flex-col gap-y-1
 }
 .bookmark-title {
     margin-top: 10px;

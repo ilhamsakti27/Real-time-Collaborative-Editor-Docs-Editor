@@ -36,6 +36,7 @@ export default {
         editor: {
             required: true
         }
+
     },
     data() {
         return {
@@ -78,9 +79,10 @@ export default {
         },
         selectItem(index) {
             this.selectedIndex = index
+            console.log(event)
             const item = this.allInlineTools[index]
             if (item.command)
-                item.command(this.editor)
+                item.command(this.editor, event)
         },
     },
 };
@@ -89,22 +91,5 @@ export default {
 <style>
 .icon-container {
     position: relative;
-}
-
-.label {
-    position: absolute;
-    bottom: 40px;
-    font-size: smaller;
-    left: 0;
-    background-color: #333;
-    color: #fff;
-    padding: 5px;
-    border-radius: 3px;
-    display: none;
-    width: max-content;
-}
-
-.icon-container:hover .label {
-    display: block;
 }
 </style>

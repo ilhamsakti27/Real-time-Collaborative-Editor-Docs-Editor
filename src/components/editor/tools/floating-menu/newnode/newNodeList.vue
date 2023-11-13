@@ -49,13 +49,7 @@ export default {
             selectedIndex: 0,
         }
     },
-    mounted() {
-        this.$nextTick(() => {
-            const el = this.$refs.itemsContainer
-            el.focus();
-            el.addEventListener('keydown', this.keyDownHandler);
-        });
-    },
+
     methods: {
         selectItem(index) {
             this.selectedIndex = index
