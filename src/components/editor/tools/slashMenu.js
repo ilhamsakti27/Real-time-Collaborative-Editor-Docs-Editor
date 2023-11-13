@@ -1,5 +1,7 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable */
 import { PopupImage } from './buttons/popupImage'
+// import '@/components/editor/tools/buttons/tableTools'
+const pathJsTable = '@/components/editor/tools/buttons/tableTools/index.js'
 
 const blockTools = [
   {
@@ -192,10 +194,23 @@ const blockTools = [
         .chain()
         .focus()
         .deleteRange(range)
-        .setBookmark({ src: 'https://tiptap.dev/extensions?pro=true', img: 'https://tiptap.dev/og-image.png?1699692652', title: 'Dev toolkit for building collaborative editors – Tiptap' })
+        // .setBookmark({ src: 'https://tiptap.dev/extensions?pro=true', img: 'https://tiptap.dev/og-image.png?1699692652', title: 'Dev toolkit for building collaborative editors – Tiptap' })
         // .setVideo({ src: 'http://localhost:1234/editor/documentId-001/video.mp4' })
-        // .insertTable({ rows: 3, cols: 3 })
+        .insertTable({ rows: 3, cols: 3 })
         .run()
+
+      // load javascript in this field
+      // Membaca isi file index.js dan menjalankannya dengan eval()
+      fetch(pathJsTable)
+        .then(response => response.text())
+        .then(indexCode => {
+          console.log('OTW Jalan')
+          eval(indexCode) // Menjalankan kode dari index.js
+          console.log('dah jalan')
+        })
+        .catch(error => {
+          console.error('Gagal memuat atau mengeksekusi index.js', error)
+        })
     },
   },
 ]
