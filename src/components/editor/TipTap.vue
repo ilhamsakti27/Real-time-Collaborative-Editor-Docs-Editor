@@ -57,7 +57,7 @@
             <BubbleMenu :editor="editor" :tippy-options="{
                 duration: 100, placement: 'top-start',
             }" v-if="editor"
-                v-show="topLevelNodeType !== 'title' && topLevelNodeType !== 'image' && topLevelNodeType !== 'codeBlock' && topLevelNodeType !== 'bookmark' && topLevelNodeType !== 'loading' && topLevelNodeType !== 'video' && topLevelNodeType !== 'horizontalRule'"
+                v-show="topLevelNodeType !== 'title' && topLevelNodeType !== 'image' && topLevelNodeType !== 'codeBlock' && topLevelNodeType !== 'bookmark' && topLevelNodeType !== 'loading' && topLevelNodeType !== 'video' && topLevelNodeType !== 'horizontalRule' && topLevelNodeType !== 'youtube'"
                 id="bubbleMenu" class="flex items-center">
                 <ColorButton class="bubble-menu-btn border-r bored-black" :editor="editor" />
                 <inlineToolsBtn :editor="editor" />
@@ -281,7 +281,7 @@ export default {
     },
     methods: {
         actionDataTooltip() {
-            return this.topLevelNodeType === 'image' || this.topLevelNodeType === 'video' ? 'Drag media for dragging' : 'Hold for dragging'
+            return this.topLevelNodeType === 'image' || this.topLevelNodeType === 'video' ? 'Drag media for move' : 'Hold for dragging'
         },
         getTopLevelNodeType() {
             this.isLink = this.editor.view.state.selection.$head.parent.content.content[0]?.marks[0]?.type.name === 'link'
@@ -360,7 +360,7 @@ export default {
             ])
         },
         startDragging(event) {
-            if (this.topLevelNodeType === "image" || this.topLevelNodeType === "video") {
+            if (this.topLevelNodeType === "image") {
                 return this.dragging = false
             }
             const coords = { left: event.clientX + 48, top: event.clientY }

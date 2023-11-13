@@ -79,7 +79,7 @@ export const Bookmark = Node.create({
             content.addEventListener('click', () => {
                 const src = options.HTMLAttributes.src;
                 if (src) {
-                    // window.location.href = src;
+                    window.open(src, '_blank');
                 }
             });
             return {

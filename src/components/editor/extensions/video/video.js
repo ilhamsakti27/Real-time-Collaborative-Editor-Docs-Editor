@@ -4,10 +4,23 @@ import { Node, mergeAttributes, nodeInputRule } from '@tiptap/core';
 const inputRegex = /(?:^|\s)(!\[(.+|:?)]\((\S+)(?:(?:\s+)["'](\S+)["'])?\))$/;
 export const Video = Node.create({
     name: 'video',
-    group: 'block',
     draggable: true,
     allowGapCursor: true,
+    isolating: true,
     // Your code goes here
+    addOptions() {
+        return {
+            inline: false,
+            HTMLAttributes: {},
+        };
+    },
+
+    inline() {
+        return this.options.inline;
+    },
+    group() {
+        return this.options.inline ? "inline" : "block";
+    },
     addAttributes() {
         return {
             src: {
@@ -19,11 +32,6 @@ export const Video = Node.create({
             title: {
                 default: null,
             },
-        };
-    },
-    addOptions() {
-        return {
-            HTMLAttributes: {},
         };
     },
     parseHTML() {

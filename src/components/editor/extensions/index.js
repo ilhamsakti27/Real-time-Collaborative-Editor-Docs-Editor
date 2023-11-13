@@ -37,6 +37,7 @@ import { LoadingExtension } from './loading'
 import { CalloutExtension } from './callout'
 import { DocumentWithTitle, Title } from './title'
 import { BookmarkExtension } from './bookmark'
+import { YoutubeExtension } from './youtube'
 
 // slash menu extension
 import Commands from '../tools/commands/commands'
@@ -50,6 +51,7 @@ const defaultExtension = [
     CalloutExtension,
     BookmarkExtension,
     LoadingExtension,
+    YoutubeExtension,
     Video,
     Title,
     TextAlign.configure({

@@ -125,6 +125,11 @@
   padding: 8px 0;
 }
 
+figure{
+  @apply bg-transparent
+}
+
+
 /* Heading style */
 h1.title {
   font-size: 3rem; /* 36px */
