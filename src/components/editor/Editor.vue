@@ -226,7 +226,7 @@ export default {
       //   <p>Let’s finish with a boring paragraph.</p>
       // `,
       // autofocus: true,
-      
+
       // content for callout component
       // content: `
       //   <p>

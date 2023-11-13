@@ -1,8 +1,8 @@
 <!-- eslint-disable -->
 <template>
     <div ref="itemsContainer" class="menuContainer">
-        <template v-if="items.length">
-            <div class="pl-2 text-black/40 text-xs font-semibold">Action</div>
+        <div class="pl-2 text-black/40 text-xs font-semibold">Action</div>
+        <template v-if="filteredItems.length">
             <button :ref="item.ref" v-for="(item, index) in filteredItems" :key="index" class="item"
                 :class="{ 'is-selected': index === selectedIndex }" @click="selectItem(index)"
                 @mouseover="handleHover(index)">
@@ -20,7 +20,7 @@
             </button>
         </template>
         <div v-else class="item">
-            No result
+            <div class="text-black/50 text-xs text-center font-semibold">No Action Available</div>
         </div>
     </div>
 </template>
@@ -66,6 +66,21 @@ export default {
                     return this.canMoveNodeUp()
                 } else if (item.ref === 'moveDownBtn') {
                     return this.canMoveNodeDown()
+                } else if (item.ref === 'convertBtn') {
+                    switch (this.topLevelNodeType) {
+                        case 'image':
+                            return false
+                        case 'video':
+                            return false
+                        case 'codeBlock':
+                            return false
+                        case 'callout':
+                            return false
+                        case 'bookmark':
+                            return false
+                        default:
+                            break;
+                    }
                 }
 
                 return true;

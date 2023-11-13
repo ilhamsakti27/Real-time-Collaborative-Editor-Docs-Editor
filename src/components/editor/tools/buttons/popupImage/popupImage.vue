@@ -9,9 +9,11 @@
           @click="uploadOrEmbedLinkBtn">Embed link</button>
       </div>
       <div class="border-t-2 border-slate-300 p-3">
-        <input ref='inputImg' type="file" name="file" id="file-input"
-          class="w-full border-solid border border-gray-300 rounded bg-gray-50 px-2 py-1 text-sm outline-none focus:outline focus:outline-2 focus:outline-offset-0 focus:outline-blue-300"
-          placeholder="Paste the image link...">
+        <div class="">
+          <input ref='inputImg' type="file" name="file" id="file-input"
+            class="w-full border-solid border border-gray-300 rounded bg-gray-50 px-2 py-1 text-sm outline-none focus:outline focus:outline-2 focus:outline-offset-0 focus:outline-blue-300"
+            placeholder="Upload or Drag file">
+        </div>
         <!-- Display loading indicator if isUploading is true -->
         <div v-if="isUploading" class="mt-2 text-gray-500 text-sm">Uploading... ({{ uploadLoaded }} / {{ uploadTotal }})
           {{
@@ -66,7 +68,7 @@ export default {
       required: true
     },
     range: {
-      required: true
+      required: false
     },
   },
   data() {
@@ -92,7 +94,10 @@ export default {
     },
     setLinkImage() {
       if (this.url) {
-        this.editor.chain().focus().deleteRange(this.range).setImage({ src: this.url }).run()
+        if (this.range)
+          this.editor.chain().focus().deleteRange(this.range)
+
+        this.editor.chain().focus().enter().setImage({ src: this.url }).run();
       }
     },
     uploadImageHandler() {
@@ -111,8 +116,14 @@ export default {
       }).then(response => {
         const imgUri = response.data.data.destination.slice('assets/'.length);
         const fileName = response.data.data.originalname;
-        const url = `${host}/${imgUri}/${fileName}`;
-        this.editor.chain().focus().deleteRange(this.range).setImage({ src: url }).run();
+        const encodedFileName = encodeURIComponent(fileName);
+        const url = `${host}/${imgUri}/${encodedFileName}`;
+
+        console.log(this.range)
+        if (this.range)
+          this.editor.chain().focus().deleteRange(this.range)
+
+        this.editor.chain().focus().setImage({ src: url }).run();
 
         this.isUploading = false;
       }).catch(error => {

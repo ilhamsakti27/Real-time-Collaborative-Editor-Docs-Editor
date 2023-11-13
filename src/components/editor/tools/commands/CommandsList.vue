@@ -72,6 +72,7 @@ export default {
       }
 
       if (event.key === 'Enter') {
+        event.preventDefault()
         this.enterHandler()
 
         return true

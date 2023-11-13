@@ -119,16 +119,13 @@ export default function (Editor) {
       command: async editor => {
         const { state } = editor.view
         const url = state.selection.$head.parent.textContent
-        const $pos = state.tr.selection.$from
-        const from = $pos.before(1) + 1
-        const to = $pos.after(1)
+        const $pos = state.tr.selection.$anchor
 
         console.log($pos)
 
         editor
           .chain()
           .focus()
-          .deleteRange({ from, to })
           .setLoading({ content: 'Generating Bookmark...' })
           .run()
 
@@ -140,6 +137,7 @@ export default function (Editor) {
             editor
               .chain()
               .focus()
+              .deleteRange({ from: $pos.pos - 1, to: $pos.pos + 1 })
               .setBookmark({ src: url, img: response.data.ogImage, title: response.data.ogTitle })
               .run()
           }

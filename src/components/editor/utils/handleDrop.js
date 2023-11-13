@@ -5,48 +5,59 @@ import { uploadMedia } from '../utils/upload'
 const host = 'https://editorhocus.oriens.my.id'
 
 export const handleImageDrop = (view, event, file, documentId) => {
-    console.log('image: ', file)
-    console.log('uploading....')
-    const coordinates = view.posAtCoords({ left: event.clientX, top: event.clientY })
+    const _URL = window.URL || window.webkitURL
+    const img = new Image()
+    img.src = _URL.createObjectURL(file)
     const { schema } = view.state
-    uploadMedia(file, documentId, (progressEvent) => {
-        const uploadProgress = parseInt(Math.round((progressEvent.loaded / progressEvent.total) * 100))
-        const loadingNode = schema.nodes.loading.create({ content: `Image Uploading... ${progressEvent.loaded}/${progressEvent.total} (${uploadProgress}%)` })
-        const loadingTransaction = view.state.tr.insert(coordinates.pos, loadingNode)
-        view.dispatch(loadingTransaction)
-
-        const $pos = view.state.tr.selection.$anchor;
-        console.log($pos.pos)
-        let depth = $pos.depth
-        const node = $pos.node(depth);
-        const from = $pos.before(depth);
-        const to = $pos.after(depth);
-
-        // view.dispatch(view.state.tr.delete(from, to).scrollIntoView())
-
-    }).then(response => {
-        const path = response.data.data.destination.slice('assets/'.length)
-        const fileName = response.data.data.originalname
-        const url = `${host}/${path}/${fileName}`
-        console.log('uploaded: ', url)
-        const imageNode = schema.nodes.image.create({ src: url })
-        const replaceTransaction = view.state.tr.insert(coordinates.pos, imageNode)
-
-        view.dispatch(replaceTransaction)
-        deleteLoadingNode(view, coordinates, 'image')
-
-        return
-    }).catch(error => {
-        console.log(error)
-    })
+    const coordinates = view.posAtCoords({ left: event.clientX, top: event.clientY })
 
 
+    img.onload = function () {
 
+        uploadMedia(file, documentId, (progressEvent) => {
+            const uploadProgress = parseInt(Math.round((progressEvent.loaded / progressEvent.total) * 100))
+            const loadingNode = schema.nodes.loading.create({ content: `Image Uploading... ${progressEvent.loaded}/${progressEvent.total} (${uploadProgress}%)` })
+            const loadingTransaction = view.state.tr.insert(coordinates.pos, loadingNode)
+            view.dispatch(loadingTransaction)
+            const $pos = view.state.tr.selection.$anchor;
+            console.log('pos: ', $pos.pos)
+            console.log('coord: ', coordinates.pos)
+            let depth = $pos.depth
+            const from = $pos.before(depth);
+            const to = $pos.after(depth);
+            // view.dispatch(view.state.tr.delete(from, to).scrollIntoView())
+            if ($pos.pos === coordinates.pos) {
+                console.log('from: ', from)
+                console.log('to: ', to)
+                view.dispatch(view.state.tr.delete(from, to).scrollIntoView())
+            } else {
+                view.dispatch(view.state.tr.delete(coordinates.pos, coordinates.pos + 2).scrollIntoView())
+
+            }
+
+        }).then(response => {
+            console.log('done')
+
+            const imgUri = response.data.data.destination.slice('assets/'.length)
+            const fileName = response.data.data.originalname
+            const url = `${host}/${imgUri}/${fileName}`
+
+            const node = schema.nodes.image.create({ src: url }) // creates the image element
+            const transaction = view.state.tr.insert(coordinates.pos, node) // places it in the correct position
+
+            view.dispatch(transaction)
+            deleteLoadingNode(view, coordinates)
+            return
+        }).catch(error => {
+            console.log(error)
+            if (error) {
+                window.alert('There was a problem uploading your image, please try again.')
+            }
+        })
+    }
 }
 
 export const handleVideoDrop = (view, event, file, documentId) => {
-    console.log('video: ', file)
-    console.log('uploading....')
     const coordinates = view.posAtCoords({ left: event.clientX, top: event.clientY })
     const { schema } = view.state
     uploadMedia(file, documentId, (progressEvent) => {
@@ -56,7 +67,6 @@ export const handleVideoDrop = (view, event, file, documentId) => {
         view.dispatch(loadingTransaction)
 
         const $pos = view.state.tr.selection.$anchor;
-        console.log($pos.pos)
         let depth = $pos.depth
         const node = $pos.node(depth);
         const from = $pos.before(depth);
@@ -68,12 +78,11 @@ export const handleVideoDrop = (view, event, file, documentId) => {
         const path = response.data.data.destination.slice('assets/'.length)
         const fileName = response.data.data.originalname
         const url = `${host}/${path}/${fileName}`
-        console.log('uploaded: ', url)
         const videoNode = schema.nodes.video.create({ src: url })
         const replaceTransaction = view.state.tr.insert(coordinates.pos, videoNode)
 
         view.dispatch(replaceTransaction)
-        deleteLoadingNode(view, coordinates, 'video')
+        deleteLoadingNode(view, coordinates)
 
         return
     }).catch(error => {
@@ -81,8 +90,7 @@ export const handleVideoDrop = (view, event, file, documentId) => {
     })
 }
 
-const deleteLoadingNode = (view, coordinates, media) => {
-    const type = view.state.schema.nodes['loading'];
+const deleteLoadingNode = (view, coordinates) => {
     const $pos = view.state.tr.selection.$anchor;
     console.log($pos.pos)
     let depth = $pos.depth
@@ -95,8 +103,7 @@ const deleteLoadingNode = (view, coordinates, media) => {
     } else {
         console.log(from)
         console.log(to)
-        if (media === 'video') view.dispatch(view.state.tr.delete(from, to).scrollIntoView())
-        if (media === 'image') view.dispatch(view.state.tr.delete(from + 3, to + 3).scrollIntoView())
+        view.dispatch(view.state.tr.delete(from, to).scrollIntoView())
     }
 
 
