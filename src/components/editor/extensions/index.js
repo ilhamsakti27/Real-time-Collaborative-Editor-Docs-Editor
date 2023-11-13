@@ -38,7 +38,6 @@ import { CalloutExtension } from './callout'
 import { DocumentWithTitle, Title } from './title'
 import { BookmarkExtension } from './bookmark'
 
-
 // slash menu extension
 import Commands from '../tools/commands/commands'
 import suggestion from '../tools/commands/suggestion'
