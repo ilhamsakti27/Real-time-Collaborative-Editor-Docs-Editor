@@ -7,7 +7,7 @@
             <div class="border p-2 w-3/4 max-h-[40vh] overflow-y-auto">
                 <editor-content id="editor" :editor="editor" />
             </div>
-            <div v-if="history.length" class="pl-4 flex flex-col gap-y-2 w-1/4">
+            <div v-if="history.length" class="pl-4 flex flex-col gap-y-2 w-1/4 max-h-[40vh] overflow-y-auto">
                 <div v-for="(item, index) in history">
                     <div @click="setPreview(index)" class=" cursor-pointer hover:bg-gray-100 px-2 py-1 w-full">
                         <div class="">{{ item.title }}</div>
