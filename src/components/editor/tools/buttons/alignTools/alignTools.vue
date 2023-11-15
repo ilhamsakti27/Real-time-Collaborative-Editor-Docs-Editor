@@ -14,6 +14,7 @@
                     </div>
                     <div class="flex flex-col">
                         <span class="text-sm">{{ item.title }}</span>
+                        <span class="text-xs text-black/50">{{ item.shortcut }}</span>
                     </div>
                 </div>
             </button>
