@@ -62,10 +62,10 @@ export default {
       this.mainEditor = mainEditor
     },
     createSnapshots() {
-      const title = (window.prompt('Name') || '')
+      let title = (window.prompt('Name') || '')
         .trim()
         .substring(0, 32)
-
+      if (title == '') title = 'Untitled'
       const data = {
         title,
         snapshots: this.snapshots,
