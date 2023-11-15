@@ -28,7 +28,6 @@
 import { Editor } from '@tiptap/core'
 import { EditorContent } from '@tiptap/vue-2'
 import defaultExtension from '../extensions'
-import { generateHTML } from '@tiptap/html'
 
 export default {
     components: {
