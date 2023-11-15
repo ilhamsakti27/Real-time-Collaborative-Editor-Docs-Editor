@@ -1,7 +1,7 @@
 <!-- eslint-disable  -->
 <template>
     <div v-if="shouldShow"
-        class="absolute z-[1000] w-1/2 bg-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg border rounded h-fit px-4 py-4">
+        class="fixed z-[1000] w-1/2 bg-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg border rounded h-fit px-4 py-4">
         <div class="text-lg font-bold pb-2 pl-2">Version Preview</div>
         <div class="flex w-full">
             <div class="border p-2 w-3/4 max-h-[40vh] overflow-y-auto">
