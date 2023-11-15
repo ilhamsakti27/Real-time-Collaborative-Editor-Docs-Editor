@@ -181,7 +181,7 @@ export default {
             url: 'wss://editorhocus.oriens.my.id',
             name: this.documentId,
             document: ydoc,
-            token: 'test-token',
+            token: 'test-token', // auth token
         })
     },
 
@@ -240,11 +240,6 @@ export default {
                     user: this.currentUser,
                 }),
             ],
-            // content: `<h1>Title Document</h1>
-            //     <div data-type="draggable-item"><h1>test</h1></div>
-            //     <div data-type="draggable-item"><h1>test</h1></div>
-            //     <div data-type="draggable-item"><h1>test</h1></div>
-            // `,
             editorProps: {
                 handleDrop: function (view, event, slice, moved) {
                     if (!moved && event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0]) {
@@ -253,15 +248,22 @@ export default {
                         const file = event.dataTransfer.files[0]
                         const fileSize = ((file.size / 1024) / 1024).toFixed(4) // fileSize in MB
 
-                        // max size for image = 5 Mb
-                        if ((file.type === 'image/jpeg' || file.type === 'image/png' && fileSize < 5)) {
-                            handleImageDrop(view, event, file, documentId)
+                        if ((file.type === 'image/jpeg' || file.type === 'image/png')) {
+                            const LimitSize = 5 // max size for image = 5 Mb
+                            if (fileSize < 5) {
+                                handleImageDrop(view, event, file, documentId)
+                            } else {
+                                alert(`Max Image size is ${LimitSize} mb`)
+                            }
                         }
-                        // max size for video = 5 Mb
-                        if ((file.type === 'video/mp4' && fileSize < 100)) {
-                            handleVideoDrop(view, event, file, documentId)
+                        if ((file.type === 'video/mp4')) {
+                            const LimitSize = 100 // max size for video = 100 Mb
+                            if (fileSize < LimitSize) {
+                                handleVideoDrop(view, event, file, documentId)
+                            } else {
+                                alert(`Max Video size is ${LimitSize} mb`)
+                            }
                         }
-
                         return true
                     }
                     return false
@@ -281,7 +283,7 @@ export default {
     },
     methods: {
         actionDataTooltip() {
-            return this.topLevelNodeType === 'image' || this.topLevelNodeType === 'video' ? 'Drag media for move' : 'Hold for dragging'
+            return this.topLevelNodeType === 'image' || this.topLevelNodeType === 'video' || this.topLevelNodeType === 'bookmark' ? 'Drag component for move' : 'Hold for dragging'
         },
         getTopLevelNodeType() {
             this.isLink = this.editor.view.state.selection.$head.parent.content.content[0]?.marks[0]?.type.name === 'link'
