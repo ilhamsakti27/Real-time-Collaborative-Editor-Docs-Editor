@@ -5,33 +5,28 @@
 
     <div class="flex w-full">
       <div class="w-full">
-        <!-- editor -->
+        <!-- main editor -->
         <div class="w-full mt-24">
-          <Tiptap v-model="content" :dataUsers="dataUsers" @update:dataUsers="handleDataUsersUpdate" mode="json" />
+          <Tiptap v-model="content" :contentUpdate="contentUpdate" :dataUsers="dataUsers"
+            @update:dataUsers="handleDataUsersUpdate" @update:contentUpdate="handleUpdateEditor" mode="json" />
           <div class="">
           </div>
         </div>
+
       </div>
-      <!-- output file -->
-      <!-- <div class="json absolute right-0 py-20 max-h-screen ">
-        <div class="">
-          <h3>
-            Output file
-          </h3>
-          <h3>
-            total blocks : {{ content.length }}
-          </h3>
+      <div class="fixed p-2 top-1/3">
+        <div class="flex flex-col gap-y-4">
+          <button @click="createSnapshots" class="bg-gray-200 p-2">Create Snapshots</button>
+          <button @click="showSnapshots" class="bg-gray-200 p-2">Show Snapshots</button>
         </div>
-
-        <div class="overflow-x-auto  overflow-y-auto max-h-[100%]">
-          <pre>
-            {{ content }}
-          </pre>
-        </div>
-
-      </div> -->
+      </div>
     </div>
 
+    <!-- snapshots preview -->
+    <div v-if="isShowSnapshots">
+      <EditorPreview :isShowSnapshots="isShowSnapshots" :mainEditor="mainEditor" :content="snapshots" :history="history">
+      </EditorPreview>
+    </div>
   </div>
 </template>
 
@@ -40,25 +35,53 @@
 import Tiptap from './components/editor/TipTap.vue'
 import SampleContent from './content.json'
 import NavBar from './components/NavBar.vue'
-
+import EditorPreview from './components/editor/snapshots/EditorPreview.vue'
 export default {
   components: {
     Tiptap,
-    NavBar
+    NavBar,
+    EditorPreview
   },
   data() {
     return {
+      history: [],
+      mainEditor: null,
+      snapshots: null,
+      isShowSnapshots: false,
       content: SampleContent,
+      contentUpdate: null,
       dataUsers: new Map(),
-      ogUrl: "https://tiptap.dev/extensions?pro=true",
     }
   },
   methods: {
     handleDataUsersUpdate(updatedDataUsers) {
-      // Handle the updated dataUsers here, you can log it
-      this.dataUsers = updatedDataUsers; // Update the dataUsers in the parent component if needed
+      this.dataUsers = updatedDataUsers;
     },
+    handleUpdateEditor(mainEditor) {
+      this.snapshots = mainEditor.getJSON()
+      this.mainEditor = mainEditor
+    },
+    createSnapshots() {
+      const title = (window.prompt('Name') || '')
+        .trim()
+        .substring(0, 32)
 
+      const data = {
+        title,
+        snapshots: this.snapshots,
+        timestamp: new Date().toLocaleString('id-ID', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+        })
+      }
+      this.history.push(data)
+    },
+    showSnapshots() {
+      this.isShowSnapshots = !this.isShowSnapshots
+    }
   }
 
 }
