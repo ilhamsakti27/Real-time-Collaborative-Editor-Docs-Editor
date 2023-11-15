@@ -272,6 +272,7 @@ export default {
             onUpdate: () => {
                 this.updateToolbar()
                 this.$emit('input', this.editor.getJSON().content)
+                this.$emit('update:contentUpdate', this.editor)
             },
             onSelectionUpdate: () => {
                 this.updateToolbar()
