@@ -36,7 +36,7 @@ import {
     GetTableColumnCoords,
     GetTableRowCoords,
     GetTopLevelNode,
-  } from "../tools/pm-utils"
+  } from "../utils/pm-utils"
 
 // custom extensions
 import { ColumnExtension } from './column'

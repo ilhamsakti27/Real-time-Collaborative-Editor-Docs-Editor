@@ -404,6 +404,16 @@ export default {
 
             return updatedCoord
         },
+        tableIsActive() {
+            return this.getTopLevelNodeType() == "table";
+        },
+        getTableRowMenuCoords() {
+            return GetTableRowCoords(this.editor.view);
+        },
+
+        getTableColumnMenuCoords() {
+            return GetTableColumnCoords(this.editor.view);
+        },
     },
 }
 </script>
