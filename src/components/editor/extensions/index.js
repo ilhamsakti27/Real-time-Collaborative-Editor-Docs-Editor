@@ -155,17 +155,9 @@ const defaultExtension = [
     Table.configure({
         resizable: true,
     }),
-    TableRow.extend({
-        allowGapCursor: false,
-    }),
-    TableHeader.extend({
-        content: "(inline|hardBreak?)*",
-        isolating: false,
-    }),
-    TableCell.extend({
-        content: "(inline|hardBreak?)*",
-        isolating: false,
-    }),
+    TableRow,
+    TableHeader,
+    TableCell
 ]
 
 export default defaultExtension
