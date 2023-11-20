@@ -96,6 +96,35 @@
                 </menu-item>
             </bubble-menu>
 
+            <!-- table column menu -->
+            <bubble-menu
+            v-if="editor && tableColumnTools"
+            :editor="editor"
+            pluginKey="tableColumnMenu"
+            :should-show="tableIsActive"
+            :tippy-options="{
+                placement: 'bottom',
+                getReferenceClientRect: getTableColumnMenuCoords,
+            }"
+            >
+            <menu-item>
+                <menu-button
+                title="Column tools"
+                :content="moreIconRound"
+                class="rounded-full text-slate-400 hover:text-slate-800"
+                />
+                <template #dropdown>
+                <menu-dropdown-button
+                    v-for="tool in tableColumnTools"
+                    :content="tool.icon + ' ' + tool.title"
+                    :key="tool.title"
+                    :label="tool.title"
+                    @click="tool.command(editor)"
+                />
+                </template>
+            </menu-item>
+            </bubble-menu>
+
             <!-- editor -->
             <editor-content id="editor" :editor="editor" :value="editor.getAttributes('textStyle').color" />
 
@@ -135,6 +164,7 @@ import {
     GetTopLevelBlockCoords,
     GetTopLevelNode,
     GetTableRowCoords,
+    GetTableColumnCoords
 } from './utils/pm-utils.js'
 import { mergeArrays } from './utils/utils'
 import defaultBlockTools from './tools/block-tools'
@@ -213,6 +243,7 @@ export default {
             isLink: false,
             allBlockTools: mergeArrays(defaultBlockTools(), this.blockTools),
             tableRowTools: tableRowTools(),
+            tableColumnTools: tableColumnTools(),
             moreIconRound:
         '<svg class="w-5 h-5 md:w-6 md:h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
         }
