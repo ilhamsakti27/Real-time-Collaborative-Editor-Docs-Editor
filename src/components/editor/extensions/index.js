@@ -29,15 +29,6 @@ import TableCell from '@tiptap/extension-table-cell'
 import TableHeader from '@tiptap/extension-table-header'
 import TableRow from '@tiptap/extension-table-row'
 
-import {
-    DragNode,
-    MoveNode,
-    GetTopLevelBlockCoords,
-    GetTableColumnCoords,
-    GetTableRowCoords,
-    GetTopLevelNode,
-  } from "../utils/pm-utils"
-
 // custom extensions
 import { ColumnExtension } from './column'
 import Placeholder from './placeholder'

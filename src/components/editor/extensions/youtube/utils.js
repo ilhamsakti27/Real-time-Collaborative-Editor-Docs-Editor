@@ -35,8 +35,7 @@ export const getEmbedUrlFromYoutubeUrl = options => {
         return url
     }
 
-    // if is a youtu.be url, get the id after the /
-    if (url.includes('youtu.be')) {
+    if (url.includes('youtu.be') || url.includes('/shorts/')) {
         const id = url.split('/').pop()
 
         if (!id) {

@@ -246,13 +246,13 @@ ul.bulletedList ul.bulletedList ul.bulletedList {
 .bookmark {
     margin: 20px 0;
     display: flex;
-    cursor:pointer;
     justify-content: flex-start;
     align-items: flex-center;
   }
   .bookmark-content{
     /* margin: 0em 6em; */
     border: 1px solid #ccc;
+    cursor:pointer;
     padding: 10px;
     max-width: 80%;
     @apply flex rounded

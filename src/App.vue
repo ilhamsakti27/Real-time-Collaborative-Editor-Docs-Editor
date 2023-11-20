@@ -16,15 +16,15 @@
       </div>
       <div class="fixed p-2 top-1/3">
         <div class="flex flex-col gap-y-4">
-          <button @click="createSnapshots" class="bg-gray-200 p-2">Create Snapshots</button>
-          <button @click="showSnapshots" class="bg-gray-200 p-2">Show Snapshots</button>
+          <button @click="createSnapshots" class="bg-gray-200 text-sm p-2 rounded">Create Snapshots</button>
+          <button @click="showSnapshots" class="bg-gray-200 text-sm p-2 rounded">Show Snapshots</button>
         </div>
       </div>
     </div>
 
     <!-- snapshots preview -->
     <div v-if="isShowSnapshots">
-      <EditorPreview :isShowSnapshots="isShowSnapshots" :mainEditor="mainEditor" :content="snapshots" :history="history">
+      <EditorPreview :isShowSnapshots="isShowSnapshots" :mainEditor="mainEditor" :history="history">
       </EditorPreview>
     </div>
   </div>

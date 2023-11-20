@@ -78,6 +78,8 @@ export default {
                             return false
                         case 'bookmark':
                             return false
+                        case 'youtube':
+                            return false
                         default:
                             break;
                     }

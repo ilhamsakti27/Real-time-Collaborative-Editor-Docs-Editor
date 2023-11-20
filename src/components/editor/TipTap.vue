@@ -20,7 +20,7 @@
         </div>
 
         <div v-if="editor" class="editor-canvas w-full">
-            <floating-menu :should-show="shouldShowMainToolbar" v-if="editor" :editor="editor" :class="{
+            <floating-menu :should-show="shouldShowFloatingMenu" v-if="editor" :editor="editor" :class="{
                 'mouse:pointer-events-none mouse:opacity-0': isTyping,
             }" :tippy-options=floatingTippy>
                 <div v-if="topLevelNodeType !== 'title' && topLevelNodeType !== 'loading'" class="flex flex-row"
@@ -58,7 +58,7 @@
             <BubbleMenu :editor="editor" :tippy-options="{
                 duration: 100, placement: 'top-start',
             }" v-if="editor"
-                v-show="topLevelNodeType !== 'title' && topLevelNodeType !== 'image' && topLevelNodeType !== 'codeBlock' && topLevelNodeType !== 'bookmark' && topLevelNodeType !== 'loading' && topLevelNodeType !== 'video' && topLevelNodeType !== 'horizontalRule' && topLevelNodeType !== 'youtube'"
+                v-show="topLevelNodeType !== 'title' && topLevelNodeType !== 'image' && topLevelNodeType !== 'codeBlock' && topLevelNodeType !== 'bookmark' && topLevelNodeType !== 'loading' && topLevelNodeType !== 'video' && topLevelNodeType !== 'horizontalRule' && topLevelNodeType !== 'youtube' && topLevelNodeType !== 'table'"
                 id="bubbleMenu" class="flex items-center">
                 <ColorButton class="bubble-menu-btn border-r bored-black" :editor="editor" />
                 <inlineToolsBtn :editor="editor" />
@@ -277,6 +277,7 @@ export default {
         },
     },
     mounted() {
+        // FOR RESET COLOR, ALIGN, HIGLIGHT FOR NEW LINE
         document.addEventListener('keydown', e => {
             if (e.key === 'Enter') {
                 if (this.editor.isActive('highlight') && this.editor.isActive('textStyle')) {
@@ -359,7 +360,10 @@ export default {
     },
     methods: {
         actionDataTooltip() {
-            return this.topLevelNodeType === 'image' || this.topLevelNodeType === 'video' || this.topLevelNodeType === 'bookmark' ? 'Drag component for move' : 'Hold for dragging'
+            const mediaNodeTypes = ['image', 'video', 'bookmark', 'youtube'];
+            return mediaNodeTypes.includes(this.topLevelNodeType)
+                ? 'Drag component for move'
+                : 'Hold for dragging';
         },
         getTopLevelNodeType() {
             this.isLink = this.editor.view.state.selection.$head.parent.content.content[0]?.marks[0]?.type.name === 'link'
@@ -392,7 +396,7 @@ export default {
             }
             return mapBaru
         },
-        shouldShowMainToolbar() {
+        shouldShowFloatingMenu() {
             return this.editor.isActive()
         },
         gantiNama() {
