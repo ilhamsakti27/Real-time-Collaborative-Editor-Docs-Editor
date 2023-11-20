@@ -68,7 +68,7 @@ const defaultExtension = [
     }),
     Highlight.configure({ multicolor: true }),
     Placeholder.configure({
-        placeholder: ({ node }) => {
+        placeholder: ({ node, editor }) => {
             let text = 'Write something … or type \'/\' to choose block'
             switch (node.type.name) {
                 case 'title':
@@ -80,15 +80,10 @@ const defaultExtension = [
                 case 'codeBlock':
                     text = 'write code ...'
                     break
-                case 'tableHeader':
-                    text = null
-                    break
-                case 'tableCell':
-                    text = null
-                    break
                 default:
                     break
             }
+            if (editor.isActive('table')) text = ''
 
             return text
         },
