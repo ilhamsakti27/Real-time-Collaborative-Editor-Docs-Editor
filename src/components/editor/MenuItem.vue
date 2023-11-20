@@ -1,20 +1,18 @@
 <!-- eslint-disable -->
 <template>
-  <div class="group text-sm relative">
+  <div ref="dropdown" class="group text-sm relative">
     <slot></slot>
-
-    <div
-      v-if="hasDropdown"
+    <div ref="dropdownContent" v-if="hasDropdown"
       class="z-10 bg-white shadow py-2 group-focus-within:block hidden overflow-hidden whitespace-nowrap absolute bottom-full sm:bottom-auto sm:top-full mt-4 rounded border border-slate-400"
-      :class="align == 'left' ? 'left-0' : 'right-0'"
-    >
-      <slot name="dropdown"> </slot>
+      :class="align == 'left' ? 'left-0' : 'right-0'">
+      <slot ref="item" name="dropdown"> </slot>
     </div>
   </div>
 </template>
 
 <script>
 /* eslint-disable */
+import tippy from "tippy.js"
 export default {
   computed: {
     hasDropdown() {
@@ -47,6 +45,15 @@ export default {
     active: {
       type: Boolean,
     },
+  },
+  mounted() {
+    tippy(this.$refs.dropdown, {
+      content: this.$refs.dropdownContent,
+      appendTo: () => this.$refs.dropdown,
+      placement: 'bottom-start',
+      trigger: 'click',
+      interactive: true,
+    });
   },
 };
 </script>

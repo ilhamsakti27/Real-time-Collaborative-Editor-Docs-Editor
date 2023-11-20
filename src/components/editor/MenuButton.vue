@@ -1,17 +1,12 @@
 <!-- eslint-disable -->
 <template>
-  <button
-    class="w-full flex p-1 flex-row items-center text-slate-600 rounded gap-2 hover:bg-slate-100"
-    :aria-label="label"
-    :data-tooltip="label"
-    :title="label"
-    :class="active ? activeClass : ''"
-    v-html="content"
-  ></button>
+  <button ref="tool" class="w-full flex p-1 flex-row items-center text-slate-600 rounded gap-2 hover:bg-slate-100"
+    :aria-label="label" :data-tooltip="label" :title="label" :class="active ? activeClass : ''" v-html="content"></button>
 </template>
 
 <script>
 /* eslint-disable */
+
 export default {
   props: {
     clickHandler: {
@@ -37,5 +32,6 @@ export default {
       type: Boolean,
     },
   },
+
 };
 </script>
