@@ -19,7 +19,7 @@
         </div>
 
         <div v-if="editor" class="editor-canvas w-full">
-            <floating-menu :should-show="shouldShowMainToolbar" v-if="editor" :editor="editor" :class="{
+            <floating-menu :should-show="shouldShowFloatingMenu" v-if="editor" :editor="editor" :class="{
                 'mouse:pointer-events-none mouse:opacity-0': isTyping,
             }" :tippy-options=floatingTippy>
                 <div v-if="topLevelNodeType !== 'title' && topLevelNodeType !== 'loading'" class="flex flex-row"
@@ -177,8 +177,8 @@ export default {
         const path = this.$route.path
         this.documentId = path.split('/')[2]
         this.provider = new HocuspocusProvider({
-            // url: 'ws://localhost:1234/',
-            url: 'wss://editorhocus.oriens.my.id',
+            url: 'ws://localhost:1234/',
+            // url: 'wss://editorhocus.oriens.my.id',
             name: this.documentId,
             document: ydoc,
             token: 'test-token', // auth token
@@ -317,7 +317,7 @@ export default {
             }
             return mapBaru
         },
-        shouldShowMainToolbar() {
+        shouldShowFloatingMenu() {
             return this.editor.isActive()
         },
         gantiNama() {
