@@ -18,11 +18,9 @@ export function qwerty() {
       element.style.backgroundColor = 'blue'
       console.log(element)
     }
-  
+
   } else {
     console.log('TIdak ada komponen table wrapper')
 
   }
-
-  console.log('Assoyyy')
 }
