@@ -85,12 +85,12 @@
 
                     <template #dropdown>
                         <menu-dropdown-button
+                            class="block"
                             v-for="tool in tableRowTools"
                             v-html="tool.icon + ' ' + tool.title"
                             :key="tool.title"
                             :label="tool.title"
                             @click.prevent="tool.command(editor)"
-                            class="block"
                         />
                     </template>
                 </menu-item>

@@ -1,7 +1,6 @@
 /* eslint-disable */
 import { PopupImage } from './buttons/popupImage'
 // import '@/components/editor/tools/buttons/tableTools'
-import { qwerty } from './buttons/tableTools/index'
 
 const blockTools = [
   {
@@ -196,13 +195,10 @@ const blockTools = [
         .deleteRange(range)
         // .setBookmark({ src: 'https://tiptap.dev/extensions?pro=true', img: 'https://tiptap.dev/og-image.png?1699692652', title: 'Dev toolkit for building collaborative editors – Tiptap' })
         // .setVideo({ src: 'http://localhost:1234/editor/documentId-001/video.mp4' })
-        .insertTable({ rows: 3, cols: 3 })
+        .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
         // .qwerty()
         .run()
 
-      // load javascript in this field
-      // Membaca isi file index.js dan menjalankannya dengan eval()
-      qwerty()
     },
   },
 ]
