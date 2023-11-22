@@ -88,6 +88,12 @@
 .tiptap .bookmark.is-empty::before{
   content: '';
 }
+.tiptap .linkPage.is-empty::before{
+  content: '';
+}
+.tiptap .videoNode.is-empty::before{
+  content: '';
+}
 
 .tiptap .is-empty::before {
   content: attr(data-placeholder);
@@ -242,6 +248,39 @@ ul.bulletedList ul.bulletedList ul.bulletedList {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+/* video styling */
+.videoNode{
+    margin: 20px 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-center;
+}
+  
+
+/* page styling */
+.linkPage {
+    margin: 0px 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-center;
+    border: 1px solid rgba(0,0,0,0.2);
+    padding: 10px 10px;
+    border-radius:4px;
+    width: fit-content;
+}
+
+.linkPage-icon{
+  /* border: 1px solid rgba(0,0,0,0.2); */
+  padding: 6px;
+  border-radius:4px;
+  background-color: rgba(243, 244, 246, 1);
+}
+.linkPage-content{
+  display:flex;
+  cursor:pointer;
+  align-items: center;
+  column-gap: 8px;
+}
 /* Bookmark Styling */
 .bookmark {
     margin: 20px 0;

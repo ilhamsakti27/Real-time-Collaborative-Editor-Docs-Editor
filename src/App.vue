@@ -20,6 +20,13 @@
           <button @click="showSnapshots" class="bg-gray-200 text-sm p-2 rounded">Show Snapshots</button>
         </div>
       </div>
+
+      <div class="fixed top-20 flex justify-end right-0">
+        <div class="w-[250px] overflow-x-auto overflow-y-auto max-h-[90vh] ">
+          <h3 class="font-bold mb-8 text-3xl">Editor output</h3>
+          <pre class="block text-sm w-full">{{ content }}</pre>
+        </div>
+      </div>
     </div>
 
     <!-- snapshots preview -->

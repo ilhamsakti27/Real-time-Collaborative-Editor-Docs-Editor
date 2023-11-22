@@ -1,7 +1,9 @@
 <!-- eslint-disable -->
 <template>
-  <button class="w-full flex py-1 pl-2 pr-6 flex-row items-center text-slate-600 gap-2 hover:bg-slate-100"
-    :aria-label="label" :title="label" :class="active ? activeClass : ''" v-html="content" @click="handleClick"></button>
+  <div class="flex items-center gap-x-2 px-2 hover:bg-slate-100 cursor-pointer" @click="handleClick">
+    <div class="border rounded p-1" v-html="content"></div>
+    <div class="">{{ label }}</div>
+  </div>
 </template>
 
 <script>
@@ -39,6 +41,6 @@ export default {
     handleClick() {
       this.tool.command(this.editor)
     }
-  }
+  },
 };
 </script>

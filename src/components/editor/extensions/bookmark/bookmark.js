@@ -4,15 +4,23 @@ import { Node, mergeAttributes } from '@tiptap/core'
 export const Bookmark = Node.create({
     name: 'bookmark',
     group: 'block',
+    content: 'inline*',
     atom: true,
-    defining: true,
-    marks: '',
     draggable: true,
+    isolating: true,
+
     // Your code goes here.
     addOptions() {
         return {
             HTMLAttributes: {},
+            inline: false
         };
+    },
+    inline() {
+        return this.options.inline
+    },
+    group() {
+        return this.options.inline ? 'inline' : 'block'
     },
     addAttributes() {
         return {
@@ -33,7 +41,39 @@ export const Bookmark = Node.create({
         ];
     },
     renderHTML({ HTMLAttributes }) {
-        return ['div', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, { 'data-type': 'draggable-item' })]
+        const { src, img, title } = HTMLAttributes
+        const clickHandler = `window.open('${src}', '_blank')`;
+        const onClickAttribute = clickHandler;
+
+        return [
+            'div',
+            {
+                class: 'bookmark',
+            },
+            [
+                'div',
+                { class: 'bookmark-content flex', onclick: onClickAttribute },
+                [
+                    'img',
+                    mergeAttributes({ class: 'bookmark-thumbnail', src: img })
+                ],
+                [
+                    'div',
+                    { class: 'bookmark-desc ' },
+                    [
+                        'h3',
+                        { class: 'bookmark-title' },
+                        title,
+                    ],
+                    [
+                        'div',
+                        { class: 'bookmark-link' },
+                        src,
+                    ]
+                ]
+            ],
+            ['div', 0]
+        ]
     },
     addCommands() {
         return {
@@ -48,46 +88,5 @@ export const Bookmark = Node.create({
             },
         };
     },
-    addNodeView() {
-        return (options) => {
-            const container = document.createElement('div');
-            const thumbnail = document.createElement('img');
-            const title = document.createElement('h3')
-            const link = document.createElement('div')
-            const wrapper = document.createElement('div')
-            const content = document.createElement('div')
-
-            container.classList.add('bookmark');
-            thumbnail.classList.add('bookmark-thumbnail')
-            title.classList.add('bookmark-title')
-            link.classList.add('bookmark-link')
-            wrapper.classList.add('bookmark-desc')
-            content.classList.add('bookmark-content')
-
-            thumbnail.src = options.HTMLAttributes.img
-            title.innerText = options.HTMLAttributes.title
-            link.innerText = options.HTMLAttributes.src
-
-            wrapper.appendChild(title)
-            wrapper.appendChild(link)
-
-            content.appendChild(thumbnail)
-            content.appendChild(wrapper)
-
-            container.appendChild(content)
-            container.setAttribute('data-type', 'draggable-item');
-            content.addEventListener('click', () => {
-                const src = options.HTMLAttributes.src;
-                if (src) {
-                    window.open(src, '_blank');
-                }
-            });
-            return {
-                dom: container,
-            };
-
-        }
-    },
-
 })
 

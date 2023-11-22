@@ -67,70 +67,13 @@ export default {
                 item.command(editor)
             }
         },
-        upHandler() {
-            // stop scroll event jika sudah mentok
-            if (this.selectedIndex <= 0) {
-                this.selectedIndex = 0
-            } else {
-                this.selectedIndex -= 1
-            }
-            // ref untuk element items
-            const { itemsContainer } = this.$refs
-            // logic scroll key down
-            if (itemsContainer && this.selectedIndex <= (this.items.length / 2)) {
-                // scroll untuk key down pada index
-                const scrollPosition = itemsContainer.scrollTop
-                if (this.selectedIndex >= 0) {
-                    const newScrollPosition = scrollPosition - 60
-                    itemsContainer.scrollTop = newScrollPosition
-                }
-            }
-        },
+
         handleHover(index) {
             this.selectedIndex = index
         },
-        downHandler() {
-            // stop scroll event jika sudah mentok
-            if (this.selectedIndex >= this.items.length - 1) {
-                this.selectedIndex = this.items.length - 1
-            } else {
-                this.selectedIndex += 1
-            }
-
-            // ref untuk element items
-            const { itemsContainer } = this.$refs
-            // logic scroll key down
-            if (itemsContainer && this.selectedIndex >= (this.items.length / 3) + 1) {
-                // scroll untuk key down pada index >= ke-setengah item
-                const scrollPosition = itemsContainer.scrollTop
-                if (this.selectedIndex !== this.items.length) {
-                    const newScrollPosition = scrollPosition + 60
-                    itemsContainer.scrollTop = newScrollPosition
-                }
-            }
-        },
         enterHandler() {
-            // alert(this.selectedIndex)
             this.selectItem(this.selectedIndex)
         },
-        keyDownHandler(event) {
-            event.preventDefault()
-            if (this.isMoreTools === true) {
-                switch (event.key) {
-                    case 'ArrowUp':
-                        this.upHandler()
-                        break;
-                    case 'ArrowDown':
-                        this.downHandler()
-                        break;
-                    case 'Enter':
-                        this.enterHandler()
-                    default:
-                        break;
-                }
-            }
-        }
-
     },
 }
 </script>

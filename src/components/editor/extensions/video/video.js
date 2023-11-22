@@ -6,20 +6,23 @@ export const Video = Node.create({
     name: 'video',
     draggable: true,
     allowGapCursor: true,
+    content: 'inline*',
+    atom: true,
+    draggable: true,
     isolating: true,
+
     // Your code goes here
     addOptions() {
         return {
-            inline: false,
             HTMLAttributes: {},
+            inline: false
         };
     },
-
     inline() {
-        return this.options.inline;
+        return this.options.inline
     },
     group() {
-        return this.options.inline ? "inline" : "block";
+        return this.options.inline ? 'inline' : 'block'
     },
     addAttributes() {
         return {
@@ -40,7 +43,25 @@ export const Video = Node.create({
         ];
     },
     renderHTML({ HTMLAttributes }) {
-        return ['iframe', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)];
+        const { src } = HTMLAttributes
+        return [
+            'div',
+            {
+                class: "videoNode"
+            },
+            ['iframe',
+                mergeAttributes(this.options.HTMLAttributes,
+                    {
+                        width: '640',
+                        height: '360',
+                        frameborder: 0,
+                        allowfullscreen: true,
+                        src: src
+                    },
+                ),
+            ],
+            ['div', { class: 'emptyNode' }, 0]
+        ]
     },
     addCommands() {
         return {
@@ -51,23 +72,6 @@ export const Video = Node.create({
                 });
             },
         };
-    },
-    addNodeView() {
-        return ({ editor, node }) => {
-            const iframe = document.createElement('iframe');
-            const container = document.createElement('div')
-            iframe.width = '640';
-            iframe.height = '360';
-            iframe.frameborder = "0";
-            iframe.allowfullscreen = true;
-            iframe.src = node.attrs.src;
-
-            container.appendChild(iframe)
-
-            return {
-                dom: container,
-            }
-        }
     },
 
     addInputRules() {

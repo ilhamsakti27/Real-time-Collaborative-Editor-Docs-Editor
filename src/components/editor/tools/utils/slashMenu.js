@@ -1,5 +1,6 @@
 /* eslint-disable */
-import { PopupImage } from './buttons/popupImage'
+import { PopupImage } from '../buttons/popupImage'
+import { PopupVideo } from '../buttons/popupVideo'
 // import '@/components/editor/tools/buttons/tableTools'
 
 const blockTools = [
@@ -21,7 +22,7 @@ const blockTools = [
     name: 'heading1',
     title: 'Heading 1',
     desc: 'Big section heading',
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 50" fill="none"> <g filter="url(#filter0_d_12_47)"> <path d="M6 8V40M25 8V40M6 24H25M34.226 24L39 19.017V40" stroke="#272829" stroke-opacity="0.8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/> </g> <defs> <filter id="filter0_d_12_47" x="-4" y="0" width="56" height="56" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"> <feFlood flood-opacity="0" result="BackgroundImageFix"/> <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/> <feOffset dy="4"/> <feGaussianBlur stdDeviation="2"/> <feComposite in2="hardAlpha" operator="out"/> <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/> <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_12_47"/> <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_12_47" result="shape"/> </filter> </defs> </svg>',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 50" fill="none"> <g filter="url(#filter0_d_12_47)"> <path d="M6 8V40M25 8V40M6 24H25M34.226 24L39 19.017V40" stroke="#272829" stroke-opacity="0.8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/> </g> <defs> </defs> </svg>',
     command: ({ editor, range }) => {
       editor
         .chain()
@@ -147,7 +148,7 @@ const blockTools = [
     name: 'separator',
     title: 'Separator',
     desc: 'Divide a block',
-    icon: '<svg class="w-5 h-5 md:w-6 md:h-6" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M20.2 7v4H3.8V7H2.2v9h1.6v-3.5h16.4V16h1.6V7z"></path></svg>',
+    icon: '<svg class="w-5 h-5 md:w-6 md:h-6" fill="272829" fill-opacity="0.8" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M20.2 7v4H3.8V7H2.2v9h1.6v-3.5h16.4V16h1.6V7z"></path></svg>',
     command: ({ editor, range }) => {
       editor
         .chain()
@@ -161,9 +162,18 @@ const blockTools = [
     name: 'image',
     title: 'Image',
     desc: 'Upload or embed image',
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 36 36" fill="none"> <path d="M22.5 17C23.39 17 24.26 16.7361 25.0001 16.2416C25.7401 15.7471 26.3169 15.0443 26.6575 14.2221C26.9981 13.3998 27.0872 12.495 26.9135 11.6221C26.7399 10.7492 26.3113 9.94736 25.682 9.31802C25.0526 8.68869 24.2508 8.2601 23.3779 8.08647C22.505 7.91283 21.6002 8.00195 20.7779 8.34254C19.9557 8.68314 19.2529 9.25992 18.7584 9.99994C18.2639 10.74 18 11.61 18 12.5C18 13.6935 18.4741 14.8381 19.318 15.682C20.1619 16.5259 21.3065 17 22.5 17ZM22.5 11C22.7967 11 23.0867 11.088 23.3334 11.2528C23.58 11.4176 23.7723 11.6519 23.8858 11.926C23.9994 12.2001 24.0291 12.5017 23.9712 12.7926C23.9133 13.0836 23.7704 13.3509 23.5607 13.5607C23.3509 13.7704 23.0836 13.9133 22.7926 13.9712C22.5017 14.0291 22.2001 13.9994 21.926 13.8858C21.6519 13.7723 21.4176 13.58 21.2528 13.3334C21.088 13.0867 21 12.7967 21 12.5C21 12.1022 21.158 11.7206 21.4393 11.4393C21.7206 11.158 22.1022 11 22.5 11Z" fill="#272829" fill-opacity="0.8"/> <path d="M33 0H3C2.20435 0 1.44129 0.31607 0.87868 0.87868C0.31607 1.44129 0 2.20435 0 3V33C0 33.7956 0.31607 34.5587 0.87868 35.1213C1.44129 35.6839 2.20435 36 3 36H33C33.7956 36 34.5587 35.6839 35.1213 35.1213C35.6839 34.5587 36 33.7956 36 33V3C36 2.20435 35.6839 1.44129 35.1213 0.87868C34.5587 0.31607 33.7956 0 33 0ZM33 33H3V24L10.5 16.5L18.885 24.885C19.4471 25.4438 20.2074 25.7574 21 25.7574C21.7926 25.7574 22.5529 25.4438 23.115 24.885L25.5 22.5L33 30V33ZM33 25.755L27.615 20.37C27.0529 19.8112 26.2926 19.4976 25.5 19.4976C24.7074 19.4976 23.9471 19.8112 23.385 20.37L21 22.755L12.615 14.37C12.0529 13.8112 11.2926 13.4976 10.5 13.4976C9.70744 13.4976 8.94709 13.8112 8.385 14.37L3 19.755V3H33V25.755Z" fill="#272829" fill-opacity="0.8"/> </svg>',
+    icon: '<svg enable-background="new 0 0 24 24" id="Layer_1" version="1.0" viewBox="0 0 24 24" xml:space="preserve" fill="#272829" fill-opacity="0.8" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M20,6v12H4V6H20 M20,4H4C2.9,4,2,4.9,2,6v12c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V6C22,4.9,21.1,4,20,4L20,4z"/></g><polygon points="8,10 12,13 14,12 18,14.4 18,16 6,16 6,12 "/><circle cx="16.5" cy="9.5" r="1.5"/></svg>',
     command: ({ editor, range }) => {
       PopupImage(editor, range)
+    },
+  },
+  {
+    name: 'Video',
+    title: 'Video',
+    desc: 'Upload or embed youtube',
+    icon: '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 256 256" enable-background="new 0 0 256 256" xml:space="preserve">< g > <g><g><path fill="#272829" fill-opacity="0.8" d="M10,96.8v88.9h118h118V96.8V8H128H10V96.8z M134.9,70.1c26.8,15.3,49,28.1,49.4,28.3c0.5,0.5-31.7,19.2-89.7,52.1l-8.8,5V98.9c0-31.1,0.1-56.6,0.2-56.6C86,42.3,108.1,54.8,134.9,70.1z" /><path fill="#272829" fill-opacity="0.8" d="M69.2,197.6c-3,0.8-5,2.1-6.7,4.2c-1.4,1.7-1.5,2.2-1.6,6l-0.2,4.2H35.3H10v10.6v10.6h25.3h25.3l0.2,4.2c0.1,3.9,0.3,4.3,1.6,6c4,5.1,13.1,6.2,18.9,2.4c3.1-2.1,4.4-4.7,4.4-9.1v-3.4h80.2H246v-10.6V212h-80.2H85.7v-3.4c0-5.5-1.9-8.4-6.8-10.4C76.5,197.1,71.8,196.8,69.2,197.6z" /></g></g></g ></svg > ',
+    command: ({ editor, range }) => {
+      PopupVideo(editor, range)
     },
   },
   {
@@ -187,18 +197,29 @@ const blockTools = [
     name: 'table',
     title: 'Table',
     desc: 'Add simple table in page',
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none"> <path d="M12 10H34C35.5913 10 37.1174 10.6321 38.2426 11.7574C39.3679 12.8826 40 14.4087 40 16V34C40 35.5913 39.3679 37.1174 38.2426 38.2426C37.1174 39.3679 35.5913 40 34 40H12C10.4087 40 8.88258 39.3679 7.75736 38.2426C6.63214 37.1174 6 35.5913 6 34V16C6 14.4087 6.63214 12.8826 7.75736 11.7574C8.88258 10.6321 10.4087 10 12 10ZM8 34C8 35.0609 8.42143 36.0783 9.17157 36.8284C9.92172 37.5786 10.9391 38 12 38H22V32H8V34ZM22 24H8V30H22V24ZM34 38C35.0609 38 36.0783 37.5786 36.8284 36.8284C37.5786 36.0783 38 35.0609 38 34V32H24V38H34ZM38 24H24V30H38V24ZM8 22H22V16H8V22ZM24 22H38V16H24V22Z" fill="#272829" fill-opacity="0.8"/> </svg>',
+    icon: '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24" height="24" viewBox="0 0 256 256" enable-background="new 0 0 256 256" xml:space="preserve">< g > <g><g><path fill="#272829" fill-opacity="0.8" d="M40.4,25.1C33.2,27,28.3,30,22.3,35.9c-5.7,5.7-8,9.2-10.6,16.6L10,57.4v70.7v70.7l1.8,4.8c3.8,10.5,10.8,18.7,19.9,23.5c10.4,5.4,3.3,5,96,5c67.1,0,83.1-0.2,86.1-0.9c11.9-2.9,22.9-11.7,27.9-22.2c4.6-9.8,4.4-5.4,4.4-81.2c0-76.4,0.3-71.8-4.6-81.6c-3.9-7.9-10.5-14.3-19-18.5c-8.2-4-4.2-3.9-94.7-3.8C48.6,23.9,45,24,40.4,25.1z M121,86.2l-0.2,20.7H72.3H23.7l-0.2-20.7l-0.1-20.7h48.9h48.9L121,86.2z M232,86.4v20.9h-48.6h-48.6V86.4V65.5h48.6H232L232,86.4L232,86.4z M121.2,141.8v20.9H72.3H23.4v-20.9V121h48.9h48.9L121.2,141.8L121.2,141.8z M232,141.8v20.9h-48.6h-48.6v-20.9V121h48.6H232L232,141.8L232,141.8z M121,197.4l0.1,20.7h-37c-40.2,0-40.6-0.1-46.8-3.7c-3.5-2-8.9-7.8-10.7-11.3c-0.8-1.6-1.8-4.8-2.3-7.2c-0.9-4.4-1.3-18.4-0.5-19.2c0.2-0.3,22.2-0.4,48.7-0.3l48.3,0.2L121,197.4z M231.9,186.9c-0.2,10.4-0.3,10.8-2.3,15c-2.9,6.1-7.1,10.4-13.2,13.4l-4.9,2.4l-38.3,0.2l-38.3,0.2v-20.9v-20.9h48.6h48.6L231.9,186.9z" /></g></g></g ></svg > ',
     command: ({ editor, range }) => {
       editor
         .chain()
         .focus()
         .deleteRange(range)
-        // .setBookmark({ src: 'https://tiptap.dev/extensions?pro=true', img: 'https://tiptap.dev/og-image.png?1699692652', title: 'Dev toolkit for building collaborative editors – Tiptap' })
-        // .setVideo({ src: 'http://localhost:1234/editor/documentId-001/video.mp4' })
         .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
-        // .qwerty()
         .run()
 
+    },
+  },
+  {
+    name: 'page',
+    title: 'Page',
+    desc: 'Add new page',
+    icon: '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 256 256" enable-background="new 0 0 256 256" xml:space="preserve">< g > <g><path fill="#272829" d="M45.9,92.1h51.3v10.2H45.9V92.1L45.9,92.1z" /><path fill="#272829" d="M45.9,122.8h51.3v10.3H45.9V122.8L45.9,122.8z" /><path fill="#272829" d="M193.2,109l-63.3-68.2h-14.4h-5.3h-2.7h-77C19.2,40.8,10,50,10,61.3v164.2c0,11.3,9.2,20.5,20.5,20.5h143.6c11.4,0,20.6-9.2,20.6-20.5V128v-13.1v-2.3l-1.8-1.8L193.2,109z M133.2,59.6l44.9,47.9h-34.7c-5.7,0-10.2-4.6-10.2-10.3L133.2,59.6L133.2,59.6z M184.4,225.5c0,5.7-4.6,10.2-10.3,10.2H30.5c-5.7,0-10.2-4.6-10.2-10.2V61.3c0-5.7,4.6-10.2,10.2-10.2h92.4v46.1c0,11.4,9.2,20.6,20.6,20.6h41.1L184.4,225.5L184.4,225.5z" /><path fill="#272829" d="M45.9,184.4h112.9v10.3H45.9V184.4L45.9,184.4z" /><path fill="#272829" d="M244.2,80l0.3-1.8L181.2,10h-14.4h-5.3h-2.7H81.9c-11.4,0-20.6,9.2-20.6,20.5h10.2c0-5.7,4.6-10.2,10.3-10.2h92.3v10.2v36c0,11.3,9.2,20.5,20.6,20.5h41.1v107.8c0,5.7-4.6,10.2-10.2,10.2h-20.6v10.2h20.6c11.3,0,20.5-9.2,20.5-20.5V97.2V81.9L244.2,80z M194.7,76.7c-5.7,0-10.2-4.6-10.2-10.2V28.8l44.9,47.9H194.7z" /><path fill="#272829" d="M45.9,153.6h112.9v10.2H45.9V153.6L45.9,153.6z" /></g></g ></svg > ',
+    command: ({ editor, range }) => {
+      editor
+        .chain()
+        .focus()
+        .deleteRange(range)
+        .setPage({ src: '/document' })
+        .run()
     },
   },
 ]

@@ -53,9 +53,7 @@ export default {
     },
     computed: {
         filteredItems() {
-            // Use a computed property to filter items based on your condition
             return this.items.filter(item => {
-
                 if (item.title === 'Delete') {
                     return this.editor.can().deleteNode(this.topLevelNodeType);
                 } else if (item.ref === 'unsetHghlBtn') {
@@ -66,6 +64,8 @@ export default {
                     return this.canMoveNodeUp()
                 } else if (item.ref === 'moveDownBtn') {
                     return this.canMoveNodeDown()
+                } else if (item.ref === 'toggleHeaderColumn' || item.ref === 'toggleHeaderRow') {
+                    return this.editor.isActive('table')
                 } else if (item.ref === 'convertBtn') {
                     switch (this.topLevelNodeType) {
                         case 'image':
@@ -79,6 +79,10 @@ export default {
                         case 'bookmark':
                             return false
                         case 'youtube':
+                            return false
+                        case 'table':
+                            return false
+                        case 'linkPage':
                             return false
                         default:
                             break;
@@ -202,6 +206,7 @@ export default {
     overflow: scroll;
     max-height: 300px;
     width: 210px;
+    z-index: 999;
 }
 
 // styling scroll slash menu

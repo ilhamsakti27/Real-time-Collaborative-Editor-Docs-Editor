@@ -1,7 +1,6 @@
 /* eslint-disable  */
 import { uploadMedia } from '../utils/upload'
 
-// const host = 'http://localhost:1234'
 const host = 'https://editorhocus.oriens.my.id'
 
 export const handleImageDrop = (view, event, file, documentId) => {
@@ -24,14 +23,9 @@ export const handleImageDrop = (view, event, file, documentId) => {
                 const loadingTransaction = view.state.tr.insert(coordinates.pos, loadingNode)
 
                 view.dispatch(loadingTransaction)
-                console.log('from: ', from)
-                console.log('to: ', to)
                 view.dispatch(view.state.tr.delete(from, to).scrollIntoView())
 
             }).then(response => {
-                console.log('poss: ', $pos.pos)
-                console.log('coorsd: ', coordinates.pos)
-
                 const imgUri = response.data.data.destination.slice('assets/'.length)
                 const fileName = response.data.data.originalname
                 const url = `${host}/${imgUri}/${fileName}`
@@ -91,20 +85,12 @@ export const handleVideoDrop = (view, event, file, documentId) => {
 
 const deleteLoadingNode = (view, coordinates) => {
     const $pos = view.state.tr.selection.$anchor;
-    console.log($pos.pos)
     let depth = $pos.depth
-    const node = $pos.node(depth);
     const from = $pos.before(depth);
     const to = $pos.after(depth);
-    console.log(coordinates)
-    if ($pos.pos !== coordinates.pos) {
+    if ($pos.pos !== coordinates.pos)
         view.dispatch(view.state.tr.delete(coordinates.pos + 1, coordinates.pos + 2).scrollIntoView())
-    } else {
-        console.log(from)
-        console.log(to)
+    else
         view.dispatch(view.state.tr.delete(from, to).scrollIntoView())
-    }
-
-
     return false;
 };

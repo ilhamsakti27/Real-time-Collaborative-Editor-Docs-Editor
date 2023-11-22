@@ -32,7 +32,7 @@
 
 <script>
 /* eslint-disable */
-import fontFamily from '../fontFamily';
+import fontFamily from '../utils/fontFamily';
 import tippy from 'tippy.js';
 
 export default {
@@ -92,4 +92,4 @@ export default {
 .btn-font:hover {
   background-color: #e2e1e1fa;
 }
-</style>
+</style>../utils/fontFamily
