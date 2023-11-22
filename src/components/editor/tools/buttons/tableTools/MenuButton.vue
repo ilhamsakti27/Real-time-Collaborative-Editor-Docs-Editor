@@ -1,6 +1,6 @@
 <!-- eslint-disable -->
 <template>
-  <button ref="tool" class="w-full flex flex-row items-center text-slate-600 rounded gap-2 " :aria-label="label"
+  <button ref="tool" class="w-full flex flex-row items-center text-slate-600 rounded gap-3 p-0.5" :aria-label="label"
     v-html="content"></button>
 </template>
 
