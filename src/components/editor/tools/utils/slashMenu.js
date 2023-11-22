@@ -232,7 +232,7 @@ const blockTools = [
         .chain()
         .focus()
         .deleteRange(range)
-        .setToggleListLink()
+        .setToggleList()
         .run()
     },
   },
