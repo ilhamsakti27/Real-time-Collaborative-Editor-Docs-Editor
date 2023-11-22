@@ -29,18 +29,17 @@
                     <!-- sub menu wrapper -->
                     <div class="" id="submenu"></div>
                     <!-- new node menu -->
-                    <button ref="newNodeMenu" @click="handleNewNode($event)" @mouseup="
+                    <!-- <button ref="newNodeMenu" @click="handleNewNode($event)" @mouseup="
                     " class="ml-1 my-2 hover:bg-slate-100 rounded">
                         <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 24">
                             <path d="M16 9h-5V4H9v5H4v2h5v5h2v-5h5V9z" />
                         </svg>
-                    </button>
+                    </button> -->
                     <!-- action menu -->
-                    <button id="action" ref="actionMenu" @click="handleActionMenu($event)"
-                        @mousedown="startDragging($event)" @mouseup="
-                            draggedNodePosition = false;
-                        dragging = false;
-                        " class="ml-1 my-2 hover:bg-slate-100 rounded" :class="{
+                    <button ref="actionMenu" @click="handleActionMenu($event)" @mousedown="startDragging($event)" @mouseup="
+                        draggedNodePosition = false;
+                    dragging = false;
+                    " class="ml-1 my-2 hover:bg-slate-100 rounded" :class="{
     'cursor-grab': !dragging,
     'cursor-grabbing': dragging,
 }" aria-label="Drag" :action-tooltip="actionDataTooltip()">
@@ -51,53 +50,66 @@
                             </path>
                         </svg>
                     </button>
-
                 </div>
             </floating-menu>
 
-            <BubbleMenu :editor="editor" :tippy-options="{
-                duration: 100, placement: 'top-start',
-            }" v-if="editor"
-                v-show="topLevelNodeType !== 'title' && topLevelNodeType !== 'image' && topLevelNodeType !== 'codeBlock' && topLevelNodeType !== 'bookmark' && topLevelNodeType !== 'loading' && topLevelNodeType !== 'video' && topLevelNodeType !== 'horizontalRule' && topLevelNodeType !== 'youtube' && topLevelNodeType !== 'table'"
-                id="bubbleMenu" class="flex items-center">
-                <ColorButton class="bubble-menu-btn border-r bored-black" :editor="editor" />
-                <inlineToolsBtn :editor="editor" />
-                <FontFamilyButton class="bubble-menu-btn border-r" :editor="editor" />
+            <BubbleMenu pluginKey="mainBubleMenu" :editor="editor" :tippy-options="{
+                duration: 500, placement: 'top-start'
+            }" v-if="editor" v-show="shouldRenderBubbleMenu" id="bubbleMenu" class="flex items-center">
+                <div v-if="topLevelNodeType !== 'table'" class="flex">
+                    <ColorButton v-if="!isLink" class="bubble-menu-btn border-r bored-black" :editor="editor" />
+                    <inlineToolsBtn :editor="editor" />
+                    <FontFamilyButton v-if="!isLink" class="bubble-menu-btn border-r" :editor="editor" />
+                </div>
+            </BubbleMenu>
+
+            <BubbleMenu pluginKey="tableBubbleMenu" :editor="editor" :tippy-options="{
+                duration: 500, placement: 'top-start', getReferenceClientRect: getMenuCoords,
+            }" v-if="editor && (tableRowTools || tableColumnTools)" :should-show="tableIsActive" id="bubbleMenu"
+                class="flex items-center mb-[-2vh] ml-[2vh]">
+                <TableCellMenu :editor="editor" />
             </BubbleMenu>
 
             <!-- table row menu -->
-            <bubble-menu v-if="editor && tableRowTools" :editor="editor" pluginKey="tableRowMenu"
+            <bubble-menu v-if="editor && tableRowTools" :editor="editor" class="ml-[-2.5vh]" pluginKey="tableRowMenu"
                 :should-show="tableIsActive" :tippy-options="{
                     placement: 'right',
                     animation: 'fade',
-                    duration: 300,
+                    zIndex: 1,
+                    duration: 500,
                     getReferenceClientRect: getTableRowMenuCoords,
-                }">
-                <menu-item>
-                    <menu-button title="Row tools" class="rounded-full text-slate-400 hover:text-slate-800"
-                        :content="moreIconRound" />
+                }
+                    ">
+                <menu-item :action="Row" class="py-1 border bg-white border-black/30 shadow rounded-md hover:bg-slate-100">
+                    <menu-button title="Row tools" class="rounded-full text-slate-400 hover:text-slate-800 "
+                        :content="rowIconTable" />
                     <template #dropdown>
-                        <menu-dropdown-button v-for="(tool, index) in tableRowTools" :content="tool.icon + ' ' + tool.title"
-                            :key="tool.title" :label="tool.title" :editor="editor" :tool="tool" />
+                        <div class="flex flex-col gap-y-1">
+                            <menu-dropdown-button v-for="(  tool  ) in   tableRowTools  " :content="tool.icon"
+                                :key="tool.title" :label="tool.title" :editor="editor" :tool="tool" />
+                        </div>
                     </template>
                 </menu-item>
             </bubble-menu>
 
             <!-- table column menu -->
-            <bubble-menu v-if="editor && tableColumnTools" :editor="editor" pluginKey="tableColumnMenu"
+            <bubble-menu v-if="editor && tableColumnTools" :editor="editor" class="mt-[-5vh] " pluginKey="tableColumnMenu"
                 :should-show="tableIsActive" :tippy-options="{
                     placement: 'bottom',
                     animation: 'fade',
-                    duration: 300,
+                    duration: 500,
+                    zIndex: 1,
                     getReferenceClientRect: getTableColumnMenuCoords,
-                }">
-                <menu-item>
-                    <menu-button title="Column tools" :content="moreIconRound"
-                        class="rounded-full text-slate-400 hover:text-slate-800" />
+                }
+                    ">
+                <menu-item :action="Column"
+                    class="px-1 border bg-white border-black/30 shadow rounded-md hover:bg-slate-100">
+                    <menu-button title="Column tools" :content="colIconTable" />
                     <template #dropdown>
-                        <menu-dropdown-button v-for="(tool, index) in tableColumnTools"
-                            :content="tool.icon + ' ' + tool.title" :key="tool.title" :label="tool.title" :editor="editor"
-                            :tool="tool" />
+                        <div class="flex flex-col gap-y-1">
+                            <menu-dropdown-button v-for="(  tool, index  ) in   tableColumnTools  " :content="tool.icon"
+                                :key="tool.title" :label="tool.title" :editor="editor" :tool="tool" />
+                        </div>
                     </template>
                 </menu-item>
             </bubble-menu>
@@ -144,13 +156,14 @@ import {
     GetTableColumnCoords
 } from './utils/pm-utils.js'
 import { mergeArrays } from './utils/utils'
-import defaultBlockTools from './tools/block-tools'
+import defaultBlockTools from './tools/utils/block-tools'
 import { uuid } from 'vue-uuid';
 import { handleImageDrop, handleVideoDrop } from './utils/handleDrop'
-import { tableRowTools, tableColumnTools } from './tools/table'
-import MenuItem from './MenuItem.vue'
-import MenuButton from './MenuButton.vue'
-import MenuDropdownButton from './MenuDropdownButton.vue'
+import { tableRowTools, tableColumnTools } from './tools/utils/table'
+import MenuItem from './tools/buttons/tableTools/MenuItem.vue'
+import MenuButton from './tools/buttons/tableTools/MenuButton.vue'
+import MenuDropdownButton from './tools/buttons/tableTools/MenuDropdownButton.vue'
+import TableCellMenu from './tools/buttons/TableCellMenu.vue'
 
 const ydoc = new Y.Doc()
 const RandomColor = list => list[Math.floor(Math.random() * list.length)]
@@ -168,6 +181,7 @@ export default {
         MenuItem,
         MenuButton,
         MenuDropdownButton,
+        TableCellMenu
     },
     props: {
         editorClass: {
@@ -180,6 +194,8 @@ export default {
     },
     data() {
         return {
+            Column: "Column",
+            Row: "Row",
             documentId: null,
             provider: null,
             currentUser: JSON.parse(localStorage.getItem('currentUser')) || {
@@ -192,7 +208,7 @@ export default {
                 maxWidth: '350',
                 placement: 'left-start',
                 animation: 'fade',
-                duration: 300,
+                duration: 500,
                 getReferenceClientRect: this.getMenuCoords,
                 onCreate: instance => instance.popper.classList.add(
                     'max-md:!sticky',
@@ -213,6 +229,7 @@ export default {
             bubbleShow: false,
             isTyping: false,
             topLevelNodeType: null,
+            currentNodeType: null,
             showMainToolbar: false,
             isActionMenu: false,
             isNewNode: false,
@@ -221,16 +238,18 @@ export default {
             allBlockTools: mergeArrays(defaultBlockTools(), this.blockTools),
             tableRowTools: tableRowTools(),
             tableColumnTools: tableColumnTools(),
-            moreIconRound:
-                '<svg class="w-5 h-5 md:w-6 md:h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
+            rowIconTable:
+                '<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="#000000" fill-opacity="0.6" viewBox="0 0 24 24" ><path d="M8 7h2V5H8v2zm0 6h2v-2H8v2zm0 6h2v-2H8v2zm6-14v2h2V5h-2zm0 8h2v-2h-2v2zm0 6h2v-2h-2v2z"></path></svg>',
+            colIconTable:
+                '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"  width="20" height="20" viewBox="0 0 1080 1080" xml:space="preserve">s<g transform="matrix(1 0 0 1 540 540)" id="dffe12cd-379f-4c7f-809c-4df8310a30e8"></g><g transform="matrix(1 0 0 1 540 540)" id="9f349ec6-c8b5-4016-b84a-996103897a35"></g><g transform="matrix(0 45 -45 0 540 540)"><path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgba(0,0,0,0.6); fill-rule: nonzero; opacity: 1;" transform=" translate(-12, -12)" d="M 8 7 L 10 7 L 10 5 L 8 5 L 8 7 z M 8 13 L 10 13 L 10 11 L 8 11 L 8 13 z M 8 19 L 10 19 L 10 17 L 8 17 L 8 19 z M 14 5 L 14 7 L 16 7 L 16 5 L 14 5 z M 14 13 L 16 13 L 16 11 L 14 11 L 14 13 z M 14 19 L 16 19 L 16 17 L 14 17 L 14 19" stroke-linecap="round"/></g><g transform="matrix(NaN NaN NaN NaN 0 0)"><g style=""></g></g></svg>'
         }
     },
     created() {
         const path = this.$route.path
         this.documentId = path.split('/')[2]
         this.provider = new HocuspocusProvider({
-            // url: 'ws://localhost:1234/',
-            url: 'wss://editorhocus.oriens.my.id',
+            url: 'ws://localhost:1234/',
+            // url: 'wss://editorhocus.oriens.my.id',
             name: this.documentId,
             document: ydoc,
             token: 'test-token', // auth token
@@ -243,6 +262,13 @@ export default {
                 return this.allAlignmentTools.filter(alignmentToolGroup => alignmentToolGroup.find(tool => tool.isActiveTest(this.editor, this.topLevelNodeType)))
             }
             return null
+        },
+        shouldRenderBubbleMenu() {
+            const excludedNodeTypes = [
+                'title', 'image', 'codeBlock', 'bookmark',
+                'loading', 'video', 'horizontalRule', 'youtube', 'linkPage'
+            ];
+            return !excludedNodeTypes.includes(this.currentNodeType);
         },
     },
     watch: {
@@ -344,6 +370,10 @@ export default {
         },
         getTopLevelNodeType() {
             this.isLink = this.editor.view.state.selection.$head.parent.content.content[0]?.marks[0]?.type.name === 'link'
+            const child = this.editor.view.state.selection
+            if (child.node !== undefined) this.currentNodeType = child.node.type.name
+            else this.currentNodeType = GetTopLevelNode(this.editor.view)?.type.name
+            console.log(this.currentNodeType)
             return GetTopLevelNode(this.editor.view)?.type.name
         },
         updateToolbar() {
@@ -419,9 +449,9 @@ export default {
             ])
         },
         startDragging(event) {
-            if (this.topLevelNodeType === "image") {
-                return this.dragging = false
-            }
+            // if (this.topLevelNodeType === "image") {
+            //     return this.dragging = false
+            // }
             const coords = { left: event.clientX + 48, top: event.clientY }
             if (this.editor.view.posAtCoords(coords)) {
                 this.draggedNodePosition = this.editor.view.posAtCoords(coords).pos
@@ -463,6 +493,7 @@ export default {
         tableIsActive() {
             return this.getTopLevelNodeType() == "table";
         },
+
         getTableRowMenuCoords() {
             return GetTableRowCoords(this.editor.view);
         },
@@ -504,4 +535,4 @@ export default {
     border-radius: 3px 3px 3px 0;
     white-space: nowrap;
 }
-</style>
+</style>./tools/utils/block-tools./tools/utils/table

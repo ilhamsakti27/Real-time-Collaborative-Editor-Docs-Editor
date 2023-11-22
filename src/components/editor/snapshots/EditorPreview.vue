@@ -25,7 +25,6 @@
 
 <!-- eslint-disable  -->
 <script>
-// tiptap extension
 import { Editor } from '@tiptap/core'
 import { EditorContent } from '@tiptap/vue-2'
 import defaultExtension from '../extensions'
@@ -35,8 +34,6 @@ export default {
         EditorContent
     },
     props: {
-
-
         history: {
             required: true
         },
@@ -70,7 +67,6 @@ export default {
             content: this.history[0].snapshots,
             editable: false,
         })
-        console.log(this.history[0])
     }
 }
 

@@ -3,8 +3,7 @@ import { VueRenderer } from '@tiptap/vue-2'
 import tippy from 'tippy.js'
 import alignTools from './alignTools.vue'
 
-let floatingComponent = null // Declare a variable to hold the VueRenderer instance
-
+let floatingComponent = null
 let popup
 export function alignFormat(editor, moreTools, isMoreTools, title) {
     if (floatingComponent == null) {

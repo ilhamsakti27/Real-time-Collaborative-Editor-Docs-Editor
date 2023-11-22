@@ -38,6 +38,7 @@ import { CalloutExtension } from './callout'
 import { DocumentWithTitle, Title } from './title'
 import { BookmarkExtension } from './bookmark'
 import { YoutubeExtension } from './youtube'
+import LinkToPage from './linkToPage'
 
 // slash menu extension
 import Commands from '../tools/commands/commands'
@@ -54,6 +55,7 @@ const defaultExtension = [
     YoutubeExtension,
     Video,
     Title,
+    LinkToPage,
     TextAlign.configure({
         types: ['heading', 'paragraph'],
     }),
@@ -64,7 +66,6 @@ const defaultExtension = [
         history: false,
         blockquote: false,
         document: false,
-        // paragraph: false,
     }),
     Highlight.configure({ multicolor: true }),
     Placeholder.configure({
@@ -80,6 +81,16 @@ const defaultExtension = [
                 case 'codeBlock':
                     text = 'write code ...'
                     break
+                case 'tableCell':
+                    text = 'table cell'
+                    break
+                case 'tableHeader':
+                    text = 'table header'
+                    break
+                case 'orderedList':
+                    text = 'text'
+                    break
+
                 default:
                     break
             }
@@ -103,6 +114,9 @@ const defaultExtension = [
         HTMLAttributes: {
             class: 'orderedList',
         },
+        content: "(inline|hardBreak?)*",
+        atom: true,
+        isolating: true
     }),
     BulletList.configure({
         HTMLAttributes: {
@@ -135,7 +149,6 @@ const defaultExtension = [
     FontFamily,
     Image,
     Dropcursor,
-    // History,
     Superscript.configure({
         HTMLAttributes: {
             class: 'superscript',
@@ -150,9 +163,17 @@ const defaultExtension = [
     Table.configure({
         resizable: true,
     }),
-    TableRow,
-    TableHeader,
-    TableCell
+    TableRow.extend({
+        allowGapCursor: true,
+    }),
+    TableHeader.extend({
+        // content: "inline*",
+        isolating: false,
+    }),
+    TableCell.extend({
+        // content: "inline*",
+        isolating: false,
+    }),
 ]
 
 export default defaultExtension

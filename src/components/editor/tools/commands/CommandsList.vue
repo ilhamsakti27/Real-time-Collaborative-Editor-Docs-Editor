@@ -1,6 +1,8 @@
 <!-- eslint-disable -->
 <template>
-  <div ref="itemsContainer" class="items flex flex-col gap-y-1">
+  <div ref="itemsContainer"
+    v-show="topLevelNodeType !== 'table' && topLevelNodeType !== 'orderedList' && topLevelNodeType !== 'title'"
+    class="items flex flex-col gap-y-1">
     <template v-if="items.length">
       <button v-for="(item, index) in items" :key="index" class="item" :class="{ 'is-selected': index === selectedIndex }"
         @click="selectItem(index)" id="popup">
@@ -42,6 +44,7 @@ export default {
   data() {
     return {
       selectedIndex: 0,
+      topLevelNodeType: null, // Renamed from topLevelNodeType
     }
   },
 
@@ -49,12 +52,30 @@ export default {
     itemsWithInsertCommand() {
       return this.items.filter(item => item.insertCommand)
     },
+
   },
 
   watch: {
     items() {
       this.selectedIndex = 0
     },
+    topLevelNodeType: {
+      handler() {
+        let node = null
+        const selectionStart = this.editor.view.state.selection.$from
+        if (selectionStart.node(1) == null && this.editor.view.lastSelectedViewDesc) {
+          node = this.editor.view.lastSelectedViewDesc.node
+        } else {
+          node = selectionStart.node(1)
+        }
+        console.log(node.type.name)
+
+        // Update the data property
+        this.topLevelNodeType = node.type.name
+      },
+      immediate: true, // This ensures the watcher is triggered on component mount
+    },
+
   },
 
   methods: {
@@ -82,45 +103,34 @@ export default {
     },
 
     upHandler() {
-      // stop scroll event jika sudah mentok
-      if (this.selectedIndex <= 0) {
-        this.selectedIndex = 0
-      } else {
+      if (this.selectedIndex > 0) {
         this.selectedIndex -= 1
-      }
-      // ref untuk element items
-      const { itemsContainer } = this.$refs
-      // logic scroll key down
-
-      if (itemsContainer && this.selectedIndex <= (this.items.length) - (this.items.length / 3) - 1) {
-        // scroll untuk key down pada index
-        const scrollPosition = itemsContainer.scrollTop
-        if (this.selectedIndex >= 0) {
-          const newScrollPosition = (scrollPosition - 60) + (this.selectedIndex / 2)
-          itemsContainer.scrollTop = newScrollPosition
-        }
+        this.scrollIfNeeded()
       }
     },
 
     downHandler() {
-      // stop scroll event jika sudah mentok
-      console.log(this.selectedIndex)
-      console.log(this.items.length - 1)
-      if (this.selectedIndex >= this.items.length - 1) {
-        this.selectedIndex = this.items.length - 1
-      } else {
+      if (this.selectedIndex < this.items.length - 1) {
         this.selectedIndex += 1
+        this.scrollIfNeeded()
       }
+    },
 
-      // ref untuk element items
+    scrollIfNeeded() {
       const { itemsContainer } = this.$refs
-      // logic scroll key down
-      if (itemsContainer && this.selectedIndex >= (this.items.length / 3)) {
-        // scroll untuk key down pada index >= ke-setengah item
+      if (itemsContainer) {
+        const itemHeight = 60 // Adjust this value based on your item height
+        const containerHeight = itemsContainer.clientHeight
         const scrollPosition = itemsContainer.scrollTop
-        if (this.selectedIndex !== this.items.length) {
-          const newScrollPosition = (scrollPosition + 60) - (this.selectedIndex / 3)
-          itemsContainer.scrollTop = newScrollPosition
+
+        const scrollToIndex = this.selectedIndex
+
+        if (scrollToIndex * itemHeight < scrollPosition) {
+          // Scroll up
+          itemsContainer.scrollTop = scrollToIndex * itemHeight
+        } else if ((scrollToIndex + 1) * itemHeight > scrollPosition + containerHeight) {
+          // Scroll down
+          itemsContainer.scrollTop = (scrollToIndex + 1) * itemHeight - containerHeight
         }
       }
     },
@@ -148,22 +158,18 @@ export default {
   background: white;
   box-shadow: 0px 4px 16px 2px rgba(0, 0, 0, 0.15);
   overflow: scroll;
-  // width: 200px;
   max-height: 300px;
 }
 
-// styling scroll slash menu
 .items::-webkit-scrollbar {
   width: 3px;
 }
 
-/* Track (jalur) */
 .items::-webkit-scrollbar-track {
   background: transparent;
   border-radius: 50px;
 }
 
-/* Handle (bilah) */
 .items::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 20px;
@@ -181,7 +187,6 @@ export default {
   padding: 0.2rem 0.4rem;
 
   &.is-selected {
-    // border-color: #000;
     background-color: #d8d9daa1;
   }
 }

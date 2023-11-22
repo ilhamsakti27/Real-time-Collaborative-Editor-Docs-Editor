@@ -1,10 +1,10 @@
 <!-- eslint-disable  -->
 <template>
     <div class="">
-        <div ref="inlineBtn" class="flex">
-            <template v-if="allInlineTools.length">
-                <button :ref="item.ref" v-for="(item, index) in allInlineTools" :key="index"
-                    :id="item.title === 'Link' || item.title === 'Unlink' ? 'popup' : item.title === 'Others' ? 'more' : item.title === 'Format Align' ? 'align' : ''">
+        <div ref="inlineBtn" id="popup" class="flex">
+            <template v-if="filteredItems.length">
+                <button :ref="item.ref" v-for="(item, index) in filteredItems" :key="index"
+                    :id="item.title === 'Link' || item.title === 'Others' ? 'more' : item.title === 'Format Align' ? 'align' : ''">
                     <!-- list of menu -->
                     <div class="icon-container flex menu items-center gap-x-2 bubble-menu-btn border-r"
                         :data-tooltip="item.title" @mouseover="handleHover(index)" @click="selectItem(index)">
@@ -20,10 +20,10 @@
         </div>
     </div>
 </template>
-<!-- eslint-disable  -->
 
+<!-- eslint-disable  -->
 <script>
-import defaultInlineTools from '../inlineTools';
+import defaultInlineTools from '../utils/inlineTools';
 import { mergeArrays } from '../../utils/utils';
 import { moreTools } from './moreToolsBtn'
 import { alignFormat } from './alignTools'
@@ -36,7 +36,6 @@ export default {
         editor: {
             required: true
         }
-
     },
     data() {
         return {
@@ -53,6 +52,22 @@ export default {
         hrefValue() {
             return this.editor.getAttributes("link").href;
         },
+        filteredItems() {
+            return this.allInlineTools.filter(item => {
+                switch (item.title) {
+                    case 'Others':
+                        return !this.editor.isActive('table')
+                    case 'Format Align':
+                        return !this.editor.isActive('table')
+                    case 'Link':
+                        return !this.editor.isActive('table')
+
+                    default:
+                        break;
+                }
+                return true;
+            })
+        }
     },
     watch: {
         hrefValue(newHref, oldHref) {

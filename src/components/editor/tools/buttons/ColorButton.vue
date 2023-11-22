@@ -74,7 +74,7 @@
 
 <script>
 /* eslint-disable */
-import colorFonts from "../colorFonts"
+import colorFonts from "../utils/colorFonts"
 import tippy from 'tippy.js';
 
 export default {
@@ -184,3 +184,4 @@ export default {
   padding: 4px;
 }
 </style>
+../utils/colorFonts

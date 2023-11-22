@@ -4,7 +4,7 @@ import { VueRenderer } from '@tiptap/vue-2'
 import tippy from 'tippy.js'
 
 import CommandsList from './CommandsList.vue'
-import slashMenu from '../slashMenu'
+import slashMenu from '../utils/slashMenu'
 
 export default {
   items: ({ query }) => {

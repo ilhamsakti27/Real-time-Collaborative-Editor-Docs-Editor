@@ -134,7 +134,7 @@ export const Youtube = Node.create({
                 {
                     'data-youtube-video': '',
                     'data-block-width': blockWidth,
-                    class: ' pb-4 text-center',
+                    class: ' pb-4 text-center cursor-grab',
                 },
                 [
                     'iframe',
@@ -164,6 +164,7 @@ export const Youtube = Node.create({
                         HTMLAttributes,
                     ),
                 ],
+                ['div', 0]
             ]
         else return [
             'div',
@@ -193,6 +194,7 @@ export const Youtube = Node.create({
                     ]
                 ]
             ],
+            ['div', 0]
         ]
     },
 })
