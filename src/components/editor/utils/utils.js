@@ -1,4 +1,3 @@
-// /* eslint-disable  */
 /**
  * Simple is object check.
  * @param item

@@ -216,7 +216,6 @@
 </template>
 
 <script>
-// /* eslint-disable */
 // tiptap extension
 import { Editor } from '@tiptap/core'
 import { BubbleMenu, EditorContent, FloatingMenu } from '@tiptap/vue-2'
