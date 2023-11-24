@@ -17,6 +17,7 @@
         <!-- list of menu -->
         <div class="flex items-center gap-x-2">
           <div class="border rounded-md p-2">
+            <!-- eslint-disable-next-line -->
             <span v-html="item.icon" />
           </div>
           <div class="flex flex-col">

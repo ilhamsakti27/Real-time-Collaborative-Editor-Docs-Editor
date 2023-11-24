@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable  */
 import { Extension } from '@tiptap/core'
 import Suggestion from '@tiptap/suggestion'
 
