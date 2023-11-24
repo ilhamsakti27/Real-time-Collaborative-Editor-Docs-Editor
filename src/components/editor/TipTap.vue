@@ -255,7 +255,6 @@ import {
 } from './utils/pm-utils'
 import { mergeArrays } from './utils/utils'
 import defaultBlockTools from './tools/utils/block-tools'
-// import { uuid } from 'vue-uuid'
 import { handleImageDrop, handleVideoDrop } from './utils/handleDrop'
 import { tableRowTools, tableColumnTools } from './tools/utils/table'
 import MenuItem from './tools/buttons/tableTools/MenuItem.vue'
