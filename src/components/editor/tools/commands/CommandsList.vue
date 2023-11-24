@@ -1,11 +1,18 @@
-<!-- eslint-disable -->
 <template>
-  <div ref="itemsContainer"
+  <div
     v-show="topLevelNodeType !== 'table' && topLevelNodeType !== 'orderedList' && topLevelNodeType !== 'title'"
-    class="items flex flex-col gap-y-1">
+    ref="itemsContainer"
+    class="items flex flex-col gap-y-1"
+  >
     <template v-if="items.length">
-      <button v-for="(item, index) in items" :key="index" class="item" :class="{ 'is-selected': index === selectedIndex }"
-        @click="selectItem(index)" id="popup">
+      <button
+        v-for="(item, index) in items"
+        id="popup"
+        :key="index"
+        class="item"
+        :class="{ 'is-selected': index === selectedIndex }"
+        @click="selectItem(index)"
+      >
         <!-- {{ item }} -->
         <!-- list of menu -->
         <div class="flex items-center gap-x-2">
@@ -19,7 +26,10 @@
         </div>
       </button>
     </template>
-    <div v-else class="item">
+    <div
+      v-else
+      class="item"
+    >
       No result
     </div>
   </div>
@@ -33,6 +43,7 @@ export default {
       required: true,
     },
     editor: {
+      type: Array, // type
       required: true,
     },
     command: {
