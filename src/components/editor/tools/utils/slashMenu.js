@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { PopupImage } from '../buttons/popupImage'
 import { PopupVideo } from '../buttons/popupVideo'
 
@@ -204,7 +203,6 @@ const blockTools = [
         .deleteRange(range)
         .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
         .run()
-
     },
   },
   {

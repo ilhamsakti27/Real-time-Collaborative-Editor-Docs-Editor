@@ -524,6 +524,7 @@ export default {
       return this.editor.isActive()
     },
     gantiNama() {
+      // eslint-disable-next-line
       const name = (window.prompt('Name') || '')
         .trim()
         .substring(0, 32)
