@@ -1,8 +1,7 @@
-/* eslint-disable no-useless-catch */
-/* eslint-disable */
 import { fetchOpenGraphData } from '../../utils/scrape'
 import { PopupLink } from '../buttons/popupLink'
 
+// eslint-disable-next-line
 export default function (Editor) {
   const isLinkActive = Editor.getAttributes('link').href
 
@@ -150,6 +149,7 @@ export default function (Editor) {
               .run()
           }
         } else {
+          // eslint-disable-next-line
           alert('Link page not found !')
           editor.commands.undo()
         }
