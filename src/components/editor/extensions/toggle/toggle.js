@@ -36,11 +36,11 @@ export const Toggle = Node.create({
   },
   addNodeView() {
     return () => {
-      const container = document.createElement('div');
-      const heading = document.createElement('h1');
-
-      container.className = 'toggle';
-      container.appendChild(heading);
+      // container
+      const container = document.createElement('div')
+      const toggleBtn = document.createElement('button')
+      
+      
 
       return {
         dom: container,

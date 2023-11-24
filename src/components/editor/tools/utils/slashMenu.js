@@ -1,7 +1,6 @@
 /* eslint-disable */
 import { PopupImage } from '../buttons/popupImage'
 import { PopupVideo } from '../buttons/popupVideo'
-// import '@/components/editor/tools/buttons/tableTools'
 
 const blockTools = [
   {
