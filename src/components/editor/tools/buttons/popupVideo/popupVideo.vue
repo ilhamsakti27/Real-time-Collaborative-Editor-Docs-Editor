@@ -1,53 +1,109 @@
-<!-- eslint-disable -->
 <template>
   <div class="">
     <!-- upload file pop up -->
-    <div class="popupImage border w-96 rounded shadow-lg bg-white" v-show="isUpload">
+    <div
+      v-show="isUpload"
+      style=""
+      class="popupImage shadow-lg"
+    >
       <div class="p-1">
-        <button class="inline-block text-left hover:bg-gray-100 p-2 ml-1 hover:rounded-md active">Upload</button>
-        <button id="embedLinkBtn" class="inline-block text-left hover:bg-gray-100 p-2 hover:rounded-md"
-          @click="uploadOrEmbedLinkBtn">YouTube</button>
+        <button
+          style=""
+          class="active"
+        >
+          Upload
+        </button>
+        <button
+          id="embedLinkBtn"
+          @click="uploadOrEmbedLinkBtn"
+        >
+          Embed link
+        </button>
       </div>
-      <div class="border-t-2 border-slate-300 p-3">
+      <div style="border-top: 1px solid rgba(0,0,0,0.1);padding: 12px;">
         <div class="">
-          <input ref='inputImg' type="file" name="file" id="file-input"
-            class="w-full border-solid border border-gray-300 rounded bg-gray-50 px-2 py-1 text-sm outline-none focus:outline focus:outline-2 focus:outline-offset-0 focus:outline-blue-300"
-            placeholder="Upload or Drag file">
+          <input
+            id="file-input"
+            ref="inputImg"
+            type="file"
+            name="file"
+            style="width: 100%;border-style: solid;border: 1px solid rgba(0,0,0,0.1);border-radius: 4px;background-color: rgba(249, 250, 251,1);padding: 8px 4px;"
+            class="text-sm outline-none"
+            placeholder="Upload or Drag file"
+          >
         </div>
         <!-- Display loading indicator if isUploading is true -->
-        <div v-if="isUploading" class="mt-2 text-gray-500 text-sm">Uploading... ({{ uploadLoaded }} / {{ uploadTotal }})
+        <div
+          v-if="isUploading"
+          style="margin-top: 8px;color: rgba(107, 114, 128, 1);"
+          class="text-sm"
+        >
+          Uploading... ({{ uploadLoaded }} / {{ uploadTotal }})
           {{
             uploadProgress
-          }}%</div>
-        <div class="progress-bar" v-if="isUploading">
-          <div class="progress" :style="{ width: `${uploadProgress}%` }"></div>
+          }}%
+        </div>
+        <div
+          v-if="isUploading"
+          class="progress-bar"
+        >
+          <div
+            class="progress"
+            :style="{ width: `${uploadProgress}%` }"
+          />
         </div>
         <button
-          class="bg-sky-600 hover:bg-sky-700 active:bg-sky-800 text-white border-solid border bg-indigo-500 rounded px-20 py-1 mt-4 text-sm flex mx-auto text"
-          @click="uploadImageHandler">Upload Video</button>
-        <div class="text-center">
-          <span class="text-xs mx-auto text-gray-400">The maximum size per file is 100 MB.</span>
+          class="uploadBtn"
+          @click="uploadVideoHandler"
+        >
+          Upload Video
+        </button>
+        <div style="text-align: center;">
+          <span
+            style="color: rgba(0,0,0,0.4);margin: 0 auto;"
+            class="text-xs"
+          >The maximum size per file is 100 MB.</span>
         </div>
       </div>
     </div>
 
     <!-- embed link pop up -->
-    <div class="popupVideo border w-96 rounded shadow-lg bg-white" v-show="isEmbedLink">
+    <div
+      v-show="isEmbedLink"
+      class="popupImage shadow-lg"
+    >
       <div class="p-1">
-        <button id="uploadImgBtn" class="inline-block text-left hover:bg-gray-100 p-2 ml-1 rounded-md"
-          @click="uploadOrEmbedLinkBtn">Upload</button>
-        <button class="inline-block text-left hover:bg-gray-100 p-2 hover:rounded-md active">Youtube</button>
+        <button
+          id="uploadImgBtn"
+          style="display: inline-block;text-align: left;padding: 8px;margin-left: 4px;"
+          @click="uploadOrEmbedLinkBtn"
+        >
+          Upload
+        </button>
+        <button class="active">
+          YouTube
+        </button>
       </div>
-      <div class="border-t-2 border-slate-300 p-3">
-        <input type="url" v-model="url"
-          class="w-full border-solid border border-gray-300 rounded bg-gray-50 px-2 py-1 text-sm outline-none focus:outline focus:outline-2 focus:outline-offset-0 focus:outline-blue-300"
-          placeholder="Paste the youtube link...">
+      <div style="border-top: 1px solid rgba(0,0,0,0.1);padding: 12px;">
+        <input
+          v-model="url"
+          type="url"
+          style="width: 100%;border-style: solid;border: 1px solid rgba(0,0,0,0.1);border-radius: 4px;background-color: rgba(249, 250, 251,1);padding: 8px 4px;margin: 4px auto;"
+          class="text-sm outline-none "
+          placeholder="Paste the youtube link..."
+        >
         <br>
         <button
-          class="bg-sky-600 hover:bg-sky-700 active:bg-sky-800 text-white border-solid border bg-indigo-500 rounded px-20 py-1 mt-4 text-sm flex mx-auto text"
-          @click="setLinkImage">Embed Youtube</button>
-        <div class="text-center">
-          <span class="text-xs mx-auto text-gray-400">Works with any youtube link</span>
+          class="uploadBtn"
+          @click="setLinkYoutube"
+        >
+          Embed YouTube
+        </button>
+        <div style="text-align: center">
+          <span
+            style="color: rgba(0,0,0,0.4);margin: 0 auto;"
+            class="text-xs "
+          >Works with any youtube link</span>
         </div>
       </div>
     </div>
@@ -57,7 +113,7 @@
 <script>
 /* eslint-disable */
 import { uploadMedia } from '@/components/editor/utils/upload'
-
+// 
 const host = 'https://editorhocus.oriens.my.id'
 
 export default {
@@ -91,7 +147,7 @@ export default {
       this.isEmbedLink = !this.isEmbedLink
       this.isUpload = !this.isUpload
     },
-    setLinkImage() {
+    setLinkYoutube() {
       if (this.url) {
         if (this.range)
           this.editor.chain().focus().deleteRange(this.range)
@@ -99,7 +155,7 @@ export default {
         this.editor.chain().focus().enter().setYoutubeVideo({ src: this.url }).run();
       }
     },
-    uploadImageHandler() {
+    uploadVideoHandler() {
       const path = this.$refs.inputImg;
       const file = path.files[0];
 
@@ -124,7 +180,7 @@ export default {
 
         this.isUploading = false;
       }).catch(error => {
-        console.error('Error uploading image:', error);
+        console.error('Error uploading video:', error);
         this.isUploading = false;
       });
     }
@@ -132,11 +188,15 @@ export default {
 }
 </script>
 
-<style>
-.popupVideo {
+<style scoped>
+.popupImage {
   display: absolute;
   z-index: 10;
   margin: 0 auto;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  width: 24rem;
+  border-radius: 4px;
+  background-color: white;
 }
 
 .active {
@@ -152,9 +212,56 @@ export default {
   overflow: hidden;
 }
 
+.shadow-lg {
+  --tw-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
 .progress {
   height: 100%;
   background-color: #4caf50;
   transition: width 0.3s ease;
 }
-</style>
+
+button {
+  display: inline-block;
+  text-align: left;
+  padding: 8px;
+  margin-left: 4px;
+}
+
+button:hover {
+  background-color: rgba(243, 244, 246, 1);
+}
+
+.outline-none {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.uploadBtn {
+  background-color: rgb(2 132 199);
+  color: white;
+  border: 1px solid rgba(7, 89, 133, 0.2);
+  border-radius: 4px;
+  padding: 4px 80px;
+  margin: 12px auto;
+  display: flex;
+
+}
+
+.uploadBtn:hover {
+  background-color: rgb(3 105 161);
+}
+
+.uploadBtn:active {
+  background-color: rgb(7 89 133);
+}
+
+input:focus {
+  outline-offset: 0px;
+  outline-style: solid;
+  outline-width: 2px;
+  outline-color: rgb(136, 186, 246);
+  ;
+}</style>

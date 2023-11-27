@@ -1,30 +1,31 @@
 <!-- eslint-disable  -->
 <template>
-  <div id="app" class=" w-full ">
+  <div id="app" style="width: 100%;">
     <NavBar :users="dataUsers" />
 
-    <div class="flex w-full">
-      <div class="w-full">
+    <div style="display: flex; width: 100%;">
+      <div style="width: 100%;">
         <!-- main editor -->
-        <div class="w-full mt-24">
+        <div style="width: 100%; margin-top: 100px;">
           <Tiptap v-model="content" :contentUpdate="contentUpdate" :dataUsers="dataUsers"
             @update:dataUsers="handleDataUsersUpdate" @update:contentUpdate="handleUpdateEditor" mode="json" />
-          <div class="">
-          </div>
-        </div>
-
-      </div>
-      <div class="fixed p-2 top-1/3">
-        <div class="flex flex-col gap-y-4">
-          <button @click="createSnapshots" class="bg-gray-200 text-sm p-2 rounded">Create Snapshots</button>
-          <button @click="showSnapshots" class="bg-gray-200 text-sm p-2 rounded">Show Snapshots</button>
+          <div style="width: 100%;"></div>
         </div>
       </div>
-
-      <div class="fixed top-20 flex justify-end right-0">
-        <div class="w-[250px] overflow-x-auto overflow-y-auto max-h-[90vh] ">
-          <h3 class="font-bold mb-8 text-3xl">Editor output</h3>
-          <pre class="block text-sm w-full">{{ content }}</pre>
+      <div style="position: fixed; padding: 8px; top: 33%;">
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <button @click="createSnapshots"
+            style="background-color: #e2e8f0; font-size: 0.875rem; padding: 8px; border-radius: 0.375rem;">Create
+            Snapshots</button>
+          <button @click="showSnapshots"
+            style="background-color: #e2e8f0; font-size: 0.875rem; padding: 8px; border-radius: 0.375rem;">Show
+            Snapshots</button>
+        </div>
+      </div>
+      <div style="position: fixed; top: 100px; display: flex; justify-content: flex-end; right: 0;">
+        <div style="width: 250px; overflow-x: auto; overflow-y: auto; max-height: 90vh;">
+          <h3 style="font-weight: bold; margin-bottom: 8px; font-size: 1.5rem;">Editor output</h3>
+          <pre style="display: block; font-size: 1rem; width: 100%;">{{ content }}</pre>
         </div>
       </div>
     </div>

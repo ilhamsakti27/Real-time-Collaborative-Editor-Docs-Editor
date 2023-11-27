@@ -2,19 +2,19 @@
 <template>
     <div ref="itemsContainer" class="moreContainer">
         <template v-if="items.length">
-            <div class="pl-2 text-black/40 text-xs font-semibold">{{ title }}</div>
+              <div style="padding:0.5rem 0.5rem; color:rgba(0,0,0,0.4); font-weight: 600;" class="text-xs">{{ title }}</div>
             <button :ref="item.ref" v-for="(item, index) in items" :key="index" class="item"
                 :class="{ 'is-selected': index === selectedIndex }" @click="selectItem(index)"
                 @mouseover="handleHover(index)">
                 <!-- {{ item }} -->
                 <!-- list of menu -->
-                <div class="flex menu items-center gap-x-2">
-                    <div class="icon-con rounded-md ">
+                <div style="display: flex; align-items: center; column-gap: 0.5rem;" class=" menu ">
+                    <div class="icon-con">
                         <span v-html="item.icon" />
                     </div>
-                    <div class="flex flex-col">
+                    <div style="display: flex;flex-direction: column;" class="flex flex-col">
                         <span class="text-sm">{{ item.title }}</span>
-                        <span class="text-xs text-black/50">{{ item.shortcut }}</span>
+                        <span style="color: rgba(0,0,0,0.5);" class="text-xs">{{ item.shortcut }}</span>
                     </div>
                 </div>
             </button>
@@ -139,6 +139,7 @@ export default {
 .icon-con {
     border: 1px solid rgba(0, 0, 0, 0.15);
     padding-bottom: 2px;
+    border-radius: 0.375rem;
 }
 
 .moreContainer {

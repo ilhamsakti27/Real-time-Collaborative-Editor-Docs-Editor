@@ -1,15 +1,21 @@
 <template>
-  <div class="flex">
+  <div
+    style="display: flex;"
+  >
     <!-- user name & avatar -->
-    <div class="absolute top-20 left-4 w-[15%]">
+    <div
+      style="position: absolute; top: 5rem;left: 1rem; width: 15%;"
+    >
       <div class="">
         Online: {{ total }}
       </div>
       <div>Status: {{ status }}</div>
       <div>Your Name: {{ currentUser.name }}</div>
-      <div class="my-4">
+      <div
+        style="margin: 1rem 0;"
+      >
         <button
-          class="bg-gray-200 border border-black px-2"
+          style="background-color: rgba(229, 231, 235,1); padding: 0.2rem 1rem;"
           @click="gantiNama"
         >
           Ganti Nama
@@ -17,7 +23,7 @@
       </div>
       <div class="">
         <button
-          class="bg-gray-200 border border-black px-2"
+          style="background-color: rgba(229, 231, 235,1); padding: 0.2rem 1rem;"
           @click="updateCurrentUser({ avatar: getRandomAvatar() })"
         >
           Ganti Avatar
@@ -27,37 +33,27 @@
 
     <div
       v-if="editor"
-      class="editor-canvas w-full"
+      class="editor-canvas"
     >
       <floating-menu
         v-if="editor"
         :should-show="shouldShowFloatingMenu"
         :editor="editor"
-        :class="{ 'mouse:pointer-events-none mouse:opacity-0': isTyping, }"
+        :class="{ 'isTyping': isTyping, }"
         :tippy-options="floatingTippy"
       >
         <div
           v-if="topLevelNodeType !== 'title' && topLevelNodeType !== 'loading'"
-          class="flex flex-row"
+          style="display: flex;flex-direction: row;"
           pluginKey=""
           :draggable="dragging"
           @dragend="endDragging($event)"
         >
           <!-- sub menu wrapper -->
-          <div
-            id="submenu"
-          />
-          <!-- new node menu -->
-          <!-- <button ref="newNodeMenu" @click="handleNewNode($event)" @mouseup="
-            " class="ml-1 my-2 hover:bg-slate-100 rounded">
-                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 24">
-                    <path d="M16 9h-5V4H9v5H4v2h5v5h2v-5h5V9z" />
-                </svg>
-            </button> -->
-          <!-- action menu -->
+          <div id="submenu" />
           <button
             ref="actionMenu"
-            class="ml-1 my-2 hover:bg-slate-100 rounded"
+            style="margin-left: 0.25rem; padding-top: 0.3rem; border-radius: 0.375rem;"
             :class="{
               'cursor-grab': !dragging,
               'cursor-grabbing': dragging,
@@ -77,9 +73,7 @@
               focusable="false"
               class="w-5 h-5 md:w-6 md:h-6"
             >
-              <path
-                d="M8 7h2V5H8v2zm0 6h2v-2H8v2zm0 6h2v-2H8v2zm6-14v2h2V5h-2zm0 8h2v-2h-2v2zm0 6h2v-2h-2v2z"
-              />
+              <path d="M8 7h2V5H8v2zm0 6h2v-2H8v2zm0 6h2v-2H8v2zm6-14v2h2V5h-2zm0 8h2v-2h-2v2zm0 6h2v-2h-2v2z" />
             </svg>
           </button>
         </div>
@@ -89,7 +83,6 @@
         v-if="editor"
         v-show="shouldRenderBubbleMenu"
         id="bubbleMenu"
-        class="flex items-center"
         plugin-key="mainBubleMenu"
         :editor="editor"
         :tippy-options="{
@@ -98,17 +91,18 @@
       >
         <div
           v-if="topLevelNodeType !== 'table'"
-          class="flex"
+          style="display: flex; align-items: center;"
         >
           <ColorButton
             v-if="!isLink"
-            class="bubble-menu-btn border-r bored-black"
+            style=""
+            class="bubble-menu-btn"
             :editor="editor"
           />
           <inlineToolsBtn :editor="editor" />
           <FontFamilyButton
             v-if="!isLink"
-            class="bubble-menu-btn border-r"
+            class="bubble-menu-btn"
             :editor="editor"
           />
         </div>
@@ -117,7 +111,6 @@
       <BubbleMenu
         v-if="editor && (tableRowTools || tableColumnTools)"
         id="bubbleMenu"
-        class="flex items-center mb-[-2vh] ml-[2vh]"
         plugin-key="tableBubbleMenu"
         :editor="editor"
         :tippy-options="{
@@ -131,8 +124,8 @@
       <!-- table row menu -->
       <bubble-menu
         v-if="editor && tableRowTools"
+        id="tableRowMenu"
         :editor="editor"
-        class="ml-[-2.5vh]"
         plugin-key="tableRowMenu"
         :should-show="tableIsActive"
         :tippy-options="{
@@ -144,16 +137,18 @@
         }"
       >
         <menu-item
+          id="menuItem"
           :action="Row"
-          class="py-1 border bg-white border-black/30 shadow rounded-md hover:bg-slate-100"
         >
           <menu-button
+            id="menuButton"
             title="Row tools"
-            class="rounded-full text-slate-400 hover:text-slate-800 "
             :content="rowIconTable"
           />
           <template #dropdown>
-            <div class="flex flex-col gap-y-1">
+            <div
+              id="dropdown"
+            >
               <menu-dropdown-button
                 v-for="( tool ) in tableRowTools "
                 :key="tool.title"
@@ -170,8 +165,8 @@
       <!-- table column menu -->
       <bubble-menu
         v-if="editor && tableColumnTools"
+        id="tableColMenu"
         :editor="editor"
-        class="mt-[-5vh] "
         plugin-key="tableColumnMenu"
         :should-show="tableIsActive"
         :tippy-options="{
@@ -182,16 +177,22 @@
           getReferenceClientRect: getTableColumnMenuCoords,
         }"
       >
+        <!-- <menu-item
+          :action="Column"
+          class="menu-item px-1 border bg-white border-black/30 shadow rounded-md hover:bg-slate-100"
+        > -->
         <menu-item
           :action="Column"
-          class="px-1 border bg-white border-black/30 shadow rounded-md hover:bg-slate-100"
+          class="menu-item"
         >
           <menu-button
             title="Column tools"
             :content="colIconTable"
           />
           <template #dropdown>
-            <div class="flex flex-col gap-y-1">
+            <div
+              style="display: flex; flex-direction: column;   row-gap: 0.25rem; /* 4px */"
+            >
               <menu-dropdown-button
                 v-for="( tool ) in tableColumnTools"
                 :key="tool.title"
@@ -353,7 +354,7 @@ export default {
     shouldRenderBubbleMenu() {
       const excludedNodeTypes = [
         'title', 'image', 'codeBlock', 'bookmark',
-        'loading', 'video', 'horizontalRule', 'youtube', 'linkPage',
+        'loading', 'video', 'horizontalRule', 'youtube', 'Page',
       ]
 
       return !excludedNodeTypes.includes(this.currentNodeType)
@@ -370,9 +371,8 @@ export default {
   created() {
     // const path = this.$route.path
     const { path } = this.$route
-    // eslint-disable-next-line prefer-destructuring
-    this.documentId = path.split('/')[2]
-
+    const [, , documentId] = path.split('/')
+    this.documentId = documentId
     this.provider = new HocuspocusProvider({
       // url: 'ws://localhost:1234/',
       url: 'wss://editorhocus.oriens.my.id',
@@ -422,8 +422,7 @@ export default {
         }),
       ],
       editorProps: {
-        /* eslint-disable */
-        handleDrop: function (view, event, slice, moved) {
+        handleDrop(view, event, slice, moved) {
           if (!moved && event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0]) {
             const path = window.location.href
             const documentId = path.split('/')[4]
@@ -451,9 +450,8 @@ export default {
           }
 
           return false
-        }
+        },
       },
-      /* eslint-enable */
       onUpdate: () => {
         this.updateToolbar()
         this.$emit('input', this.editor.getJSON().content)
@@ -489,8 +487,18 @@ export default {
     },
     getCurrentBlockTool() {
       return this.allBlockTools.find(
-        // eslint-disable-next-line
-        tool => tool.name === this.topLevelNodeType || tool.tools?.find(tool => tool.name === this.topLevelNodeType),
+        tool => {
+          if (tool.name === this.topLevelNodeType) {
+            return true
+          }
+          if (tool.tools && tool.tools.length > 0) {
+            return tool.tools.find(
+              childTool => childTool.name === this.topLevelNodeType,
+            ) !== undefined
+          }
+
+          return false
+        },
       )
     },
     handleNewNode() {
@@ -502,21 +510,15 @@ export default {
       if (this.topLevelNodeType !== 'title') { showActionMenu(this.editor, this.topLevelNodeType, this.isActionMenu) }
     },
     filterUsers(dataMap) {
-      /* eslint-disable */
+      const dataArray = Array.from(dataMap.values())
+
       const mapBaru = new Map()
-      for (const [key, value] of dataMap) {
+      dataArray.forEach(value => {
         const userId = value.user.id
         if (!mapBaru.has(userId)) {
           mapBaru.set(userId, value)
         }
-      }
-      // dataMap.forEach(([value]) => {
-      //   const userId = value.user.id
-      //   if (!mapBaru.has(userId)) {
-      //     mapBaru.set(userId, value)
-      //   }
-      // })
-      /* eslint-enable */
+      })
 
       return mapBaru
     },
@@ -524,7 +526,6 @@ export default {
       return this.editor.isActive()
     },
     gantiNama() {
-      // eslint-disable-next-line
       const name = (window.prompt('Name') || '')
         .trim()
         .substring(0, 32)
@@ -536,7 +537,7 @@ export default {
         })
       }
 
-      return null // add return
+      return null
     },
     updateCurrentUser(attributes) {
       this.currentUser = { ...this.currentUser, ...attributes }
@@ -545,16 +546,16 @@ export default {
     },
     getRandomAvatar() {
       return RandomAvatar([
-        'brook.svg',
-        'chopper.svg',
-        'franky.svg',
-        'jimbei.svg',
-        'nami.svg',
-        'robin.svg',
-        'sanji.svg',
-        'usopp.svg',
-        'zoro.svg',
-        'luffy.svg',
+        'brook',
+        'chopper',
+        'franky',
+        'jimbei',
+        'nami',
+        'robin',
+        'sanji',
+        'usopp',
+        'zoro',
+        'luffy',
       ])
     },
     getRandomColor() {
@@ -627,32 +628,88 @@ export default {
 
 <style >
 @import 'style.css';
-
-/* ============ STYLING CURSOR ============ */
 /* Give a remote user a caret */
 .collaboration-cursor__caret {
-    position: relative;
-    margin-left: -1px;
-    margin-right: -1px;
-    border-left: 1px solid #0D0D0D;
-    border-right: 1px solid #0D0D0D;
-    word-break: normal;
-    pointer-events: none;
+  position: relative;
+  margin-left: -1px;
+  margin-right: -1px;
+  border-left: 1px solid #0D0D0D;
+  border-right: 1px solid #0D0D0D;
+  word-break: normal;
+  pointer-events: none;
 }
-
 /* Render the username above the caret */
 .collaboration-cursor__label {
-    position: absolute;
-    top: -1.4em;
-    left: -1px;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    user-select: none;
-    color: #0D0D0D;
-    padding: 0.1rem 0.3rem;
-    border-radius: 3px 3px 3px 0;
-    white-space: nowrap;
+  position: absolute;
+  top: -1.4em;
+  left: -1px;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  user-select: none;
+  color: #0D0D0D;
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px 3px 3px 0;
+  white-space: nowrap;
 }
-</style>./tools/utils/block-tools./tools/utils/table
+.isTyping{
+  pointer-events: none;
+  opacity: 0;
+}
+button:hover{
+  background-color: #e1e1e1;
+}
+#bubbleMenu{
+  display: flex;
+  align-items: center;
+  margin-bottom: -2vh;
+  margin-left: 1vh;
+  border-radius: 4px;
+  background: #fff;
+  width: -moz-max-content;
+  width: max-content;
+  border-width: 1px;
+  --tw-shadow: 0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);
+  box-shadow: var(--tw-ring-offset-shadow,0 0 transparent),var(--tw-ring-shadow,0 0 transparent),var(--tw-shadow);
+}
+#tableRowMenu{
+  margin-left: -2.5vh;
+}
+#tableColMenu{
+  margin-top: -5vh;
+}
+#tableRowMenu, #tableColMenu{
+  padding: 0 4px;
+  border: 1px solid rgba(0,0,0,0.4);
+  background-color: white;
+  border-radius: 6px;
+}
+#tableRowMenu:hover, #tableColMenu:hover{
+    background-color: #e1e1e1;
+}
+#menuButton {
+  border-radius: 9999px;
+  color: rgb(148 163 184);
+}
+#menuButton:hover {
+  color: rgb(30 41 59);
+}
+#dropdown {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.25rem; /* 4px */
+}
+.menu-item {
+  padding-left: 0.25rem; /* 4px */
+  padding-right: 0.25rem; /* 4px */
+  border-width: 1px;
+  background-color: rgb(255 255 255);
+  border-color: rgb(0 0 0);
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  border-radius: 0.25rem; /* 4px */
+}
+.menu-item:hover {
+  background-color: #e1e1e1;
+}
+</style>

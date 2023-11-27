@@ -2,7 +2,7 @@
   <div
     v-show="topLevelNodeType !== 'table' && topLevelNodeType !== 'orderedList' && topLevelNodeType !== 'title'"
     ref="itemsContainer"
-    class="items flex flex-col gap-y-1"
+    class="items"
   >
     <template v-if="items.length">
       <button
@@ -15,14 +15,19 @@
       >
         <!-- {{ item }} -->
         <!-- list of menu -->
-        <div class="flex items-center gap-x-2">
-          <div class="border rounded-md p-2">
+        <div style="display: flex;align-items: center;column-gap: 8px;">
+          <div
+            style="border: 1px solid rgba(0,0,0,0.2);border-radius: 0.375rem;padding: 8px;"
+          >
             <!-- eslint-disable-next-line -->
             <span v-html="item.icon" />
           </div>
-          <div class="flex flex-col">
-            <span class="text-md">{{ item.title }}</span>
-            <span class="text-black/50 text-sm">{{ item.desc }}</span>
+          <div style="display: flex;flex-direction: column;">
+            <span>{{ item.title }}</span>
+            <span
+              style="color:rgba(0,0,0,0.5)"
+              class="text-black/50 text-sm"
+            >{{ item.desc }}</span>
           </div>
         </div>
       </button>
@@ -171,6 +176,7 @@ export default {
   box-shadow: 0px 4px 16px 2px rgba(0, 0, 0, 0.15);
   overflow: scroll;
   max-height: 300px;
+  display: flex;flex-direction: column;row-gap: 4px;
 }
 
 .items::-webkit-scrollbar {

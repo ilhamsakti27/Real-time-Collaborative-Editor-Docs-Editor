@@ -1,8 +1,6 @@
 import axios from 'axios'
-// eslint-disable-next-line
 import FormData from 'form-data'
 
-// const host = 'http://localhost:1234'
 const host = 'https://editorhocus.oriens.my.id'
 
 export const uploadMedia = (file, documentId, progressEvent) => {
