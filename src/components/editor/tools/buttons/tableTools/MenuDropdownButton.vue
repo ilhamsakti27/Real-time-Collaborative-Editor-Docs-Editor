@@ -1,6 +1,8 @@
 <!-- eslint-disable -->
 <template>
-  <div class="flex items-center gap-x-2 px-2 hover:bg-slate-100 cursor-pointer" @click="handleClick">
+  <div id="item-btn"
+  style="display: flex;align-items: center;column-gap: 8px;padding: 8px 0;"
+  class="flex items-center gap-x-2 px-2 hover:bg-slate-100 cursor-pointer" @click="handleClick">
     <div class="border rounded p-1" v-html="content"></div>
     <div class="">{{ label }}</div>
   </div>
@@ -44,3 +46,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+#item-btn:hover{
+  background-color: #e1e1e1;
+}
+</style>

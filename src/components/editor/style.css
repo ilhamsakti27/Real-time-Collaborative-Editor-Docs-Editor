@@ -50,8 +50,21 @@
   pointer-events: none;
 }
 
+.text-sm{
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
+}
+.shadow-md {
+    --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
 .editor-canvas {
   padding: 0% 20%;
+  width: 100%;
 }
 
 #page-title {
@@ -103,9 +116,6 @@
   height: 0;
 }
 /* color font */
-/* .ProseMirror > p {
-  color: blue;
-} */
 * {
   color: #272829;
 }
@@ -133,16 +143,22 @@
 }
 
 figure{
-  @apply bg-transparent
+  background-color: transparent;
 }
 
+/* YOUTUBE */
+.youtube-embed{
+  width:100%;
+}
 
 /* Heading style */
 h1.title {
   font-size: 3rem; /* 36px */
   line-height: 2.5rem; /* 40px */
   margin-bottom: 36px;
-  @apply border-b pb-12 font-bold
+  border-bottom: 1px solid rgba(0,0,0,0.4);
+  padding-bottom: 3rem;
+  font-weight: 700;
 }
 h1.heading {
   font-size: 2.25rem; /* 36px */
@@ -294,7 +310,8 @@ ul.bulletedList ul.bulletedList ul.bulletedList {
     cursor:pointer;
     padding: 10px;
     max-width: 80%;
-    @apply flex rounded
+    display: flex;
+    border-radius: 0.25rem/* 4px */;
   }
   .bookmark-thumbnail {
     max-width: 23%;
@@ -388,11 +405,16 @@ ul[data-type="taskList"] {
   border-radius: 4px;
   background: white;
   display: flex;
+  align-items:center;
   width: max-content;
-  @apply shadow-md border
+  --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  border-width: 1px;
 }
+
 .bubble-menu-btn {
   padding: 6px 8px;
+  border-right: 1px solid rgba(0,0,0,0.4);
 }
 .bubble-menu-btn:hover {
   background-color: #e2e1e1fa;

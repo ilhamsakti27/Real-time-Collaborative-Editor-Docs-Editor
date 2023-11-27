@@ -1,9 +1,10 @@
 <!-- eslint-disable -->
 <template>
-  <div ref="dropdown" class="group text-sm relative">
+  <div ref="dropdown" style="position: relative;" class="group text-sm">
     <slot></slot>
     <div ref="dropdownContent" v-if="hasDropdown"
-      class="z-10 bg-white shadow-md py-2 group-focus-within:block hidden overflow-hidden whitespace-nowrap absolute bottom-full sm:bottom-auto sm:top-full  rounded "
+    style="z-index: 10;background-color: white; padding: 0 8px; overflow: hidden;white-space: nowrap;position: absolute;bottom: 100%; border-radius: 4px;"
+      class="shadow-md group-focus-within:block sm:bottom-auto sm:top-full"
       :class="align == 'left' ? 'left-0' : 'right-0'">
       <div ref="item" class=" text-sm">
         <div class="px-2 pb-2 text-black/40 text-xs font-semibold">{{ action }} Action</div>
@@ -55,7 +56,7 @@ export default {
     tippy(this.$refs.dropdown, {
       content: this.$refs.dropdownContent,
       appendTo: () => this.$refs.dropdown,
-      placement: 'top-end',
+      placement: 'right-end',
       zIndex: 999,
       trigger: 'click',
       interactive: true,

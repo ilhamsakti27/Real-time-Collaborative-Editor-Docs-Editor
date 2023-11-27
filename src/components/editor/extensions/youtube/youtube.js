@@ -141,7 +141,7 @@ export const Youtube = Node.create({
                     mergeAttributes(
                         this.options.HTMLAttributes,
                         {
-                            class: 'w-[60%] h-[400px]',
+                            class: 'youtube-embed',
                             contenteditable: false,
                             draggable: false,
                             width: this.options.width,

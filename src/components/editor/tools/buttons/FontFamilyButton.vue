@@ -1,8 +1,8 @@
 <!-- eslint-disable -->
 <template>
   <div @mouseenter="menuFontFamily" data-tooltip="Font family" class="w-max-content" ref="fontMenu">
-    <button class="flex items-center justify-center">
-      <div class="text-sm">Font-Family</div>
+    <button style="display: flex;align-items: center;justify-content: center;" >
+      <div style="font-size: 0.875rem;line-height: 1.25rem" >Font-Family</div>
       <!-- down arrow icon -->
       <div class="inline arrow-icon">
         <svg class="" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" aria-hidden="true"
@@ -15,8 +15,8 @@
     <template>
       <div ref="fontTools">
         <!-- dropdown menu text color -->
-        <div class="pb-3 pt-2 border-b labelFontFamily">
-          <div class="px-3 py-2 text-black/40 text-xs font-semibold">Font Family</div>
+        <div style="padding-bottom: 0.75rem;padding-top: 0.25rem;border-bottom: 1px solid rgba(0,0,0,0.4);" class="labelFontFamily">
+          <div style="padding:0.75rem 0.5rem; color:rgba(0,0,0,0.4); font-weight: 600;" class="px-3 py-2 text-black/40 text-xs font-semibold">Font Family</div>
           <button v-for="(  item, index  ) in fontFamily" :key="index" class="btn-font"
             :class="{ 'is-active': editor.isActive('textStyle', { fontFamily: item.class }) }"
             @click="setFont(item.class, index)">

@@ -2,7 +2,7 @@
 <template>
   <div class="">
     <!-- upload file pop up -->
-    <div class="popupImage border w-96 rounded shadow-lg bg-white" v-show="isUpload">
+    <div style="border: 1px solid rgba(0,0,0,0.4);" class="popupImage border w-96 rounded shadow-lg bg-white" v-show="isUpload">
       <div class="p-1">
         <button class="inline-block text-left hover:bg-gray-100 p-2 ml-1 hover:rounded-md active">Upload</button>
         <button id="embedLinkBtn" class="inline-block text-left hover:bg-gray-100 p-2 hover:rounded-md"
@@ -135,7 +135,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .popupImage {
   display: absolute;
   z-index: 10;

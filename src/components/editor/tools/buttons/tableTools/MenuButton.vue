@@ -1,7 +1,10 @@
 <!-- eslint-disable -->
 <template>
-  <button ref="tool" class="w-full flex flex-row items-center text-slate-600 rounded gap-3 p-0.5" :aria-label="label"
-    v-html="content"></button>
+  <button ref="tool" 
+  style="width: 100%; display: flex; align-items: center; flex-direction: row;border-radius: 0.25rem" 
+  class="w-full flex flex-row items-center text-slate-600 rounded gap-3 p-0.5" :aria-label="label"
+    v-html="content">
+  </button>
 </template>
 
 <script>

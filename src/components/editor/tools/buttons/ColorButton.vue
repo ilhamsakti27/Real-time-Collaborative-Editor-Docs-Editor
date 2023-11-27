@@ -4,19 +4,18 @@
     <div ref="colorMenu" class="">
       <button>
         <!-- text color icon -->
-        <div class="flex gap-x-2 items-center">
-          <div class="inline">
-            <span v-html="selectedIndex === null ? defaultIcon : colorFonts[selectedIndex].mainIcon" :class="['border rounded-md pad', isHighlight && selectedIndex !== null ?
-              colorFonts[selectedIndex].name !== 'Default' ?
-                `bg-[${colorFonts[selectedIndex].setColor}]/20` : ''
-              : ''
-            ]" />
+        <div style="display: flex; column-gap: 0.5rem; align-items:center;" >
+          <div style="display: flex;align-items:center;">
+            <span v-html="selectedIndex === null ? defaultIcon : colorFonts[selectedIndex].mainIcon" 
+              style="border: 1px solid rgba(0,0,0,0.2);border-radius: 0.375rem;padding: 2px 4px"
+              :style="{ backgroundColor: isHighlight && selectedIndex !== null ? getBackgroundColor : 'transparent' }"
+             />
           </div>
           <div class="text-sm">Paragraph</div>
 
           <!-- down arrow icon -->
           <div class="inline arrow-icon">
-            <svg class="w-5 h-5 md:w-6 md:h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24"
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24"
               height="24" aria-hidden="true" fill="currentColor" focusable="false">
               <path d="M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z"></path>
             </svg>
@@ -28,19 +27,18 @@
     <template>
       <div ref="colorTools" id="dropdownMenu" class="dropdownContent">
         <!-- Latest Color -->
-        <div class="pb-3 border-b">
-          <div class="px-3 py-2 text-black/40 text-xs font-semibold">
+        <div style="padding-bottom: 8px;border-bottom: 1px solid rgba(0,0,0,0.2);">
+          <div style="padding: 12px 8px;color: rgba(0,0,0,0.4);font-weight: 600;" class="text-xs">
             Latest use
           </div>
           <button
             @click="selectedIndex !== null ?
               isHighlight ? setHighlight(colorFonts[selectedIndex].setColor, selectedIndex) : setColor(colorFonts[selectedIndex].setColor, selectedIndex) : ''"
-            class="">
-            <span v-html="selectedIndex === null ? defaultIcon : colorFonts[selectedIndex].mainIcon" :class="['border rounded-md pad', isHighlight && selectedIndex !== null ?
-              colorFonts[selectedIndex].name !== 'Default' ?
-                `bg-[${colorFonts[selectedIndex].setColor}]/20` : ''
-              : ''
-            ]" />
+            style="display: flex;align-items: center;column-gap: 4px;">
+            <span v-html="selectedIndex === null ? defaultIcon : colorFonts[selectedIndex].mainIcon" 
+              style="border: 1px solid rgba(0,0,0,0.2);border-radius: 0.375rem;padding: 4px;"
+             :style="{ backgroundColor: isHighlight && selectedIndex !== null ? getBackgroundColor : 'transparent' }"
+            />
             <span class="space-x-1">
               {{ selectedIndex === null ? 'Default' : colorFonts[selectedIndex].name }}
             </span>
@@ -48,22 +46,30 @@
         </div>
 
         <!-- dropdown menu text color -->
-        <div class="pb-3 pt-2 border-b">
-          <div class="px-3 py-2 text-black/40 text-xs font-semibold">Text Color</div>
-          <button v-for="(  item, index  ) in colorFonts" :key="index"
+        <div style="padding-bottom: 8px;padding-top: 8px;border-bottom: 1px solid rgba(0,0,0,0.2);" class="pb-3 pt-2 border-b">
+            <div style="padding: 12px 8px;color: rgba(0,0,0,0.4);font-weight: 600;" class="text-xs">
+              Text Color
+            </div>
+            <button v-for="(  item, index  ) in colorFonts" :key="index"
+            style="display: flex;align-items: center;column-gap: 4px;"
             :class="{ 'is-active': editor.isActive('textStyle', { color: item.setColor }) }"
             @click="setColor(item.setColor, index)">
-            <span v-html="item.mainIcon" class="border rounded-md pad" />
+            <span style="border: 1px solid rgba(0,0,0,0.2);border-radius: 0.375rem;padding: 4px;" v-html="item.mainIcon" class="border rounded-md" />
             <span class="space">{{ item.name }}</span>
           </button>
         </div>
 
         <!-- dropdown menu highlight color -->
-        <div class="pb-3 pt-2 ">
-          <div class="text-black/40 text-xs font-semibold px-3 py-2">Highlight Color</div>
-          <button v-for="(  item, index  ) in colorFonts" :key="index" @click="setHighlight(item.setColor, index)">
-            <span v-html="item.mainIcon"
-              :class="['border rounded-md pad', item.name !== 'Default' ? `bg-[${item.setColor}]/20` : '']" />
+        <div style="padding-bottom: 8px;padding-top: 8px;border-bottom: 1px solid rgba(0,0,0,0.2);" class="pb-3 pt-2 border-b">
+          <div style="padding: 12px 8px;color: rgba(0,0,0,0.4);font-weight: 600;" class="text-xs">
+            Highlight Color
+          </div>
+          <button v-for="(  item, index  ) in colorFonts" :key="index" @click="setHighlight(item.setColor, index)"
+           style="display: flex;align-items: center;column-gap: 4px;"           
+          >
+            <span style="border: 1px solid rgba(0,0,0,0.2);border-radius: 0.375rem;padding: 4px;" v-html="item.mainIcon"
+              :style="{ backgroundColor: item.name !== 'Default' ? hexToRGBA(item.setColor,0.2) : 'transparent' }"
+              />
             <span class=" space">{{ item.name }}</span>
           </button>
         </div>
@@ -96,6 +102,20 @@ export default {
       interactive: true,
     });
   },
+  computed: {
+    getBackgroundColor() {
+      if (
+        this.colorFonts[this.selectedIndex] &&
+        this.colorFonts[this.selectedIndex].name !== 'Default'
+      ) {
+        const hexColor = this.colorFonts[this.selectedIndex].setColor;
+        const rgbaColor = this.hexToRGBA(hexColor, 0.2);
+        return rgbaColor;
+      } else {
+        return '';
+      }
+    },
+  },
   methods: {
     setColor(color, index) {
       this.selectedIndex = index
@@ -114,7 +134,14 @@ export default {
       } else {
         this.editor.chain().focus().toggleHighlight({ color }).blur().run();
       }
-    }
+    },
+    hexToRGBA(hex, alpha) {
+      const hexToDec = (hex) => parseInt(hex, 16);
+      const r = hexToDec(hex.substring(1, 3));
+      const g = hexToDec(hex.substring(3, 5));
+      const b = hexToDec(hex.substring(5, 7));
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    },
   },
 
 }

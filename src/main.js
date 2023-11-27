@@ -10,8 +10,6 @@ import router from './router'
 import vuetify from './plugins/vuetify'
 import App from './App.vue'
 
-import './tailwind.css'
-
 Vue.use(VueAnimXYZ)
 Vue.use(Notifications)
 Vue.config.productionTip = false
