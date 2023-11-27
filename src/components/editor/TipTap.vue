@@ -143,13 +143,11 @@
           <menu-button
             id="menuButton"
             title="Row tools"
-            class="rounded-full text-slate-400 hover:text-slate-800 "
             :content="rowIconTable"
           />
           <template #dropdown>
             <div
               id="dropdown"
-              class="flex flex-col gap-y-1"
             >
               <menu-dropdown-button
                 v-for="( tool ) in tableRowTools "
@@ -179,16 +177,22 @@
           getReferenceClientRect: getTableColumnMenuCoords,
         }"
       >
+        <!-- <menu-item
+          :action="Column"
+          class="menu-item px-1 border bg-white border-black/30 shadow rounded-md hover:bg-slate-100"
+        > -->
         <menu-item
           :action="Column"
-          class="px-1 border bg-white border-black/30 shadow rounded-md hover:bg-slate-100"
+          class="menu-item"
         >
           <menu-button
             title="Column tools"
             :content="colIconTable"
           />
           <template #dropdown>
-            <div class="flex flex-col gap-y-1">
+            <div
+              style="display: flex; flex-direction: column;   row-gap: 0.25rem; /* 4px */"
+            >
               <menu-dropdown-button
                 v-for="( tool ) in tableColumnTools"
                 :key="tool.title"
@@ -657,7 +661,17 @@ button:hover{
   background-color: #e1e1e1;
 }
 #bubbleMenu{
-  display: flex;align-items: center; margin-bottom: -2vh;margin-left: 1vh;
+  display: flex;
+  align-items: center;
+  margin-bottom: -2vh;
+  margin-left: 1vh;
+  border-radius: 4px;
+  background: #fff;
+  width: -moz-max-content;
+  width: max-content;
+  border-width: 1px;
+  --tw-shadow: 0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);
+  box-shadow: var(--tw-ring-offset-shadow,0 0 transparent),var(--tw-ring-shadow,0 0 transparent),var(--tw-shadow);
 }
 #tableRowMenu{
   margin-left: -2.5vh;
@@ -673,5 +687,29 @@ button:hover{
 }
 #tableRowMenu:hover, #tableColMenu:hover{
     background-color: #e1e1e1;
+}
+#menuButton {
+  border-radius: 9999px;
+  color: rgb(148 163 184);
+}
+#menuButton:hover {
+  color: rgb(30 41 59);
+}
+#dropdown {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.25rem; /* 4px */
+}
+.menu-item {
+  padding-left: 0.25rem; /* 4px */
+  padding-right: 0.25rem; /* 4px */
+  border-width: 1px;
+  background-color: rgb(255 255 255);
+  border-color: rgb(0 0 0);
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  border-radius: 0.25rem; /* 4px */
+}
+.menu-item:hover {
+  background-color: #e1e1e1;
 }
 </style>
