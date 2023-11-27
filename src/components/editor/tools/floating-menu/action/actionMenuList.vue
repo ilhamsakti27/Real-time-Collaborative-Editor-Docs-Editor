@@ -85,6 +85,8 @@ export default {
           return this.editor.can().deleteNode(this.topLevelNodeType)
         } else if (item.ref === 'unsetHghlBtn') {
           return this.editor.isActive('highlight')
+        } else if (item.ref === 'pageTitle') {
+          return this.editor.isActive('Page')
         } else if (item.ref === 'unsetColorBtn') {
           return this.editor.isActive('textStyle')
         } else if (item.ref === 'moveUpBtn') {
@@ -94,36 +96,24 @@ export default {
         } else if (item.ref === 'toggleHeaderColumn' || item.ref === 'toggleHeaderRow') {
           return this.editor.isActive('table')
         } else if (item.ref === 'convertBtn') {
-          switch (this.topLevelNodeType) {
-            case 'image':
-              return false
-            case 'video':
-              return false
-            case 'codeBlock':
-              return false
-            case 'callout':
-              return false
-            case 'bookmark':
-              return false
-            case 'youtube':
-              return false
-            case 'table':
-              return false
-            case 'linkPage':
-              return false
-            case 'orderedList':
-              return false
-            case 'bulletList':
-              return false
-            case 'columnBlock':
-              return false
-            case 'taskList':
-              return false
-            case 'horizontalRule':
-              return false
-            default:
-              break
-          }
+          const excludedNodeTypes = new Set([
+            'image',
+            'video',
+            'codeBlock',
+            'callout',
+            'bookmark',
+            'youtube',
+            'table',
+            'Page',
+            'orderedList',
+            'bulletList',
+            'columnBlock',
+            'taskList',
+            'horizontalRule'
+          ]);
+          if (excludedNodeTypes.has(this.topLevelNodeType)) {
+            return false;
+          } 
         }
 
         return true

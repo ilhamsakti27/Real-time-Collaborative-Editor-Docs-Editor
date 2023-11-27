@@ -296,7 +296,6 @@ ul.bulletedList ul.bulletedList ul.bulletedList {
     display: flex;
     justify-content: flex-start;
     align-items: flex-center;
-    /* border: 1px solid rgba(0,0,0,0.2); */
     padding: 4px;
     border-radius:4px;
     width: 100%;
@@ -304,12 +303,12 @@ ul.bulletedList ul.bulletedList ul.bulletedList {
 }
 
 .linkPage-icon{
-  /* border: 1px solid rgba(0,0,0,0.2); */
   padding: 2px;
   border-radius:4px;
-  /* background-color: rgba(243, 244, 246, 1); */
 }
-.linkPage:hover{
+
+.linkPage-content:hover{
+  border-radius: 5px;
   background-color: rgba(243, 244, 246, 1);
 }
 .linkPage-content{
@@ -317,7 +316,9 @@ ul.bulletedList ul.bulletedList ul.bulletedList {
   cursor:pointer;
   align-items: center;
   column-gap: 8px;
+  padding:4px 10px;
 }
+
 /* Bookmark Styling */
 .bookmark {
     margin: 20px 0;

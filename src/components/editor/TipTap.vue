@@ -354,7 +354,7 @@ export default {
     shouldRenderBubbleMenu() {
       const excludedNodeTypes = [
         'title', 'image', 'codeBlock', 'bookmark',
-        'loading', 'video', 'horizontalRule', 'youtube', 'linkPage',
+        'loading', 'video', 'horizontalRule', 'youtube', 'Page',
       ]
 
       return !excludedNodeTypes.includes(this.currentNodeType)
@@ -371,12 +371,11 @@ export default {
   created() {
     // const path = this.$route.path
     const { path } = this.$route
-    // eslint-disable-next-line prefer-destructuring
-    this.documentId = path.split('/')[2]
-
+    const [, , documentId] = path.split('/')
+    this.documentId = documentId
     this.provider = new HocuspocusProvider({
-      url: 'ws://localhost:1234/',
-      // url: 'wss://editorhocus.oriens.my.id',
+      // url: 'ws://localhost:1234/',
+      url: 'wss://editorhocus.oriens.my.id',
       name: this.documentId,
       document: ydoc,
       token: 'test-token', // auth token
@@ -423,8 +422,7 @@ export default {
         }),
       ],
       editorProps: {
-        /* eslint-disable */
-        handleDrop: function (view, event, slice, moved) {
+        handleDrop(view, event, slice, moved) {
           if (!moved && event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0]) {
             const path = window.location.href
             const documentId = path.split('/')[4]
@@ -452,9 +450,8 @@ export default {
           }
 
           return false
-        }
+        },
       },
-      /* eslint-enable */
       onUpdate: () => {
         this.updateToolbar()
         this.$emit('input', this.editor.getJSON().content)
@@ -490,8 +487,18 @@ export default {
     },
     getCurrentBlockTool() {
       return this.allBlockTools.find(
-        // eslint-disable-next-line
-        tool => tool.name === this.topLevelNodeType || tool.tools?.find(tool => tool.name === this.topLevelNodeType),
+        tool => {
+          if (tool.name === this.topLevelNodeType) {
+            return true
+          }
+          if (tool.tools && tool.tools.length > 0) {
+            return tool.tools.find(
+              childTool => childTool.name === this.topLevelNodeType,
+            ) !== undefined
+          }
+
+          return false
+        },
       )
     },
     handleNewNode() {
@@ -503,21 +510,15 @@ export default {
       if (this.topLevelNodeType !== 'title') { showActionMenu(this.editor, this.topLevelNodeType, this.isActionMenu) }
     },
     filterUsers(dataMap) {
-      /* eslint-disable */
+      const dataArray = Array.from(dataMap.values())
+
       const mapBaru = new Map()
-      for (const [key, value] of dataMap) {
+      dataArray.forEach(value => {
         const userId = value.user.id
         if (!mapBaru.has(userId)) {
           mapBaru.set(userId, value)
         }
-      }
-      // dataMap.forEach(([value]) => {
-      //   const userId = value.user.id
-      //   if (!mapBaru.has(userId)) {
-      //     mapBaru.set(userId, value)
-      //   }
-      // })
-      /* eslint-enable */
+      })
 
       return mapBaru
     },
@@ -525,7 +526,6 @@ export default {
       return this.editor.isActive()
     },
     gantiNama() {
-      // eslint-disable-next-line
       const name = (window.prompt('Name') || '')
         .trim()
         .substring(0, 32)
@@ -537,7 +537,7 @@ export default {
         })
       }
 
-      return null // add return
+      return null
     },
     updateCurrentUser(attributes) {
       this.currentUser = { ...this.currentUser, ...attributes }
