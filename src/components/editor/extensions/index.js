@@ -1,4 +1,3 @@
-// /* eslint-disable */
 // tiptap extension
 import StarterKit from '@tiptap/starter-kit'
 // import Focus from '@tiptap/extension-focus'
