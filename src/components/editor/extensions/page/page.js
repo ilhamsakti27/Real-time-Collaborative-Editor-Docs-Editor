@@ -1,10 +1,7 @@
-/* eslint-disable no-dupe-keys */
-
 import { Node } from '@tiptap/core'
 
 export const Page = Node.create({
-  name: 'linkPage',
-  group: 'block',
+  name: 'Page',
   content: 'inline*',
   atom: true,
   draggable: true,
@@ -48,10 +45,10 @@ export const Page = Node.create({
 
     return [
       'div',
-      { class: 'linkPage', onclick: onClickAttribute },
+      { class: 'linkPage' },
       [
         'div',
-        { class: 'linkPage-content' },
+        { class: 'linkPage-content', onclick: onClickAttribute },
         [
           'div',
           { class: 'linkPage-icon' },
@@ -59,6 +56,7 @@ export const Page = Node.create({
         ],
         [
           'div',
+          { class: 'linkPage-title' },
           title,
         ],
       ],

@@ -68,6 +68,18 @@ const floatingItems = [
       editor.chain().focus().unsetColor().run()
     },
   },
+  {
+    title: 'Change title',
+    ref: 'pageTitle',
+    desc: 'Change page title',
+    icon: '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 256 256" enable-background="new 0 0 256 256" xml:space="preserve">< g > <g><path fill="#000000" d="M39.1,10v236l88.9-75.2l88.9,75.2V10H39.1z M204.1,59H53.5V27.4h150.6L204.1,59L204.1,59z" /></g></g ></svg > ',
+    command: editor => {
+      const title = (window.prompt('Page Title') || '')
+        .trim()
+        .substring(0, 32)
+      if (title !== '') { editor.chain().focus().updateAttributes('Page', { title }).run() }
+    },
+  },
 
 ]
 
