@@ -1,13 +1,27 @@
-<!-- eslint-disable -->
 <template>
-  <div @mouseenter="menuFontFamily" data-tooltip="Font family" class="w-max-content" ref="fontMenu">
+  <div
+    ref="fontMenu"
+    data-tooltip="Font family"
+    class="w-max-content"
+    @mouseenter="menuFontFamily"
+  >
     <button class="flex items-center justify-center">
-      <div class="text-sm">Font-Family</div>
+      <div class="text-sm">
+        Font-Family
+      </div>
       <!-- down arrow icon -->
       <div class="inline arrow-icon">
-        <svg class="" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" aria-hidden="true"
-          fill="currentColor" focusable="false">
-          <path d="M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z"></path>
+        <svg
+          class=""
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          aria-hidden="true"
+          fill="currentColor"
+          focusable="false"
+        >
+          <path d="M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z" />
         </svg>
       </div>
     </button>
@@ -16,13 +30,17 @@
       <div ref="fontTools">
         <!-- dropdown menu text color -->
         <div class="pb-3 pt-2 border-b labelFontFamily">
-          <div class="px-3 py-2 text-black/40 text-xs font-semibold">Font Family</div>
-          <button v-for="(  item, index  ) in fontFamily" :key="index" class="btn-font"
+          <div class="px-3 py-2 text-black/40 text-xs font-semibold">
+            Font Family
+          </div>
+          <button
+            v-for="( item, index ) in fontFamily"
+            :key="index"
+            class="btn-font"
             :class="{ 'is-active': editor.isActive('textStyle', { fontFamily: item.class }) }"
-            @click="setFont(item.class, index)">
-
+            @click="setFont(item.class, index)"
+          >
             {{ item.name }}
-
           </button>
         </div>
       </div>
@@ -31,16 +49,21 @@
 </template>
 
 <script>
-/* eslint-disable */
-import fontFamily from '../utils/fontFamily';
-import tippy from 'tippy.js';
+import tippy from 'tippy.js'
+import fontFamily from '../utils/fontFamily'
 
 export default {
-  props: ['editor'],
+  // props: ['editor'],
+  props: {
+    editor: {
+      required: true,
+      type: Object,
+    },
+  },
   data() {
     return {
       toggleFontFamily: false,
-      fontFamily: fontFamily,
+      fontFamily,
     }
   },
   mounted() {
@@ -50,22 +73,22 @@ export default {
       placement: 'bottom-start',
       trigger: 'mouseenter',
       interactive: true,
-    });
+    })
   },
   methods: {
     menuFontFamily() {
       this.toggleFontFamily = !this.toggleFontFamily
-      document.addEventListener("click", this.clickOutsideHandler);
+      document.addEventListener('click', this.clickOutsideHandler)
     },
     clickOutsideHandler(event) {
       if (!this.$el.contains(event.target)) {
-        this.toggleFontFamily = false;
+        this.toggleFontFamily = false
       }
     },
-    setFont(font, index) {
-      this.editor.chain().focus().setFontFamily(font).run();
-    }
-  }
+    setFont(font) {
+      this.editor.chain().focus().setFontFamily(font).run()
+    },
+  },
 }
 </script>
 

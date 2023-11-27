@@ -47,7 +47,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const toggleLists = document.querySelectorAll('.toggle-list')
 
-  toggleLists.forEach((toggleList, index) => {
+  toggleLists.forEach(toggleList => {
     const toggleBtn = toggleList.querySelector('.toggle-btn')
     const toggleIcon = toggleList.querySelector('span')
     const toggleDesc = toggleList.querySelector('.toggle-desc')
