@@ -110,6 +110,16 @@ export default {
               return false
             case 'linkPage':
               return false
+            case 'orderedList':
+              return false
+            case 'bulletList':
+              return false
+            case 'columnBlock':
+              return false
+            case 'taskList':
+              return false
+            case 'horizontalRule':
+              return false
             default:
               break
           }

@@ -107,6 +107,9 @@
 .tiptap .videoNode.is-empty::before{
   content: '';
 }
+.tiptap .separator.is-empty::before{
+  content: '';
+}
 
 .tiptap .is-empty::before {
   content: attr(data-placeholder);
@@ -146,11 +149,23 @@ figure{
   background-color: transparent;
 }
 
+/* IMAGE */
+.tiptap img{
+  width: 40%;
+  /* height: 50vh; */
+}
 /* YOUTUBE */
 .youtube-embed{
   width:100%;
 }
 
+/* DIVIDER */
+hr {
+  border-top:1px solid rgba(0,0,0,0.4);
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+}
 /* Heading style */
 h1.title {
   font-size: 3rem; /* 36px */
@@ -279,16 +294,20 @@ ul.bulletedList ul.bulletedList ul.bulletedList {
     display: flex;
     justify-content: flex-start;
     align-items: flex-center;
-    border: 1px solid rgba(0,0,0,0.2);
-    padding: 10px 10px;
+    /* border: 1px solid rgba(0,0,0,0.2); */
+    padding: 4px;
     border-radius:4px;
-    width: fit-content;
+    width: 100%;
+    cursor:pointer;
 }
 
 .linkPage-icon{
   /* border: 1px solid rgba(0,0,0,0.2); */
-  padding: 6px;
+  padding: 2px;
   border-radius:4px;
+  /* background-color: rgba(243, 244, 246, 1); */
+}
+.linkPage:hover{
   background-color: rgba(243, 244, 246, 1);
 }
 .linkPage-content{
