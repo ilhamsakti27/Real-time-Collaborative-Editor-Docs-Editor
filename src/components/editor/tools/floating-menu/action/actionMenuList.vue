@@ -3,7 +3,10 @@
     ref="itemsContainer"
     class="menuContainer"
   >
-    <div class="pl-2 text-black/40 text-xs font-semibold">
+    <div
+      style="padding-left: 8px;color: rgba(0,0,0,0.4);font-weight: 600;"
+      class=" text-xs"
+    >
       Action
     </div>
     <template v-if="filteredItems.length">
@@ -18,14 +21,21 @@
       >
         <!-- {{ item }} -->
         <!-- list of menu -->
-        <div class="flex menu items-center gap-x-2">
-          <div class="icon-wrapper rounded-md ">
-            <!-- eslint-disable-next-line -->
-            <span v-html="item.icon" />
+        <div
+          style="display: flex;align-items: center;column-gap: 8px;"
+          class="menu"
+        >
+          <div class="icon-wrapper">
+            <span
+              v-html="item.icon"
+            />
           </div>
-          <div class="flex flex-col">
+          <div style="display: flex;flex-direction: column;">
             <span class="text-sm">{{ item.title }}</span>
-            <span class="text-black/50 text-xs">{{ item.desc }}</span>
+            <span
+              style="color: rgba(0,0,0,0.4);"
+              class="text-xs"
+            >{{ item.desc }}</span>
           </div>
         </div>
       </button>
@@ -209,7 +219,13 @@ export default {
 <style lang="scss">
 .icon-wrapper {
     border: 1px solid rgba(0, 0, 0, 0.15);
-    padding-bottom: 2px;
+    padding: 2px;
+    border-radius: 0.375rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 5vh; ;
+    align-items: center;
 }
 
 .menuContainer {

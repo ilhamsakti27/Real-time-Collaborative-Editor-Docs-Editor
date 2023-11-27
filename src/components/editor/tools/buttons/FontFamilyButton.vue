@@ -1,12 +1,14 @@
 <template>
   <div
     ref="fontMenu"
-    data-tooltip="Font family"
     class="w-max-content"
+    data-tooltip="Font family"
     @mouseenter="menuFontFamily"
   >
-    <button class="flex items-center justify-center">
-      <div class="text-sm">
+    <button
+      style="display: flex;align-items: center;justify-content: center;"
+    >
+      <div style="font-size: 0.875rem;line-height: 1.25rem">
         Font-Family
       </div>
       <!-- down arrow icon -->
