@@ -3,10 +3,13 @@
     <!-- upload file pop up -->
     <div
       v-show="isUpload"
-      style=""
+      style="box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);"
       class="popupImage shadow-lg"
     >
-      <div class="p-1">
+      <div
+        style="padding: 0.25rem;"
+        class="p-1"
+      >
         <button
           style=""
           class="active"
@@ -29,7 +32,7 @@
             ref="inputImg"
             type="file"
             name="file"
-            style="width: 100%;border-style: solid;border: 1px solid rgba(0,0,0,0.1);border-radius: 4px;background-color: rgba(249, 250, 251,1);padding: 8px 4px;"
+            style="width: 100%; border-style: solid; border: 1px solid rgba(0,0,0,0.1); border-radius: 4px;background-color: rgba(249, 250, 251,1);padding: 8px 4px; font-size: 0.875rem; line-height: 1.25rem; outline: 2px solid transparent; outline-offset: 2px;"
             class="text-sm outline-none"
             placeholder="Upload or Drag file"
           >
@@ -37,7 +40,7 @@
         <!-- Display loading indicator if isUploading is true -->
         <div
           v-if="isUploading"
-          style="margin-top: 8px;color: rgba(107, 114, 128, 1);"
+          style="margin-top: 8px;color: rgba(107, 114, 128, 1); font-size: 0.875rem; line-height: 1.25rem;"
           class="text-sm"
         >
           Uploading... ({{ uploadLoaded }} / {{ uploadTotal }})
@@ -62,7 +65,7 @@
         </button>
         <div style="text-align: center;">
           <span
-            style="color: rgba(0,0,0,0.4);margin: 0 auto;"
+            style="color: rgba(0,0,0,0.4);margin: 0 auto; font-size: 0.75rem; line-height: 1rem;"
             class="text-xs"
           >The maximum size per file is 5 MB.</span>
         </div>
@@ -74,7 +77,10 @@
       v-show="isEmbedLink"
       class="popupImage shadow-lg"
     >
-      <div class="p-1">
+      <div
+        style="padding: 0.25rem;"
+        class="p-1"
+      >
         <button
           id="uploadImgBtn"
           style="display: inline-block;text-align: left;padding: 8px;margin-left: 4px;"
@@ -92,7 +98,7 @@
         <input
           v-model="url"
           type="url"
-          style="width: 100%;border-style: solid;border: 1px solid rgba(0,0,0,0.1);border-radius: 4px;background-color: rgba(249, 250, 251,1);padding: 8px 4px;margin: 4px auto;"
+          style="width: 100%;border-style: solid;border: 1px solid rgba(0,0,0,0.1);border-radius: 4px;background-color: rgba(249, 250, 251,1);padding: 8px 4px;margin: 4px auto; font-size: 0.875rem; line-height: 1.25rem; outline: 2px solid transparent; outline-offset: 2px;"
           class="text-sm outline-none "
           placeholder="Paste the image link..."
         >
@@ -105,7 +111,7 @@
         </button>
         <div style="text-align: center">
           <span
-            style="color: rgba(0,0,0,0.4);margin: 0 auto;"
+            style="color: rgba(0,0,0,0.4);margin: 0 auto;font-size: 0.75rem; line-height: 1rem;"
             class="text-xs "
           >Works with any image from the web</span>
         </div>
@@ -115,6 +121,9 @@
 </template>
 
 <script>
+/* eslint-disable vue/require-default-prop */
+/* eslint-disable vue/require-prop-types */
+
 import { uploadMedia } from '@/components/editor/utils/upload'
 
 // const host = 'http://localhost:1234'

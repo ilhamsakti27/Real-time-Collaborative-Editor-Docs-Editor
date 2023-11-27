@@ -1,31 +1,76 @@
-<!-- eslint-disable  -->
 <template>
-    <div class="">
-        <div v-show="!toggleShowLinkEdit" class="popUpLink flex flex-col gap-y-2">
-            <input class="w-full text-sm" placeholder="Paste link" type="url" v-model="urlInput" @input="clearError">
-            <button @click="setLink" class=" bg-blue-400 hover:bg-blue-200 text-white text-sm"
-                style="border: 1px solid rgba(156, 156, 156, 0.201);">Submit</button>
-        </div>
-        <div class="popUpLink" v-show="toggleShowLinkEdit">
-            <div class="flex flex-col gap-y-2">
-                <div class="flex flex-col gap-y-1">
-                    <label class="text-black/40 text-xs font-semibold " for="pageOrURL">Page or URL</label>
-                    <input class="w-full text-sm" placeholder="Edit link or search pages" type="url" id="pageOrURL"
-                        v-model="url">
-                </div>
-                <div class="flex flex-col gap-y-1">
-                    <label class="text-black/40 text-xs font-semibold " for="linkTitle">Link title</label>
-                    <input class="w-full text-sm" placeholder="title" type="url" id="linkTitle" v-model="urlTitle">
-                </div>
-            </div>
-            <hr class="custom-hr">
-            <button @click="removeLink" class="flex items-center justify-center w-full gap-x-2 hover:bg-red-200 bg-red-400"
-                style="border: 1px solid rgba(156, 156, 156, 0.201);padding: 4px 0;">
-                <span v-html="removeIcon"></span>
-                <div class="text-white text-sm font-semibold ">Remove link</div>
-            </button>
-        </div>
+  <div class="">
+    <div
+      v-show="!toggleShowLinkEdit"
+      class="popUpLink flex flex-col gap-y-2"
+    >
+      <input
+        v-model="urlInput"
+        class="w-full text-sm"
+        placeholder="Paste link"
+        type="url"
+        @input="clearError"
+      >
+      <button
+        class=" bg-blue-400 hover:bg-blue-200 text-white text-sm"
+        style="border: 1px solid rgba(156, 156, 156, 0.201);"
+        @click="setLink"
+      >
+        Submit
+      </button>
     </div>
+    <div
+      v-show="toggleShowLinkEdit"
+      class="popUpLink"
+    >
+      <div class="flex flex-col gap-y-2">
+        <div class="flex flex-col gap-y-1">
+          <label
+            class="text-black/40 text-xs font-semibold "
+            for="pageOrURL"
+          >
+            Page or URL
+          </label>
+          <input
+            id="pageOrURL"
+            v-model="url"
+            class="w-full text-sm"
+            placeholder="Edit link or search pages"
+            type="url"
+          >
+        </div>
+        <div class="flex flex-col gap-y-1">
+          <label
+            class="text-black/40 text-xs font-semibold "
+            for="linkTitle"
+          >
+            Link title
+          </label>
+          <input
+            id="linkTitle"
+            v-model="urlTitle"
+            class="w-full text-sm"
+            placeholder="title"
+            type="url"
+          >
+        </div>
+      </div>
+      <hr class="custom-hr">
+      <button
+        style="border: 1px solid rgba(156, 156, 156, 0.201);padding: 4px 0;"
+        class="flex items-center justify-center w-full gap-x-2 hover:bg-red-200 bg-red-400"
+        @click="removeLink"
+      >
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <span v-html="removeIcon" />
+        <div
+          class="text-white text-sm font-semibold "
+        >
+          Remove link
+        </div>
+      </button>
+    </div>
+  </div>
 </template>
 
 <!-- eslint-disable  -->
@@ -127,53 +172,53 @@ export default {
 </script>
 <style>
 .tiptap a {
-    color: #24b8f7;
-    text-decoration: underline;
+  color: #24b8f7;
+  text-decoration: underline;
 }
 
 .popUpLink {
-    /* position: absolute; */
-    background-color: rgb(253, 253, 253);
-    /* left: -40px; */
-    z-index: 1;
-    border-radius: 0 0 4px 4px;
-    padding: 2vh 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0px 8px 16px 2px rgba(0, 0, 0, 0.1);
-    width: 222px;
-    padding: 12px;
-    margin-top: 30px;
+  /* position: absolute; */
+  background-color: rgb(253, 253, 253);
+  /* left: -40px; */
+  z-index: 1;
+  border-radius: 0 0 4px 4px;
+  padding: 2vh 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 8px 16px 2px rgba(0, 0, 0, 0.1);
+  width: 222px;
+  padding: 12px;
+  margin-top: 30px;
 }
 
 .popUpLink input {
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    border-radius: 4px;
-    padding: 4px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  padding: 4px 10px;
 
-    &:focus {
-        outline: 2px solid rgba(35, 131, 226, 0.5);
-    }
+  &:focus {
+      outline: 2px solid rgba(35, 131, 226, 0.5);
+  }
 }
 
 .popUpLink button {
-    margin-top: 8px;
-    padding: 2px 8px;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    border-color: #6c757d;
-    /* Button border color */
-    /* color: #6c757d; */
-    /* Button text color */
-    width: 100%;
+  margin-top: 8px;
+  padding: 2px 8px;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  border-color: #6c757d;
+  /* Button border color */
+  /* color: #6c757d; */
+  /* Button text color */
+  width: 100%;
 }
 
 .custom-hr {
-    border: none;
-    height: 1px;
-    /* Set the height of the custom rule line */
-    background-color: #7979794f;
-    /* Set the background color of the line */
-    margin-top: 8px;
-    /* Add margin for spacing */
+  border: none;
+  height: 1px;
+  /* Set the height of the custom rule line */
+  background-color: #7979794f;
+  /* Set the background color of the line */
+  margin-top: 8px;
+  /* Add margin for spacing */
 }
 </style>
