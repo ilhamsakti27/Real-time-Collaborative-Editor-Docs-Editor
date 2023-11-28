@@ -1,25 +1,20 @@
-<!-- eslint-disable vue/no-v-html -->
 <template>
   <div
     id="item-btn"
-    style="display: flex; align-items: center; column-gap: 8px; padding: 8px 0;"
-    class="flex items-center gap-x-2 px-2 hover:bg-slate-100 cursor-pointer"
+    style="display: flex; align-items: center; column-gap: 8px; padding: 4px 8px;cursor: pointer;"
     @click="handleClick"
   >
     <div
-      class="padding: 0.25rem; border-radius: 0.25rem; border-width: 1px;"
-      style=""
+      style="margin: auto 0;display: flex;"
       v-html="content"
     />
-    <div class="">
+    <div>
       {{ label }}
     </div>
   </div>
 </template>
 
 <script>
-/* eslint-disable vue/order-in-components */
-/* eslint-disable vue/require-default-prop */
 export default {
   props: {
     content: {

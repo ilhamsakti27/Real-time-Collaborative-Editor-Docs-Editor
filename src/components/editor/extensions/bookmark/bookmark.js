@@ -1,11 +1,7 @@
-/* eslint-disable arrow-body-style */
-/* eslint-disable no-dupe-keys */
-
 import { Node, mergeAttributes } from '@tiptap/core'
 
 export const Bookmark = Node.create({
   name: 'bookmark',
-  group: 'block',
   content: 'inline*',
   atom: true,
   draggable: true,
@@ -79,14 +75,11 @@ export const Bookmark = Node.create({
   },
   addCommands() {
     return {
-      setBookmark: options => ({ commands }) => {
-        // commands.setNode(this.name)
-        return commands.insertContent({
-          type: this.name,
-          attrs: options,
-        })
-        // console.log(options)
-      },
+      setBookmark: options => ({ commands }) => commands.insertContent({
+        type: this.name,
+        attrs: options,
+      })
+      ,
     }
   },
 })

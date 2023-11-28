@@ -1,50 +1,37 @@
-<!-- eslint-disable vue/html-self-closing -->
 <template>
   <div
     ref="dropdown"
     style="position: relative;"
     class="group text-sm"
   >
-    <slot></slot>
+    <slot />
     <div
       v-if="hasDropdown"
       ref="dropdownContent"
-      style="z-index: 10;background-color: white; padding: 0 8px; overflow: hidden;white-space: nowrap;position: absolute;bottom: 100%; border-radius: 4px;"
+      style="z-index: 10;background-color: white;  overflow: hidden;white-space: nowrap;position: absolute;bottom: 100%; border-radius: 4px;"
       class="shadow-md group-focus-within:block sm:bottom-auto sm:top-full"
       :class="align == 'left' ? 'left-0' : 'right-0'"
     >
       <div
         ref="item"
-        class=" text-sm"
       >
         <div
-          style="padding-left: 0.5rem;
-            padding-right: 0.5rem;
-            padding-bottom: 0.5rem;
-            font-size: 0.75rem;
-            line-height: 1rem;
-            font-weight: 600; "
+          style="padding:0.5rem 0.5rem; color:rgba(0,0,0,0.4); font-weight: 600;"
+          class="text-xs"
         >
-          {{ action }}Action
+          {{ action }} Action
         </div>
-        <slot name="dropdown"></slot>
+        <slot name="dropdown" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-/* eslint-disable vue/order-in-components */
-/* eslint-disable vue/require-default-prop */
 
 import tippy from 'tippy.js'
 
 export default {
-  computed: {
-    hasDropdown() {
-      return !!this.$slots.dropdown
-    },
-  },
   props: {
     action: {
       type: String,
@@ -72,6 +59,11 @@ export default {
     },
     active: {
       type: Boolean,
+    },
+  },
+  computed: {
+    hasDropdown() {
+      return !!this.$slots.dropdown
     },
   },
   mounted() {

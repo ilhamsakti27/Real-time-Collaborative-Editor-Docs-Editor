@@ -1,128 +1,127 @@
-/* eslint-disable indent */
 export const YOUTUBE_REGEX = /^(https?:\/\/)?(www\.|music\.)?(youtube\.com|youtu\.be)(?!.*\/channel\/)(?!\/@)(.+)?$/
 export const YOUTUBE_REGEX_GLOBAL = /^(https?:\/\/)?(www\.|music\.)?(youtube\.com|youtu\.be)(?!.*\/channel\/)(?!\/@)(.+)?$/g
 
 export const isValidYoutubeUrl = url => url.match(YOUTUBE_REGEX)
 
 export const getYoutubeEmbedUrl = nocookie => (nocookie
-    ? 'https://www.youtube-nocookie.com/embed/'
-    : 'https://www.youtube.com/embed/')
+  ? 'https://www.youtube-nocookie.com/embed/'
+  : 'https://www.youtube.com/embed/')
 
 export const getEmbedUrlFromYoutubeUrl = options => {
-    const {
-        url,
-        allowFullscreen,
-        autoplay,
-        ccLanguage,
-        ccLoadPolicy,
-        controls,
-        disableKBcontrols,
-        enableIFrameApi,
-        endTime,
-        interfaceLanguage,
-        ivLoadPolicy,
-        loop,
-        modestBranding,
-        nocookie,
-        origin,
-        playlist,
-        progressBarColor,
-        startAt,
-    } = options
+  const {
+    url,
+    allowFullscreen,
+    autoplay,
+    ccLanguage,
+    ccLoadPolicy,
+    controls,
+    disableKBcontrols,
+    enableIFrameApi,
+    endTime,
+    interfaceLanguage,
+    ivLoadPolicy,
+    loop,
+    modestBranding,
+    nocookie,
+    origin,
+    playlist,
+    progressBarColor,
+    startAt,
+  } = options
 
-    // if is already an embed url, return it
-    if (url.includes('/embed/')) {
-        return url
+  // if is already an embed url, return it
+  if (url.includes('/embed/')) {
+    return url
+  }
+
+  if (url.includes('youtu.be') || url.includes('/shorts/')) {
+    const id = url.split('/').pop()
+
+    if (!id) {
+      return null
     }
 
-    if (url.includes('youtu.be') || url.includes('/shorts/')) {
-        const id = url.split('/').pop()
+    return `${getYoutubeEmbedUrl(nocookie)}${id}`
+  }
 
-        if (!id) {
-            return null
-        }
+  const videoIdRegex = /v=([-\w]+)/gm
+  const matches = videoIdRegex.exec(url)
 
-        return `${getYoutubeEmbedUrl(nocookie)}${id}`
-    }
+  if (!matches || !matches[1]) {
+    return null
+  }
 
-    const videoIdRegex = /v=([-\w]+)/gm
-    const matches = videoIdRegex.exec(url)
+  let outputUrl = `${getYoutubeEmbedUrl(nocookie)}${matches[1]}`
 
-    if (!matches || !matches[1]) {
-        return null
-    }
+  const params = []
 
-    let outputUrl = `${getYoutubeEmbedUrl(nocookie)}${matches[1]}`
+  if (allowFullscreen === false) {
+    params.push('fs=0')
+  }
 
-    const params = []
+  if (autoplay) {
+    params.push('autoplay=1')
+  }
 
-    if (allowFullscreen === false) {
-        params.push('fs=0')
-    }
+  if (ccLanguage) {
+    params.push(`cc_lang_pref=${ccLanguage}`)
+  }
 
-    if (autoplay) {
-        params.push('autoplay=1')
-    }
+  if (ccLoadPolicy) {
+    params.push('cc_load_policy=1')
+  }
 
-    if (ccLanguage) {
-        params.push(`cc_lang_pref=${ccLanguage}`)
-    }
+  if (!controls) {
+    params.push('controls=0')
+  }
 
-    if (ccLoadPolicy) {
-        params.push('cc_load_policy=1')
-    }
+  if (disableKBcontrols) {
+    params.push('disablekb=1')
+  }
 
-    if (!controls) {
-        params.push('controls=0')
-    }
+  if (enableIFrameApi) {
+    params.push('enablejsapi=1')
+  }
 
-    if (disableKBcontrols) {
-        params.push('disablekb=1')
-    }
+  if (endTime) {
+    params.push(`end=${endTime}`)
+  }
 
-    if (enableIFrameApi) {
-        params.push('enablejsapi=1')
-    }
+  if (interfaceLanguage) {
+    params.push(`hl=${interfaceLanguage}`)
+  }
 
-    if (endTime) {
-        params.push(`end=${endTime}`)
-    }
+  if (ivLoadPolicy) {
+    params.push(`iv_load_policy=${ivLoadPolicy}`)
+  }
 
-    if (interfaceLanguage) {
-        params.push(`hl=${interfaceLanguage}`)
-    }
+  if (loop) {
+    params.push('loop=1')
+  }
 
-    if (ivLoadPolicy) {
-        params.push(`iv_load_policy=${ivLoadPolicy}`)
-    }
+  if (modestBranding) {
+    params.push('modestbranding=1')
+  }
 
-    if (loop) {
-        params.push('loop=1')
-    }
+  if (origin) {
+    params.push(`origin=${origin}`)
+  }
 
-    if (modestBranding) {
-        params.push('modestbranding=1')
-    }
+  if (playlist) {
+    params.push(`playlist=${playlist}`)
+  }
 
-    if (origin) {
-        params.push(`origin=${origin}`)
-    }
+  if (startAt) {
+    params.push(`start=${startAt}`)
+  }
 
-    if (playlist) {
-        params.push(`playlist=${playlist}`)
-    }
+  if (progressBarColor) {
+    params.push(`color=${progressBarColor}`)
+  }
 
-    if (startAt) {
-        params.push(`start=${startAt}`)
-    }
+  if (params.length) {
+    outputUrl += `?${params.join('&')}`
+  }
 
-    if (progressBarColor) {
-        params.push(`color=${progressBarColor}`)
-    }
-
-    if (params.length) {
-        outputUrl += `?${params.join('&')}`
-    }
-
-    return outputUrl
+  return outputUrl
 }

@@ -17,7 +17,7 @@
           id="embedLinkBtn"
           @click="uploadOrEmbedLinkBtn"
         >
-          Embed link
+          YouTube
         </button>
       </div>
       <div style="border-top: 1px solid rgba(0,0,0,0.1);padding: 12px;">
@@ -111,19 +111,18 @@
 </template>
 
 <script>
-/* eslint-disable */
 import { uploadMedia } from '@/components/editor/utils/upload'
-// 
+//
 const host = 'https://editorhocus.oriens.my.id'
 
 export default {
   name: 'ImageView',
   props: {
     editor: {
-      required: true
+      required: true,
     },
     range: {
-      required: false
+      required: false,
     },
   },
   data() {
@@ -136,11 +135,12 @@ export default {
       uploadTotal: 0,
       uploadProgress: 0,
       isUploading: false, // Add this state for tracking the upload status
-    };
+    }
   },
   created() {
     const path = window.location.href
-    this.documentId = path.split('/')[4]
+    const [, , , , documentId] = path.split('/')
+    this.documentId = documentId
   },
   methods: {
     uploadOrEmbedLinkBtn() {
@@ -149,41 +149,39 @@ export default {
     },
     setLinkYoutube() {
       if (this.url) {
-        if (this.range)
-          this.editor.chain().focus().deleteRange(this.range)
+        if (this.range) { this.editor.chain().focus().deleteRange(this.range) }
 
-        this.editor.chain().focus().enter().setYoutubeVideo({ src: this.url }).run();
+        this.editor.chain().focus().enter().setYoutubeVideo({ src: this.url })
+          .run()
       }
     },
     uploadVideoHandler() {
-      const path = this.$refs.inputImg;
-      const file = path.files[0];
+      const path = this.$refs.inputImg
+      const file = path.files[0]
 
       // Set isUploading to true when starting the upload
-      this.isUploading = true;
+      this.isUploading = true
 
-      uploadMedia(file, this.documentId, (progressEvent) => {
+      uploadMedia(file, this.documentId, progressEvent => {
         this.uploadLoaded = progressEvent.loaded
         this.uploadTotal = progressEvent.total
-        this.uploadProgress = parseInt(Math.round((progressEvent.loaded / progressEvent.total) * 100))
-
+        this.uploadProgress = parseInt(Math.round((progressEvent.loaded / progressEvent.total) * 100), 10)
       }).then(response => {
-        const imgUri = response.data.data.destination.slice('assets/'.length);
-        const fileName = response.data.data.originalname;
-        const encodedFileName = encodeURIComponent(fileName);
-        const url = `${host}/${imgUri}/${encodedFileName}`;
+        const imgUri = response.data.data.destination.slice('assets/'.length)
+        const fileName = response.data.data.originalname
+        const encodedFileName = encodeURIComponent(fileName)
+        const url = `${host}/${imgUri}/${encodedFileName}`
 
-        if (this.range)
-          this.editor.chain().focus().deleteRange(this.range)
+        if (this.range) { this.editor.chain().focus().deleteRange(this.range) }
 
-        this.editor.chain().focus().setVideo({ src: url }).run();
+        this.editor.chain().focus().setVideo({ src: url }).run()
 
-        this.isUploading = false;
+        this.isUploading = false
       }).catch(error => {
-        console.error('Error uploading video:', error);
-        this.isUploading = false;
-      });
-    }
+        console.error('Error uploading video:', error)
+        this.isUploading = false
+      })
+    },
   },
 }
 </script>

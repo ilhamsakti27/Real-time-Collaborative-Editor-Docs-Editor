@@ -117,7 +117,6 @@
 <script>
 import { uploadMedia } from '@/components/editor/utils/upload'
 
-// const host = 'http://localhost:1234'
 const host = 'https://editorhocus.oriens.my.id'
 
 export default {
@@ -153,8 +152,7 @@ export default {
     },
     setLinkImage() {
       if (this.url) {
-        // if (this.range) { this.editor.chain().focus().deleteRange(this.range) }
-
+        if (this.range) { this.editor.chain().focus().deleteRange(this.range) }
         this.editor.chain().focus().setImage({ src: this.url }).run()
       }
     },

@@ -32,8 +32,11 @@
       <div ref="fontTools">
         <!-- dropdown menu text color -->
         <div class="pb-3 pt-2 border-b labelFontFamily">
-          <div class="px-3 py-2 text-black/40 text-xs font-semibold">
-            Font Family
+          <div
+            style="padding:0.5rem 0.5rem; color:rgba(0,0,0,0.4); font-weight: 600;"
+            class="text-xs"
+          >
+           Font Family
           </div>
           <button
             v-for="( item, index ) in fontFamily"

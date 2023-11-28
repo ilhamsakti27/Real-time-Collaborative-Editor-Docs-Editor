@@ -1,13 +1,4 @@
-<!-- eslint-disable vue/no-v-html -->
 <template>
-  <!-- <button
-    id="menuButton"
-    ref="tool"
-    style="width: 100%; display: flex; align-items: center; flex-direction: row;border-radius: 0.25rem"
-    class="w-full flex flex-row items-center text-slate-600 rounded gap-3 p-0.5"
-    :aria-label="label"
-    v-html="content">
-  </button> -->
   <button
     id="menuButton"
     ref="tool"
@@ -17,8 +8,6 @@
 </template>
 
 <script>
-/* eslint-disable vue/order-in-components */
-/* eslint-disable vue/require-default-prop */
 export default {
   props: {
     clickHandler: {

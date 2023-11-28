@@ -26,6 +26,11 @@ export function showActionMenu(editor, topLevelNodeType, isSubMenu) {
       interactive: true,
       trigger: 'manual',
       placement: 'bottom-start',
+      onShow(instance) {
+        instance.popper.addEventListener('click', () => {
+          instance.hide()
+        })
+      },
     })
   }
 }

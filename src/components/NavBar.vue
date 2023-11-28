@@ -15,8 +15,6 @@
         <div
           style="position: relative;"
           :user-tooltip="index === 0 ? 'Me' : item[1].user.name"
-          @mouseover="$event.target.setAttribute('style', 'transform: translateY(0); opacity: 1;');"
-          @mouseout="$event.target.setAttribute('style', 'transform: translateX(-50%) translateY(1); opacity: 0;');"
         >
           <img
             style="border-radius: 50%; width: 40px; height: 40px;"
@@ -101,5 +99,28 @@ export default {
   border-radius: 50%;
   padding: 0.25rem;
   background-color: #fff;
+}
+[user-tooltip] {
+  position: relative;
+}
+[user-tooltip]:hover::after {
+  transform: translateY(0);
+  opacity: 1;
+}
+[user-tooltip]::after {
+  content: attr(user-tooltip);
+  width: max-content;
+  transition: all 0.3s;
+  font-size: 12px;
+  padding: 4px 8px;
+  background-color: rgba(0,0,0,0.4);
+  color: white;
+  border-radius: 4px;
+  position: absolute;
+  top:50px;
+  left: 0px;
+  transform: translateX(-50%) translateY(1);
+  opacity: 0;
+  pointer-events: none;
 }
 </style>

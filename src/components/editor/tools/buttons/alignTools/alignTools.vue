@@ -1,28 +1,53 @@
-<!-- eslint-disable -->
 <template>
-    <div ref="itemsContainer" class="moreContainer">
-        <template v-if="items.length">
-              <div style="padding:0.5rem 0.5rem; color:rgba(0,0,0,0.4); font-weight: 600;" class="text-xs">{{ title }}</div>
-            <button :ref="item.ref" v-for="(item, index) in items" :key="index" class="item"
-                :class="{ 'is-selected': index === selectedIndex }" @click="selectItem(index)"
-                @mouseover="handleHover(index)">
-                <!-- {{ item }} -->
-                <!-- list of menu -->
-                <div style="display: flex; align-items: center; column-gap: 0.5rem;" class=" menu ">
-                    <div class="icon-con">
-                        <span v-html="item.icon" />
-                    </div>
-                    <div style="display: flex;flex-direction: column;" class="flex flex-col">
-                        <span class="text-sm">{{ item.title }}</span>
-                        <span style="color: rgba(0,0,0,0.5);" class="text-xs">{{ item.shortcut }}</span>
-                    </div>
-                </div>
-            </button>
-        </template>
-        <div v-else class="item">
-            No result
+  <div
+    ref="itemsContainer"
+    class="moreContainer"
+  >
+    <template v-if="items.length">
+      <div
+        style="padding:0.5rem 0.5rem; color:rgba(0,0,0,0.4); font-weight: 600;"
+        class="text-xs"
+      >
+        {{ title }}
+      </div>
+      <button
+        v-for="(item, index) in items"
+        :ref="item.ref"
+        :key="index"
+        class="item"
+        :class="{ 'is-selected': index === selectedIndex }"
+        @click="selectItem(index)"
+        @mouseover="handleHover(index)"
+      >
+        <!-- {{ item }} -->
+        <!-- list of menu -->
+        <div
+          style="display: flex; align-items: center; column-gap: 0.5rem;"
+          class=" menu "
+        >
+          <div class="icon-con">
+            <span v-html="item.icon" />
+          </div>
+          <div
+            style="display: flex;flex-direction: column;"
+            class="flex flex-col"
+          >
+            <span class="text-sm">{{ item.title }}</span>
+            <span
+              style="color: rgba(0,0,0,0.5);"
+              class="text-xs"
+            >{{ item.shortcut }}</span>
+          </div>
         </div>
+      </button>
+    </template>
+    <div
+      v-else
+      class="item"
+    >
+      No result
     </div>
+  </div>
 </template>
 
 <!-- eslint-disable -->
@@ -153,7 +178,6 @@ export default {
     background: white;
     overflow: scroll;
     max-height: 300px;
-    @apply shadow-md
 }
 
 // styling scroll slash menu
