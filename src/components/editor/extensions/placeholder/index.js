@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-/* eslint-disable no-void */
-
->>>>>>> f0d79645e59bd37b57a868aaee760dcdbb5c8c58
 import { Extension } from '@tiptap/core'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { Decoration, DecorationSet } from '@tiptap/pm/view'
@@ -33,11 +28,7 @@ const Placeholder = Extension.create({
             }
             // only calculate isEmpty once due to its performance impacts (see issue #3360)
             const emptyDocInstance = doc.type.createAndFill()
-<<<<<<< HEAD
             const isEditorEmpty = (emptyDocInstance === null || emptyDocInstance).sameMarkup(doc)
-=======
-            const isEditorEmpty = (emptyDocInstance === null || emptyDocInstance === void 0 ? void 0 : emptyDocInstance.sameMarkup(doc))
->>>>>>> f0d79645e59bd37b57a868aaee760dcdbb5c8c58
                             && emptyDocInstance.content.findDiffStart(doc.content) === null
             doc.descendants((node, pos) => {
               const hasAnchor = anchor >= pos && anchor <= pos + node.nodeSize

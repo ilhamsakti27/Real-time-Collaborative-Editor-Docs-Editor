@@ -1,8 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-<<<<<<< HEAD
-=======
-
->>>>>>> f0d79645e59bd37b57a868aaee760dcdbb5c8c58
 import { Selection, SelectionRange, TextSelection } from 'prosemirror-state'
 
 import { Column } from './column'

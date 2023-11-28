@@ -157,12 +157,7 @@ import x86asm from 'highlight.js/lib/languages/x86asm'
 import xl from 'highlight.js/lib/languages/xl'
 import xquery from 'highlight.js/lib/languages/xquery'
 import zephir from 'highlight.js/lib/languages/zephir'
-<<<<<<< HEAD
 import { grammars as base } from './common'
-=======
-// eslint-disable-next-line import/extensions
-import { grammars as base } from './common.js'
->>>>>>> f0d79645e59bd37b57a868aaee760dcdbb5c8c58
 
 /**
  * Map of grammars.
