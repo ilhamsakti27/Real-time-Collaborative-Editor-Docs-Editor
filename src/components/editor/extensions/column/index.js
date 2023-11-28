@@ -1,26 +1,19 @@
-/* eslint-disable  */
-import { Extension } from "@tiptap/core"
+import { Extension } from '@tiptap/core'
 
-import { Column } from "./column"
-import { ColumnBlock } from "./columnBlock"
+import { Column } from './column'
+import { ColumnBlock } from './columnBlock'
 
 export const ColumnExtension = Extension.create({
-    name: "columnExtension",
+  name: 'columnExtension',
 
-    addExtensions() {
-        const extensions = []
+  addExtensions() {
+    const extensions = []
 
-        // if (this.options.column !== false) {
-        // console.log('col: ', this.options.column)
-        extensions.push(Column)
-        // }
+    extensions.push(Column)
+    extensions.push(ColumnBlock)
 
-        // if (this.options.columnBlock !== false) {
-        extensions.push(ColumnBlock)
-        // }
-
-        return extensions
-    }
+    return extensions
+  },
 })
 
 export { Column, ColumnBlock }

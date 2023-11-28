@@ -1,7 +1,6 @@
 import { fetchOpenGraphData } from '../../utils/scrape'
 import { PopupLink } from '../buttons/popupLink'
 
-// eslint-disable-next-line
 export default function (Editor) {
   const isLinkActive = Editor.getAttributes('link').href
 

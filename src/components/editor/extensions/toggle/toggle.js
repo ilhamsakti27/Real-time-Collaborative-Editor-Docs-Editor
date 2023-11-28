@@ -1,7 +1,6 @@
-/* eslint-disable  */
 import { Node, wrappingInputRule } from '@tiptap/core'
 
-const inputRegex = /^\s*>\s$/;
+const inputRegex = /^\s*>\s$/
 
 export const Toggle = Node.create({
   name: 'toggle',
@@ -13,18 +12,19 @@ export const Toggle = Node.create({
   addAttributes() {
     return {
       HTMLAttributes: {},
-    };
+    }
   },
   parseHTML() {
-    return [{ tag: 'toggle' }];
+    return [{ tag: 'toggle' }]
   },
   addCommands() {
     return {
       setToggleList: () => ({ commands }) => {
-        const command = commands.wrapIn(this.name);
+        const command = commands.wrapIn(this.name)
+
         return command
-    },
-    };
+      },
+    }
   },
   addInputRules() {
     return [
@@ -32,20 +32,18 @@ export const Toggle = Node.create({
         find: inputRegex,
         type: this.type,
       }),
-    ];
+    ]
   },
   addNodeView() {
     return () => {
       // container
       const container = document.createElement('div')
-      const toggleBtn = document.createElement('button')
-      
-      
+      // const toggleBtn = document.createElement('button')
 
       return {
         dom: container,
         contentDOM: container,
-      };
-    };
+      }
+    }
   },
-});
+})

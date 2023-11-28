@@ -1,4 +1,3 @@
-// /* eslint-disable  */
 import { Extension } from '@tiptap/core'
 import { Callout } from './callout'
 

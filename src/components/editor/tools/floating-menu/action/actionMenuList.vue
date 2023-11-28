@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-v-html -->
 <template>
   <div
     ref="itemsContainer"
@@ -19,10 +18,12 @@
         :class="{ 'is-selected': index === selectedIndex }"
         @click="selectItem(index)"
         @mouseover="handleHover(index)"
+        @mouseleave="handleLeave()"
       >
         <!-- {{ item }} -->
         <!-- list of menu -->
         <div
+          :id="item.ref === 'convertBtn' ? 'convert' : ''"
           style="display: flex;align-items: center;column-gap: 8px;"
           class="menu"
         >
@@ -53,7 +54,7 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 export default {
   props: {
     items: {
@@ -61,45 +62,50 @@ export default {
       required: true,
     },
     editor: {
+      type: Map,
       required: true,
     },
     topLevelNodeType: {
+      type: String,
       required: true,
     },
     isSubMenu: {
+      type: Boolean,
       required: true,
     },
-    isNodeUp: true,
-    isNodeDown: true,
+
   },
 
   data() {
     return {
       selectedIndex: 0,
+      isNodeUp: false,
+      isNodeDown: false,
     }
   },
   computed: {
     filteredItems() {
+      console.log(this.topLevelNodeType)
+
       return this.items.filter(item => {
         if (item.title === 'Delete') {
           return this.editor.can().deleteNode(this.topLevelNodeType)
-        } else if (item.ref === 'unsetHghlBtn') {
+        } if (item.ref === 'unsetHghlBtn') {
           return this.editor.isActive('highlight')
-        } else if (item.ref === 'pageTitle') {
+        } if (item.ref === 'pageTitle') {
           return this.editor.isActive('Page')
-        } else if (item.ref === 'unsetColorBtn') {
+        } if (item.ref === 'unsetColorBtn') {
           return this.editor.isActive('textStyle')
-        } else if (item.ref === 'moveUpBtn') {
+        } if (item.ref === 'moveUpBtn') {
           return this.canMoveNodeUp()
-        } else if (item.ref === 'moveDownBtn') {
+        } if (item.ref === 'moveDownBtn') {
           return this.canMoveNodeDown()
-        } else if (item.ref === 'toggleHeaderColumn' || item.ref === 'toggleHeaderRow') {
+        } if (item.ref === 'toggleHeaderColumn' || item.ref === 'toggleHeaderRow') {
           return this.editor.isActive('table')
-        } else if (item.ref === 'convertBtn') {
+        } if (item.ref === 'convertBtn') {
           const excludedNodeTypes = new Set([
             'image',
             'video',
-            'codeBlock',
             'callout',
             'bookmark',
             'youtube',
@@ -109,11 +115,12 @@ export default {
             'bulletList',
             'columnBlock',
             'taskList',
-            'horizontalRule'
-          ]);
+            'horizontalRule',
+            'blockquote',
+          ])
           if (excludedNodeTypes.has(this.topLevelNodeType)) {
-            return false;
-          } 
+            return false
+          }
         }
 
         return true
@@ -130,23 +137,18 @@ export default {
   methods: {
     selectItem() {
       const item = this.filteredItems[this.selectedIndex]
-      console.log(item.title)
       if (item) {
         item.command(this.editor, this.topLevelNodeType)
       }
     },
     upHandler() {
-      // stop scroll event jika sudah mentok
       if (this.selectedIndex <= 0) {
         this.selectedIndex = 0
       } else {
         this.selectedIndex -= 1
       }
-      // ref untuk element items
       const { itemsContainer } = this.$refs
-      // logic scroll key down
       if (itemsContainer && this.selectedIndex <= (this.items.length / 2)) {
-        // scroll untuk key down pada index
         const scrollPosition = itemsContainer.scrollTop
         if (this.selectedIndex >= 0) {
           const newScrollPosition = scrollPosition - 60
@@ -156,20 +158,22 @@ export default {
     },
     handleHover(index) {
       this.selectedIndex = index
+      const item = this.filteredItems[this.selectedIndex]
+      if (item.ref === 'convertBtn') item.command(this.editor, true)
+    },
+    handleLeave() {
+      const items = this.filteredItems.filter(item => item.ref === 'convertBtn')
+      if (items) items[0].command(this.editor, false)
     },
     downHandler() {
-      // stop scroll event jika sudah mentok
       if (this.selectedIndex >= this.items.length - 1) {
         this.selectedIndex = this.items.length - 1
       } else {
         this.selectedIndex += 1
       }
 
-      // ref untuk element items
       const { itemsContainer } = this.$refs
-      // logic scroll key down
       if (itemsContainer && this.selectedIndex >= (this.items.length / 3) + 1) {
-        // scroll untuk key down pada index >= ke-setengah item
         const scrollPosition = itemsContainer.scrollTop
         if (this.selectedIndex !== this.items.length) {
           const newScrollPosition = scrollPosition + 60
@@ -192,7 +196,7 @@ export default {
             break
           case 'Enter':
             this.enterHandler()
-          // eslint-disable-next-line
+            break
           default:
             break
         }

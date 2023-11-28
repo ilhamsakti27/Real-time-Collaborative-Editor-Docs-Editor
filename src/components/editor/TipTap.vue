@@ -49,15 +49,10 @@
           :draggable="dragging"
           @dragend="endDragging($event)"
         >
-          <!-- sub menu wrapper -->
-          <div id="submenu" />
           <button
+            id="submenu"
             ref="actionMenu"
             style="margin-left: 0.25rem; padding-top: 0.3rem; border-radius: 0.375rem;"
-            :class="{
-              'cursor-grab': !dragging,
-              'cursor-grabbing': dragging,
-            }"
             aria-label="Drag"
             :action-tooltip="actionDataTooltip()"
             @click="handleActionMenu($event)"
@@ -244,7 +239,6 @@ import inlineToolsBtn from './tools/buttons/InlineButton.vue'
 
 // floating-menu
 import { showActionMenu } from './tools/floating-menu/action'
-import { showNewNode } from './tools/floating-menu/newnode'
 
 // utils
 import {
@@ -501,13 +495,14 @@ export default {
         },
       )
     },
-    handleNewNode() {
-      this.isNewNode = true
-      if (this.topLevelNodeType !== 'title') { showNewNode(this.editor, this.topLevelNodeType, this.isNewNode) }
-    },
+
     handleActionMenu() {
-      this.isActionMenu = true
-      if (this.topLevelNodeType !== 'title') { showActionMenu(this.editor, this.topLevelNodeType, this.isActionMenu) }
+      this.isActionMenu = !this.isActionMenu
+      this.$nextTick(() => {
+        if (this.topLevelNodeType !== 'title') {
+          showActionMenu(this.editor, this.topLevelNodeType, this.isActionMenu)
+        }
+      })
     },
     filterUsers(dataMap) {
       const dataArray = Array.from(dataMap.values())
@@ -679,10 +674,16 @@ button:hover{
 #tableColMenu{
   margin-top: -5vh;
 }
-#tableRowMenu, #tableColMenu{
-  padding: 0 4px;
+#tableRowMenu{
+  padding: 4px 0px;
   border: 1px solid rgba(0,0,0,0.4);
+  border-radius: 6px;
   background-color: white;
+}
+#tableColMenu{
+  padding: 0px 2px;
+  background-color: white;
+  border: 1px solid rgba(0,0,0,0.4);
   border-radius: 6px;
 }
 #tableRowMenu:hover, #tableColMenu:hover{

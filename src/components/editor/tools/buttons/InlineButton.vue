@@ -30,7 +30,6 @@
       </template>
       <div
         v-else
-        class=""
       >
         No data
       </div>
@@ -103,17 +102,13 @@ export default {
       const item = this.allInlineTools[this.selectedIndex]
       this.isMoreTools = true
       if (item.tools) {
-        const title = 'Inline Tools'
-        console.log()
-        if (item.title === 'Others') moreTools(this.editor, item.tools, this.isMoreTools, title)
-        if (item.title === 'Format Align') alignFormat(this.editor, item.tools, this.isMoreTools, title)
+        if (item.title === 'Others') moreTools(this.editor, item.tools, this.isMoreTools, 'Inline Tools')
+        if (item.title === 'Format Align') alignFormat(this.editor, item.tools, this.isMoreTools, 'Format Align')
       }
     },
     selectItem(index) {
       this.selectedIndex = index
-      // console.log(event)
       const item = this.allInlineTools[index]
-      // if (item.command) item.command(this.editor, event)
       if (item.command) item.command(this.editor)
     },
   },

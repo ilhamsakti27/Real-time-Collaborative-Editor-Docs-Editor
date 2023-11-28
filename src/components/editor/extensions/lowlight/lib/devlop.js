@@ -1,4 +1,6 @@
-/* eslint-disable */
+/* eslint-disable max-classes-per-file */
+/* eslint-disable no-use-before-define */
+
 import { dequal } from 'dequal'
 
 const codesWarned = new Set()
@@ -26,31 +28,31 @@ class AssertionError extends Error {
      */
     // eslint-disable-next-line max-params
     constructor(message, actual, expected, operator, generated) {
-        super(message)
+      super(message)
 
-        if (Error.captureStackTrace) {
-            Error.captureStackTrace(this, this.constructor)
-        }
+      if (Error.captureStackTrace) {
+        Error.captureStackTrace(this, this.constructor)
+      }
 
-        /**
+      /**
            * @type {unknown}
            */
-        this.actual = actual
+      this.actual = actual
 
-        /**
+      /**
            * @type {unknown}
            */
-        this.expected = expected
+      this.expected = expected
 
-        /**
+      /**
            * @type {boolean}
            */
-        this.generated = generated
+      this.generated = generated
 
-        /**
+      /**
            * @type {string}
            */
-        this.operator = operator
+      this.operator = operator
     }
 }
 
@@ -68,12 +70,12 @@ class DeprecationError extends Error {
      *   Instance.
      */
     constructor(message, code) {
-        super(message)
+      super(message)
 
-        /**
+      /**
            * @type {string | undefined}
            */
-        this.code = code
+      this.code = code
     }
 }
 
@@ -100,36 +102,36 @@ class DeprecationError extends Error {
  *   Wrapped `fn`.
  */
 export function deprecate(fn, message, code) {
-    let warned = false
+  let warned = false
 
-    // The wrapper will keep the same prototype as fn to maintain prototype chain
-    Object.setPrototypeOf(deprecated, fn)
+  // The wrapper will keep the same prototype as fn to maintain prototype chain
+  Object.setPrototypeOf(deprecated, fn)
 
-    // @ts-expect-error: it’s perfect, typescript…
-    return deprecated
+  // @ts-expect-error: it’s perfect, typescript…
+  return deprecated
 
-    /**
+  /**
        * @this {unknown}
        * @param  {...Array<unknown>} args
        * @returns {unknown}
        */
-    function deprecated(...args) {
-        if (!warned) {
-            warned = true
+  function deprecated(...args) {
+    if (!warned) {
+      warned = true
 
-            if (typeof code === 'string' && codesWarned.has(code)) {
-                // Empty.
-            } else {
-                console.error(new DeprecationError(message, code || undefined))
+      if (typeof code === 'string' && codesWarned.has(code)) {
+        // Empty.
+      } else {
+        console.error(new DeprecationError(message, code || undefined))
 
-                if (typeof code === 'string') codesWarned.add(code)
-            }
-        }
-
-        return new.target
-            ? Reflect.construct(fn, args, new.target)
-            : Reflect.apply(fn, this, args)
+        if (typeof code === 'string') codesWarned.add(code)
+      }
     }
+
+    return new.target
+      ? Reflect.construct(fn, args, new.target)
+      : Reflect.apply(fn, this, args)
+  }
 }
 
 /**
@@ -152,14 +154,14 @@ export function deprecate(fn, message, code) {
  *   Throws when `actual` is not deep strict equal to `expected`.
  */
 export function equal(actual, expected, message) {
-    assert(
-        dequal(actual, expected),
-        actual,
-        expected,
-        'equal',
-        'Expected values to be deeply equal',
-        message,
-    )
+  assert(
+    dequal(actual, expected),
+    actual,
+    expected,
+    'equal',
+    'Expected values to be deeply equal',
+    message,
+  )
 }
 
 /**
@@ -178,14 +180,14 @@ export function equal(actual, expected, message) {
  *   Throws when `value` is falsey.
  */
 export function ok(value, message) {
-    assert(
-        Boolean(value),
-        false,
-        true,
-        'ok',
-        'Expected value to be truthy',
-        message,
-    )
+  assert(
+    Boolean(value),
+    false,
+    true,
+    'ok',
+    'Expected value to be truthy',
+    message,
+  )
 }
 
 /**
@@ -202,7 +204,7 @@ export function ok(value, message) {
  *   Throws when `value` is falsey.
  */
 export function unreachable(message) {
-    assert(false, false, true, 'ok', 'Unreachable', message)
+  assert(false, false, true, 'ok', 'Unreachable', message)
 }
 
 /**
@@ -223,15 +225,15 @@ export function unreachable(message) {
  */
 // eslint-disable-next-line max-params
 function assert(bool, actual, expected, operator, defaultMessage, userMessage) {
-    if (!bool) {
-        throw userMessage instanceof Error
-            ? userMessage
-            : new AssertionError(
-                userMessage || defaultMessage,
-                actual,
-                expected,
-                operator,
-                !userMessage,
-            )
-    }
+  if (!bool) {
+    throw userMessage instanceof Error
+      ? userMessage
+      : new AssertionError(
+        userMessage || defaultMessage,
+        actual,
+        expected,
+        operator,
+        !userMessage,
+      )
+  }
 }
