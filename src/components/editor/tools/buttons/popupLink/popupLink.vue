@@ -163,53 +163,53 @@ export default {
 </script>
 <style>
 .tiptap a {
-    color: #24b8f7;
-    text-decoration: underline;
+  color: #24b8f7;
+  text-decoration: underline;
 }
 
 .popUpLink {
-    /* position: absolute; */
-    background-color: rgb(253, 253, 253);
-    /* left: -40px; */
-    z-index: 1;
-    border-radius: 0 0 4px 4px;
-    padding: 2vh 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0px 8px 16px 2px rgba(0, 0, 0, 0.1);
-    width: 222px;
-    padding: 12px;
-    margin-top: 30px;
+  /* position: absolute; */
+  background-color: rgb(253, 253, 253);
+  /* left: -40px; */
+  z-index: 1;
+  border-radius: 0 0 4px 4px;
+  padding: 2vh 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 8px 16px 2px rgba(0, 0, 0, 0.1);
+  width: 222px;
+  padding: 12px;
+  margin-top: 30px;
 }
 
 .popUpLink input {
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    border-radius: 4px;
-    padding: 4px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  padding: 4px 10px;
 
-    &:focus {
-        outline: 2px solid rgba(35, 131, 226, 0.5);
-    }
+  &:focus {
+      outline: 2px solid rgba(35, 131, 226, 0.5);
+  }
 }
 
 .popUpLink button {
-    margin-top: 8px;
-    padding: 2px 8px;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    border-color: #6c757d;
-    /* Button border color */
-    /* color: #6c757d; */
-    /* Button text color */
-    width: 100%;
+  margin-top: 8px;
+  padding: 2px 8px;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  border-color: #6c757d;
+  /* Button border color */
+  /* color: #6c757d; */
+  /* Button text color */
+  width: 100%;
 }
 
 .custom-hr {
-    border: none;
-    height: 1px;
-    /* Set the height of the custom rule line */
-    background-color: #7979794f;
-    /* Set the background color of the line */
-    margin-top: 8px;
-    /* Add margin for spacing */
+  border: none;
+  height: 1px;
+  /* Set the height of the custom rule line */
+  background-color: #7979794f;
+  /* Set the background color of the line */
+  margin-top: 8px;
+  /* Add margin for spacing */
 }
 </style>

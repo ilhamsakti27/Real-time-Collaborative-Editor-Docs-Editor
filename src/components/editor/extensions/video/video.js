@@ -7,6 +7,10 @@ export const Video = Node.create({
   allowGapCursor: true,
   content: 'inline*',
   atom: true,
+<<<<<<< HEAD
+=======
+  // draggable: true,
+>>>>>>> f0d79645e59bd37b57a868aaee760dcdbb5c8c58
   isolating: true,
 
   // Your code goes here

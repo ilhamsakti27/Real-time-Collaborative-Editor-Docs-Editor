@@ -50,121 +50,121 @@
   </div>
 </template>
 
-<!-- eslint-disable -->
 <script>
 export default {
-    props: {
-        items: {
-            type: Array,
-            required: true,
-        },
-        editor: {
-            required: true
-        },
-        isMoreTools: {
-            required: true
-        },
-        title: {
-            type: String
+  props: {
+    items: {
+      type: Array,
+      required: true,
+    },
+    editor: {
+      required: true,
+    },
+    isMoreTools: {
+      required: true,
+    },
+    title: {
+      type: String,
+    },
+  },
+
+  data() {
+    return {
+      selectedIndex: 0,
+    }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      const el = this.$refs.itemsContainer
+      el.focus()
+      el.addEventListener('keydown', this.keyDownHandler)
+    })
+  },
+  methods: {
+    selectItem(index) {
+      this.selectedIndex = index
+      const item = this.items[index]
+
+      if (item) {
+        console.log(this.editor)
+        const { editor } = this.editor
+        item.command(editor)
+      }
+    },
+    upHandler() {
+      // stop scroll event jika sudah mentok
+      if (this.selectedIndex <= 0) {
+        this.selectedIndex = 0
+      } else {
+        this.selectedIndex -= 1
+      }
+      // ref untuk element items
+      const { itemsContainer } = this.$refs
+      // logic scroll key down
+      if (itemsContainer && this.selectedIndex <= (this.items.length / 2)) {
+        // scroll untuk key down pada index
+        const scrollPosition = itemsContainer.scrollTop
+        if (this.selectedIndex >= 0) {
+          const newScrollPosition = scrollPosition - 60
+          itemsContainer.scrollTop = newScrollPosition
         }
+      }
     },
+    handleHover(index) {
+      this.selectedIndex = index
+    },
+    downHandler() {
+      // stop scroll event jika sudah mentok
+      if (this.selectedIndex >= this.items.length - 1) {
+        this.selectedIndex = this.items.length - 1
+      } else {
+        this.selectedIndex += 1
+      }
 
-    data() {
-        return {
-            selectedIndex: 0,
+      // ref untuk element items
+      const { itemsContainer } = this.$refs
+      // logic scroll key down
+      if (itemsContainer && this.selectedIndex >= (this.items.length / 3) + 1) {
+        // scroll untuk key down pada index >= ke-setengah item
+        const scrollPosition = itemsContainer.scrollTop
+        if (this.selectedIndex !== this.items.length) {
+          const newScrollPosition = scrollPosition + 60
+          itemsContainer.scrollTop = newScrollPosition
         }
+      }
     },
-    mounted() {
-        this.$nextTick(() => {
-            const el = this.$refs.itemsContainer
-            el.focus();
-            el.addEventListener('keydown', this.keyDownHandler);
-        });
+    enterHandler() {
+      // alert(this.selectedIndex)
+      this.selectItem(this.selectedIndex)
     },
-    methods: {
-        selectItem(index) {
-            this.selectedIndex = index
-            const item = this.items[index]
-
-            if (item) {
-                console.log(this.editor)
-                let editor = this.editor
-                item.command(editor)
-            }
-        },
-        upHandler() {
-            // stop scroll event jika sudah mentok
-            if (this.selectedIndex <= 0) {
-                this.selectedIndex = 0
-            } else {
-                this.selectedIndex -= 1
-            }
-            // ref untuk element items
-            const { itemsContainer } = this.$refs
-            // logic scroll key down
-            if (itemsContainer && this.selectedIndex <= (this.items.length / 2)) {
-                // scroll untuk key down pada index
-                const scrollPosition = itemsContainer.scrollTop
-                if (this.selectedIndex >= 0) {
-                    const newScrollPosition = scrollPosition - 60
-                    itemsContainer.scrollTop = newScrollPosition
-                }
-            }
-        },
-        handleHover(index) {
-            this.selectedIndex = index
-        },
-        downHandler() {
-            // stop scroll event jika sudah mentok
-            if (this.selectedIndex >= this.items.length - 1) {
-                this.selectedIndex = this.items.length - 1
-            } else {
-                this.selectedIndex += 1
-            }
-
-            // ref untuk element items
-            const { itemsContainer } = this.$refs
-            // logic scroll key down
-            if (itemsContainer && this.selectedIndex >= (this.items.length / 3) + 1) {
-                // scroll untuk key down pada index >= ke-setengah item
-                const scrollPosition = itemsContainer.scrollTop
-                if (this.selectedIndex !== this.items.length) {
-                    const newScrollPosition = scrollPosition + 60
-                    itemsContainer.scrollTop = newScrollPosition
-                }
-            }
-        },
-        enterHandler() {
-            // alert(this.selectedIndex)
-            this.selectItem(this.selectedIndex)
-        },
-        keyDownHandler(event) {
-            event.preventDefault()
-            if (this.isMoreTools === true) {
-                switch (event.key) {
-                    case 'ArrowUp':
-                        this.upHandler()
-                        break;
-                    case 'ArrowDown':
-                        this.downHandler()
-                        break;
-                    case 'Enter':
-                        this.enterHandler()
-                    default:
-                        break;
-                }
-            }
+    keyDownHandler(event) {
+      event.preventDefault()
+      if (this.isMoreTools === true) {
+        switch (event.key) {
+          case 'ArrowUp':
+            this.upHandler()
+            break
+          case 'ArrowDown':
+            this.downHandler()
+            break
+          case 'Enter':
+            this.enterHandler()
+          // eslint-disable-next-line
+          default:
+            break
         }
-
+      }
     },
+
+  },
 }
 </script>
 
 <style lang="scss">
 .icon-con {
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    padding-bottom: 2px;
-    border-radius: 0.375rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding-bottom: 2px;
+  border-radius: 0.375rem;
 }
 
 .moreContainer {
@@ -187,34 +187,34 @@ export default {
 
 /* Track (jalur) */
 .moreContainer::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 50px;
+  background: transparent;
+  border-radius: 50px;
 }
 
 /* Handle (bilah) */
 .moreContainer::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 20px;
-    border: 7px solid transparent;
+  background: #888;
+  border-radius: 20px;
+  border: 7px solid transparent;
 }
 
 .item {
-    display: block;
-    margin: 0;
-    width: 100%;
-    text-align: left;
-    background: transparent;
-    border-radius: 0.4rem;
-    border: 1px solid transparent;
+  display: block;
+  margin: 0;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border-radius: 0.4rem;
+  border: 1px solid transparent;
 
-    &.is-selected {
-        // border-color: #000;
-        background-color: #d8d9daa1;
-    }
+  &.is-selected {
+      // border-color: #000;
+      background-color: #d8d9daa1;
+  }
 }
 
 .item span svg {
-    display: inline-block;
-    width: 2em;
+  display: inline-block;
+  width: 2em;
 }
 </style>

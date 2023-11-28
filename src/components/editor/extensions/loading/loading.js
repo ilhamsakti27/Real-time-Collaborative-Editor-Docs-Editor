@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+// /* eslint-disable  */
+>>>>>>> f0d79645e59bd37b57a868aaee760dcdbb5c8c58
 import { Node } from '@tiptap/core'
 
 export const Loading = Node.create({

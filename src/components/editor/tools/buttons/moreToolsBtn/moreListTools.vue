@@ -29,17 +29,10 @@
             style="border-radius: 0.375rem"
             class="icon-con rounded-md"
           >
-            <span v-html="item.icon" />
-          </div>
-          <div style="display: flex;flex-direction: column;">
             <span
               style="font-weight: 500;"
               class="text-sm"
             >{{ item.title }}</span>
-            <span
-              style="color: rgba(0,0,0,0.5)"
-              class="text-xs"
-            >{{ item.shortcut }}</span>
           </div>
         </div>
       </button>
@@ -53,62 +46,62 @@
   </div>
 </template>
 
-<!-- eslint-disable -->
 <script>
 export default {
-    props: {
-        items: {
-            type: Array,
-            required: true,
-        },
-        editor: {
-            required: true
-        },
-        isMoreTools: {
-            required: true
-        },
-        title: {
-            type: String
-        }
+  props: {
+    items: {
+      type: Array,
+      required: true,
+    },
+    editor: {
+      required: true,
+    },
+    isMoreTools: {
+      required: true,
+    },
+    title: {
+      type: String,
+    },
+  },
+
+  data() {
+    return {
+      selectedIndex: 0,
+    }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      const el = this.$refs.itemsContainer
+      el.focus()
+      el.addEventListener('keydown', this.keyDownHandler)
+    })
+  },
+  methods: {
+    SVGParser(icon) {
+      const parser = new DOMParser()
+      const svgElement = parser.parseFromString(icon, 'image/svg+xml').documentElement
+      console.log(svgElement)
+
+      return svgElement
+    },
+    selectItem(index) {
+      this.selectedIndex = index
+      const item = this.items[index]
+
+      if (item) {
+        console.log(this.editor)
+        const { editor } = this
+        item.command(editor)
+      }
     },
 
-    data() {
-        return {
-            selectedIndex: 0,
-        }
+    handleHover(index) {
+      this.selectedIndex = index
     },
-    mounted() {
-        this.$nextTick(() => {
-            const el = this.$refs.itemsContainer
-            el.focus();
-            el.addEventListener('keydown', this.keyDownHandler);
-        });
+    enterHandler() {
+      this.selectItem(this.selectedIndex)
     },
-    methods: {
-        SVGParser(icon){
-          const parser = new DOMParser()
-          const svgElement = parser.parseFromString(icon, 'image/svg+xml').documentElement
-          console.log(svgElement)
-          return svgElement
-        },
-        selectItem(index) {
-            this.selectedIndex = index
-            const item = this.items[index]
-
-            if (item) {
-                console.log(this.editor)
-                let editor = this.editor
-                item.command(editor)
-            }
-        },
-
-        handleHover(index) {
-            this.selectedIndex = index
-        },
-        enterHandler() {
-            this.selectItem(this.selectedIndex)
-        },
-    },
+  },
 }
 </script>
 

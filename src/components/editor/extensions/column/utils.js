@@ -1,13 +1,9 @@
 const times = (n, fn) => Array.from({ length: n }, (_, i) => fn(i))
 
 export const buildNode = ({ type, content }) => (content ? { type, content } : { type })
-
 export const buildParagraph = ({ content }) => buildNode({ type: 'paragraph', content })
-
 export const buildColumn = ({ content }) => buildNode({ type: 'column', content })
-
 export const buildColumnBlock = ({ content }) => buildNode({ type: 'columnBlock', content })
-
 export const buildNColumns = n => {
   const content = [buildParagraph({})]
   const fn = () => buildColumn({ content })

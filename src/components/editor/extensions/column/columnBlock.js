@@ -1,3 +1,8 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable consistent-return */
+/* eslint-disable no-return-assign */
+/* eslint-disable no-param-reassign */
+
 import { Node, mergeAttributes } from '@tiptap/core'
 import { NodeSelection } from 'prosemirror-state'
 
@@ -65,13 +70,11 @@ export const ColumnBlock = Node.create({
         const sel = new NodeSelection(resolvedPos)
 
         // insert the content inside of all the columns and remove the column layout
-        let newTr = tr.setSelection(sel)
-        nodes.forEach(node => {
-          newTr = newTr.insert(firstAncestor.pos, node)
-        })
-        newTr = newTr.deleteSelection()
+        tr = tr.setSelection(sel)
+        nodes.forEach(node => (tr = tr.insert(firstAncestor.pos, node)))
+        tr = tr.deleteSelection()
 
-        dispatch(newTr)
+        return dispatch(tr)
       } catch (error) {
         console.error(error)
       }
@@ -114,10 +117,29 @@ export const ColumnBlock = Node.create({
           return
         }
 
-        let newTr = tr.setSelection(sel)
-        newTr = tr.replaceSelectionWith(newNode, false)
+        const parent = sel.$anchor.parent.type
+        const canAcceptColumnBlockChild = par => {
+          if (!par.contentMatch.matchType(this.type)) {
+            return false
+          }
 
-        dispatch(newTr)
+          if (!this.options.nestedColumns && par.name === Column.name) {
+            return false
+          }
+
+          return true
+        }
+
+        // if (!canAcceptColumnBlockChild(parent)) {
+        //     console.warn('content not allowed')
+
+        //     return
+        // }
+
+        tr = tr.setSelection(sel)
+        tr = tr.replaceSelectionWith(newNode, false)
+
+        return dispatch(tr)
       } catch (error) {
         console.error(error)
       }

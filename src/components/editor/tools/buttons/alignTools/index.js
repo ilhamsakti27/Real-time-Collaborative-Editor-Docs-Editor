@@ -3,7 +3,6 @@ import tippy from 'tippy.js'
 import alignTools from './alignTools.vue'
 
 let floatingComponent = null
-
 export function alignFormat(editor, moreTools, isMoreTools, title) {
   if (floatingComponent == null) {
     const props = {
