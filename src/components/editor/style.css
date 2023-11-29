@@ -427,11 +427,13 @@ ul[data-type="taskList"] li {
 }
 ul[data-type="taskList"] li > label {
   flex: 0 0 auto;
-  padding: 8px 0px 8px 0;
+  padding: 12px 0px 12px 0;
   margin-right: 0.5rem;
   margin-left: -4px;
   user-select: none;
 }
+
+
 ul[data-type="taskList"] li > div {
   flex: 1 1 auto;
 }
