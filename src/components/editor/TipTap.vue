@@ -90,14 +90,14 @@
         >
           <ColorButton
             v-if="!isLink"
-            style=""
+            style="border-radius: 8px 0 0 8px;"
             class="bubble-menu-btn"
             :editor="editor"
           />
           <inlineToolsBtn :editor="editor" />
           <FontFamilyButton
             v-if="!isLink"
-            style="border: none;"
+            style="border: none; border-radius: 0 8px 8px 0;"
             class="bubble-menu-btn"
             :editor="editor"
           />
@@ -419,6 +419,7 @@ export default {
               if (fileSize < 5) {
                 handleImageDrop(view, event, file, documentId)
               } else {
+                // eslint-disable-next-line no-alert
                 alert(`Max Image size is ${LimitSize} mb`)
               }
             }
@@ -427,6 +428,7 @@ export default {
               if (fileSize < LimitSize) {
                 handleVideoDrop(view, event, file, documentId)
               } else {
+                // eslint-disable-next-line no-alert
                 alert(`Max Video size is ${LimitSize} mb`)
               }
             }
@@ -511,6 +513,7 @@ export default {
       return this.editor.isActive()
     },
     gantiNama() {
+      // eslint-disable-next-line no-alert
       const name = (window.prompt('Name') || '')
         .trim()
         .substring(0, 32)
