@@ -31,7 +31,6 @@
           </div>
           <div
             style="display: flex;flex-direction: column;"
-            class="flex flex-col"
           >
             <span class="text-sm">{{ item.title }}</span>
             <span
@@ -90,9 +89,7 @@ export default {
       const item = this.items[index]
 
       if (item) {
-        console.log(this.editor)
-        const { editor } = this.editor
-        item.command(editor)
+        item.command(this.editor)
       }
     },
     upHandler() {
@@ -138,7 +135,6 @@ export default {
       }
     },
     enterHandler() {
-      // alert(this.selectedIndex)
       this.selectItem(this.selectedIndex)
     },
     keyDownHandler(event) {

@@ -47,6 +47,7 @@
           style="display: flex;flex-direction: row;"
           pluginKey=""
           :draggable="dragging"
+          @click="handleActionMenu($event)"
           @dragend="endDragging($event)"
         >
           <button
@@ -55,7 +56,6 @@
             style="margin-left: 0.25rem; padding-top: 0.3rem; border-radius: 0.375rem;"
             aria-label="Drag"
             :action-tooltip="actionDataTooltip()"
-            @click="handleActionMenu($event)"
             @mousedown="startDragging($event)"
             @mouseup="draggedNodePosition = false; dragging = false;"
           >
@@ -172,10 +172,6 @@
           getReferenceClientRect: getTableColumnMenuCoords,
         }"
       >
-        <!-- <menu-item
-          :action="Column"
-          class="menu-item px-1 border bg-white border-black/30 shadow rounded-md hover:bg-slate-100"
-        > -->
         <menu-item
           :action="Column"
           class="menu-item"
@@ -186,7 +182,7 @@
           />
           <template #dropdown>
             <div
-              style="display: flex; flex-direction: column;   row-gap: 0.25rem; /* 4px */"
+              style="display: flex; flex-direction: column;   row-gap: 0.25rem; "
             >
               <menu-dropdown-button
                 v-for="( tool ) in tableColumnTools"
@@ -234,9 +230,6 @@ import ColorButton from './tools/buttons/ColorButton.vue'
 import FontFamilyButton from './tools/buttons/FontFamilyButton.vue'
 import inlineToolsBtn from './tools/buttons/InlineButton.vue'
 
-// buttons for slash menu
-// import ImageView from './tools/buttons/popupImage/popupImage.vue'
-
 // floating-menu
 import { showActionMenu } from './tools/floating-menu/action'
 
@@ -268,8 +261,6 @@ export default {
     ColorButton,
     FontFamilyButton,
     inlineToolsBtn,
-    // FontFamilyButton,
-    // ImageView,
     MenuItem,
     MenuButton,
     MenuDropdownButton,
@@ -363,7 +354,6 @@ export default {
     },
   },
   created() {
-    // const path = this.$route.path
     const { path } = this.$route
     const [, , documentId] = path.split('/')
     this.documentId = documentId
@@ -472,7 +462,6 @@ export default {
       const child = this.editor.view.state.selection
       if (child.node !== undefined) this.currentNodeType = child.node.type.name
       else this.currentNodeType = GetTopLevelNode(this.editor.view)?.type.name
-      console.log(this.currentNodeType)
 
       return GetTopLevelNode(this.editor.view)?.type.name
     },
@@ -705,12 +694,8 @@ button:hover{
   padding-left: 0.25rem; /* 4px */
   padding-right: 0.25rem; /* 4px */
   border-width: 1px;
-  background-color: rgb(255 255 255);
   border-color: rgb(0 0 0);
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   border-radius: 0.25rem; /* 4px */
-}
-.menu-item:hover {
-  background-color: #e1e1e1;
 }
 </style>
