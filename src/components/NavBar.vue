@@ -79,9 +79,6 @@ export default {
   methods: {
     getImageUrl(path) {
       if (path !== null) {
-        console.log(path)
-        console.log(this.images.path)
-
         return this.images[path]
       }
 

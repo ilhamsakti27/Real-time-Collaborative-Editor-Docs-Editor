@@ -36,7 +36,7 @@
             style="padding:0.5rem 0.5rem; color:rgba(0,0,0,0.4); font-weight: 600;"
             class="text-xs"
           >
-           Font Family
+            Font Family
           </div>
           <button
             v-for="( item, index ) in fontFamily"
@@ -91,7 +91,8 @@ export default {
       }
     },
     setFont(font) {
-      this.editor.chain().focus().setFontFamily(font).run()
+      this.editor.chain().focus().setFontFamily(font).blur()
+        .run()
     },
   },
 }

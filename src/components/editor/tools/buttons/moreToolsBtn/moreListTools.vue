@@ -29,11 +29,12 @@
             style="border-radius: 0.375rem"
             class="icon-con rounded-md"
           >
-            <span
-              style="font-weight: 500;"
-              class="text-sm"
-            >{{ item.title }}</span>
+            <span v-html="item.icon" />
           </div>
+          <span
+            style="font-weight: 500;"
+            class="text-sm"
+          >{{ item.title }}</span>
         </div>
       </button>
     </template>
