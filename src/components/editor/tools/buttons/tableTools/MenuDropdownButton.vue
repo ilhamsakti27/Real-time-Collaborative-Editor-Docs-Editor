@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <div
     id="item-btn"
@@ -15,6 +16,9 @@
 </template>
 
 <script>
+/* eslint-disable vue/require-prop-types */
+/* eslint-disable vue/require-default-prop */
+
 export default {
   props: {
     content: {
