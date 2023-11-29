@@ -342,22 +342,26 @@ iframe{
     display: flex;
     justify-content: flex-start;
     align-items: flex-center;
-  }
-  .bookmark-content{
-    /* margin: 0em 6em; */
+    cursor:grab;
+}
+.bookmark-content{  
+    width: 80%;
     border: 1px solid #ccc;
     cursor:pointer;
     padding: 10px;
-    max-width: 80%;
     display: flex;
-    border-radius: 0.25rem/* 4px */;
-  }
-  .bookmark-thumbnail {
-    max-width: 23%;
-    height: auto;
-  }
-  .bookmark-desc{
+    border-radius: 0.25rem;
+  }  
+
+.bookmark img{
+  width:25%;
+  height: auto;
+}
+.bookmark-desc{
   padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
   width: 100%;
 }
 .bookmark-title {

@@ -22,6 +22,11 @@ export function alignFormat(editor, moreTools, isMoreTools, title) {
       interactive: true,
       trigger: 'mouseenter',
       placement: 'bottom-start',
+      onShow(instance) {
+        instance.popper.addEventListener('click', () => {
+          instance.hide()
+        })
+      },
     })
   }
 }
