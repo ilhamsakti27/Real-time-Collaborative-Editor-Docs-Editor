@@ -235,7 +235,7 @@ export default {
   width: 150px;
   max-height: 50vh;
   margin-left: -10px;
-  @apply shadow-md overflow-y-auto
+  @apply shadow-md overflow-y-auto;
 }
 
 .dropdownContent::-webkit-scrollbar {
