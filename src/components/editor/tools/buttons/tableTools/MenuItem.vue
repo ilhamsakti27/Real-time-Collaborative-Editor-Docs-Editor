@@ -28,6 +28,8 @@
 </template>
 
 <script>
+/* eslint-disable vue/require-prop-types */
+/* eslint-disable vue/require-default-prop */
 
 import tippy from 'tippy.js'
 

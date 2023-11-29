@@ -5,7 +5,7 @@
   >
     <template v-if="items.length">
       <div
-        style="padding:0.5rem 0.5rem; color:rgba(0,0,0,0.4); font-weight: 600;"
+        style="padding:0.5rem 0.5rem; color:rgba(0,0,0,0.4); font-weight: 600; font-size: 0.75rem; line-height: 1rem;"
         class="text-xs"
       >
         {{ title }}
@@ -29,6 +29,7 @@
             style="border-radius: 0.375rem"
             class="icon-con rounded-md"
           >
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <span v-html="item.icon" />
           </div>
           <span

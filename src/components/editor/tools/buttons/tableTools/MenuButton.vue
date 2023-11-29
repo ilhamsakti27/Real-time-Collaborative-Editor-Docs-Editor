@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <button
     id="menuButton"
@@ -8,6 +9,9 @@
 </template>
 
 <script>
+/* eslint-disable vue/require-prop-types */
+/* eslint-disable vue/require-default-prop */
+
 export default {
   props: {
     clickHandler: {
