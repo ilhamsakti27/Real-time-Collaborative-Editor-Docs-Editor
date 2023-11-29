@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 /**
  * Simple is object check.
  * @param item
@@ -9,30 +10,6 @@ function isObject(item) {
 
 function isArray(item) {
   return item && typeof item === 'object' && Array.isArray(item)
-}
-
-/**
- * Deep merge two objects.
- * @param target
- * @param source
- */
-function mergeDeep(target, source) {
-  if (isObject(target) && isObject(source)) {
-    /* eslint-disable  */
-    for (const key in source) {
-      if (isObject(source[key])) {
-        if (!target[key]) Object.assign(target, { [key]: {} })
-        mergeDeep(target[key], source[key])
-      } else if (isArray(source[key])) {
-        if (!target[key]) target[key] = []
-        mergeArrays(target[key], source[key])
-      } else {
-        Object.assign(target, { [key]: source[key] })
-      }
-    }
-  }
-
-  return target
 }
 
 export const mergeArrays = (target, source) => {
@@ -50,6 +27,33 @@ export const mergeArrays = (target, source) => {
       )
     }
   })
+
+  return target
+}
+
+/**
+ * Deep merge two objects.
+ * @param target
+ * @param source
+ */
+function mergeDeep(target, source) {
+  if (isObject(target) && isObject(source)) {
+    Object.keys(source).forEach(key => {
+      let newTarget
+
+      if (isObject(source[key])) {
+        newTarget = !target[key] ? { [key]: {} } : target[key]
+        mergeDeep(newTarget, source[key])
+      } else if (isArray(source[key])) {
+        newTarget = !target[key] ? [] : target[key]
+        mergeArrays(newTarget, source[key])
+      } else {
+        newTarget = { [key]: source[key] }
+      }
+
+      Object.assign(target, { [key]: newTarget })
+    })
+  }
 
   return target
 }
