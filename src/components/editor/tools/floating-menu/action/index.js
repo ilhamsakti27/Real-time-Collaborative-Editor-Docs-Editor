@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { VueRenderer } from '@tiptap/vue-2'
 import tippy from 'tippy.js'
 import actionMenuItems from './actionMenuItems' // Assuming you have a file named floating.js
@@ -20,7 +19,7 @@ export function showActionMenu(editor, topLevelNodeType, isSubMenu) {
       propsData: props,
     })
 
-    const popup = tippy('#submenu', {
+    tippy('#submenu', {
       content: floatingComponent.element,
       showOnCreate: true,
       interactive: true,

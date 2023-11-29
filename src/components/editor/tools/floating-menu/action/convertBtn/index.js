@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { VueRenderer } from '@tiptap/vue-2'
 import tippy from 'tippy.js'
 import convertBtn from './convertBtn.vue'

@@ -7,7 +7,6 @@ export const Bookmark = Node.create({
   draggable: true,
   isolating: true,
 
-  // Your code goes here.
   addOptions() {
     return {
       HTMLAttributes: {},

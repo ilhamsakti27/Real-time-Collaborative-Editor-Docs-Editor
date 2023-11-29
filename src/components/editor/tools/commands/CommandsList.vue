@@ -1,6 +1,6 @@
 <template>
   <div
-    v-show="topLevelNodeType !== 'table' && topLevelNodeType !== 'orderedList' && topLevelNodeType !== 'title'"
+    v-show="topLevelNodeType !== 'table' && topLevelNodeType !== 'title'"
     ref="itemsContainer"
     class="items"
   >
