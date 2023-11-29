@@ -2,18 +2,18 @@
   <div class="">
     <div
       v-show="!toggleShowLinkEdit"
-      class="popUpLink flex flex-col gap-y-2"
+      style="display: flex; flex-direction: column; row-gap: 0.5rem;"
+      class="popUpLink"
     >
       <input
         v-model="urlInput"
-        class="w-full text-sm"
+        style="width: 100%; font-size: 0.875rem; line-height: 1.25rem;"
         placeholder="Paste link"
         type="url"
         @input="clearError"
       >
       <button
-        class=" bg-blue-400 hover:bg-blue-200 text-white text-sm"
-        style="border: 1px solid rgba(156, 156, 156, 0.201);"
+        class="button-submit-link"
         @click="setLink"
       >
         Submit
@@ -23,29 +23,29 @@
       v-show="toggleShowLinkEdit"
       class="popUpLink"
     >
-      <div class="flex flex-col gap-y-2">
-        <div class="flex flex-col gap-y-1">
+      <div class="popuplink-edit-link">
+        <div>
           <label
-            class="text-black/40 text-xs font-semibold "
             for="pageOrURL"
-          >Page or URL</label>
+          >
+            Page or URL
+          </label>
           <input
             id="pageOrURL"
             v-model="url"
-            class="w-full text-sm"
             placeholder="Edit link or search pages"
             type="url"
           >
         </div>
-        <div class="flex flex-col gap-y-1">
+        <div>
           <label
-            class="text-black/40 text-xs font-semibold "
             for="linkTitle"
-          >Link title</label>
+          >
+            Link title
+          </label>
           <input
             id="linkTitle"
             v-model="urlTitle"
-            class="w-full text-sm"
             placeholder="title"
             type="url"
           >
@@ -53,12 +53,12 @@
       </div>
       <hr class="custom-hr">
       <button
-        class="flex items-center justify-center w-full gap-x-2 hover:bg-red-200 bg-red-400"
-        style="border: 1px solid rgba(156, 156, 156, 0.201);padding: 4px 0;"
+        class="button-remove-link"
         @click="removeLink"
       >
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <span v-html="removeIcon" />
-        <div class="text-white text-sm font-semibold ">
+        <div>
           Remove link
         </div>
       </button>
@@ -66,99 +66,98 @@
   </div>
 </template>
 
-<!-- eslint-disable  -->
 <script>
+/* eslint-disable vue/require-prop-types */
 
 export default {
-    props: {
-        editor: {
-            required: true
-        },
+  props: {
+    editor: {
+      required: true,
     },
-    data() {
-        return {
-            previousUrl: this.editor.getAttributes('link').href,
-            url: '',
-            toggleShowLinkInput: false,
-            toggleShowLinkEdit: false,
-            urlInput: '', 
-            urlError: '', 
-            removeIcon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none"  viewBox="0 0 24 24 " stroke-width="1.5" stroke="white" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>',
-            url: '',
-            urlTitle: '',
-        }
-    },
-    mounted() {
-        if (this.previousUrl) {
-            this.url = this.previousUrl;
-            this.toggleShowLinkEdit = !this.toggleShowLinkEdit;
-        }
-    },
-    methods: {
-        setLink() {
-            // cancelled
-            if (this.urlInput === null) {
-                return
-            }
-
-            // empty
-            if (this.urlInput === '') {
-                this.editor
-                    .chain()
-                    .focus()
-                    .extendMarkRange('link')
-                    .unsetLink()
-                    .run()
-
-                return
-            }
-
-            const pattern = /^(http:\/\/|https:\/\/)/;
-            const url = pattern.test(this.urlInput);
-
-            if (!url) {
-                this.editor
-                    .chain()
-                    .focus()
-                    .extendMarkRange('link')
-                    .setLink({ href: `http://${this.urlInput}` })
-                    .run()
-                this.toggleShowLinkEdit = !this.toggleShowLinkEdit;
-                this.url = this.urlInput;
-                this.urlInput = ''
-            }
-            else {
-                // update link
-                this.editor
-                    .chain()
-                    .focus()
-                    .extendMarkRange('link')
-                    .setLink({ href: this.urlInput })
-                    .run()
-                this.toggleShowLinkEdit = !this.toggleShowLinkEdit;
-                this.url = this.urlInput;
-                // clear input
-                this.urlInput = ''
-            }
-
-            this.toggleShowLinkInput = !this.toggleShowLinkInput
-            document.addEventListener("click", this.clickOutsideHandler);
-        },
-        removeLink() {
-            this.editor
-                .chain()
-                .focus()
-                .unsetLink()
-                .run()
-
-            this.toggleShowLinkEdit = !this.toggleShowLinkEdit;
-
-            document.addEventListener("click", this.clickOutsideHandler);
-        },
-        clearError() {
-            this.urlError = ''; // Clear the error message when input changes
-        },
+  },
+  data() {
+    return {
+      previousUrl: this.editor.getAttributes('link').href,
+      url: '',
+      toggleShowLinkInput: false,
+      toggleShowLinkEdit: false,
+      urlInput: '',
+      urlError: '',
+      removeIcon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none"  viewBox="0 0 24 24 " stroke-width="1.5" stroke="white" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>',
+      // url: '',
+      urlTitle: '',
     }
+  },
+  mounted() {
+    if (this.previousUrl) {
+      this.url = this.previousUrl
+      this.toggleShowLinkEdit = !this.toggleShowLinkEdit
+    }
+  },
+  methods: {
+    setLink() {
+      // cancelled
+      if (this.urlInput === null) {
+        return
+      }
+
+      // empty
+      if (this.urlInput === '') {
+        this.editor
+          .chain()
+          .focus()
+          .extendMarkRange('link')
+          .unsetLink()
+          .run()
+
+        return
+      }
+
+      const pattern = /^(http:\/\/|https:\/\/)/
+      const url = pattern.test(this.urlInput)
+
+      if (!url) {
+        this.editor
+          .chain()
+          .focus()
+          .extendMarkRange('link')
+          .setLink({ href: `http://${this.urlInput}` })
+          .run()
+        this.toggleShowLinkEdit = !this.toggleShowLinkEdit
+        this.url = this.urlInput
+        this.urlInput = ''
+      } else {
+        // update link
+        this.editor
+          .chain()
+          .focus()
+          .extendMarkRange('link')
+          .setLink({ href: this.urlInput })
+          .run()
+        this.toggleShowLinkEdit = !this.toggleShowLinkEdit
+        this.url = this.urlInput
+        // clear input
+        this.urlInput = ''
+      }
+
+      this.toggleShowLinkInput = !this.toggleShowLinkInput
+      document.addEventListener('click', this.clickOutsideHandler)
+    },
+    removeLink() {
+      this.editor
+        .chain()
+        .focus()
+        .unsetLink()
+        .run()
+
+      this.toggleShowLinkEdit = !this.toggleShowLinkEdit
+
+      document.addEventListener('click', this.clickOutsideHandler)
+    },
+    clearError() {
+      this.urlError = '' // Clear the error message when input changes
+    },
+  },
 }
 </script>
 <style>
@@ -178,7 +177,7 @@ export default {
   box-shadow: 0px 8px 16px 2px rgba(0, 0, 0, 0.1);
   width: 222px;
   padding: 12px;
-  margin-top: 30px;
+  margin-top: 4px;
 }
 
 .popUpLink input {
@@ -187,7 +186,7 @@ export default {
   padding: 4px 10px;
 
   &:focus {
-      outline: 2px solid rgba(35, 131, 226, 0.5);
+    outline: 2px solid rgba(35, 131, 226, 0.5);
   }
 }
 
@@ -197,12 +196,16 @@ export default {
   border-radius: 0.25rem;
   cursor: pointer;
   border-color: #6c757d;
-  /* Button border color */
-  /* color: #6c757d; */
-  /* Button text color */
   width: 100%;
 }
-
+.popUpLink button span {
+  font-size: 14px;
+}
+.popUpLink button div {
+  display: inline;
+  color: white;
+  font-size: 14px;
+}
 .custom-hr {
   border: none;
   height: 1px;
@@ -211,5 +214,47 @@ export default {
   /* Set the background color of the line */
   margin-top: 8px;
   /* Add margin for spacing */
+}
+.button-submit-link {
+  background-color: rgb(2 132 199);
+  color: rgb(255 255 255);
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem; /* 20px */
+}
+.button-submit-link:hover {
+  background-color: rgb(3 105 161);
+}
+.popuplink-edit-link {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+}
+.popuplink-edit-link div {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.25rem;
+}
+.popuplink-edit-link label {
+  color: rgba(55, 53, 47, 0.65);
+  font-size: 0.75rem; /* 12px */
+  line-height: 1rem; /* 16px */
+  font-weight: 600;
+}
+#pageOrURL,
+#linkTitle {
+  width: 100%;
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem; /* 20px */
+}
+.button-remove-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  column-gap: 0.5rem; /* 8px */
+  background-color: rgb(220 38 38);
+}
+.button-remove-link:hover {
+  background-color: rgb(185 28 28);
 }
 </style>

@@ -5,7 +5,7 @@
   >
     <template v-if="items.length">
       <div
-        style="padding:0.5rem 0.5rem; color:rgba(0,0,0,0.4); font-weight: 600;"
+        style="padding:0.5rem 0.5rem; color:rgba(0,0,0,0.4); font-weight: 600; font-size: 0.75rem; line-height: 1rem;"
         class="text-xs"
       >
         {{ title }}
@@ -29,6 +29,7 @@
             style="border-radius: 0.375rem"
             class="icon-con rounded-md"
           >
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <span v-html="item.icon" />
           </div>
           <span
@@ -48,6 +49,9 @@
 </template>
 
 <script>
+/* eslint-disable vue/require-prop-types */
+/* eslint-disable vue/require-default-prop */
+
 export default {
   props: {
     items: {
@@ -108,55 +112,55 @@ export default {
 
 <style lang="scss" scoped>
 .icon-con {
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    padding-bottom: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding-bottom: 2px;
 }
 
 .moreContainer {
-    display: flex;
-    flex-direction: column;
-    row-gap: 4px;
-    margin-top: -8px;
-    border-radius: 6px;
-    padding: 12px 4px 0px 4px;
-    border: 1px solid #D9D9D9;
-    background: white;
-    overflow: scroll;
-    max-height: 300px;
-    @apply shadow-md
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+  margin-top: -8px;
+  border-radius: 6px;
+  padding: 12px 4px 0px 4px;
+  border: 1px solid #D9D9D9;
+  background: white;
+  overflow: scroll;
+  max-height: 300px;
+  @apply shadow-md
 }
 
 // styling scroll slash menu
 .moreContainer::-webkit-scrollbar {
-    width: 3px;
+  width: 3px;
 }
 
 /* Track (jalur) */
 .moreContainer::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 50px;
+  background: transparent;
+  border-radius: 50px;
 }
 
 /* Handle (bilah) */
 .moreContainer::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 20px;
-    border: 7px solid transparent;
+  background: #888;
+  border-radius: 20px;
+  border: 7px solid transparent;
 }
 
 .item {
-    display: block;
-    margin: 0;
-    width: 100%;
-    text-align: left;
-    background: transparent;
-    border-radius: 0.4rem;
-    border: 1px solid transparent;
+  display: block;
+  margin: 0;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border-radius: 0.4rem;
+  border: 1px solid transparent;
 
-    &.is-selected {
-        // border-color: #000;
-        background-color: #d8d9daa1;
-    }
+  &.is-selected {
+    // border-color: #000;
+    background-color: #d8d9daa1;
+  }
 }
 
 .item span svg {
