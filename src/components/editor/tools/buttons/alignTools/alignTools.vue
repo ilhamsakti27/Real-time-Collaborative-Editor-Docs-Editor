@@ -26,6 +26,7 @@
           class=" menu "
         >
           <div class="icon-con">
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <span v-html="item.icon" />
           </div>
           <div
@@ -51,6 +52,9 @@
 </template>
 
 <script>
+/* eslint-disable vue/require-prop-types */
+/* eslint-disable vue/require-default-prop */
+
 export default {
   props: {
     items: {
