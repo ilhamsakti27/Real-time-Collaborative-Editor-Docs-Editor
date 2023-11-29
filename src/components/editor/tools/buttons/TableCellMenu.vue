@@ -18,7 +18,6 @@
           >
             <div class="flex flex-col">
               <div class=" rounded-md">
-                <!-- eslint-disable-next-line -->
                 <span v-html="item.icon" />
               </div>
             </div>

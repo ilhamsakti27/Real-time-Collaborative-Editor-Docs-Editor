@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-v-html -->
 <template>
   <div
     id="color-menu"
@@ -128,7 +127,6 @@
 </template>
 
 <script>
-// /* eslint-disable */
 import tippy from 'tippy.js'
 import colorFonts from '../utils/colorFonts'
 
@@ -157,10 +155,9 @@ export default {
         const rgbaColor = this.hexToRGBA(hexColor, 0.2)
 
         return rgbaColor
-        // eslint-disable-next-line
-      } else {
-        return ''
       }
+
+      return null
     },
   },
   mounted() {
@@ -195,12 +192,11 @@ export default {
           .run()
       }
     },
-    hexToRGBA(hex, alpha) {
-      // eslint-disable-next-line
+    hexToRGBA(hexCode, alpha) {
       const hexToDec = hex => parseInt(hex, 16)
-      const r = hexToDec(hex.substring(1, 3))
-      const g = hexToDec(hex.substring(3, 5))
-      const b = hexToDec(hex.substring(5, 7))
+      const r = hexToDec(hexCode.substring(1, 3))
+      const g = hexToDec(hexCode.substring(3, 5))
+      const b = hexToDec(hexCode.substring(5, 7))
 
       return `rgba(${r}, ${g}, ${b}, ${alpha})`
     },
@@ -215,10 +211,6 @@ export default {
   display: inline;
   position: sticky;
 }
-
-/* .inline {
-  display: inline;
-} */
 
 .arrow-icon {
   margin-left: -2px;

@@ -49,48 +49,47 @@
   </div>
 </template>
 
-<!-- eslint-disable -->
 <script>
 export default {
-    props: {
-        items: {
-            type: Array,
-            required: true,
-        },
-        editor: {
-          type: Object,
-          required: true
-        },
+  props: {
+    items: {
+      type: Array,
+      required: true,
     },
-    data() {
-        return {
-            selectedIndex: 0,
-        }
+    editor: {
+      type: Object,
+      required: true,
     },
-    mounted() {
-        console.log(this.items)
-    },
-    methods: {
-        selectItem(index) {
-            this.selectedIndex = index
-            const item = this.items[index]
+  },
+  data() {
+    return {
+      selectedIndex: 0,
+    }
+  },
+  mounted() {
+    console.log(this.items)
+  },
+  methods: {
+    selectItem(index) {
+      this.selectedIndex = index
+      const item = this.items[index]
 
-            if (item) {
-                let editor = this.editor
-                item.command({editor})
-            }
-        },
-        handleHover(index) {
-            this.selectedIndex = index
-        },
-        enterHandler() {
-            this.selectItem(this.selectedIndex)
-        },
+      if (item) {
+        const { editor } = this
+        item.command({ editor })
+      }
     },
+    handleHover(index) {
+      this.selectedIndex = index
+    },
+    enterHandler() {
+      this.selectItem(this.selectedIndex)
+    },
+  },
 }
 </script>
 
-<style lang="scss" scoped> 
+<style lang="scss" scoped>
 .icon-con {
     border: 1px solid rgba(0, 0, 0, 0.15);
     padding-bottom: 2px;

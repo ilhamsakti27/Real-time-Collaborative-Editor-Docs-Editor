@@ -30,7 +30,6 @@ function mergeDeep(target, source) {
         Object.assign(target, { [key]: source[key] })
       }
     }
-    /* eslint-enable  */
   }
 
   return target
