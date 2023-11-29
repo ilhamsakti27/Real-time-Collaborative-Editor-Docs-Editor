@@ -662,6 +662,7 @@ button:hover{
 }
 #tableColMenu{
   margin-top: -5vh;
+  margin-bottom: -20vh;
 }
 #tableRowMenu{
   padding: 4px 0px;

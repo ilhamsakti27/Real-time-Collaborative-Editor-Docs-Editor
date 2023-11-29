@@ -111,20 +111,21 @@
 </template>
 
 <script>
-/* eslint-disable vue/require-prop-types */
-/* eslint-disable vue/require-default-prop */
 
 import { uploadMedia } from '@/components/editor/utils/upload'
 
-const host = 'https://editorhocus.oriens.my.id'
+const host = process.env.VUE_APP_EDITOR_BACKEND
 
 export default {
   name: 'ImageView',
   props: {
     editor: {
+      type: Object,
       required: true,
     },
     range: {
+      type: Number,
+      default: 0,
       required: false,
     },
   },
