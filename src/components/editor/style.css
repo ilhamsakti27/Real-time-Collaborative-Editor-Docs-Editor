@@ -160,6 +160,12 @@
   line-height: 1.5;
 }
 
+/* LINK */
+.tiptap a{
+  cursor:pointer;
+  font-style: normal;
+}
+
 /* IMAGE */
 .tiptap img{
   height: 40vh;
