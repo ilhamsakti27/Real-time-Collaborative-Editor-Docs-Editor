@@ -418,31 +418,36 @@ ul[data-type="taskList"] {
 	 list-style: none;
 	 padding: 0;
 }
- ul[data-type="taskList"] p {
-	 margin: 0;
+ul[data-type="taskList"] p {
+  margin: 0;
   padding: 8px 8px;
 }
- ul[data-type="taskList"] li {
-	 display: flex;
+ul[data-type="taskList"] li {
+  display: flex;
 }
- ul[data-type="taskList"] li > label {
-	 flex: 0 0 auto;
-   padding: 8px 0px 8px 0;
-	 margin-right: 0.5rem;
-   margin-left: -4px;
-	 user-select: none;
+ul[data-type="taskList"] li > label {
+  flex: 0 0 auto;
+  padding: 8px 0px 8px 0;
+  margin-right: 0.5rem;
+  margin-left: -4px;
+  user-select: none;
 }
- ul[data-type="taskList"] li > div {
-	 flex: 1 1 auto;
+ul[data-type="taskList"] li > div {
+  flex: 1 1 auto;
 }
- ul[data-type="taskList"] li ul li, ul[data-type="taskList"] li ol li {
-	 display: list-item;
+ul[data-type="taskList"] li ul li, ul[data-type="taskList"] li ol li {
+  display: list-item;
 }
- ul[data-type="taskList"] li ul[data-type="taskList"] > li {
-	 display: flex;
+ul[data-type="taskList"] li ul[data-type="taskList"] > li {
+  display: flex;
 }
- 
-
+ul[data-type="taskList"] li.todoList[data-checked="true"] {
+  text-decoration: line-through;
+  color: rgb(177, 177, 177);
+}
+ul[data-type="taskList"] li.todoList[data-checked="true"] div p {
+  color: rgba(55, 53, 47, 0.65);
+}
 /* bubble menu */
 #bubbleMenu {
   border-radius: 4px;
