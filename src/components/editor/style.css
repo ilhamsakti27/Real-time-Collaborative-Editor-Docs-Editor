@@ -464,7 +464,7 @@ ul[data-type="taskList"] li.todoList[data-checked="true"] div p {
 
 .bubble-menu-btn {
   padding: 6px 8px;
-  border-right: 1px solid rgba(0,0,0,0.4);
+  border-right: 1px solid rgb(212 212 216);
 }
 .bubble-menu-btn:hover {
   background-color: #e2e1e1fa;

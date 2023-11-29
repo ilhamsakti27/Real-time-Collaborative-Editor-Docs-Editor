@@ -49,7 +49,7 @@ export default {
       required: true,
     },
     editor: {
-      type: Array, // type
+      type: Object, // type
       required: true,
     },
     command: {

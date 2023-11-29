@@ -97,6 +97,7 @@
           <inlineToolsBtn :editor="editor" />
           <FontFamilyButton
             v-if="!isLink"
+            style="border: none;"
             class="bubble-menu-btn"
             :editor="editor"
           />
@@ -105,7 +106,7 @@
 
       <BubbleMenu
         v-if="editor && (tableRowTools || tableColumnTools)"
-        id="bubbleMenu"
+        id="bubbleMenuTable"
         plugin-key="tableBubbleMenu"
         :editor="editor"
         :tippy-options="{
@@ -644,7 +645,7 @@ export default {
 button:hover{
   background-color: #e1e1e1;
 }
-#bubbleMenu{
+#bubbleMenuTable{
   display: flex;
   align-items: center;
   margin-bottom: -2vh;
@@ -657,6 +658,9 @@ button:hover{
   --tw-shadow: 0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);
   box-shadow: var(--tw-ring-offset-shadow,0 0 transparent),var(--tw-ring-shadow,0 0 transparent),var(--tw-shadow);
 }
+/* #bubbleMenu {
+  background-color: pink;
+} */
 #tableRowMenu{
   margin-left: -2.5vh;
 }
