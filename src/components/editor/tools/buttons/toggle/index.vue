@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <div class="toggle-list">
+    <!-- <div class="toggle-list">
       <div>
         <button
           class="toggle-btn"
@@ -51,7 +51,7 @@
       <div class="toggle-desc hidden">
         <p>This is the content you can toggle. 2</p>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

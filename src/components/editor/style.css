@@ -597,3 +597,29 @@ ul[data-type="taskList"] li.todoList[data-checked="true"] div p {
   cursor: ew-resize;
   cursor: col-resize;
 }
+.toggle-list {
+  border: 1px solid black;
+  /* padding: 2.5rem; */
+}
+.toggle-btn {
+  background-color: rgba(128, 128, 128, 0.242);
+  border-radius: 4px;
+  display: inline;
+
+}
+.toggle-heading {
+  margin-left: 10px;
+}
+.toggle-heading p {
+  display: inline;
+}
+.toggle-desc {
+  background-color: pink;
+  /* margin-left: 1.75rem; 
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(100 116 139); */
+} 
+.show {
+  display: none;
+}

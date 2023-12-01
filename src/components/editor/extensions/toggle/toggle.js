@@ -36,13 +36,44 @@ export const Toggle = Node.create({
   },
   addNodeView() {
     return () => {
-      // container
+      const div = document.createElement('div')
+      div.classList.add('toggle-list')
+
       const container = document.createElement('div')
-      // const toggleBtn = document.createElement('button')
+
+      const toggleBtn = document.createElement('button')
+      toggleBtn.classList.add('toggle-btn')
+
+      const spanIcon = document.createElement('span')
+      spanIcon.classList.add('material-symbols-outlined')
+      spanIcon.innerHTML = '&#10158;'
+      spanIcon.contentEditable = false
+
+      const spanHeading = document.createElement('span')
+      spanHeading.classList.add('toggle-heading')
+      spanHeading.classList.add('content')
+
+      const toggleDesc = document.createElement('div')
+      toggleDesc.classList.add('toggle-desc')
+
+      // const p = document.createElement('p')
+      // p.classList.add('content')
+
+      div.appendChild(container)
+      container.appendChild(toggleBtn)
+      toggleBtn.appendChild(spanIcon)
+      container.appendChild(spanHeading)
+      div.appendChild(toggleDesc)
+      // toggleDesc.appendChild(p)
+
+      toggleBtn.addEventListener('click', () => {
+        toggleDesc.classList.add('show')
+      })
 
       return {
-        dom: container,
-        contentDOM: container,
+        dom: div,
+        // contentDOM: spanHeading,
+        contentDOM: toggleDesc,
       }
     }
   },
