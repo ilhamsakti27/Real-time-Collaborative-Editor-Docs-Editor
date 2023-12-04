@@ -8,7 +8,7 @@ export const Toggle = Node.create({
   content: 'block+',
 
   parseHTML() {
-    return [{ tag: 'toggle' }]
+    return [{ tag: 'div[data-type="toggle"]' }]
   },
 
   addCommands() {
@@ -22,7 +22,7 @@ export const Toggle = Node.create({
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ['toggle-component', mergeAttributes(HTMLAttributes)]
+    return ['toggle-component', mergeAttributes(HTMLAttributes, { 'data-type': 'toggle' }), 0]
   },
 
   addNodeView() {

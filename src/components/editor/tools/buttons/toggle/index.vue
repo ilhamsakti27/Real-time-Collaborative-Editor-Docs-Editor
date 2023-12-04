@@ -1,37 +1,47 @@
 <template>
-  <div>
-    <div
-      class="toggle-list"
-    >
+  <node-view-wrapper class="toggle">
+    <div>
       <div
-        class="toggle-btn"
+        class="toggle-list"
       >
-        <button
-          @click="toggleFunction"
+        <div
+          class="toggle-btn"
         >
-          <!-- eslint-disable-next-line vue/no-v-html -->
-          <span v-html="arrowIcon" />
-        </button>
-        <span
-          class="toggle-heading"
+          <button
+            @click="toggleFunction"
+          >
+            <!-- eslint-disable-next-line vue/no-v-html -->
+            <span v-html="arrowIcon" />
+          </button>
+          <span
+            class="toggle-heading"
+            contenteditable="true"
+          >
+            Heading 1
+          </span>
+        </div>
+        <div
+          id="toggle-desc"
+          class="hide"
           contenteditable="true"
         >
-          Heading 1
-        </span>
-      </div>
-      <div
-        id="toggle-desc"
-        class="hide"
-        contenteditable="true"
-      >
-        <p>This is the content you can toggle.</p>
+          <p>This is the content you can toggle.</p>
+        </div>
       </div>
     </div>
-  </div>
+  </node-view-wrapper>
 </template>
 
 <script>
+import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-2'
+
 export default {
+  components: {
+    NodeViewWrapper,
+    // eslint-disable-next-line vue/no-unused-components
+    NodeViewContent,
+  },
+  props: nodeViewProps,
   data() {
     return {
       isToggled: false,
