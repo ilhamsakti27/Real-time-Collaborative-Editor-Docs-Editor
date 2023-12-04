@@ -64,18 +64,6 @@
       <BubbleMenu v-if="editor" v-show="shouldRenderBubbleMenu" id="bubbleMenu" plugin-key="mainBubleMenu"
         :editor="editor" :tippy-options="{
           duration: 500, placement: 'top-start'
-<<<<<<< HEAD
-        }">
-        <div v-if="topLevelNodeType !== 'table'" style="display: flex; align-items: center;">
-          <ColorButton v-if="!isLink" style="" class="bubble-menu-btn" :editor="editor" />
-          <inlineToolsBtn :editor="editor" />
-          <FontFamilyButton v-if="!isLink" class="bubble-menu-btn" :editor="editor" />
-        </div>
-      </BubbleMenu>
-
-      <BubbleMenu v-if="editor && (tableRowTools || tableColumnTools)" id="bubbleMenu" plugin-key="tableBubbleMenu"
-        :editor="editor" :tippy-options="{
-=======
         }"
       >
         <div
@@ -151,9 +139,6 @@
       </bubble-menu>
 
       <!-- editor -->
-<<<<<<< HEAD
-      <editor-content id="editor" :editor="editor" :value="editor.getAttributes('textStyle').color" />
-=======
       <editor-content
         id="editor"
         :editor="editor"
@@ -162,7 +147,6 @@
 
       <!-- eslint-disable-next-line vue/html-self-closing -->
       <toggle-list></toggle-list>
->>>>>>> 41dc1ebaa5c4c75c714f5c08d7a2cc37b7914f88
     </div>
   </div>
 </template>
@@ -613,12 +597,7 @@ export default {
 button:hover {
   background-color: #e1e1e1;
 }
-<<<<<<< HEAD
-
-#bubbleMenu {
-=======
 #bubbleMenuTable{
->>>>>>> 41dc1ebaa5c4c75c714f5c08d7a2cc37b7914f88
   display: flex;
   align-items: center;
   margin-bottom: -2vh;
@@ -631,15 +610,10 @@ button:hover {
   --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 transparent), var(--tw-ring-shadow, 0 0 transparent), var(--tw-shadow);
 }
-<<<<<<< HEAD
-
-#tableRowMenu {
-=======
 /* #bubbleMenu {
   background-color: pink;
 } */
 #tableRowMenu{
->>>>>>> 41dc1ebaa5c4c75c714f5c08d7a2cc37b7914f88
   margin-left: -2.5vh;
 }
 
