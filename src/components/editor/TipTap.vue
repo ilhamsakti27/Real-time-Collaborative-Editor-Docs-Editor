@@ -4,7 +4,7 @@
   >
     <!-- user name & avatar -->
     <div
-      style="position: absolute; top: 5rem;left: 1rem; width: 15%;"
+      class="username-and-avatar"
     >
       <div class="">
         Online: {{ total }}
@@ -12,18 +12,17 @@
       <div>Status: {{ status }}</div>
       <div>Your Name: {{ currentUser.name }}</div>
       <div
-        style="margin: 1rem 0;"
+        style="margin-top: 1rem;"
+        class="button-ganti-nama-avatar"
       >
         <button
-          style="background-color: rgba(229, 231, 235,1); padding: 0.2rem 1rem;"
           @click="gantiNama"
         >
           Ganti Nama
         </button>
       </div>
-      <div class="">
+      <div class="button-ganti-nama-avatar">
         <button
-          style="background-color: rgba(229, 231, 235,1); padding: 0.2rem 1rem;"
           @click="updateCurrentUser({ avatar: getRandomAvatar() })"
         >
           Ganti Avatar
@@ -705,5 +704,24 @@ button:hover{
   border-color: rgb(0 0 0);
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   border-radius: 0.25rem; /* 4px */
+}
+.button-ganti-nama-avatar {
+  margin: 0.3rem 0;
+}
+.button-ganti-nama-avatar button {
+  /* margin: 1rem 0; */
+  border-radius: 4px;
+  border: 1px solid rgb(203 213 225);
+  /* background-color: rgba(229, 231, 235,1); */
+  background-color: #fff;
+  padding: 0.2rem 0.8rem;
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem; /* 20px */
+}
+.username-and-avatar {
+  position: absolute;
+  top: 5rem;
+  left: 1rem;
+  width: 15%;
 }
 </style>

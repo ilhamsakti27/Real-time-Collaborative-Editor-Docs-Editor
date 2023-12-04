@@ -141,6 +141,8 @@ export default {
   width: 75%;
   height: 40vh;
   overflow-y: auto;
+  border: 1px solid rgb(203 213 225);
+  border-radius: 4px;
 }
 .snapshot-body-history {
   display: flex;
@@ -152,7 +154,8 @@ export default {
   height: 40vh;
 }
 .snapshot-body-gray {
-  background-color: rgb(243 244 246);
+  background-color: rgb(209 213 219);
+  border-radius: 4px;
 }
 .snapshot-body-timestamp {
   font-size: 0.75rem; /* 12px */
@@ -160,20 +163,24 @@ export default {
   color: rgb(0, 0, 0, 0.5);
 }
 .snapshot-body-preview {
+  border-radius: 4px;
   cursor: pointer;
   padding-left: 0.5rem; /* 8px */
   padding-right: 0.5rem; /* 8px */
   padding-top: 0.25rem; /* 4px */
   padding-bottom: 0.25rem; /* 4px */
   width: 100%;
+  /* color: white; */
 }
 .snapshot-body-preview:hover {
-  background-color: rgb(243 244 246);
+  background-color: rgb(107 114 128);
+  /* color: white; */
 }
 .snapshot-btn-container {
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  margin-top: 1rem;
 }
 .snapshot-btn {
   padding-top: 0.25rem;
@@ -182,13 +189,19 @@ export default {
   padding-right: 2rem;
   /* margin-top: 0.5rem; */
   margin-left: 10px;
-  background-color: rgb(229, 231, 235);
+  /* background-color: rgb(229, 231, 235); */
+  background-color: rgb(37 99 235);
+  color: white;
   border-radius: 4px;
 }
 .btn-cancel {
   background-color: rgb(237, 237, 237, 0.7);
+  color: black;
 }
 .snapshot-btn:hover {
+  background-color: rgb(30 64 175);
+}
+.btn-cancel:hover {
   background-color: rgb(214, 214, 214);
 }
 </style>
