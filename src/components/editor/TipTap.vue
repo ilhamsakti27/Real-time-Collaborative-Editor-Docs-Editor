@@ -1,16 +1,28 @@
 <template>
-  <div
-    style="display: flex;"
-  >
+  <div style="display: flex;">
     <!-- user name & avatar -->
+<<<<<<< HEAD
+    <div style="position: absolute; top: 5rem;left: 1rem; width: 15%;">
+=======
     <div
       class="username-and-avatar"
     >
+>>>>>>> 41dc1ebaa5c4c75c714f5c08d7a2cc37b7914f88
       <div class="">
         Online: {{ total }}
       </div>
       <div>Status: {{ status }}</div>
       <div>Your Name: {{ currentUser.name }}</div>
+<<<<<<< HEAD
+      <div style="margin: 1rem 0;">
+        <button style="background-color: rgba(229, 231, 235,1); padding: 0.2rem 1rem;" @click="gantiNama">
+          Ganti Nama
+        </button>
+      </div>
+      <div class="">
+        <button style="background-color: rgba(229, 231, 235,1); padding: 0.2rem 1rem;"
+          @click="updateCurrentUser({ avatar: getRandomAvatar() })">
+=======
       <div
         style="margin-top: 1rem;"
         class="button-ganti-nama-avatar"
@@ -25,62 +37,45 @@
         <button
           @click="updateCurrentUser({ avatar: getRandomAvatar() })"
         >
+>>>>>>> 41dc1ebaa5c4c75c714f5c08d7a2cc37b7914f88
           Ganti Avatar
         </button>
       </div>
     </div>
 
-    <div
-      v-if="editor"
-      class="editor-canvas"
-    >
-      <floating-menu
-        v-if="editor"
-        :should-show="shouldShowFloatingMenu"
-        :editor="editor"
-        :class="{ 'isTyping': isTyping, }"
-        :tippy-options="floatingTippy"
-      >
-        <div
-          v-if="topLevelNodeType !== 'title' && topLevelNodeType !== 'loading'"
-          style="display: flex;flex-direction: row;"
-          pluginKey=""
-          :draggable="dragging"
-          @click="handleActionMenu($event)"
-          @dragend="endDragging($event)"
-        >
-          <button
-            id="submenu"
-            ref="actionMenu"
-            style="margin-left: 0.25rem; padding-top: 0.3rem; border-radius: 0.375rem;"
-            aria-label="Drag"
-            :action-tooltip="actionDataTooltip()"
-            @mousedown="startDragging($event)"
-            @mouseup="draggedNodePosition = false; dragging = false;"
-          >
-            <svg
-              width="24"
-              height="24"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-              focusable="false"
-              class="w-5 h-5 md:w-6 md:h-6"
-            >
+    <div v-if="editor" class="editor-canvas">
+      <floating-menu v-if="editor" :should-show="shouldShowFloatingMenu" :editor="editor"
+        :class="{ 'isTyping': isTyping, }" :tippy-options="floatingTippy">
+        <div v-if="topLevelNodeType !== 'title' && topLevelNodeType !== 'loading'"
+          style="display: flex;flex-direction: row;" pluginKey="" :draggable="dragging" @click="handleActionMenu($event)"
+          @dragend="endDragging($event)">
+          <button id="submenu" ref="actionMenu"
+            style="margin-left: 0.25rem; padding-top: 0.3rem; border-radius: 0.375rem;" aria-label="Drag"
+            :action-tooltip="actionDataTooltip()" @mousedown="startDragging($event)"
+            @mouseup="draggedNodePosition = false; dragging = false;">
+            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"
+              focusable="false" class="w-5 h-5 md:w-6 md:h-6">
               <path d="M8 7h2V5H8v2zm0 6h2v-2H8v2zm0 6h2v-2H8v2zm6-14v2h2V5h-2zm0 8h2v-2h-2v2zm0 6h2v-2h-2v2z" />
             </svg>
           </button>
         </div>
       </floating-menu>
 
-      <BubbleMenu
-        v-if="editor"
-        v-show="shouldRenderBubbleMenu"
-        id="bubbleMenu"
-        plugin-key="mainBubleMenu"
-        :editor="editor"
-        :tippy-options="{
+      <BubbleMenu v-if="editor" v-show="shouldRenderBubbleMenu" id="bubbleMenu" plugin-key="mainBubleMenu"
+        :editor="editor" :tippy-options="{
           duration: 500, placement: 'top-start'
+<<<<<<< HEAD
+        }">
+        <div v-if="topLevelNodeType !== 'table'" style="display: flex; align-items: center;">
+          <ColorButton v-if="!isLink" style="" class="bubble-menu-btn" :editor="editor" />
+          <inlineToolsBtn :editor="editor" />
+          <FontFamilyButton v-if="!isLink" class="bubble-menu-btn" :editor="editor" />
+        </div>
+      </BubbleMenu>
+
+      <BubbleMenu v-if="editor && (tableRowTools || tableColumnTools)" id="bubbleMenu" plugin-key="tableBubbleMenu"
+        :editor="editor" :tippy-options="{
+=======
         }"
       >
         <div
@@ -109,95 +104,56 @@
         plugin-key="tableBubbleMenu"
         :editor="editor"
         :tippy-options="{
+>>>>>>> 41dc1ebaa5c4c75c714f5c08d7a2cc37b7914f88
           duration: 500, placement: 'top-start', getReferenceClientRect: getMenuCoords,
-        }"
-        :should-show="tableIsActive"
-      >
+        }" :should-show="tableIsActive">
         <TableCellMenu :editor="editor" />
       </BubbleMenu>
 
       <!-- table row menu -->
-      <bubble-menu
-        v-if="editor && tableRowTools"
-        id="tableRowMenu"
-        :editor="editor"
-        plugin-key="tableRowMenu"
-        :should-show="tableIsActive"
-        :tippy-options="{
+      <bubble-menu v-if="editor && tableRowTools" id="tableRowMenu" :editor="editor" plugin-key="tableRowMenu"
+        :should-show="tableIsActive" :tippy-options="{
           placement: 'right',
           animation: 'fade',
           zIndex: 1,
           duration: 500,
           getReferenceClientRect: getTableRowMenuCoords,
-        }"
-      >
-        <menu-item
-          id="menuItem"
-          :action="Row"
-        >
-          <menu-button
-            id="menuButton"
-            title="Row tools"
-            :content="rowIconTable"
-          />
+        }">
+        <menu-item id="menuItem" :action="Row">
+          <menu-button id="menuButton" title="Row tools" :content="rowIconTable" />
           <template #dropdown>
-            <div
-              id="dropdown"
-            >
-              <menu-dropdown-button
-                v-for="( tool ) in tableRowTools "
-                :key="tool.title"
-                :content="tool.icon"
-                :label="tool.title"
-                :editor="editor"
-                :tool="tool"
-              />
+            <div id="dropdown">
+              <menu-dropdown-button v-for="( tool ) in tableRowTools " :key="tool.title" :content="tool.icon"
+                :label="tool.title" :editor="editor" :tool="tool" />
             </div>
           </template>
         </menu-item>
       </bubble-menu>
 
       <!-- table column menu -->
-      <bubble-menu
-        v-if="editor && tableColumnTools"
-        id="tableColMenu"
-        :editor="editor"
-        plugin-key="tableColumnMenu"
-        :should-show="tableIsActive"
-        :tippy-options="{
+      <bubble-menu v-if="editor && tableColumnTools" id="tableColMenu" :editor="editor" plugin-key="tableColumnMenu"
+        :should-show="tableIsActive" :tippy-options="{
           placement: 'bottom',
           animation: 'fade',
           duration: 500,
           zIndex: 1,
           getReferenceClientRect: getTableColumnMenuCoords,
-        }"
-      >
-        <menu-item
-          :action="Column"
-          class="menu-item"
-        >
-          <menu-button
-            title="Column tools"
-            :content="colIconTable"
-          />
+        }">
+        <menu-item :action="Column" class="menu-item">
+          <menu-button title="Column tools" :content="colIconTable" />
           <template #dropdown>
-            <div
-              style="display: flex; flex-direction: column;   row-gap: 0.25rem; "
-            >
-              <menu-dropdown-button
-                v-for="( tool ) in tableColumnTools"
-                :key="tool.title"
-                :content="tool.icon"
-                :label="tool.title"
-                :editor="editor"
-                :tool="tool"
-              />
+            <div style="display: flex; flex-direction: column;   row-gap: 0.25rem; ">
+              <menu-dropdown-button v-for="( tool ) in tableColumnTools" :key="tool.title" :content="tool.icon"
+                :label="tool.title" :editor="editor" :tool="tool" />
             </div>
           </template>
         </menu-item>
       </bubble-menu>
 
       <!-- editor -->
+<<<<<<< HEAD
+      <editor-content id="editor" :editor="editor" :value="editor.getAttributes('textStyle').color" />
+=======
       <editor-content
         id="editor"
         :editor="editor"
@@ -206,6 +162,7 @@
 
       <!-- eslint-disable-next-line vue/html-self-closing -->
       <toggle-list></toggle-list>
+>>>>>>> 41dc1ebaa5c4c75c714f5c08d7a2cc37b7914f88
     </div>
   </div>
 </template>
@@ -363,8 +320,8 @@ export default {
     const [, , documentId] = path.split('/')
     this.documentId = documentId
     this.provider = new HocuspocusProvider({
-      // url: 'ws://localhost:1234/',
-      url: 'wss://editorhocus.oriens.my.id',
+      url: 'ws://localhost:1234/',
+      // url: 'wss://editorhocus.oriens.my.id',
       name: this.documentId,
       document: ydoc,
       token: 'test-token', // auth token
@@ -620,6 +577,7 @@ export default {
 
 <style >
 @import 'style.css';
+
 /* Give a remote user a caret */
 .collaboration-cursor__caret {
   position: relative;
@@ -630,6 +588,7 @@ export default {
   word-break: normal;
   pointer-events: none;
 }
+
 /* Render the username above the caret */
 .collaboration-cursor__label {
   position: absolute;
@@ -645,14 +604,21 @@ export default {
   border-radius: 3px 3px 3px 0;
   white-space: nowrap;
 }
-.isTyping{
+
+.isTyping {
   pointer-events: none;
   opacity: 0;
 }
-button:hover{
+
+button:hover {
   background-color: #e1e1e1;
 }
+<<<<<<< HEAD
+
+#bubbleMenu {
+=======
 #bubbleMenuTable{
+>>>>>>> 41dc1ebaa5c4c75c714f5c08d7a2cc37b7914f88
   display: flex;
   align-items: center;
   margin-bottom: -2vh;
@@ -662,53 +628,108 @@ button:hover{
   width: -moz-max-content;
   width: max-content;
   border-width: 1px;
-  --tw-shadow: 0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);
-  box-shadow: var(--tw-ring-offset-shadow,0 0 transparent),var(--tw-ring-shadow,0 0 transparent),var(--tw-shadow);
+  --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 transparent), var(--tw-ring-shadow, 0 0 transparent), var(--tw-shadow);
 }
+<<<<<<< HEAD
+
+#tableRowMenu {
+=======
 /* #bubbleMenu {
   background-color: pink;
 } */
 #tableRowMenu{
+>>>>>>> 41dc1ebaa5c4c75c714f5c08d7a2cc37b7914f88
   margin-left: -2.5vh;
 }
-#tableColMenu{
+
+#tableColMenu {
   margin-top: -5vh;
   margin-bottom: -20vh;
 }
-#tableRowMenu{
+
+#tableRowMenu {
   padding: 4px 0px;
-  border: 1px solid rgba(0,0,0,0.4);
+  border: 1px solid rgba(0, 0, 0, 0.4);
   border-radius: 6px;
   background-color: white;
 }
-#tableColMenu{
+
+#tableColMenu {
   padding: 0px 2px;
   background-color: white;
-  border: 1px solid rgba(0,0,0,0.4);
+  border: 1px solid rgba(0, 0, 0, 0.4);
   border-radius: 6px;
 }
-#tableRowMenu:hover, #tableColMenu:hover{
-    background-color: #e1e1e1;
+
+#tableRowMenu:hover,
+#tableColMenu:hover {
+  background-color: #e1e1e1;
 }
+
 #menuButton {
   border-radius: 9999px;
   color: rgb(148 163 184);
 }
+
 #menuButton:hover {
   color: rgb(30 41 59);
 }
+
 #dropdown {
   display: flex;
   flex-direction: column;
-  row-gap: 0.25rem; /* 4px */
+  row-gap: 0.25rem;
+  /* 4px */
 }
+
 .menu-item {
-  padding-left: 0.25rem; /* 4px */
-  padding-right: 0.25rem; /* 4px */
+  padding-left: 0.25rem;
+  /* 4px */
+  padding-right: 0.25rem;
+  /* 4px */
   border-width: 1px;
   border-color: rgb(0 0 0);
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  border-radius: 0.25rem; /* 4px */
+  border-radius: 0.25rem;
+  /* 4px */
+}
+
+.details {
+  display: flex;
+  margin: 1rem 0;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+
+  >button {
+    display: flex;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 0;
+
+    &::before {
+      content: '\25B6';
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 1.5em;
+      height: 1.5em;
+    }
+  }
+
+  &.is-open>button::before {
+    content: '\25BC';
+  }
+
+  >div {
+    flex: 1 1 auto;
+  }
+
+  :last-child {
+    margin-bottom: 0;
+  }
 }
 .button-ganti-nama-avatar {
   margin: 0.3rem 0;
