@@ -123,6 +123,7 @@ export default {
   padding-right: 1rem; /* 16px */
   padding-top: 1rem; /* 16px */
   padding-bottom: 1rem; /* 16px */
+  border: 1px solid rgb(203 213 225);
 }
 .snapshot-title {
   padding-bottom: 0.5rem;

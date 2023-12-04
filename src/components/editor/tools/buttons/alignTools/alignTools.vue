@@ -160,29 +160,31 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style sc>
 .icon-con {
   border: 1px solid rgba(0, 0, 0, 0.15);
-  padding-bottom: 2px;
+  /* // padding-bottom: 2px; */
+  padding: 4px 4px 0 4px;
   border-radius: 0.375rem;
+  /* background-color: pink; */
 }
 
 .moreContainer {
-    display: flex;
-    flex-direction: column;
-    row-gap: 4px;
-    margin-top: -8px;
-    border-radius: 6px;
-    padding: 12px 4px 0px 4px;
-    border: 1px solid #D9D9D9;
-    background: white;
-    overflow: scroll;
-    max-height: 300px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+  margin-top: -8px;
+  border-radius: 6px;
+  padding: 12px 4px 0px 4px;
+  border: 1px solid #D9D9D9;
+  background: white;
+  overflow: scroll;
+  max-height: 300px;
 }
 
-// styling scroll slash menu
+/* // styling scroll slash menu */
 .moreContainer::-webkit-scrollbar {
-    width: 3px;
+  width: 3px;
 }
 
 /* Track (jalur) */
@@ -206,11 +208,10 @@ export default {
   background: transparent;
   border-radius: 0.4rem;
   border: 1px solid transparent;
-
-  &.is-selected {
-      // border-color: #000;
-      background-color: #d8d9daa1;
-  }
+}
+.item.is-selected {
+    /* // border-color: #000; */
+  background-color: #d8d9daa1;
 }
 
 .item span svg {

@@ -203,6 +203,9 @@
         :editor="editor"
         :value="editor.getAttributes('textStyle').color"
       />
+
+      <!-- eslint-disable-next-line vue/html-self-closing -->
+      <toggle-list></toggle-list>
     </div>
   </div>
 </template>
@@ -249,6 +252,7 @@ import MenuItem from './tools/buttons/tableTools/MenuItem.vue'
 import MenuButton from './tools/buttons/tableTools/MenuButton.vue'
 import MenuDropdownButton from './tools/buttons/tableTools/MenuDropdownButton.vue'
 import TableCellMenu from './tools/buttons/TableCellMenu.vue'
+import ToggleList from './tools/buttons/toggle/index.vue'
 
 const ydoc = new Y.Doc()
 const RandomColor = list => list[Math.floor(Math.random() * list.length)]
@@ -265,6 +269,7 @@ export default {
     MenuButton,
     MenuDropdownButton,
     TableCellMenu,
+    ToggleList,
   },
   props: {
     editorClass: {
@@ -709,10 +714,8 @@ button:hover{
   margin: 0.3rem 0;
 }
 .button-ganti-nama-avatar button {
-  /* margin: 1rem 0; */
   border-radius: 4px;
   border: 1px solid rgb(203 213 225);
-  /* background-color: rgba(229, 231, 235,1); */
   background-color: #fff;
   padding: 0.2rem 0.8rem;
   font-size: 0.875rem; /* 14px */
