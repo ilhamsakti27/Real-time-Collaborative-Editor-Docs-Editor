@@ -334,7 +334,7 @@ export default {
     shouldRenderBubbleMenu() {
       const excludedNodeTypes = [
         'title', 'image', 'codeBlock', 'bookmark',
-        'loading', 'video', 'horizontalRule', 'youtube', 'Page',
+        'loading', 'video', 'horizontalRule', 'youtube', 'Page', 'toggle',
       ]
 
       return !excludedNodeTypes.includes(this.currentNodeType)

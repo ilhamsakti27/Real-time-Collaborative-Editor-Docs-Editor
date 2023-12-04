@@ -1,6 +1,12 @@
 <template>
   <node-view-wrapper class="vue-component">
-    <div>
+    <div
+      style="cursor: grab;"
+      class="drag-handle"
+      contenteditable="false"
+      draggable="true"
+      data-drag-handle
+    >
       <div class="toggle-list">
         <div class="toggle-btn">
           <button @click="toggleFunction">
@@ -10,7 +16,7 @@
             class="toggle-heading"
             contenteditable="true"
           >
-            Heading 1
+            Details
           </span>
         </div>
         <div

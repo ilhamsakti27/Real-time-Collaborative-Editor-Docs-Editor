@@ -4,11 +4,22 @@ import ToggleComponent from '../../tools/buttons/toggle/index.vue'
 
 export const Toggle = Node.create({
   name: 'toggle',
-
-  group: 'block',
-
   atom: true,
+  draggable: true,
+  isolating: true,
 
+  addOptions() {
+    return {
+      HTMLAttributes: {},
+      inline: false,
+    }
+  },
+  inline() {
+    return this.options.inline
+  },
+  group() {
+    return this.options.inline ? 'inline' : 'block'
+  },
   addAttributes() {
     return {
       count: {
