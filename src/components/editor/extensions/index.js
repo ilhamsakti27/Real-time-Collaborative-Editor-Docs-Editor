@@ -38,6 +38,8 @@ import { DocumentWithTitle, Title } from './title'
 import { BookmarkExtension } from './bookmark'
 import { YoutubeExtension } from './youtube'
 import { LinkToPage } from './page'
+import { ToggleExtension } from './toggle'
+import { DetailsExtension } from './details'
 
 // slash menu extension
 import Commands from '../tools/commands/commands'
@@ -52,6 +54,8 @@ const defaultExtension = [
   BookmarkExtension,
   LoadingExtension,
   YoutubeExtension,
+  ToggleExtension,
+  DetailsExtension,
   Video,
   Title,
   LinkToPage,

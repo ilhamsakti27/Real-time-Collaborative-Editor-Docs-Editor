@@ -1,28 +1,14 @@
 <template>
   <div style="display: flex;">
     <!-- user name & avatar -->
-<<<<<<< HEAD
-    <div style="position: absolute; top: 5rem;left: 1rem; width: 15%;">
-=======
     <div
       class="username-and-avatar"
     >
->>>>>>> 41dc1ebaa5c4c75c714f5c08d7a2cc37b7914f88
       <div class="">
         Online: {{ total }}
       </div>
       <div>Status: {{ status }}</div>
       <div>Your Name: {{ currentUser.name }}</div>
-<<<<<<< HEAD
-      <div style="margin: 1rem 0;">
-        <button style="background-color: rgba(229, 231, 235,1); padding: 0.2rem 1rem;" @click="gantiNama">
-          Ganti Nama
-        </button>
-      </div>
-      <div class="">
-        <button style="background-color: rgba(229, 231, 235,1); padding: 0.2rem 1rem;"
-          @click="updateCurrentUser({ avatar: getRandomAvatar() })">
-=======
       <div
         style="margin-top: 1rem;"
         class="button-ganti-nama-avatar"
@@ -37,32 +23,61 @@
         <button
           @click="updateCurrentUser({ avatar: getRandomAvatar() })"
         >
->>>>>>> 41dc1ebaa5c4c75c714f5c08d7a2cc37b7914f88
           Ganti Avatar
         </button>
       </div>
     </div>
 
-    <div v-if="editor" class="editor-canvas">
-      <floating-menu v-if="editor" :should-show="shouldShowFloatingMenu" :editor="editor"
-        :class="{ 'isTyping': isTyping, }" :tippy-options="floatingTippy">
-        <div v-if="topLevelNodeType !== 'title' && topLevelNodeType !== 'loading'"
-          style="display: flex;flex-direction: row;" pluginKey="" :draggable="dragging" @click="handleActionMenu($event)"
-          @dragend="endDragging($event)">
-          <button id="submenu" ref="actionMenu"
-            style="margin-left: 0.25rem; padding-top: 0.3rem; border-radius: 0.375rem;" aria-label="Drag"
-            :action-tooltip="actionDataTooltip()" @mousedown="startDragging($event)"
-            @mouseup="draggedNodePosition = false; dragging = false;">
-            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"
-              focusable="false" class="w-5 h-5 md:w-6 md:h-6">
+    <div
+      v-if="editor"
+      class="editor-canvas"
+    >
+      <floating-menu
+        v-if="editor"
+        :should-show="shouldShowFloatingMenu"
+        :editor="editor"
+        :class="{ 'isTyping': isTyping, }"
+        :tippy-options="floatingTippy"
+      >
+        <div
+          v-if="topLevelNodeType !== 'title' && topLevelNodeType !== 'loading'"
+          style="display: flex;flex-direction: row;"
+          pluginKey=""
+          :draggable="dragging"
+          @click="handleActionMenu($event)"
+          @dragend="endDragging($event)"
+        >
+          <button
+            id="submenu"
+            ref="actionMenu"
+            style="margin-left: 0.25rem; padding-top: 0.3rem; border-radius: 0.375rem;"
+            aria-label="Drag"
+            :action-tooltip="actionDataTooltip()"
+            @mousedown="startDragging($event)"
+            @mouseup="draggedNodePosition = false; dragging = false;"
+          >
+            <svg
+              width="24"
+              height="24"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              focusable="false"
+              class="w-5 h-5 md:w-6 md:h-6"
+            >
               <path d="M8 7h2V5H8v2zm0 6h2v-2H8v2zm0 6h2v-2H8v2zm6-14v2h2V5h-2zm0 8h2v-2h-2v2zm0 6h2v-2h-2v2z" />
             </svg>
           </button>
         </div>
       </floating-menu>
 
-      <BubbleMenu v-if="editor" v-show="shouldRenderBubbleMenu" id="bubbleMenu" plugin-key="mainBubleMenu"
-        :editor="editor" :tippy-options="{
+      <BubbleMenu
+        v-if="editor"
+        v-show="shouldRenderBubbleMenu"
+        id="bubbleMenu"
+        plugin-key="mainBubleMenu"
+        :editor="editor"
+        :tippy-options="{
           duration: 500, placement: 'top-start'
         }"
       >
@@ -92,47 +107,85 @@
         plugin-key="tableBubbleMenu"
         :editor="editor"
         :tippy-options="{
->>>>>>> 41dc1ebaa5c4c75c714f5c08d7a2cc37b7914f88
           duration: 500, placement: 'top-start', getReferenceClientRect: getMenuCoords,
-        }" :should-show="tableIsActive">
+        }"
+        :should-show="tableIsActive"
+      >
         <TableCellMenu :editor="editor" />
       </BubbleMenu>
 
       <!-- table row menu -->
-      <bubble-menu v-if="editor && tableRowTools" id="tableRowMenu" :editor="editor" plugin-key="tableRowMenu"
-        :should-show="tableIsActive" :tippy-options="{
+      <bubble-menu
+        v-if="editor && tableRowTools"
+        id="tableRowMenu"
+        :editor="editor"
+        plugin-key="tableRowMenu"
+        :should-show="tableIsActive"
+        :tippy-options="{
           placement: 'right',
           animation: 'fade',
           zIndex: 1,
           duration: 500,
           getReferenceClientRect: getTableRowMenuCoords,
-        }">
-        <menu-item id="menuItem" :action="Row">
-          <menu-button id="menuButton" title="Row tools" :content="rowIconTable" />
+        }"
+      >
+        <menu-item
+          id="menuItem"
+          :action="Row"
+        >
+          <menu-button
+            id="menuButton"
+            title="Row tools"
+            :content="rowIconTable"
+          />
           <template #dropdown>
             <div id="dropdown">
-              <menu-dropdown-button v-for="( tool ) in tableRowTools " :key="tool.title" :content="tool.icon"
-                :label="tool.title" :editor="editor" :tool="tool" />
+              <menu-dropdown-button
+                v-for="( tool ) in tableRowTools "
+                :key="tool.title"
+                :content="tool.icon"
+                :label="tool.title"
+                :editor="editor"
+                :tool="tool"
+              />
             </div>
           </template>
         </menu-item>
       </bubble-menu>
 
       <!-- table column menu -->
-      <bubble-menu v-if="editor && tableColumnTools" id="tableColMenu" :editor="editor" plugin-key="tableColumnMenu"
-        :should-show="tableIsActive" :tippy-options="{
+      <bubble-menu
+        v-if="editor && tableColumnTools"
+        id="tableColMenu"
+        :editor="editor"
+        plugin-key="tableColumnMenu"
+        :should-show="tableIsActive"
+        :tippy-options="{
           placement: 'bottom',
           animation: 'fade',
           duration: 500,
           zIndex: 1,
           getReferenceClientRect: getTableColumnMenuCoords,
-        }">
-        <menu-item :action="Column" class="menu-item">
-          <menu-button title="Column tools" :content="colIconTable" />
+        }"
+      >
+        <menu-item
+          :action="Column"
+          class="menu-item"
+        >
+          <menu-button
+            title="Column tools"
+            :content="colIconTable"
+          />
           <template #dropdown>
             <div style="display: flex; flex-direction: column;   row-gap: 0.25rem; ">
-              <menu-dropdown-button v-for="( tool ) in tableColumnTools" :key="tool.title" :content="tool.icon"
-                :label="tool.title" :editor="editor" :tool="tool" />
+              <menu-dropdown-button
+                v-for="( tool ) in tableColumnTools"
+                :key="tool.title"
+                :content="tool.icon"
+                :label="tool.title"
+                :editor="editor"
+                :tool="tool"
+              />
             </div>
           </template>
         </menu-item>
@@ -144,9 +197,6 @@
         :editor="editor"
         :value="editor.getAttributes('textStyle').color"
       />
-
-      <!-- eslint-disable-next-line vue/html-self-closing -->
-      <toggle-list></toggle-list>
     </div>
   </div>
 </template>
@@ -163,6 +213,7 @@ import { uuid } from 'vue-uuid'
 import { HocuspocusProvider } from '@hocuspocus/provider'
 import * as Y from 'yjs'
 import Collaboration from '@tiptap/extension-collaboration'
+import { ToggleExtension } from './extensions/toggle'
 
 // tiptap extension
 import defaultExtension from './extensions'
@@ -193,7 +244,6 @@ import MenuItem from './tools/buttons/tableTools/MenuItem.vue'
 import MenuButton from './tools/buttons/tableTools/MenuButton.vue'
 import MenuDropdownButton from './tools/buttons/tableTools/MenuDropdownButton.vue'
 import TableCellMenu from './tools/buttons/TableCellMenu.vue'
-import ToggleList from './tools/buttons/toggle/index.vue'
 
 const ydoc = new Y.Doc()
 const RandomColor = list => list[Math.floor(Math.random() * list.length)]
@@ -210,7 +260,6 @@ export default {
     MenuButton,
     MenuDropdownButton,
     TableCellMenu,
-    ToggleList,
   },
   props: {
     editorClass: {
@@ -343,6 +392,7 @@ export default {
     this.editor = new Editor({
       extensions: [
         ...defaultExtension,
+        ToggleExtension,
         Collaboration.configure({
           document: this.provider.document,
         }),

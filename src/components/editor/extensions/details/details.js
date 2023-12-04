@@ -1,11 +1,9 @@
 import { Node, mergeAttributes } from '@tiptap/core'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
-import ToggleComponent from '../../tools/buttons/toggle/index.vue'
 
-export const Toggle = Node.create({
-  name: 'toggle',
+export const Details = Node.create({
+  name: 'details',
 
-  group: 'block',
+  group: 'inline*',
 
   atom: true,
 
@@ -26,17 +24,14 @@ export const Toggle = Node.create({
   },
   addCommands() {
     return {
-      setToggle: options => ({ commands }) => commands.insertContent({
-        type: this.name,
-        attrs: options,
-      }),
+      setDetails: () => ({ commands }) => {
+        const command = commands.setNode(this.name)
+
+        return command
+      },
     }
   },
   renderHTML({ HTMLAttributes }) {
     return ['vue-component', mergeAttributes(HTMLAttributes)]
-  },
-
-  addNodeView() {
-    return VueNodeViewRenderer(ToggleComponent)
   },
 })

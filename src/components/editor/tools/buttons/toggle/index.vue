@@ -1,5 +1,5 @@
 <template>
-  <node-view-wrapper class="toggle">
+  <node-view-wrapper class="vue-component">
     <div>
       <div
         class="toggle-list"
@@ -7,9 +7,7 @@
         <div
           class="toggle-btn"
         >
-          <button
-            @click="toggleFunction"
-          >
+          <button @click="toggleFunction(index)">
             <!-- eslint-disable-next-line vue/no-v-html -->
             <span v-html="arrowIcon" />
           </button>
@@ -22,7 +20,7 @@
         </div>
         <div
           id="toggle-desc"
-          class="hide"
+          class="hide toggle-desc"
           contenteditable="true"
         >
           <p>This is the content you can toggle.</p>
@@ -33,15 +31,15 @@
 </template>
 
 <script>
-import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-2'
+import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-2'
 
 export default {
   components: {
     NodeViewWrapper,
-    // eslint-disable-next-line vue/no-unused-components
-    NodeViewContent,
   },
+
   props: nodeViewProps,
+
   data() {
     return {
       isToggled: false,
@@ -57,12 +55,10 @@ export default {
     },
   },
   methods: {
-    toggleFunction() {
+    toggleFunction(index) {
       this.isToggled = !this.isToggled
 
-      const toggleDesc = document.querySelector('#toggle-desc')
-      console.log(toggleDesc)
-      toggleDesc.classList.toggle('hide')
+      console.log(index)
     },
   },
 }

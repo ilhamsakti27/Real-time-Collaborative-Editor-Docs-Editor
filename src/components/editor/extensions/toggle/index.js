@@ -7,6 +7,7 @@ export const ToggleExtension = Extension.create({
   addExtensions() {
     const extensions = []
     extensions.push(Toggle)
+
     return extensions
   },
 })
