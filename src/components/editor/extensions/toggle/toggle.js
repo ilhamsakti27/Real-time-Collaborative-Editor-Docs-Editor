@@ -2,6 +2,8 @@ import { Node, mergeAttributes } from '@tiptap/core'
 import { NodeViewWrapper } from '@tiptap/vue-2'
 import ToggleComponent from '../../tools/buttons/toggle/index.vue'
 
+// const ha = 1
+
 export const Toggle = Node.create({
   name: 'toggle',
   group: 'block',
