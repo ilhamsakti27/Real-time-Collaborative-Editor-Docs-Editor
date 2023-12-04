@@ -38,7 +38,6 @@ import { DocumentWithTitle, Title } from './title'
 import { BookmarkExtension } from './bookmark'
 import { YoutubeExtension } from './youtube'
 import { LinkToPage } from './page'
-import { ToggleExtension } from './toggle'
 
 // slash menu extension
 import Commands from '../tools/commands/commands'
@@ -56,7 +55,6 @@ const defaultExtension = [
   Video,
   Title,
   LinkToPage,
-  ToggleExtension,
   TextAlign.configure({
     types: ['heading', 'paragraph'],
   }),

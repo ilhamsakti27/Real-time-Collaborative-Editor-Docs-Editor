@@ -114,6 +114,9 @@
 .tiptap .separator.is-empty::before{
   content: '';
 }
+.tiptap .toggle-list.is-empty::before{
+  margin-left: 2.5em;
+}
 
 .tiptap .is-empty::before {
   content: attr(data-placeholder);
@@ -342,6 +345,21 @@ iframe{
   padding:4px 10px;
 }
 
+/* Toggle-list */
+
+.toggle-wrapper{
+  display:flex;
+  align-items:center;
+  position: relative; /* Add relative positioning to the wrapper */
+}
+.toggle-icon{
+  position: absolute; /* Add absolute positioning to the icon */
+  top: 0; 
+  cursor:pointer;
+}
+.toggle-title{
+  margin-left: 2em;
+}
 /* Bookmark Styling */
 .bookmark {
     margin: 20px 0;
