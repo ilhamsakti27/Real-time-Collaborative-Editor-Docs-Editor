@@ -1,14 +1,9 @@
 <template>
   <node-view-wrapper class="vue-component">
     <div>
-      <div
-        class="toggle-list"
-      >
-        <div
-          class="toggle-btn"
-        >
-          <button @click="toggleFunction(index)">
-            <!-- eslint-disable-next-line vue/no-v-html -->
+      <div class="toggle-list">
+        <div class="toggle-btn">
+          <button @click="toggleFunction">
             <span v-html="arrowIcon" />
           </button>
           <span
@@ -19,7 +14,7 @@
           </span>
         </div>
         <div
-          id="toggle-desc"
+          ref="toggleDesc"
           class="hide toggle-desc"
           contenteditable="true"
         >
@@ -49,16 +44,17 @@ export default {
   },
   computed: {
     arrowIcon() {
-      console.log('Haii sayang')
-
       return this.isToggled ? this.arrowDown : this.arrowRight
     },
   },
   methods: {
-    toggleFunction(index) {
+    toggleFunction() {
       this.isToggled = !this.isToggled
+      const { toggleDesc } = this.$refs
 
-      console.log(index)
+      if (toggleDesc) {
+        toggleDesc.classList.toggle('hide')
+      }
     },
   },
 }
@@ -68,18 +64,23 @@ export default {
 .toggle-list {
   padding: 0.3rem;
 }
+
 .toggle-btn {
   border-radius: 0.25rem;
   height: 26px;
   display: flex;
-  align-items: center; /* Center vertically */
+  align-items: center;
+  /* Center vertically */
 }
+
 .toggle-heading {
-  font-size:larger;
+  font-size: larger;
 }
+
 #toggle-desc {
   margin-left: 1.5rem;
 }
+
 .hide {
   display: none;
 }

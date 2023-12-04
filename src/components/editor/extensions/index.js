@@ -39,7 +39,6 @@ import { BookmarkExtension } from './bookmark'
 import { YoutubeExtension } from './youtube'
 import { LinkToPage } from './page'
 import { ToggleExtension } from './toggle'
-import { DetailsExtension } from './details'
 
 // slash menu extension
 import Commands from '../tools/commands/commands'
@@ -55,7 +54,6 @@ const defaultExtension = [
   LoadingExtension,
   YoutubeExtension,
   ToggleExtension,
-  DetailsExtension,
   Video,
   Title,
   LinkToPage,
