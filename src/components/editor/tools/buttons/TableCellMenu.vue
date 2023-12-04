@@ -18,6 +18,7 @@
           >
             <div class="flex flex-col">
               <div class=" rounded-md">
+                <!-- eslint-disable-next-line vue/no-v-html -->
                 <span v-html="item.icon" />
               </div>
             </div>

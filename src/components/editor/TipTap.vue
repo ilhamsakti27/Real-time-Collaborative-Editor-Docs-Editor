@@ -1,12 +1,19 @@
 <template>
   <div style="display: flex;">
     <!-- user name & avatar -->
+<<<<<<< HEAD
     <div style="position: absolute; top: 5rem;left: 1rem; width: 15%;">
+=======
+    <div
+      class="username-and-avatar"
+    >
+>>>>>>> 41dc1ebaa5c4c75c714f5c08d7a2cc37b7914f88
       <div class="">
         Online: {{ total }}
       </div>
       <div>Status: {{ status }}</div>
       <div>Your Name: {{ currentUser.name }}</div>
+<<<<<<< HEAD
       <div style="margin: 1rem 0;">
         <button style="background-color: rgba(229, 231, 235,1); padding: 0.2rem 1rem;" @click="gantiNama">
           Ganti Nama
@@ -15,6 +22,22 @@
       <div class="">
         <button style="background-color: rgba(229, 231, 235,1); padding: 0.2rem 1rem;"
           @click="updateCurrentUser({ avatar: getRandomAvatar() })">
+=======
+      <div
+        style="margin-top: 1rem;"
+        class="button-ganti-nama-avatar"
+      >
+        <button
+          @click="gantiNama"
+        >
+          Ganti Nama
+        </button>
+      </div>
+      <div class="button-ganti-nama-avatar">
+        <button
+          @click="updateCurrentUser({ avatar: getRandomAvatar() })"
+        >
+>>>>>>> 41dc1ebaa5c4c75c714f5c08d7a2cc37b7914f88
           Ganti Avatar
         </button>
       </div>
@@ -41,6 +64,7 @@
       <BubbleMenu v-if="editor" v-show="shouldRenderBubbleMenu" id="bubbleMenu" plugin-key="mainBubleMenu"
         :editor="editor" :tippy-options="{
           duration: 500, placement: 'top-start'
+<<<<<<< HEAD
         }">
         <div v-if="topLevelNodeType !== 'table'" style="display: flex; align-items: center;">
           <ColorButton v-if="!isLink" style="" class="bubble-menu-btn" :editor="editor" />
@@ -51,6 +75,36 @@
 
       <BubbleMenu v-if="editor && (tableRowTools || tableColumnTools)" id="bubbleMenu" plugin-key="tableBubbleMenu"
         :editor="editor" :tippy-options="{
+=======
+        }"
+      >
+        <div
+          v-if="topLevelNodeType !== 'table'"
+          style="display: flex; align-items: center;"
+        >
+          <ColorButton
+            v-if="!isLink"
+            style="border-radius: 8px 0 0 8px;"
+            class="bubble-menu-btn"
+            :editor="editor"
+          />
+          <inlineToolsBtn :editor="editor" />
+          <FontFamilyButton
+            v-if="!isLink"
+            style="border: none; border-radius: 0 8px 8px 0;"
+            class="bubble-menu-btn"
+            :editor="editor"
+          />
+        </div>
+      </BubbleMenu>
+
+      <BubbleMenu
+        v-if="editor && (tableRowTools || tableColumnTools)"
+        id="bubbleMenuTable"
+        plugin-key="tableBubbleMenu"
+        :editor="editor"
+        :tippy-options="{
+>>>>>>> 41dc1ebaa5c4c75c714f5c08d7a2cc37b7914f88
           duration: 500, placement: 'top-start', getReferenceClientRect: getMenuCoords,
         }" :should-show="tableIsActive">
         <TableCellMenu :editor="editor" />
@@ -97,7 +151,18 @@
       </bubble-menu>
 
       <!-- editor -->
+<<<<<<< HEAD
       <editor-content id="editor" :editor="editor" :value="editor.getAttributes('textStyle').color" />
+=======
+      <editor-content
+        id="editor"
+        :editor="editor"
+        :value="editor.getAttributes('textStyle').color"
+      />
+
+      <!-- eslint-disable-next-line vue/html-self-closing -->
+      <toggle-list></toggle-list>
+>>>>>>> 41dc1ebaa5c4c75c714f5c08d7a2cc37b7914f88
     </div>
   </div>
 </template>
@@ -144,6 +209,7 @@ import MenuItem from './tools/buttons/tableTools/MenuItem.vue'
 import MenuButton from './tools/buttons/tableTools/MenuButton.vue'
 import MenuDropdownButton from './tools/buttons/tableTools/MenuDropdownButton.vue'
 import TableCellMenu from './tools/buttons/TableCellMenu.vue'
+import ToggleList from './tools/buttons/toggle/index.vue'
 
 const ydoc = new Y.Doc()
 const RandomColor = list => list[Math.floor(Math.random() * list.length)]
@@ -160,6 +226,7 @@ export default {
     MenuButton,
     MenuDropdownButton,
     TableCellMenu,
+    ToggleList,
   },
   props: {
     editorClass: {
@@ -313,6 +380,7 @@ export default {
               if (fileSize < 5) {
                 handleImageDrop(view, event, file, documentId)
               } else {
+                // eslint-disable-next-line no-alert
                 alert(`Max Image size is ${LimitSize} mb`)
               }
             }
@@ -321,6 +389,7 @@ export default {
               if (fileSize < LimitSize) {
                 handleVideoDrop(view, event, file, documentId)
               } else {
+                // eslint-disable-next-line no-alert
                 alert(`Max Video size is ${LimitSize} mb`)
               }
             }
@@ -405,6 +474,7 @@ export default {
       return this.editor.isActive()
     },
     gantiNama() {
+      // eslint-disable-next-line no-alert
       const name = (window.prompt('Name') || '')
         .trim()
         .substring(0, 32)
@@ -543,8 +613,12 @@ export default {
 button:hover {
   background-color: #e1e1e1;
 }
+<<<<<<< HEAD
 
 #bubbleMenu {
+=======
+#bubbleMenuTable{
+>>>>>>> 41dc1ebaa5c4c75c714f5c08d7a2cc37b7914f88
   display: flex;
   align-items: center;
   margin-bottom: -2vh;
@@ -557,8 +631,15 @@ button:hover {
   --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 transparent), var(--tw-ring-shadow, 0 0 transparent), var(--tw-shadow);
 }
+<<<<<<< HEAD
 
 #tableRowMenu {
+=======
+/* #bubbleMenu {
+  background-color: pink;
+} */
+#tableRowMenu{
+>>>>>>> 41dc1ebaa5c4c75c714f5c08d7a2cc37b7914f88
   margin-left: -2.5vh;
 }
 
@@ -649,5 +730,22 @@ button:hover {
   :last-child {
     margin-bottom: 0;
   }
+}
+.button-ganti-nama-avatar {
+  margin: 0.3rem 0;
+}
+.button-ganti-nama-avatar button {
+  border-radius: 4px;
+  border: 1px solid rgb(203 213 225);
+  background-color: #fff;
+  padding: 0.2rem 0.8rem;
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem; /* 20px */
+}
+.username-and-avatar {
+  position: absolute;
+  top: 5rem;
+  left: 1rem;
+  width: 15%;
 }
 </style>

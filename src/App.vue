@@ -1,30 +1,48 @@
-<!-- eslint-disable  -->
 <template>
-  <div id="app" style="width: 100%;">
+  <div
+    id="app"
+    style="width: 100%;"
+  >
     <NavBar :users="dataUsers" />
 
     <div style="display: flex; width: 100%;">
       <div style="width: 100%;">
         <!-- main editor -->
         <div style="width: 100%; margin-top: 100px;">
-          <Tiptap v-model="content" :contentUpdate="contentUpdate" :dataUsers="dataUsers"
-            @update:dataUsers="handleDataUsersUpdate" @update:contentUpdate="handleUpdateEditor" mode="json" />
-          <div style="width: 100%;"></div>
+          <Tiptap
+            v-model="content"
+            :data-users="dataUsers"
+            :content-update="contentUpdate"
+            mode="json"
+            @update:dataUsers="handleDataUsersUpdate"
+            @update:contentUpdate="handleUpdateEditor"
+          />
+          <div style="width: 100%;" />
         </div>
       </div>
       <div style="position: fixed; padding: 8px; top: 33%;">
         <div style="display: flex; flex-direction: column; gap: 4px;">
-          <button @click="createSnapshots"
-            style="background-color: #e2e8f0; font-size: 0.875rem; padding: 8px; border-radius: 0.375rem;">Create
-            Snapshots</button>
-          <button @click="showSnapshots"
-            style="background-color: #e2e8f0; font-size: 0.875rem; padding: 8px; border-radius: 0.375rem;">Show
-            Snapshots</button>
+          <button
+            class="button-snapshots"
+            @click="createSnapshots"
+          >
+            Create Snapshots
+          </button>
+          <button
+            class="button-snapshots"
+            @click="showSnapshots"
+          >
+            Show Snapshots
+          </button>
         </div>
       </div>
       <div style="position: fixed; top: 100px; display: flex; justify-content: flex-end; right: 0;">
         <div style="width: 250px; overflow-x: auto; overflow-y: auto; max-height: 90vh;">
-          <h3 style="font-weight: bold; margin-bottom: 8px; font-size: 1.5rem;">Editor output</h3>
+          <h3
+            style="font-weight: bold; margin-bottom: 8px; font-size: 1.5rem;"
+          >
+            Editor output
+          </h3>
           <pre style="display: block; font-size: 1rem; width: 100%;">{{ content }}</pre>
         </div>
       </div>
@@ -32,23 +50,26 @@
 
     <!-- snapshots preview -->
     <div v-if="isShowSnapshots">
-      <EditorPreview :isShowSnapshots="isShowSnapshots" :mainEditor="mainEditor" :history="history">
-      </EditorPreview>
+      <EditorPreview
+        :is-show-snapshots="isShowSnapshots"
+        :main-editor="mainEditor"
+        :history="history"
+      />
     </div>
   </div>
 </template>
 
-<!-- eslint-disable  -->
 <script>
 import Tiptap from './components/editor/TipTap.vue'
 import SampleContent from './content.json'
 import NavBar from './components/NavBar.vue'
 import EditorPreview from './components/editor/snapshots/EditorPreview.vue'
+
 export default {
   components: {
     Tiptap,
     NavBar,
-    EditorPreview
+    EditorPreview,
   },
   data() {
     return {
@@ -63,17 +84,18 @@ export default {
   },
   methods: {
     handleDataUsersUpdate(updatedDataUsers) {
-      this.dataUsers = updatedDataUsers;
+      this.dataUsers = updatedDataUsers
     },
     handleUpdateEditor(mainEditor) {
       this.snapshots = mainEditor.getJSON()
       this.mainEditor = mainEditor
     },
     createSnapshots() {
+      // eslint-disable-next-line no-alert
       let title = (window.prompt('Name') || '')
         .trim()
         .substring(0, 32)
-      if (title == '') title = 'Untitled'
+      if (title === '') title = 'Untitled'
       const data = {
         title,
         snapshots: this.snapshots,
@@ -83,14 +105,14 @@ export default {
           year: 'numeric',
           hour: '2-digit',
           minute: '2-digit',
-        })
+        }),
       }
       this.history.push(data)
     },
     showSnapshots() {
       this.isShowSnapshots = !this.isShowSnapshots
-    }
-  }
+    },
+  },
 
 }
 
@@ -98,5 +120,14 @@ export default {
 <style>
 .json {
   max-width: 15%;
+}
+.button-snapshots {
+  margin: 0.3rem 0;
+  border-radius: 4px;
+  border: 1px solid rgb(203 213 225);
+  background-color: #fff;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem; /* 20px */
 }
 </style>
