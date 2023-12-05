@@ -1,49 +1,53 @@
-import { Node, wrappingInputRule } from '@tiptap/core'
-
-const inputRegex = /^\s*>\s$/
+import { Node, mergeAttributes } from '@tiptap/core'
+import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import ToggleComponent from '../../tools/buttons/toggle/index.vue'
 
 export const Toggle = Node.create({
   name: 'toggle',
-  group: 'block',
-  content: 'block+',
-  defining: true,
+  atom: true,
   draggable: true,
-  marks: '',
-  addAttributes() {
+  isolating: true,
+
+  addOptions() {
     return {
       HTMLAttributes: {},
+      inline: false,
     }
   },
-  parseHTML() {
-    return [{ tag: 'toggle' }]
+  inline() {
+    return this.options.inline
   },
-  addCommands() {
+  group() {
+    return this.options.inline ? 'inline' : 'block'
+  },
+  addAttributes() {
     return {
-      setToggleList: () => ({ commands }) => {
-        const command = commands.wrapIn(this.name)
-
-        return command
+      count: {
+        default: 0,
       },
     }
   },
-  addInputRules() {
+
+  parseHTML() {
     return [
-      wrappingInputRule({
-        find: inputRegex,
-        type: this.type,
-      }),
+      {
+        tag: 'vue-component',
+      },
     ]
   },
-  addNodeView() {
-    return () => {
-      // container
-      const container = document.createElement('div')
-      // const toggleBtn = document.createElement('button')
-
-      return {
-        dom: container,
-        contentDOM: container,
-      }
+  addCommands() {
+    return {
+      setToggle: options => ({ commands }) => commands.insertContent({
+        type: this.name,
+        attrs: options,
+      }),
     }
+  },
+  renderHTML({ HTMLAttributes }) {
+    return ['vue-component', mergeAttributes(HTMLAttributes)]
+  },
+
+  addNodeView() {
+    return VueNodeViewRenderer(ToggleComponent)
   },
 })

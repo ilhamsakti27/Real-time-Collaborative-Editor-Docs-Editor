@@ -1,10 +1,8 @@
 <template>
-  <div
-    style="display: flex;"
-  >
+  <div style="display: flex;">
     <!-- user name & avatar -->
     <div
-      style="position: absolute; top: 5rem;left: 1rem; width: 15%;"
+      class="username-and-avatar"
     >
       <div class="">
         Online: {{ total }}
@@ -12,18 +10,17 @@
       <div>Status: {{ status }}</div>
       <div>Your Name: {{ currentUser.name }}</div>
       <div
-        style="margin: 1rem 0;"
+        style="margin-top: 1rem;"
+        class="button-ganti-nama-avatar"
       >
         <button
-          style="background-color: rgba(229, 231, 235,1); padding: 0.2rem 1rem;"
           @click="gantiNama"
         >
           Ganti Nama
         </button>
       </div>
-      <div class="">
+      <div class="button-ganti-nama-avatar">
         <button
-          style="background-color: rgba(229, 231, 235,1); padding: 0.2rem 1rem;"
           @click="updateCurrentUser({ avatar: getRandomAvatar() })"
         >
           Ganti Avatar
@@ -90,13 +87,14 @@
         >
           <ColorButton
             v-if="!isLink"
-            style=""
+            style="border-radius: 8px 0 0 8px;"
             class="bubble-menu-btn"
             :editor="editor"
           />
           <inlineToolsBtn :editor="editor" />
           <FontFamilyButton
             v-if="!isLink"
+            style="border: none; border-radius: 0 8px 8px 0;"
             class="bubble-menu-btn"
             :editor="editor"
           />
@@ -105,7 +103,7 @@
 
       <BubbleMenu
         v-if="editor && (tableRowTools || tableColumnTools)"
-        id="bubbleMenu"
+        id="bubbleMenuTable"
         plugin-key="tableBubbleMenu"
         :editor="editor"
         :tippy-options="{
@@ -141,9 +139,7 @@
             :content="rowIconTable"
           />
           <template #dropdown>
-            <div
-              id="dropdown"
-            >
+            <div id="dropdown">
               <menu-dropdown-button
                 v-for="( tool ) in tableRowTools "
                 :key="tool.title"
@@ -181,9 +177,7 @@
             :content="colIconTable"
           />
           <template #dropdown>
-            <div
-              style="display: flex; flex-direction: column;   row-gap: 0.25rem; "
-            >
+            <div style="display: flex; flex-direction: column;   row-gap: 0.25rem; ">
               <menu-dropdown-button
                 v-for="( tool ) in tableColumnTools"
                 :key="tool.title"
@@ -219,6 +213,7 @@ import { uuid } from 'vue-uuid'
 import { HocuspocusProvider } from '@hocuspocus/provider'
 import * as Y from 'yjs'
 import Collaboration from '@tiptap/extension-collaboration'
+import { ToggleExtension } from './extensions/toggle'
 
 // tiptap extension
 import defaultExtension from './extensions'
@@ -339,7 +334,7 @@ export default {
     shouldRenderBubbleMenu() {
       const excludedNodeTypes = [
         'title', 'image', 'codeBlock', 'bookmark',
-        'loading', 'video', 'horizontalRule', 'youtube', 'Page',
+        'loading', 'video', 'horizontalRule', 'youtube', 'Page', 'toggle',
       ]
 
       return !excludedNodeTypes.includes(this.currentNodeType)
@@ -397,6 +392,7 @@ export default {
     this.editor = new Editor({
       extensions: [
         ...defaultExtension,
+        ToggleExtension,
         Collaboration.configure({
           document: this.provider.document,
         }),
@@ -418,6 +414,7 @@ export default {
               if (fileSize < 5) {
                 handleImageDrop(view, event, file, documentId)
               } else {
+                // eslint-disable-next-line no-alert
                 alert(`Max Image size is ${LimitSize} mb`)
               }
             }
@@ -426,6 +423,7 @@ export default {
               if (fileSize < LimitSize) {
                 handleVideoDrop(view, event, file, documentId)
               } else {
+                // eslint-disable-next-line no-alert
                 alert(`Max Video size is ${LimitSize} mb`)
               }
             }
@@ -510,6 +508,7 @@ export default {
       return this.editor.isActive()
     },
     gantiNama() {
+      // eslint-disable-next-line no-alert
       const name = (window.prompt('Name') || '')
         .trim()
         .substring(0, 32)
@@ -612,6 +611,7 @@ export default {
 
 <style >
 @import 'style.css';
+
 /* Give a remote user a caret */
 .collaboration-cursor__caret {
   position: relative;
@@ -622,6 +622,7 @@ export default {
   word-break: normal;
   pointer-events: none;
 }
+
 /* Render the username above the caret */
 .collaboration-cursor__label {
   position: absolute;
@@ -637,14 +638,16 @@ export default {
   border-radius: 3px 3px 3px 0;
   white-space: nowrap;
 }
-.isTyping{
+
+.isTyping {
   pointer-events: none;
   opacity: 0;
 }
-button:hover{
+
+button:hover {
   background-color: #e1e1e1;
 }
-#bubbleMenu{
+#bubbleMenuTable{
   display: flex;
   align-items: center;
   margin-bottom: -2vh;
@@ -654,49 +657,119 @@ button:hover{
   width: -moz-max-content;
   width: max-content;
   border-width: 1px;
-  --tw-shadow: 0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);
-  box-shadow: var(--tw-ring-offset-shadow,0 0 transparent),var(--tw-ring-shadow,0 0 transparent),var(--tw-shadow);
+  --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 transparent), var(--tw-ring-shadow, 0 0 transparent), var(--tw-shadow);
 }
+/* #bubbleMenu {
+  background-color: pink;
+} */
 #tableRowMenu{
   margin-left: -2.5vh;
 }
-#tableColMenu{
+
+#tableColMenu {
   margin-top: -5vh;
   margin-bottom: -20vh;
 }
-#tableRowMenu{
+
+#tableRowMenu {
   padding: 4px 0px;
-  border: 1px solid rgba(0,0,0,0.4);
+  border: 1px solid rgba(0, 0, 0, 0.4);
   border-radius: 6px;
   background-color: white;
 }
-#tableColMenu{
+
+#tableColMenu {
   padding: 0px 2px;
   background-color: white;
-  border: 1px solid rgba(0,0,0,0.4);
+  border: 1px solid rgba(0, 0, 0, 0.4);
   border-radius: 6px;
 }
-#tableRowMenu:hover, #tableColMenu:hover{
-    background-color: #e1e1e1;
+
+#tableRowMenu:hover,
+#tableColMenu:hover {
+  background-color: #e1e1e1;
 }
+
 #menuButton {
   border-radius: 9999px;
   color: rgb(148 163 184);
 }
+
 #menuButton:hover {
   color: rgb(30 41 59);
 }
+
 #dropdown {
   display: flex;
   flex-direction: column;
-  row-gap: 0.25rem; /* 4px */
+  row-gap: 0.25rem;
+  /* 4px */
 }
+
 .menu-item {
-  padding-left: 0.25rem; /* 4px */
-  padding-right: 0.25rem; /* 4px */
+  padding-left: 0.25rem;
+  /* 4px */
+  padding-right: 0.25rem;
+  /* 4px */
   border-width: 1px;
   border-color: rgb(0 0 0);
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  border-radius: 0.25rem; /* 4px */
+  border-radius: 0.25rem;
+  /* 4px */
+}
+
+.details {
+  display: flex;
+  margin: 1rem 0;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+
+  >button {
+    display: flex;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 0;
+
+    &::before {
+      content: '\25B6';
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 1.5em;
+      height: 1.5em;
+    }
+  }
+
+  &.is-open>button::before {
+    content: '\25BC';
+  }
+
+  >div {
+    flex: 1 1 auto;
+  }
+
+  :last-child {
+    margin-bottom: 0;
+  }
+}
+.button-ganti-nama-avatar {
+  margin: 0.3rem 0;
+}
+.button-ganti-nama-avatar button {
+  border-radius: 4px;
+  border: 1px solid rgb(203 213 225);
+  background-color: #fff;
+  padding: 0.2rem 0.8rem;
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem; /* 20px */
+}
+.username-and-avatar {
+  position: absolute;
+  top: 5rem;
+  left: 1rem;
+  width: 15%;
 }
 </style>

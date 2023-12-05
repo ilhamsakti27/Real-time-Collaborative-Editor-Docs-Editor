@@ -53,10 +53,10 @@ const defaultExtension = [
   BookmarkExtension,
   LoadingExtension,
   YoutubeExtension,
+  ToggleExtension,
   Video,
   Title,
   LinkToPage,
-  ToggleExtension,
   TextAlign.configure({
     types: ['heading', 'paragraph'],
   }),

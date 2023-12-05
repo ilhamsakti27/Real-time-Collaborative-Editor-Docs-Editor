@@ -114,6 +114,9 @@
 .tiptap .separator.is-empty::before{
   content: '';
 }
+.tiptap .toggle-list.is-empty::before{
+  margin-left: 2.5em;
+}
 
 .tiptap .is-empty::before {
   content: attr(data-placeholder);
@@ -342,6 +345,21 @@ iframe{
   padding:4px 10px;
 }
 
+/* Toggle-list */
+
+.toggle-wrapper{
+  display:flex;
+  align-items:center;
+  position: relative; /* Add relative positioning to the wrapper */
+}
+.toggle-icon{
+  position: absolute; /* Add absolute positioning to the icon */
+  top: 0; 
+  cursor:pointer;
+}
+.toggle-title{
+  margin-left: 2em;
+}
 /* Bookmark Styling */
 .bookmark {
     margin: 20px 0;
@@ -458,7 +476,7 @@ ul[data-type="taskList"] li.todoList[data-checked="true"] div p {
 }
 /* bubble menu */
 #bubbleMenu {
-  border-radius: 4px;
+  border-radius: 8px;
   background: white;
   display: flex;
   align-items:center;
@@ -470,7 +488,7 @@ ul[data-type="taskList"] li.todoList[data-checked="true"] div p {
 
 .bubble-menu-btn {
   padding: 6px 8px;
-  border-right: 1px solid rgba(0,0,0,0.4);
+  border-right: 1px solid rgb(212 212 216);
 }
 .bubble-menu-btn:hover {
   background-color: #e2e1e1fa;
@@ -596,4 +614,7 @@ ul[data-type="taskList"] li.todoList[data-checked="true"] div p {
 .resize-cursor {
   cursor: ew-resize;
   cursor: col-resize;
+}
+.show {
+  display: none;
 }

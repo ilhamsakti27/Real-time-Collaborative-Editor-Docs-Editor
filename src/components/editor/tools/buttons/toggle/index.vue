@@ -1,104 +1,93 @@
 <template>
-  <div>
+  <node-view-wrapper class="vue-component">
     <div
-      class="toggle-list"
+      style="cursor: grab;"
+      class="drag-handle"
+      contenteditable="false"
+      draggable="true"
+      data-drag-handle
     >
-      <div>
-        <button
-          class="toggle-btn"
-          style="height: 24px;"
-        >
-          <span class="material-symbols-outlined">
-            arrow_right
+      <div class="toggle-list">
+        <div class="toggle-btn">
+          <button @click="toggleFunction">
+            <span v-html="arrowIcon" />
+          </button>
+          <span
+            class="toggle-heading"
+            contenteditable="true"
+          >
+            Details
           </span>
-        </button>
-        <span class="toggle-heading">Toggle 1</span>
-      </div>
-      <div class="toggle-desc">
-        <p>This is the content you can toggle. 1</p>
+        </div>
+        <div
+          ref="toggleDesc"
+          class="hide toggle-desc"
+          contenteditable="true"
+        >
+          <p>This is the content you can toggle.</p>
+        </div>
       </div>
     </div>
-
-    <div class="toggle-list">
-      <div>
-        <button
-          class="toggle-btn"
-          style="height: 24px;"
-        >
-          <span class="material-symbols-outlined">
-            arrow_right
-          </span>
-        </button>
-        <span class="toggle-heading">Toggle 2</span>
-      </div>
-      <div class="toggle-desc hidden">
-        <p>This is the content you can toggle. 2</p>
-      </div>
-    </div>
-
-    <div class="toggle-list">
-      <div>
-        <button
-          class="toggle-btn"
-          style="height: 24px;"
-        >
-          <span class="material-symbols-outlined">
-            arrow_right
-          </span>
-        </button>
-        <span class="toggle-heading">Toggle 2</span>
-      </div>
-      <div class="toggle-desc hidden">
-        <p>This is the content you can toggle. 2</p>
-      </div>
-    </div>
-  </div>
+  </node-view-wrapper>
 </template>
 
-<script setup>
-document.addEventListener('DOMContentLoaded', () => {
-  const toggleLists = document.querySelectorAll('.toggle-list')
+<script>
+import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-2'
 
-  toggleLists.forEach(toggleList => {
-    const toggleBtn = toggleList.querySelector('.toggle-btn')
-    const toggleIcon = toggleList.querySelector('span')
-    const toggleDesc = toggleList.querySelector('.toggle-desc')
+export default {
+  components: {
+    NodeViewWrapper,
+  },
 
-    toggleBtn.addEventListener('click', () => {
-      toggleDesc.classList.toggle('hidden')
+  props: nodeViewProps,
 
-      // Toggle the icon based on the state of the description visibility
-      if (toggleDesc.classList.contains('hidden')) {
-        toggleIcon.innerText = 'arrow_right' // Change to the right arrow when hidden
-      } else {
-        toggleIcon.innerText = 'arrow_drop_down' // Change to the down arrow when shown
+  data() {
+    return {
+      isToggled: false,
+      arrowRight: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32" fill="none"> <path d="M11.3644 25.2053L23.4127 18.2491C24.9518 17.3622 24.9518 15.9081 23.4127 15.0201L11.3633 8.0639C9.82416 7.17486 8.56702 7.90245 8.56702 9.67837V23.5909C8.56702 25.3668 9.82631 26.0944 11.3633 25.2053H11.3644Z" fill="black"/> </svg>',
+      arrowDown: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32" fill="none"> <path d="M8.06389 11.3644L15.02 23.4127C15.9079 24.9518 17.3609 24.9518 18.2489 23.4127L25.205 11.3633C26.094 9.82416 25.3664 8.56702 23.5906 8.56702H9.67834C7.90244 8.56702 7.17487 9.82523 8.06389 11.3644Z" fill="black"/> </svg>',
+    }
+  },
+  computed: {
+    arrowIcon() {
+      return this.isToggled ? this.arrowDown : this.arrowRight
+    },
+  },
+  methods: {
+    toggleFunction() {
+      this.isToggled = !this.isToggled
+      const { toggleDesc } = this.$refs
+
+      if (toggleDesc) {
+        toggleDesc.classList.toggle('hide')
       }
-    })
-  })
-})
+    },
+  },
+}
 </script>
 
 <style scoped>
 .toggle-list {
-  padding: 2.5rem;
+  padding: 0.3rem;
 }
+
 .toggle-btn {
-  border-radius: 0.25rem; /* 4px */
-  height: 24px;
+  border-radius: 0.25rem;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  /* Center vertically */
 }
-.toggle-btn:hover {
-  background-color: rgb(226 232 240);
-}
+
 .toggle-heading {
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgb(100 116 139);
+  font-size: larger;
 }
-.toggle-desc {
+
+#toggle-desc {
+  margin-left: 1.5rem;
+}
+
+.hide {
   display: none;
-  margin-left: 1.75rem; /* 28px */
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgb(100 116 139);
 }
 </style>
