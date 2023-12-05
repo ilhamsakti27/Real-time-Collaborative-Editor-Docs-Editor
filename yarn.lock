@@ -1862,26 +1862,6 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@tiptap-pro/extension-collaboration-history@^2.3.3":
-  version "2.3.3"
-  resolved "https://registry.tiptap.dev/@tiptap-pro%2fextension-collaboration-history/-/extension-collaboration-history-2.3.3.tgz"
-  integrity sha512-ZSq6U5ZE9XTcd+OSGBokSE0y2fRyquEFtf+C5i9QybxqquXdoQgC9GkVNmtTZ2kFgtKChstR2y2C8xJdSqNV6Q==
-
-"@tiptap-pro/extension-details-content@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.tiptap.dev/@tiptap-pro%2fextension-details-content/-/extension-details-content-2.5.0.tgz"
-  integrity sha512-WUVROUBjzr8WGk/IEvGUI8F1Zh8y2g5kBpOkOglUGhVak6kbzeXx8TWAyRlMDhAEbAzEhgEa6YxJts3ApdpYwQ==
-
-"@tiptap-pro/extension-details-summary@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.tiptap.dev/@tiptap-pro%2fextension-details-summary/-/extension-details-summary-2.5.0.tgz#b94e13c57f6a87b3f23c95c57d6b0b5622b9f193"
-  integrity sha512-BrgQx2ZBcMDDtAq7Nursa/lRd6ikG+08042dNXMJnyTarnxkMPcfL6nrGhUPJKSogr4MdmsFFkvLhCCuoeZeTA==
-
-"@tiptap-pro/extension-details@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.tiptap.dev/@tiptap-pro%2fextension-details/-/extension-details-2.5.0.tgz#b848a42561b2584a3629ea7450744c4d15796059"
-  integrity sha512-iZi8We+RcDeetssUha4+h5rxqmobTQxGJFB4C77YEStx5Ae3CZTaiS+8J2uOm4Qbi49iv2aHaRwhi84UnCiROg==
-
 "@tiptap/core@^2.0.3", "@tiptap/core@^2.1.12":
   version "2.1.12"
   resolved "https://registry.npmjs.org/@tiptap/core/-/core-2.1.12.tgz"
