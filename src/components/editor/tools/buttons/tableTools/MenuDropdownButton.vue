@@ -16,22 +16,23 @@
 </template>
 
 <script>
-/* eslint-disable vue/require-prop-types */
-/* eslint-disable vue/require-default-prop */
 
 export default {
   props: {
     content: {
       type: String,
       required: false,
+      default: null,
     },
     clickHandler: {
       type: String,
       required: false,
+      default: null,
     },
     label: {
       type: String,
       required: false,
+      default: null,
     },
     activeClass: {
       type: String,
@@ -43,9 +44,11 @@ export default {
     },
     editor: {
       type: Object,
+      default: null,
     },
     tool: {
       type: Object,
+      default: null,
     },
   },
   methods: {

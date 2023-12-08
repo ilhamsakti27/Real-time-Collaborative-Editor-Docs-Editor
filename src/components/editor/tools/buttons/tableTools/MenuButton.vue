@@ -9,24 +9,24 @@
 </template>
 
 <script>
-/* eslint-disable vue/require-prop-types */
-/* eslint-disable vue/require-default-prop */
-
 export default {
   props: {
     clickHandler: {
       type: String,
       required: false,
+      default: null,
     },
 
     content: {
       type: String,
       required: false,
+      default: null,
     },
 
     label: {
       type: String,
       required: false,
+      default: null,
     },
     activeClass: {
       type: String,

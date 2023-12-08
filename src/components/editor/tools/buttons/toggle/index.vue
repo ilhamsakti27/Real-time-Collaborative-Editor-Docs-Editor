@@ -26,7 +26,8 @@
           contenteditable="true"
         >
           <textarea
-            style="width: 100%;height: 20vh;border: 1px solid rgba(0,0,0,0.4);border-radius: 10px;padding: 2vh;"
+            class="content"
+            style="width: 100%;height: 10vh;border-radius: 10px;padding: 2vh;"
             :value="node.attrs.details"
             @input="handleDetailsChange"
           />
@@ -88,7 +89,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 textarea:focus{
   outline: none;
 }
@@ -100,26 +101,27 @@ textarea:focus{
   height: 26px;
   display: flex;
   align-items: center;
-  /* Center vertically */
-}
-.toggle-btn button {
-  /* background-color: pink; */
-  border-radius: 4px;
-  height: 26px;
-  /* border: 1px solid black; */
+
+  button {
+    border-radius: 4px;
+    height: 26px;
+  }
 }
 .toggle-heading {
-  /* font-size: large; */
   margin-left: 4px;
-}
-.toggle-heading:focus,
-.toggle-desc input:focus {
-  outline: none;
+  :focus,input:focus {
+    outline: none;
+  }
 }
 .toggle-desc {
   margin-left: 1.8rem;
 }
 .hide {
   display: none;
+}
+.content {
+  padding: 0.5rem;
+  border: 2px dashed #0D0D0D20;
+  border-radius: 0.5rem;
 }
 </style>

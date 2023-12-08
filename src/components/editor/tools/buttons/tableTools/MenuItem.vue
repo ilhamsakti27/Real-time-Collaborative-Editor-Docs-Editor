@@ -28,8 +28,6 @@
 </template>
 
 <script>
-/* eslint-disable vue/require-prop-types */
-/* eslint-disable vue/require-default-prop */
 
 import tippy from 'tippy.js'
 
@@ -37,6 +35,7 @@ export default {
   props: {
     action: {
       type: String,
+      default: null,
     },
     align: {
       type: String,
@@ -45,14 +44,17 @@ export default {
     iconName: {
       type: String,
       required: false,
+      default: null,
     },
     iconSvg: {
       type: String,
       required: false,
+      default: null,
     },
     label: {
       type: String,
       required: false,
+      default: null,
     },
     activeClass: {
       type: String,
