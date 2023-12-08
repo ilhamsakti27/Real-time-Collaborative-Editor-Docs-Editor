@@ -23,10 +23,18 @@ export const Toggle = Node.create({
   addAttributes() {
     return {
       summary: {
-        default: 'title',
+        default: 'Enter summary...',
+        parseHTML: element => ({ summary: element.getAttribute('summary') }),
+        renderHTML: attributes => ({
+          summary: attributes.summary || 'Enter summary...',
+        }),
       },
       details: {
-        default: 'details content',
+        default: 'Enter details...',
+        parseHTML: element => ({ details: element.getAttribute('details') }),
+        renderHTML: attributes => ({
+          details: attributes.details || 'Enter details...',
+        }),
       },
     }
   },

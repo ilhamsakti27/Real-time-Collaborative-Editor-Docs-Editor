@@ -98,15 +98,23 @@ export default {
   align-items: center;
   /* Center vertically */
 }
-
+.toggle-btn button {
+  /* background-color: pink; */
+  border-radius: 4px;
+  height: 26px;
+  /* border: 1px solid black; */
+}
 .toggle-heading {
-  font-size: larger;
+  /* font-size: large; */
+  margin-left: 4px;
 }
-
-#toggle-desc {
-  margin-left: 1.5rem;
+.toggle-heading:focus,
+.toggle-desc input:focus {
+  outline: none;
 }
-
+.toggle-desc {
+  margin-left: 1.8rem;
+}
 .hide {
   display: none;
 }
