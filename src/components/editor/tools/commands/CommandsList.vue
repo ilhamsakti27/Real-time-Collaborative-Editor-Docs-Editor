@@ -48,9 +48,8 @@ export default {
       type: Array,
       required: true,
     },
-    // eslint-disable-next-line vue/require-prop-types
     editor: {
-      // type: Object, // type
+      type: Object,
       required: true,
     },
     command: {

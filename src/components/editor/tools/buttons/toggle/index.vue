@@ -12,23 +12,21 @@
           <button @click="toggleFunction">
             <span v-html="arrowIcon" />
           </button>
-          <input
+          <span
             ref="summary"
             class="toggle-heading"
-            :value="node.attrs.summary"
             contenteditable="true"
             @input="handleSummaryChange"
           >
+            {{ node.attrs.summary }}
+          </span>
         </div>
         <div
           ref="toggleDesc"
           class="hide toggle-desc"
           contenteditable="true"
         >
-          <input
-            :value="node.attrs.details"
-            @input="handleDetailsChange"
-          >
+          <p> {{ node.attrs.details }} </p>
         </div>
       </div>
     </div>
@@ -69,17 +67,11 @@ export default {
         toggleDesc.classList.toggle('hide')
       }
     },
-    handleSummaryChange(event) {
-      const summary = event.target.value
-
+    handleSummaryChange() {
+      const { summary } = this.$refs
+      console.log('Summary changed:', summary.textContent)
       this.updateAttributes({
-        summary: this.node.attrs.summary = summary,
-      })
-    },
-    handleDetailsChange(event) {
-      const toggleDesc = event.target.value
-      this.updateAttributes({
-        details: this.node.attrs.details = toggleDesc,
+        summary: this.node.attrs.summary = summary.textContent,
       })
     },
   },

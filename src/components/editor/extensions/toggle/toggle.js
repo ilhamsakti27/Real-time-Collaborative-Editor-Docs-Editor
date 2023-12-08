@@ -26,7 +26,7 @@ export const Toggle = Node.create({
         default: 'title',
       },
       details: {
-        default: 'details content',
+        default: 'details',
       },
     }
   },
@@ -47,7 +47,7 @@ export const Toggle = Node.create({
     }
   },
   renderHTML({ HTMLAttributes }) {
-    return ['vue-component', mergeAttributes(HTMLAttributes)]
+    return ['vue-component', mergeAttributes(HTMLAttributes), 0]
   },
 
   addNodeView() {
