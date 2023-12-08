@@ -126,7 +126,6 @@ export const Youtube = Node.create({
     const blockWidth = HTMLAttributes['data-block-width']
     updatedHTMLAttributes['data-block-width'] = null
     updatedHTMLAttributes.src = embedUrl
-    console.log('att: ', updatedHTMLAttributes)
 
     if (embedUrl !== null) {
       return [
@@ -177,7 +176,7 @@ export const Youtube = Node.create({
       },
       [
         'div',
-        { class: 'bookmark-content flex', onclick: onClickAttribute },
+        { class: 'bookmark-content', onclick: onClickAttribute },
         [
           'img',
           mergeAttributes({ class: 'bookmark-thumbnail', src: 'https://ultimagz.com/wp-content/uploads/YTLogo_old_new_1680.gif' }),
