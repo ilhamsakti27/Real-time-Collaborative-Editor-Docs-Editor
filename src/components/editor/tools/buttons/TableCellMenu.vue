@@ -65,6 +65,6 @@ export default {
 
 <style>
 .icon-container {
-    position: relative;
+  position: relative;
 }
 </style>

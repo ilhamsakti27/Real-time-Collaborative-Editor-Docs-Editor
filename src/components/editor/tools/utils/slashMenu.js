@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { v4 as uuidv4 } from 'uuid'
 import { PopupImage } from '../buttons/popupImage'
 import { PopupVideo } from '../buttons/popupVideo'
@@ -189,7 +190,19 @@ const blockTools = [
         //   type: 'callout-node', // Use the type of your custom node
         // })
         .setCallout()
+        .setParagraph()
         .run()
+
+      // editor
+      //   .chain()
+      //   .focus()
+      //   .deleteRange(range)
+      //   // .insertContent({
+      //   //   type: 'callout-node', // Use the type of your custom node
+      //   // })
+      //   // .setCallout()
+      //   .setParagraph()
+      //   .run()
     },
   },
   {
