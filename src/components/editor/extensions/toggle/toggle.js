@@ -22,8 +22,11 @@ export const Toggle = Node.create({
   },
   addAttributes() {
     return {
-      count: {
-        default: 0,
+      summary: {
+        default: 'title',
+      },
+      details: {
+        default: 'details content',
       },
     }
   },
