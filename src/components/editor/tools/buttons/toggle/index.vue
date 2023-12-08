@@ -12,21 +12,24 @@
           <button @click="toggleFunction">
             <span v-html="arrowIcon" />
           </button>
-          <span
+          <input
             ref="summary"
+            :value="node.attrs.summary"
             class="toggle-heading"
             contenteditable="true"
             @input="handleSummaryChange"
           >
-            {{ node.attrs.summary }}
-          </span>
         </div>
         <div
           ref="toggleDesc"
           class="hide toggle-desc"
           contenteditable="true"
         >
-          <p> {{ node.attrs.details }} </p>
+          <textarea
+            style="width: 100%;height: 20vh;border: 1px solid rgba(0,0,0,0.4);border-radius: 10px;padding: 2vh;"
+            :value="node.attrs.details"
+            @input="handleDetailsChange"
+          />
         </div>
       </div>
     </div>
@@ -67,22 +70,31 @@ export default {
         toggleDesc.classList.toggle('hide')
       }
     },
-    handleSummaryChange() {
-      const { summary } = this.$refs
-      console.log('Summary changed:', summary.textContent)
+    handleSummaryChange(event) {
+      const summary = event.target.value
+      console.log('Summary changed:', summary)
       this.updateAttributes({
-        summary: this.node.attrs.summary = summary.textContent,
+        summary: this.node.attrs.summary = summary,
       })
+    },
+    handleDetailsChange(event) {
+      const details = event.target.value
+      this.updateAttributes({
+        details: this.node.attrs.details = details,
+      })
+      console.log(details)
     },
   },
 }
 </script>
 
 <style scoped>
+textarea:focus{
+  outline: none;
+}
 .toggle-list {
   padding: 0.3rem;
 }
-
 .toggle-btn {
   border-radius: 0.25rem;
   height: 26px;
