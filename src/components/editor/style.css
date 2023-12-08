@@ -56,12 +56,12 @@
   line-height: 1.25rem;
 }
 .text-xs {
-    font-size: 0.75rem;
-    line-height: 1rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 .shadow-md {
-    --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 .editor-canvas {
   padding: 0% 20%;
@@ -305,27 +305,27 @@ ul.bulletedList ul.bulletedList ul.bulletedList {
 
 /* video styling */
 .videoNode{
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-center;
-    width:100%;
-    cursor:grab;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-center;
+  width:100%;
+  cursor:grab;
 }
 iframe{
-    width: 60%;
-    height: 40vh;
+  width: 60%;
+  height: 40vh;
 }  
 
 /* page styling */
 .linkPage {
-    margin: 0px 0;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-center;
-    padding: 4px;
-    border-radius:4px;
-    width: 100%;
-    cursor:grab;
+  margin: 0px 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-center;
+  padding: 4px;
+  border-radius:4px;
+  width: 100%;
+  cursor:grab;
 }
 
 .linkPage-icon{
@@ -383,20 +383,21 @@ iframe{
 }
 .bookmark-desc{
   padding: 0 20px;
-    display: flex;
-    flex-direction: column;
-    row-gap: 8px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
   width: 100%;
 }
 .bookmark-title {
-    margin-top: 10px;
-    font-weight: bold;
-    font-size: 20px;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 /* Callout Style */
 callout{
   background-color: #F1F1EF;
+  border-radius: 8px;
   display: flex;
   align-items: flex-center;
   padding: 10em;
@@ -404,7 +405,7 @@ callout{
 }
 
 callout .callout-content {
-  padding: 0 32px;
+  padding: 4px 12px 4px 36px;
   max-width: 100%;
 }
 
@@ -412,7 +413,9 @@ callout .callout-emoji::before {
   content: "💡";
   font-size: 20px;
   position: absolute;
-  padding: 4px;
+  /* padding: 4px; */
+  margin-left: 6px;
+  margin-top: 8px;
   top:0;
 }
 
@@ -424,23 +427,23 @@ blockquote.blockquote {
   margin-block-end: 1em;
   /* margin-inline-start: 40px; */
   /* margin-inline-end: 40px;  */
-  border-left: 4px solid rgba(10, 10, 10, 0.259);
-  background-color: #F1F1EF;
+  border-left: 3px solid rgba(10, 10, 10, 0.47);
+  background-color: #f1f1ef85;
 }
 blockquote.blockquote > *{
-  font-style: italic;
-  color:rgba(10, 10, 10, 0.459);
-    padding: 0px 10px;
-    font-weight: 800;
+  /* font-style: italic; */
+  /* color:rgba(10, 10, 10, 0.459); */
+  padding: 0px 12px;
+  /* font-weight: 500; */
 
 }
 blockquote.blockquote > *.is-empty{
-    font-weight: 400;
+  font-weight: 400;
 }
 /* Todo List */
 ul[data-type="taskList"] {
-	 list-style: none;
-	 padding: 0;
+  list-style: none;
+  padding: 0;
 }
 ul[data-type="taskList"] p {
   margin: 0;
@@ -499,7 +502,7 @@ ul[data-type="taskList"] li.todoList[data-checked="true"] div p {
 .tiptap pre .hljs-comment,
 .tiptap pre .hljs-quote {
   color: #216f06;
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .tiptap pre .hljs-variable,
@@ -555,8 +558,8 @@ ul[data-type="taskList"] li.todoList[data-checked="true"] div p {
   font-size: 0.9rem;
   padding: 0.25em;
   border-radius: 0.25em;
-  background-color: rgba(135,131,120,.15);
-  color: #EB5757;
+  /* background-color: rgba(135,131,120,.15); */
+  /* color: #EB5757; */
   box-decoration-break: clone;
 }
 
