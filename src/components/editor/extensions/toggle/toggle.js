@@ -55,7 +55,7 @@ export const Toggle = Node.create({
     }
   },
   renderHTML({ HTMLAttributes }) {
-    return ['vue-component', mergeAttributes(HTMLAttributes), 0]
+    return ['vue-component', mergeAttributes(HTMLAttributes)]
   },
 
   addNodeView() {

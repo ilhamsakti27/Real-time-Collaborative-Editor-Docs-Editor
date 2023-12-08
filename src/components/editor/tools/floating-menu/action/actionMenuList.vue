@@ -85,8 +85,6 @@ export default {
   },
   computed: {
     filteredItems() {
-      console.log(this.topLevelNodeType)
-
       return this.items.filter(item => {
         if (item.title === 'Delete') {
           return this.editor.can().deleteNode(this.topLevelNodeType)
@@ -116,6 +114,7 @@ export default {
             'columnBlock',
             'taskList',
             'horizontalRule',
+            'toggle',
             'blockquote',
           ])
           if (excludedNodeTypes.has(this.topLevelNodeType)) {
@@ -246,24 +245,19 @@ export default {
     max-height: 300px;
     width: 210px;
     z-index: 999;
-}
 
-// styling scroll slash menu
-.menuContainer::-webkit-scrollbar {
-    width: 3px;
-}
-
-/* Track (jalur) */
-.menuContainer::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 50px;
-}
-
-/* Handle (bilah) */
-.menuContainer::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 20px;
-    border: 7px solid transparent;
+    ::-webkit-scrollbar {
+      width: 3px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+      border-radius: 50px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 20px;
+      border: 7px solid transparent;
+    }
 }
 
 .item {
@@ -276,13 +270,12 @@ export default {
     border: 1px solid transparent;
 
     &.is-selected {
-        // border-color: #000;
         background-color: #d8d9daa1;
+    }
+     span svg {
+        display: inline-block;
+        width: 2em;
     }
 }
 
-.item span svg {
-    display: inline-block;
-    width: 2em;
-}
 </style>

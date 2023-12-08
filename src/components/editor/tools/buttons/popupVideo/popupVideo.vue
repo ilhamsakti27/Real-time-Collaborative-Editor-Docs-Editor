@@ -190,7 +190,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .popupImage {
   display: absolute;
   z-index: 10;
@@ -200,11 +200,9 @@ export default {
   border-radius: 4px;
   background-color: white;
 }
-
 .active {
   border-bottom: 3px solid black;
 }
-
 .progress-bar {
   width: 100%;
   height: 10px;
@@ -213,34 +211,29 @@ export default {
   border-radius: 5px;
   overflow: hidden;
 }
-
 .shadow-lg {
   --tw-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
-
 .progress {
   height: 100%;
   background-color: #4caf50;
   transition: width 0.3s ease;
 }
-
 button {
   display: inline-block;
   text-align: left;
   padding: 8px;
   margin-left: 4px;
-}
 
-button:hover {
-  background-color: rgba(243, 244, 246, 1);
+  :hover {
+    background-color: rgba(243, 244, 246, 1);
+  }
 }
-
 .outline-none {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
-
 .uploadBtn {
   background-color: rgb(2 132 199);
   color: white;
@@ -249,21 +242,17 @@ button:hover {
   padding: 4px 80px;
   margin: 12px auto;
   display: flex;
-
+  :hover {
+    background-color: rgb(3 105 161);
+  }
+  :active {
+    background-color: rgb(7 89 133);
+  }
 }
-
-.uploadBtn:hover {
-  background-color: rgb(3 105 161);
-}
-
-.uploadBtn:active {
-  background-color: rgb(7 89 133);
-}
-
 input:focus {
   outline-offset: 0px;
   outline-style: solid;
   outline-width: 2px;
   outline-color: rgb(136, 186, 246);
-  ;
-}</style>
+}
+</style>

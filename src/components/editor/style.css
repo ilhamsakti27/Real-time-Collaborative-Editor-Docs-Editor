@@ -114,9 +114,10 @@
 .tiptap .separator.is-empty::before{
   content: '';
 }
-.tiptap .toggle-list.is-empty::before{
-  margin-left: 2.5em;
+.tiptap .toggle.is-empty::before{
+  content: '';
 }
+
 
 .tiptap .is-empty::before {
   content: attr(data-placeholder);
