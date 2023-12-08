@@ -1,8 +1,8 @@
 <template>
-  <node-view-wrapper class="vue-component">
+  <node-view-wrapper class="vue-component dom">
     <div
       style="cursor: grab;"
-      class="drag-handle"
+      class="drag-handle content"
       contenteditable="false"
       draggable="true"
       data-drag-handle
@@ -12,19 +12,23 @@
           <button @click="toggleFunction">
             <span v-html="arrowIcon" />
           </button>
-          <span
+          <input
+            ref="summary"
             class="toggle-heading"
+            :value="node.attrs.summary"
             contenteditable="true"
+            @input="handleSummaryChange"
           >
-            Details
-          </span>
         </div>
         <div
           ref="toggleDesc"
           class="hide toggle-desc"
           contenteditable="true"
         >
-          <p>This is the content you can toggle.</p>
+          <input
+            :value="node.attrs.details"
+            @input="handleDetailsChange"
+          >
         </div>
       </div>
     </div>
@@ -53,6 +57,9 @@ export default {
       return this.isToggled ? this.arrowDown : this.arrowRight
     },
   },
+  mounted() {
+    console.log(nodeViewProps)
+  },
   methods: {
     toggleFunction() {
       this.isToggled = !this.isToggled
@@ -61,6 +68,19 @@ export default {
       if (toggleDesc) {
         toggleDesc.classList.toggle('hide')
       }
+    },
+    handleSummaryChange(event) {
+      const summary = event.target.value
+
+      this.updateAttributes({
+        summary: this.node.attrs.summary = summary,
+      })
+    },
+    handleDetailsChange(event) {
+      const toggleDesc = event.target.value
+      this.updateAttributes({
+        details: this.node.attrs.details = toggleDesc,
+      })
     },
   },
 }
