@@ -14,8 +14,8 @@
           </button>
           <input
             ref="summary"
-            class="toggle-heading"
             :value="node.attrs.summary"
+            class="toggle-heading"
             contenteditable="true"
             @input="handleSummaryChange"
           >
@@ -25,10 +25,11 @@
           class="hide toggle-desc"
           contenteditable="true"
         >
-          <input
+          <textarea
+            style="width: 100%;height: 20vh;border: 1px solid rgba(0,0,0,0.4);border-radius: 10px;padding: 2vh;"
             :value="node.attrs.details"
             @input="handleDetailsChange"
-          >
+          />
         </div>
       </div>
     </div>
@@ -71,26 +72,29 @@ export default {
     },
     handleSummaryChange(event) {
       const summary = event.target.value
-
+      console.log('Summary changed:', summary)
       this.updateAttributes({
         summary: this.node.attrs.summary = summary,
       })
     },
     handleDetailsChange(event) {
-      const toggleDesc = event.target.value
+      const details = event.target.value
       this.updateAttributes({
-        details: this.node.attrs.details = toggleDesc,
+        details: this.node.attrs.details = details,
       })
+      console.log(details)
     },
   },
 }
 </script>
 
 <style scoped>
+textarea:focus{
+  outline: none;
+}
 .toggle-list {
   padding: 0.3rem;
 }
-
 .toggle-btn {
   border-radius: 0.25rem;
   height: 26px;
