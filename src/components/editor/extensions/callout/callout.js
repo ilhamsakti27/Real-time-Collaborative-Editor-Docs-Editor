@@ -1,14 +1,13 @@
-import { Node, wrappingInputRule } from '@tiptap/core'
+import { Node, mergeAttributes } from '@tiptap/core'
 
-const inputRegex = /^\s*>\s$/
 export const Callout = Node.create({
   name: 'callout',
   group: 'block',
-  content: 'block+',
+  content: 'inline*',
   defining: true,
   draggable: true,
   marks: '',
-  // Your code goes here.
+
   addOptions() {
     return {
       HTMLAttributes: {},
@@ -19,40 +18,24 @@ export const Callout = Node.create({
       { tag: 'callout' },
     ]
   },
-  addCommands() {
-    return {
-      setCallout: () => ({ commands }) => {
-        const command = commands.wrapIn(this.name)
-
-        return command
-      },
-    }
-  },
-  addInputRules() {
+  renderHTML({ HTMLAttributes }) {
     return [
-      wrappingInputRule({
-        find: inputRegex,
-        type: this.type,
-      }),
+      'callout',
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+      [
+        'div',
+        { class: 'callout-emoji' },
+      ],
+      [
+        'div',
+        { class: 'callout-content' },
+      ],
+      ['div', 0],
     ]
   },
-  addNodeView() {
-    return () => {
-      const container = document.createElement('callout')
-      const bulb = document.createElement('div')
-      const content = document.createElement('div')
-      container.classList.add('callout')
-      bulb.classList.add('callout-emoji')
-      content.classList.add('callout-content')
-
-      container.append(bulb)
-      container.append(content)
-
-      return {
-        dom: container,
-        contentDOM: content,
-      }
+  addCommands() {
+    return {
+      setCallout: () => ({ commands }) => commands.setNode(this.name),
     }
   },
-
 })

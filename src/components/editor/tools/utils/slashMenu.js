@@ -126,7 +126,7 @@ const blockTools = [
         .chain()
         .focus()
         .deleteRange(range)
-        .toggleBlockquote()
+        .setBlockquote()
         .run()
     },
   },
@@ -186,23 +186,8 @@ const blockTools = [
         .chain()
         .focus()
         .deleteRange(range)
-        // .insertContent({
-        //   type: 'callout-node', // Use the type of your custom node
-        // })
         .setCallout()
-        .setParagraph()
         .run()
-
-      // editor
-      //   .chain()
-      //   .focus()
-      //   .deleteRange(range)
-      //   // .insertContent({
-      //   //   type: 'callout-node', // Use the type of your custom node
-      //   // })
-      //   // .setCallout()
-      //   .setParagraph()
-      //   .run()
     },
   },
   {

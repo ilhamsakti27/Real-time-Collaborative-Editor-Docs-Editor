@@ -90,7 +90,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-textarea:focus{
+input:focus,textarea:focus{
   outline: none;
 }
 .toggle-list {

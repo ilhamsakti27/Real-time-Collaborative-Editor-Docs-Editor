@@ -353,7 +353,6 @@ export default {
     const [, , documentId] = path.split('/')
     this.documentId = documentId
     this.provider = new HocuspocusProvider({
-      // url: 'ws://localhost:1234/',
       url: 'wss://editorhocus.oriens.my.id',
       name: this.documentId,
       document: ydoc,
