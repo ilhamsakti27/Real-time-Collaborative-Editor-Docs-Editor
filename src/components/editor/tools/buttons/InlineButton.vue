@@ -72,13 +72,6 @@ export default {
     filteredItems() {
       return this.allInlineTools.filter(item => {
         switch (item.title) {
-          case 'Others':
-            return !this.editor.isActive('table')
-          case 'Format Align':
-            return !this.editor.isActive('table')
-          case 'Link':
-            return !this.editor.isActive('table')
-
           default:
             break
         }
@@ -101,7 +94,7 @@ export default {
     },
     handleHover(index) {
       this.selectedIndex = index
-      const item = this.allInlineTools[this.selectedIndex]
+      const item = this.filteredItems[this.selectedIndex]
       this.isMoreTools = true
       if (item.tools) {
         if (item.title === 'Others') moreTools(this.editor, item.tools, this.isMoreTools, 'Inline Tools')
@@ -110,7 +103,7 @@ export default {
     },
     selectItem(index) {
       this.selectedIndex = index
-      const item = this.allInlineTools[index]
+      const item = this.filteredItems[index]
       if (item.command) item.command(this.editor, this.node)
     },
   },
