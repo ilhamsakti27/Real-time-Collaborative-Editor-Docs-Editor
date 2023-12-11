@@ -114,6 +114,13 @@ input:focus,textarea:focus{
     outline: none;
   }
 }
+input.toggle-heading {
+  width: 100%;
+  // border: 1px solid black;
+}
+.toggle-heading:focus {
+  outline: none;
+}
 .toggle-desc {
   margin-left: 1.8rem;
 }
