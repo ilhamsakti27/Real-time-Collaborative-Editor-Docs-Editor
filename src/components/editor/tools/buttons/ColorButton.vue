@@ -173,14 +173,34 @@ export default {
     setColor(color, index) {
       this.selectedIndex = index
       this.isHighlight = false
-      if (color === '#000') {
-        this.editor.chain().focus().unsetColor().blur()
-          .run()
+
+      const { state } = this.editor
+      // eslint-disable-next-line no-unused-vars
+      const { from, to, empty } = state.selection
+
+      if (empty) {
+        // No text is selected
+        this.isHighlight = false
       } else {
-        this.editor.chain().focus().setColor(color).blur()
-          .run()
+        const { marks } = state.doc.resolve(from).marks()
+
+        if (!marks || !marks.some(mark => mark.type.name === 'link' && mark.attrs.href)) {
+          // The selection does not contain the "href" attribute
+          if (color === '#000') {
+            this.editor.chain().focus().unsetColor().blur()
+              .run()
+          } else {
+            this.editor.chain().focus().setColor(color).blur()
+              .run()
+          }
+        } else {
+          // The selection contains the "href" attribute, handle accordingly
+          // You can add your specific logic here if needed
+          console.log("Selection contains 'href' attribute")
+        }
       }
     },
+
     setHighlight(color, index) {
       this.selectedIndex = index
       this.isHighlight = true

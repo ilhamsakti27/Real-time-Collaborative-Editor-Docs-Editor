@@ -79,7 +79,7 @@ const defaultExtension = [
         case 'heading':
           text = 'Heading'
           break
-        case 'codeBlock':
+        case 'codeBlosck':
           text = 'write code ...'
           break
         case 'tableCell':
@@ -87,6 +87,9 @@ const defaultExtension = [
           break
         case 'tableHeader':
           text = 'table header'
+          break
+        case 'blockquote':
+          text = 'write quote ...'
           break
         case 'orderedList':
           text = 'text'
@@ -146,7 +149,10 @@ const defaultExtension = [
   Underline,
   TextStyle,
   Color,
-  Link,
+  Link.extend({
+    Marks: '',
+    inclusive: false,
+  }),
   FontFamily,
   Image,
   Dropcursor,

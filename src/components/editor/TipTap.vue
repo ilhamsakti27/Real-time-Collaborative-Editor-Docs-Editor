@@ -52,7 +52,7 @@
             ref="actionMenu"
             style="margin-left: 0.25rem; padding-top: 0.3rem; border-radius: 0.375rem;"
             aria-label="Drag"
-            :action-tooltip="actionDataTooltip()"
+            action-tooltip="Hold for dragging"
             @mousedown="startDragging($event)"
             @mouseup="draggedNodePosition = false; dragging = false;"
           >
@@ -86,14 +86,15 @@
           style="display: flex; align-items: center;"
         >
           <ColorButton
-            v-if="!isLink"
             style="border-radius: 8px 0 0 8px;"
             class="bubble-menu-btn"
             :editor="editor"
           />
-          <inlineToolsBtn :editor="editor" />
+          <inlineToolsBtn
+            :editor="editor"
+            :node="topLevelNodeType"
+          />
           <FontFamilyButton
-            v-if="!isLink"
             style="border: none; border-radius: 0 8px 8px 0;"
             class="bubble-menu-btn"
             :editor="editor"
@@ -447,15 +448,7 @@ export default {
     this.editor.destroy()
   },
   methods: {
-    actionDataTooltip() {
-      const mediaNodeTypes = ['image', 'video', 'bookmark', 'youtube']
-
-      return mediaNodeTypes.includes(this.topLevelNodeType)
-        ? 'Drag component for move'
-        : 'Hold for dragging'
-    },
     getTopLevelNodeType() {
-      this.isLink = this.editor.view.state.selection.$head.parent.content.content[0]?.marks[0]?.type.name === 'link'
       const child = this.editor.view.state.selection
       if (child.node !== undefined) this.currentNodeType = child.node.type.name
       else this.currentNodeType = GetTopLevelNode(this.editor.view)?.type.name
