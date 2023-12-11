@@ -10,7 +10,6 @@
           v-model="urlInput"
           style="width: 100%; font-size: 0.875rem; line-height: 1.25rem;"
           placeholder="Paste link"
-          type="url"
           @input="clearError"
         >
         <button
@@ -37,7 +36,6 @@
               id="pageOrURL"
               v-model="urlInput"
               placeholder="Edit link or search pages"
-              type="url"
             >
           </div>
         </div>

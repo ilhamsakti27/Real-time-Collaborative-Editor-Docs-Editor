@@ -7,6 +7,7 @@ let floatingComponent = null // Declare a variable to hold the VueRenderer insta
 let popup = null
 
 export function ConvertBtn(editor, isHover) {
+  console.log(popup)
   if (isHover) {
     if (floatingComponent === null) {
       const props = {
