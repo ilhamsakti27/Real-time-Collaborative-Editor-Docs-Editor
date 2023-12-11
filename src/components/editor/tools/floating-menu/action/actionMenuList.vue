@@ -22,22 +22,23 @@
       >
         <!-- {{ item }} -->
         <!-- list of menu -->
-        <div
-          :id="item.ref === 'convertBtn' ? 'convert' : ''"
-          style="display: flex;align-items: center;column-gap: 8px;"
-          class="menu"
-        >
-          <div class="icon-wrapper">
-            <span
-              v-html="item.icon"
-            />
-          </div>
-          <div style="display: flex;flex-direction: column;">
-            <span class="text-sm">{{ item.title }}</span>
-            <span
-              style="color: rgba(0,0,0,0.4);"
-              class="text-xs"
-            >{{ item.desc }}</span>
+        <div id="convert">
+          <div
+            style="display: flex;align-items: center;column-gap: 8px;"
+            class="menu"
+          >
+            <div class="icon-wrapper">
+              <span
+                v-html="item.icon"
+              />
+            </div>
+            <div style="display: flex;flex-direction: column;">
+              <span class="text-sm">{{ item.title }}</span>
+              <span
+                style="color: rgba(0,0,0,0.4);"
+                class="text-xs"
+              >{{ item.desc }}</span>
+            </div>
           </div>
         </div>
       </button>

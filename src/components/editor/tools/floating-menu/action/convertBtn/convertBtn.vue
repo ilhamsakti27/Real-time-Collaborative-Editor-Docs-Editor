@@ -103,7 +103,6 @@ export default {
     border-radius: 6px;
     padding: 12px 4px 0px 4px;
     border: 1px solid #D9D9D9;
-    box-shadow: 0px 4px 16px 2px rgba(0, 0, 0, 0.15);
     background: white;
     overflow: scroll;
     max-height: 300px;
