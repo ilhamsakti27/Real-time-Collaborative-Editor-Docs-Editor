@@ -13,6 +13,8 @@ export default function inlineTools(Editor) {
     } else {
       isLinkActive = false
     }
+  } else {
+    isLinkActive = false
   }
 
   return !isLinkActive ? [
