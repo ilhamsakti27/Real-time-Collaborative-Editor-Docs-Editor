@@ -36,16 +36,6 @@
           </button>
         </div>
       </div>
-      <div style="position: fixed; top: 100px; display: flex; justify-content: flex-end; right: 0;">
-        <div style="width: 250px; overflow-x: auto; overflow-y: auto; max-height: 90vh;">
-          <h3
-            style="font-weight: bold; margin-bottom: 8px; font-size: 1.5rem;"
-          >
-            Editor output
-          </h3>
-          <pre style="display: block; font-size: 1rem; width: 100%;">{{ content }}</pre>
-        </div>
-      </div>
     </div>
 
     <!-- snapshots preview -->
