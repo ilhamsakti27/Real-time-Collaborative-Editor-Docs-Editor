@@ -134,7 +134,7 @@
 }
 /* color font */
 * {
-  color: #272829;
+  /* color: #272829; */
 }
 /* disable outline editor */
 .ProseMirror-focused {

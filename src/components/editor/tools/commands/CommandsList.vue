@@ -1,6 +1,6 @@
 <template>
   <div
-    v-show="topLevelNodeType !== 'table' && topLevelNodeType !== 'title' && topLevelNodeType !== 'callout' && topLevelNodeType !== 'blockquote' && topLevelNodeType !== 'codeBlock'"
+    v-show="topLevelNodeType !== 'table' && topLevelNodeType !== 'title' && topLevelNodeType !== 'callout' && topLevelNodeType !== 'blockquote' && topLevelNodeType !== 'codeBlock' && topLevelNodeType !== 'orderedList' && topLevelNodeType !== 'bulletList' && topLevelNodeType !== 'taskList'"
     ref="itemsContainer"
     class="items"
   >
