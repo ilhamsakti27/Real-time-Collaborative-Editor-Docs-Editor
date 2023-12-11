@@ -82,7 +82,6 @@
         }"
       >
         <div
-          v-if="topLevelNodeType !== 'table'"
           style="display: flex; align-items: center;"
         >
           <ColorButton
