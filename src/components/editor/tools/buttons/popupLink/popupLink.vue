@@ -1,67 +1,64 @@
 <template>
   <div class="">
-    <div
-      v-show="!toggleShowLinkEdit"
-      style="display: flex; flex-direction: column; row-gap: 0.5rem;"
-      class="popUpLink"
-    >
-      <input
-        v-model="urlInput"
-        style="width: 100%; font-size: 0.875rem; line-height: 1.25rem;"
-        placeholder="Paste link"
-        type="url"
-        @input="clearError"
+    <form @submit.prevent="setLink">
+      <div
+        v-show="!toggleShowLinkEdit"
+        style="display: flex; flex-direction: column; row-gap: 0.5rem;"
+        class="popUpLink"
       >
-      <button
-        class="button-submit-link"
-        @click="setLink"
-      >
-        Submit
-      </button>
-    </div>
+        <input
+          v-model="urlInput"
+          style="width: 100%; font-size: 0.875rem; line-height: 1.25rem;"
+          placeholder="Paste link"
+          type="url"
+          @input="clearError"
+        >
+        <button
+          type="submit"
+          class="button-submit-link"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
     <div
       v-show="toggleShowLinkEdit"
       class="popUpLink"
     >
-      <div class="popuplink-edit-link">
-        <div>
-          <label
-            for="pageOrURL"
-          >
-            Page or URL
-          </label>
-          <input
-            id="pageOrURL"
-            v-model="url"
-            placeholder="Edit link or search pages"
-            type="url"
-          >
+      <form @submit.prevent="setLink">
+        <div class="popuplink-edit-link">
+          <div>
+            <label
+              for="pageOrURL"
+            >
+              Page or URL
+            </label>
+            <input
+              id="pageOrURL"
+              v-model="url"
+              placeholder="Edit link or search pages"
+              type="url"
+            >
+          </div>
         </div>
-        <div>
-          <label
-            for="linkTitle"
-          >
-            Link title
-          </label>
-          <input
-            id="linkTitle"
-            v-model="urlTitle"
-            placeholder="title"
-            type="url"
-          >
-        </div>
-      </div>
-      <hr class="custom-hr">
-      <button
-        class="button-remove-link"
-        @click="removeLink"
-      >
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-html="removeIcon" />
-        <div>
-          Remove link
-        </div>
-      </button>
+        <hr class="custom-hr">
+        <button
+          type="submit"
+          class="button-submit-link"
+        >
+          Submit
+        </button>
+        <button
+          class="button-remove-link"
+          @click="removeLink"
+        >
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <span v-html="removeIcon" />
+          <div>
+            Remove link
+          </div>
+        </button>
+      </form>
     </div>
   </div>
 </template>
@@ -86,6 +83,8 @@ export default {
       removeIcon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none"  viewBox="0 0 24 24 " stroke-width="1.5" stroke="white" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>',
       // url: '',
       urlTitle: '',
+      // Properti untuk menyimpan teks yang dipilih
+      selectedText: '',
     }
   },
   mounted() {
@@ -116,6 +115,12 @@ export default {
       const pattern = /^(http:\/\/|https:\/\/)/
       const url = pattern.test(this.urlInput)
 
+      // Mendapatkan teks yang dipilih
+      const selectedText = this.editor.getHTML().slice(
+        this.editor.getHTML().lastIndexOf('<a'),
+        this.editor.getHTML().lastIndexOf('</a>') + 4,
+      )
+
       if (!url) {
         this.editor
           .chain()
@@ -126,6 +131,8 @@ export default {
         this.toggleShowLinkEdit = !this.toggleShowLinkEdit
         this.url = this.urlInput
         this.urlInput = ''
+        // Menyimpan teks yang dipilih
+        this.selectedText = selectedText
       } else {
         // update link
         this.editor
@@ -138,6 +145,8 @@ export default {
         this.url = this.urlInput
         // clear input
         this.urlInput = ''
+        // Menyimpan teks yang dipilih
+        this.selectedText = selectedText
       }
 
       this.toggleShowLinkInput = !this.toggleShowLinkInput
@@ -157,15 +166,20 @@ export default {
     clearError() {
       this.urlError = '' // Clear the error message when input changes
     },
+    updateLinkTitle() {
+    // Melakukan sesuatu dengan judul link yang diperbarui
+      console.log('Updated Link Title:', this.urlTitle)
+      console.log('Selected tec')
+    },
   },
 }
 </script>
+
 <style>
 .tiptap a {
   color: #24b8f7;
   text-decoration: underline;
 }
-
 .popUpLink {
   /* position: absolute; */
   background-color: rgb(253, 253, 253);
@@ -179,7 +193,6 @@ export default {
   padding: 12px;
   margin-top: 4px;
 }
-
 .popUpLink input {
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 4px;
@@ -189,7 +202,6 @@ export default {
     outline: 2px solid rgba(35, 131, 226, 0.5);
   }
 }
-
 .popUpLink button {
   margin-top: 8px;
   padding: 2px 8px;
@@ -197,6 +209,7 @@ export default {
   cursor: pointer;
   border-color: #6c757d;
   width: 100%;
+  height: 28px;
 }
 .popUpLink button span {
   font-size: 14px;
