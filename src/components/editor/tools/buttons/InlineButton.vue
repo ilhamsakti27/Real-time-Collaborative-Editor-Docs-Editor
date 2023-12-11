@@ -52,6 +52,10 @@ export default {
       required: true,
       type: Object,
     },
+    node: {
+      type: null,
+      required: true,
+    },
   },
   data() {
     return {
@@ -95,7 +99,6 @@ export default {
     handleHrefChange() {
       this.allInlineTools = mergeArrays(defaultInlineTools(this.editor), this.inlineTools)
     },
-
     handleHover(index) {
       this.selectedIndex = index
       const item = this.allInlineTools[this.selectedIndex]
@@ -108,7 +111,7 @@ export default {
     selectItem(index) {
       this.selectedIndex = index
       const item = this.allInlineTools[index]
-      if (item.command) item.command(this.editor)
+      if (item.command) item.command(this.editor, this.node)
     },
   },
 }

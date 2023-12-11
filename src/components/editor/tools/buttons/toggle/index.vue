@@ -74,6 +74,7 @@ export default {
     handleSummaryChange(event) {
       const summary = event.target.value
       console.log('Summary changed:', summary)
+      console.log(this.node)
       this.updateAttributes({
         summary: this.node.attrs.summary = summary,
       })

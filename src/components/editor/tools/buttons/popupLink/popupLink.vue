@@ -25,7 +25,7 @@
       v-show="toggleShowLinkEdit"
       class="popUpLink"
     >
-      <form @submit.prevent="setLink">
+      <form @submit.prevent>
         <div class="popuplink-edit-link">
           <div>
             <label
@@ -35,7 +35,7 @@
             </label>
             <input
               id="pageOrURL"
-              v-model="url"
+              v-model="urlInput"
               placeholder="Edit link or search pages"
               type="url"
             >
@@ -43,10 +43,10 @@
         </div>
         <hr class="custom-hr">
         <button
-          type="submit"
           class="button-submit-link"
+          @click="setLink"
         >
-          Submit
+          Submits
         </button>
         <button
           class="button-remove-link"
@@ -65,7 +65,6 @@
 
 <script>
 /* eslint-disable vue/require-prop-types */
-
 export default {
   props: {
     editor: {
@@ -81,45 +80,25 @@ export default {
       urlInput: '',
       urlError: '',
       removeIcon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none"  viewBox="0 0 24 24 " stroke-width="1.5" stroke="white" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>',
-      // url: '',
-      urlTitle: '',
-      // Properti untuk menyimpan teks yang dipilih
       selectedText: '',
     }
   },
   mounted() {
     if (this.previousUrl) {
-      this.url = this.previousUrl
-      this.toggleShowLinkEdit = !this.toggleShowLinkEdit
+      this.urlInput = this.previousUrl
+      this.toggleShowLinkEdit = true
+    } else {
+      this.toggleShowLinkEdit = false
     }
   },
   methods: {
     setLink() {
-      // cancelled
-      if (this.urlInput === null) {
-        return
-      }
-
-      // empty
-      if (this.urlInput === '') {
-        this.editor
-          .chain()
-          .focus()
-          .extendMarkRange('link')
-          .unsetLink()
-          .run()
-
+      if (this.urlInput === null || this.urlInput === '') {
         return
       }
 
       const pattern = /^(http:\/\/|https:\/\/)/
       const url = pattern.test(this.urlInput)
-
-      // Mendapatkan teks yang dipilih
-      const selectedText = this.editor.getHTML().slice(
-        this.editor.getHTML().lastIndexOf('<a'),
-        this.editor.getHTML().lastIndexOf('</a>') + 4,
-      )
 
       if (!url) {
         this.editor
@@ -128,11 +107,8 @@ export default {
           .extendMarkRange('link')
           .setLink({ href: `http://${this.urlInput}` })
           .run()
-        this.toggleShowLinkEdit = !this.toggleShowLinkEdit
+        this.toggleShowLinkEdit = true
         this.url = this.urlInput
-        this.urlInput = ''
-        // Menyimpan teks yang dipilih
-        this.selectedText = selectedText
       } else {
         // update link
         this.editor
@@ -141,15 +117,11 @@ export default {
           .extendMarkRange('link')
           .setLink({ href: this.urlInput })
           .run()
-        this.toggleShowLinkEdit = !this.toggleShowLinkEdit
+        this.toggleShowLinkEdit = true
         this.url = this.urlInput
-        // clear input
-        this.urlInput = ''
-        // Menyimpan teks yang dipilih
-        this.selectedText = selectedText
       }
 
-      this.toggleShowLinkInput = !this.toggleShowLinkInput
+      this.toggleShowLinkInput = false
       document.addEventListener('click', this.clickOutsideHandler)
     },
     removeLink() {
@@ -159,17 +131,12 @@ export default {
         .unsetLink()
         .run()
 
-      this.toggleShowLinkEdit = !this.toggleShowLinkEdit
+      this.toggleShowLinkEdit = false
 
       document.addEventListener('click', this.clickOutsideHandler)
     },
     clearError() {
       this.urlError = '' // Clear the error message when input changes
-    },
-    updateLinkTitle() {
-    // Melakukan sesuatu dengan judul link yang diperbarui
-      console.log('Updated Link Title:', this.urlTitle)
-      console.log('Selected tec')
     },
   },
 }

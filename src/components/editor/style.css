@@ -184,7 +184,7 @@
 /* YOUTUBE */
 .youtube-embed{
   width:60%;
-  height: 40vh;
+  border:none;
 }
 
 /* DIVIDER */
@@ -400,7 +400,7 @@ iframe{
 
 /* Callout Style */
 callout{
-  background-color: #F1F1EF;
+  background-color: #f1f1ef85;
   border-radius: 8px;
   display: flex;
   align-items: flex-center;
