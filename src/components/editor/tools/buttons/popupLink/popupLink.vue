@@ -46,7 +46,7 @@
           class="button-submit-link"
           @click="setLink"
         >
-          Submits
+          Submit
         </button>
         <button
           class="button-remove-link"
@@ -136,7 +136,7 @@ export default {
       document.addEventListener('click', this.clickOutsideHandler)
     },
     clearError() {
-      this.urlError = '' // Clear the error message when input changes
+      this.urlError = ''
     },
   },
 }
