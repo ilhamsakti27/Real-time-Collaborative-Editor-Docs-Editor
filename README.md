@@ -74,7 +74,7 @@ The UI is designed with the concept of block components, here's a list of them:
 3. Delete Block
 4. Turn Into Other Block
 
-**Result**
+**Result**  
 ![pic1](./images/Picture1.png)
 ![pic2](./images/Picture2.png)
 ![pic3](./images/Picture3.png)
