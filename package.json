@@ -10,7 +10,6 @@
   "dependencies": {
     "@animxyz/core": "^0.6.4",
     "@animxyz/vue": "^0.6.5",
-    "@apollo/client": "^3.5.6",
     "@casl/ability": "^5.3.1",
     "@casl/vue": "1.x",
     "@gocapsule/column-extension": "^1.0.0-beta-3",
