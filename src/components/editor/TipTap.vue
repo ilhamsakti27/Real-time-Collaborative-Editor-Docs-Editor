@@ -352,8 +352,10 @@ export default {
     const { path } = this.$route
     const [, , documentId] = path.split('/')
     this.documentId = documentId
+    // backend for collab
     this.provider = new HocuspocusProvider({
-      url: 'wss://editorhocus.oriens.my.id',
+      // url: 'wss://editorhocus.oriens.my.id',
+      url: 'wss://lorem',
       name: this.documentId,
       document: ydoc,
       token: 'test-token', // auth token
