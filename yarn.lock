@@ -16,7 +16,7 @@
     clsx "^1.1.1"
     vue-functional-data-merge "^3.1.0"
 
-"@apollo/client@^3.1.5", "@apollo/client@^3.5.6":
+"@apollo/client@^3.1.5":
   version "3.5.6"
   resolved "https://registry.npmjs.org/@apollo/client/-/client-3.5.6.tgz"
   integrity sha512-XHoouuEJ4L37mtfftcHHO1caCRrKKAofAwqRoq28UQIPMJk+e7n3X9OtRRNXKk/9tmhNkwelSary+EilfPwI7A==
